@@ -19,8 +19,18 @@ const Banner = () => {
                     <Link href="" className='w-full inline-block px-3 py-2 mt-2 rounded-lg hover:bg-[#E3F0FF]'>Machinery tools</Link>
 
                 </div>
-                <div className='col-span-7'>
-                    <Image src={BannerImage} alt='' className='h-full w-full object-cover' />
+                <div className='col-span-7 relative'>
+
+                    <div className='absolute top-10 left-5'>
+                        <h1 className='text-3xl'><span >Latest trending</span> <br /> <span className='font-extrabold '> Electronic items</span> </h1>
+
+                        <button type='button' className="bg-white rounded-xl px-4 py-2 mt-5">
+                            Learn more
+                        </button>
+                    </div>
+
+                    <Image src={BannerImage} alt='' className='h-full w-full object-cover ' />
+
                 </div>
 
                 <div className='col-span-2'>
