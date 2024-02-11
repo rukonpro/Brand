@@ -161,15 +161,14 @@ const Footer = () => {
                                     )
                                 })
                             }
-
                         </ul>
                     </div>
 
-                    <div className="col-span-9 grid grid-cols-5">
+                    <ul className="col-span-9 grid grid-cols-5">
                         {
-                            FooterData?.footerCetagory?.map((cetagory) => {
+                            FooterData?.footerCetagory?.map((cetagory,index) => {
                                 return (
-                                    <div>
+                                    <li key={index}>
                                         <h1 className='font-bold'>{cetagory?.title}</h1>
 
                                         <ul className='pt-5 '>
@@ -190,12 +189,11 @@ const Footer = () => {
                                                 })
                                             }
                                         </ul>
-                                    </div>
+                                    </li>
                                 )
                             })
                         }
-                    </div>
-
+                    </ul>
                 </div>
             </div>
 

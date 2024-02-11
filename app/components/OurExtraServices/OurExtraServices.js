@@ -42,15 +42,17 @@ const OurExtraServices = () => {
         <div>
             <div className='max-w-[1200px] mx-auto pt-5'>
                 <h1 className='text-2xl py-5'>Our extra services</h1>
-                <div className='grid grid-cols-4 gap-4'>
+                <ul className='grid grid-cols-4 gap-4'>
                     {
-                        datas?.map(data => {
+                        datas?.map((data,index) => {
                             return (
-                                <OurExtraServicesCard data={data} />
+                               <li key={index}>
+                                   <OurExtraServicesCard  data={data} />
+                               </li>
                             )
                         })
                     }
-                </div>
+                </ul>
             </div>
         </div>
     );
