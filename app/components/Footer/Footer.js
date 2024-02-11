@@ -142,10 +142,10 @@ const Footer = () => {
     }
     return (
         <div>
-            <div className='max-w-[1200px] mx-auto py-10'>
+            <div className='py-10 bg-white'>
 
-                <div className='grid grid-cols-12 gap-5'>
-                    <div className='col-span-3'>
+                <div className='grid grid-cols-12 gap-5 max-w-[1200px] mx-auto px-3'>
+                    <div className='md:col-span-3 col-span-12'>
                         <Image src={FooterData?.logo} alt='' />
                         <p className='pt-5'>{FooterData?.description}</p>
 
@@ -164,12 +164,12 @@ const Footer = () => {
                         </ul>
                     </div>
 
-                    <ul className="col-span-9 grid grid-cols-5">
+                    <ul className="md:col-span-9 col-span-12 grid sm:grid-cols-5 grid-cols-3 ">
                         {
                             FooterData?.footerCetagory?.map((cetagory,index) => {
                                 return (
                                     <li key={index}>
-                                        <h1 className='font-bold'>{cetagory?.title}</h1>
+                                        <h1 className='font-bold sm:pt-0 pt-10'>{cetagory?.title}</h1>
 
                                         <ul className='pt-5 '>
                                             {

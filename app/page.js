@@ -17,7 +17,7 @@ export default function Home() {
 
           <Navbar />
         <Nav />
-     <div className="px-3">
+
          <Banner />
          <Offers />
          <HomeAndOutdoor />
@@ -28,7 +28,7 @@ export default function Home() {
          <SuppliersByRegion />
          <SubscribeOnOurNewsletter />
          <Footer />
-     </div>
+
     </main>
   );
 }

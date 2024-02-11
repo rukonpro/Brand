@@ -56,15 +56,15 @@ const SuppliersByRegion = () => {
         },
     ]
     return (
-        <div className="pt-5">
+        <div className="pt-5 px-3">
             <div className='max-w-[1200px] mx-auto'>
                 <h1 className='text-2xl py-5'>Suppliers by region</h1>
 
-                <ul className='grid grid-cols-5 gap-2 '>
+                <ul className='grid xl:grid-cols-5 lg:grid-cols-4 md:grid-cols-4 sm:grid-cols-3 grid-cols-2 gap-3 '>
                     {
                         datas?.map((data, index) => {
                             return (
-                                <li key={index} className='grid grid-cols-12 items-center'>
+                                <li key={index} className='grid gap-2 grid-cols-12 items-center'>
                                     <div className='col-span-2'>
                                         <Image src={data.flag} alt='' />
                                     </div>

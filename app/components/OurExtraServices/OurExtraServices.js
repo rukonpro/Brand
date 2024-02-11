@@ -39,10 +39,10 @@ const OurExtraServices = () => {
 
 
     return (
-        <div>
+        <div className="px-3">
             <div className='max-w-[1200px] mx-auto pt-5'>
                 <h1 className='text-2xl py-5'>Our extra services</h1>
-                <ul className='grid grid-cols-4 gap-4'>
+                <ul className='grid xl:grid-cols-4 lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-3 grid-cols-2 gap-4'>
                     {
                         datas?.map((data,index) => {
                             return (
