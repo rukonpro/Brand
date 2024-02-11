@@ -10,7 +10,7 @@ import Nav from './nav';
 
 const Navbar = () => {
     return (
-        <div className='bg-white'>
+        <nav className='bg-white'>
             <div className="grid grid-cols-12 max-w-[1200px] mx-auto py-8 ">
                 <div className="h-[46px] w-[150px] col-span-2">
                     <Image src={Logo} alt="Logo"
@@ -68,7 +68,7 @@ const Navbar = () => {
                 </div>
             </div>
             <Nav />
-        </div>
+        </nav>
     );
 };
 

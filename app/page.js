@@ -4,6 +4,11 @@ import Offers from "./components/offers/Offers";
 import HomeAndOutdoor from "./components/SourceProducts/HomeAndOutdoor";
 import ConsumerElectronicsAndGadgets from "./components/SourceProducts/ConsumerElectronicsAndGadgets";
 import Requests from "./components/requests/Requests";
+import RecommendedItems from "./components/RecommendedItems/RecommendedItems";
+import OurExtraServices from "./components/OurExtraServices/OurExtraServices";
+import SuppliersByRegion from "./components/SuppliersByRegion/SuppliersByRegion";
+import SubscribeOnOurNewsletter from "./components/SubscribeOnOurNewsletter/SubscribeOnOurNewsletter";
+import Footer from "./components/Footer/Footer";
 
 export default function Home() {
   return (
@@ -14,7 +19,11 @@ export default function Home() {
       <HomeAndOutdoor />
       <ConsumerElectronicsAndGadgets />
       <Requests />
-      <br /><br />
+      <RecommendedItems />
+      <OurExtraServices />
+      <SuppliersByRegion />
+      <SubscribeOnOurNewsletter />
+      <Footer />
     </main>
   );
 }
