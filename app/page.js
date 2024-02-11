@@ -9,21 +9,26 @@ import OurExtraServices from "./components/OurExtraServices/OurExtraServices";
 import SuppliersByRegion from "./components/SuppliersByRegion/SuppliersByRegion";
 import SubscribeOnOurNewsletter from "./components/SubscribeOnOurNewsletter/SubscribeOnOurNewsletter";
 import Footer from "./components/Footer/Footer";
+import Nav from "@/app/components/navbar/nav";
 
 export default function Home() {
   return (
     <main>
-      <Navbar />
-      <Banner />
-      <Offers />
-      <HomeAndOutdoor />
-      <ConsumerElectronicsAndGadgets />
-      <Requests />
-      <RecommendedItems />
-      <OurExtraServices />
-      <SuppliersByRegion />
-      <SubscribeOnOurNewsletter />
-      <Footer />
+
+          <Navbar />
+        <Nav />
+     <div className="px-3">
+         <Banner />
+         <Offers />
+         <HomeAndOutdoor />
+         <ConsumerElectronicsAndGadgets />
+         <Requests />
+         <RecommendedItems />
+         <OurExtraServices />
+         <SuppliersByRegion />
+         <SubscribeOnOurNewsletter />
+         <Footer />
+     </div>
     </main>
   );
 }
