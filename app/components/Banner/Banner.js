@@ -6,7 +6,7 @@ import Avater from "@/public/images/avater.png";
 
 const Banner = () => {
     return (
-        <div className="max-w-[1200px] mx-auto border rounded-lg p-3 mt-5">
+        <div className="max-w-[1200px] mx-auto border rounded-lg p-3 mt-5 bg-white">
             <div className='grid grid-cols-12 gap-3'>
                 <div className='col-span-3'>
                     <Link href="" className='w-full inline-block px-3 py-2 rounded-lg bg-[#E3F0FF] hover:bg-[#E3F0FF]'>Automobiles</Link>
