@@ -4,7 +4,7 @@ import Image from 'next/image';
 
 const OurExtraServicesCard = ({ data }) => {
     return (
-        <div className='rounded-lg border-2 bg-white relative overflow-hidden'>
+        <div>
 
             <div className='h-[55px] w-[55px] rounded-full border-2 border-white bg-[#D1E7FF] flex justify-center items-center absolute bottom-14 right-5 z-[100]'>
                 <Image src={data?.icon} alt=''
