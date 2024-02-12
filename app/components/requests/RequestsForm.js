@@ -13,13 +13,17 @@ const RequestsForm = () => {
 
             <div className='grid grid-cols-3 gap-3 pt-2'>
                 <input type="number" placeholder='Quntity' className='col-span-2 h-[40px] px-2 border rounded-lg border-white placeholder:text-black bg-gray-100/50' />
-                <select className='col-span-1 h-[40px] px-2 bg-white border border-white rounded-lg placeholder:text-black bg-gray-100/50'>
-                    <option value="Pcs">Pcs</option>
+
+                <select className='col-span-1 h-[40px] px-2  border border-white rounded-lg   bg-gray-100/50'>
+                    <option value="Pcs" className=" bg-gray-100/50">Pcs</option>
+                    <option value="Pcs" className=" bg-gray-100/50">Pcs</option>
+                    <option value="Pcs" className=" bg-gray-100/50">Pcs</option>
                 </select>
+
             </div>
 
             <div className="pt-2">
-                <button type='button'
+            <button type='button'
                     className='bg-blue-500 px-3 py-2 rounded-lg text-white '
                 >Send inquiry</button>
             </div>
