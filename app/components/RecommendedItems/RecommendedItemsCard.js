@@ -2,7 +2,7 @@ import React from 'react';
 import Image from 'next/image';
 const RecommendedItemsCard = ({product}) => {
     return (
-        <div className='p-5 border-2 rounded-lg bg-white'>
+        <div className='p-5 sm:border-2 sm:rounded-lg bg-white'>
             <div className='flex justify-center'>
                 <Image src={product.image} alt='' />
             </div>

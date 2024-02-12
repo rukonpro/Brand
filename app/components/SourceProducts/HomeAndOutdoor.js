@@ -57,9 +57,9 @@ const HomeAndOutdoor = () => {
         },
     ]
     return (
-        <div className="px-3">
+        <div className="sm:px-3">
             <div className='max-w-[1200px] mx-auto mt-5'>
-                <div className='grid grid-cols-12  border-2 border-gray-200 bg-gray-200 rounded-lg gap-[2px] overflow-hidden'>
+                <div className='grid grid-cols-12  border-2 border-gray-200 bg-gray-200 sm:rounded-lg gap-[2px] overflow-hidden'>
                     <div className="md:col-span-3 col-span-12">
                         <SourceCard image={CoverImage}/>
                     </div>

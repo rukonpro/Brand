@@ -9,19 +9,19 @@ const OfferTiming = () => {
             </div>
 
             <div className='grid grid-cols-4 gap-1 md:mt-5'>
-                <div className='bg-[#606060] p-2 text-white rounded-lg w-full text-center'>
+                <div className='md:bg-[#606060] bg-gray-200 p-2 md:text-white text-gray-500 rounded-lg w-full text-center'>
                 <h1 className='text-sm text-center font-extrabold'>04</h1>
                     <p className='text-xs'>Days</p>
                 </div>
-                <div className='bg-[#606060] p-2 text-white rounded-lg w-full text-center'>
+                <div className='md:bg-[#606060] bg-gray-200 p-2 md:text-white text-gray-500 rounded-lg w-full text-center'>
                     <h1 className='text-sm text-center font-extrabold'>13</h1>
                     <p className='text-xs'>Hour</p>
                 </div>
-                <div className='bg-[#606060] p-2 text-white rounded-lg w-full text-center'>
+                <div className='md:bg-[#606060] bg-gray-200 p-2 md:text-white text-gray-500 rounded-lg w-full text-center'>
                     <h1 className='text-sm text-center font-extrabold'>34</h1>
                     <p className='text-xs'>Min</p>
                 </div>
-                <div className='bg-[#606060] p-2 text-white rounded-lg w-full text-center'>
+                <div className='md:bg-[#606060] bg-gray-200 p-2 md:text-white text-gray-500 rounded-lg w-full text-center'>
                     <h1 className='text-sm text-center font-extrabold'>36</h1>
                     <p className='text-xs'>Sec</p>
                 </div>
