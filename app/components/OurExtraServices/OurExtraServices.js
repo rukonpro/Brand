@@ -39,14 +39,14 @@ const OurExtraServices = () => {
 
 
     return (
-        <div className="px-3">
+        <div>
             <div className='max-w-[1200px] mx-auto pt-5'>
-                <h1 className='text-2xl py-5'>Our extra services</h1>
-                <ul className='grid xl:grid-cols-4 lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-3 grid-cols-2 gap-4'>
+                <h1 className='text-2xl py-5 px-3'>Our extra services</h1>
+                <ul className='grid md:grid-cols-4 sm:grid-cols-2 grid-cols-2 sm:gap-3 gap-1 sm:px-3'>
                     {
                         datas?.map((data,index) => {
                             return (
-                               <li key={index} className="rounded-lg border-2 bg-white relative overflow-hidden">
+                               <li key={index} className="sm:rounded-lg bg-white relative overflow-hidden">
                                    <OurExtraServicesCard  data={data} />
                                </li>
                             )
