@@ -8,7 +8,7 @@ const Banner = () => {
     return (
         <div className="md:px-3">
             <div className="max-w-[1200px] mx-auto border md:rounded-lg md:px-3  md:pt-3 pb-3 md:mt-5 bg-white ">
-                <div className='grid grid-cols-12 md:gap-3'>
+                <div className='grid grid-cols-12 gap-3'>
                     <div className='md:col-span-3 col-span-12 px-3 md:px-0'>
                        <ul className="md:block hidden">
                            <li>
@@ -56,7 +56,7 @@ const Banner = () => {
                     </div>
 
                     <div className='md:col-span-2 col-span-12 grid md:grid-cols-1 sm:grid-cols-3 grid-cols-2 gap-3 px-3 md:px-0'>
-                        <div className=" p-3 bg-[#E3F0FF] rounded-lg sm:col-span-1 col-span-2 md:mt-0 mt-3">
+                        <div className=" p-3 bg-[#E3F0FF] rounded-lg sm:col-span-1 col-span-2 ">
                             <div className='grid grid-cols-3 gap-2 items-center'>
                                 <div className="col-span-1">
                                     <Image className="rounded-full h-[44px] w-[44px] object-contain bg-white p-1" src={Avater} alt=''/>
