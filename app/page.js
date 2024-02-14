@@ -10,20 +10,21 @@ import SuppliersByRegion from "./components/SuppliersByRegion/SuppliersByRegion"
 import Footer from "./components/Footer/Footer";
 import Nav from "@/app/components/navbar/nav";
 
+
 export default function Home() {
   return (
-    <main>
-         <Navbar />
-         <Nav />
-         <Banner />
-         <Offers />
-         <HomeAndOutdoor />
-         <ConsumerElectronicsAndGadgets />
-         <Requests />
-         <RecommendedItems />
-         <OurExtraServices />
-         <SuppliersByRegion />
-         <Footer />
-    </main>
+      <main>
+         <Navbar/>
+          <Nav/>
+          <Banner/>
+          <Offers/>
+          <HomeAndOutdoor/>
+          <ConsumerElectronicsAndGadgets/>
+          <Requests/>
+          <RecommendedItems/>
+          <OurExtraServices/>
+          <SuppliersByRegion/>
+          <Footer/>
+      </main>
   );
 }
