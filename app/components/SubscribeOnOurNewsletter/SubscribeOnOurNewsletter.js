@@ -3,7 +3,7 @@ import Image from 'next/image';
 import EmailIcon from "@/public/images/emailIcon.png";
 const SubscribeOnOurNewsletter = () => {
     return (
-        <div className='bg-gray-200 mt-10 px-3'>
+        <div className='bg-gray-200  px-3'>
             <div className='max-w-[1200px] mx-auto py-10'>
                 <div className='flex justify-center'>
                     <div className=''>

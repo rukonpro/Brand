@@ -7,17 +7,14 @@ import Requests from "./components/requests/Requests";
 import RecommendedItems from "./components/RecommendedItems/RecommendedItems";
 import OurExtraServices from "./components/OurExtraServices/OurExtraServices";
 import SuppliersByRegion from "./components/SuppliersByRegion/SuppliersByRegion";
-import SubscribeOnOurNewsletter from "./components/SubscribeOnOurNewsletter/SubscribeOnOurNewsletter";
 import Footer from "./components/Footer/Footer";
 import Nav from "@/app/components/navbar/nav";
 
 export default function Home() {
   return (
     <main>
-
-          <Navbar />
-        <Nav />
-
+         <Navbar />
+         <Nav />
          <Banner />
          <Offers />
          <HomeAndOutdoor />
@@ -26,9 +23,7 @@ export default function Home() {
          <RecommendedItems />
          <OurExtraServices />
          <SuppliersByRegion />
-         <SubscribeOnOurNewsletter />
          <Footer />
-
     </main>
   );
 }

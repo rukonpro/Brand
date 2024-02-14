@@ -56,7 +56,7 @@ const SuppliersByRegion = () => {
         },
     ]
     return (
-        <div className="pt-5 px-3">
+        <div className="py-5 px-3">
             <div className='max-w-[1200px] mx-auto'>
                 <h1 className='text-2xl py-5'>Suppliers by region</h1>
 

@@ -9,6 +9,7 @@ import twitterIcon from "@/public/images/twitterIcon.png";
 import youtubeIcon from "@/public/images/youtubeIcon.png";
 import googleStoreIcon from "@/public/images/googleStoreIcon.png";
 import appleStoreIcon from "@/public/images/appleStoreIcon.png";
+import SubscribeOnOurNewsletter from "@/app/components/SubscribeOnOurNewsletter/SubscribeOnOurNewsletter";
 
 const Footer = () => {
 
@@ -141,10 +142,10 @@ const Footer = () => {
         ]
     }
     return (
-        <div>
-            <div className='py-10 bg-white'>
-
-                <div className='grid grid-cols-12 gap-5 max-w-[1200px] mx-auto px-3'>
+        <footer>
+            <div className='bg-white'>
+                <SubscribeOnOurNewsletter/>
+                <div className='grid grid-cols-12 gap-5 max-w-[1200px] mx-auto px-3 py-10'>
                     <div className='md:col-span-3 col-span-12'>
                         <Image src={FooterData?.logo} alt='' />
                         <p className='pt-5'>{FooterData?.description}</p>
@@ -203,7 +204,7 @@ const Footer = () => {
 
                 </div>
             </div>
-        </div>
+        </footer>
     );
 };
 
