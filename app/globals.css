@@ -42,14 +42,3 @@ body {
   display: none;
 }
 
-@media (min-width: 768px) {
-
-
-  .wrapper::-webkit-scrollbar {
-    display: block;
-  }
-  .wrapper {
-    -ms-overflow-style: auto;  /* IE and Edge */
-    scrollbar-width: auto;  /* Firefox */
-  }
-}

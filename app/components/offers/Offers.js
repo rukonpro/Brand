@@ -47,7 +47,7 @@ const Offers = () => {
                     <div className="md:col-span-3 col-span-12  bg-white overflow-hidden  ">
                         <OfferTiming/>
                     </div>
-                    <ul className=' md:col-span-9 col-span-12 flex gap-0.5  w-full overflow-x-auto  wrapper touch-pan-x'>
+                    <ul className=' md:col-span-9 col-span-12 flex gap-0.5  w-full overflow-x-auto  wrapper touch-pan-x '>
                         {
                             products?.map((product,index)=>{
                                 return (
