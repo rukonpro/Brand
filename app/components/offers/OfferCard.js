@@ -3,7 +3,7 @@ import Product1 from "@/public/images/image35.png";
 import Image from 'next/image';
 const OfferCard = () => {
     return (
-        <div>
+        <div className="w-32">
             <div className='flex justify-center p-2'>
                 <Image src={Product1} alt='' />
             </div>

@@ -34,6 +34,11 @@ const Offers = () => {
             discount:50,
             image:""
         },
+        {
+            title:"Smart watches",
+            discount:50,
+            image:""
+        },
     ]
     return (
         <div className="sm:px-3">
@@ -42,11 +47,11 @@ const Offers = () => {
                     <div className="md:col-span-3 col-span-12  bg-white overflow-hidden  ">
                         <OfferTiming/>
                     </div>
-                    <ul className='grid  md:grid-cols-6 sm:grid-cols-3 grid-cols-2 md:col-span-9 col-span-12 gap-[2px]  '>
+                    <ul className=' md:col-span-9 col-span-12 flex gap-0.5  w-full overflow-x-auto  wrapper touch-pan-x'>
                         {
                             products?.map((product,index)=>{
                                 return (
-                                    <li key={index} className='p-2  bg-white'>
+                                    <li key={index} className='p-2  bg-white cursor-pointer  '>
                                         <OfferCard/>
                                     </li>
                                 )
