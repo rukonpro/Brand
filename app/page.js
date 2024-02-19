@@ -10,7 +10,6 @@ import SuppliersByRegion from "./components/SuppliersByRegion/SuppliersByRegion"
 import Footer from "./components/Footer/Footer";
 import Nav from "@/app/components/navbar/nav";
 
-
 export default function Home() {
   return (
       <main>
