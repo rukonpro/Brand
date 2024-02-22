@@ -138,7 +138,6 @@ const Footer = () => {
 
                 ]
             },
-
         ]
     }
     return (
