@@ -9,7 +9,6 @@ const Details = () => {
         <div>
             <Navbar/>
             <Nav/>
-
             <div className="max-w-[1200px] mx-auto">
                 <div className="border-2 p-3 grid grid-cols-12">
                     <div className="col-span-4">
@@ -96,11 +95,10 @@ const Details = () => {
                                     </div>
                                 </div>
                             </div>
-
                         </div>
                     </div>
                     <div className="col-span-3">
-                        sfdf
+                        
                     </div>
                 </div>
             </div>
