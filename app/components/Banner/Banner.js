@@ -2,7 +2,7 @@ import Link from 'next/link';
 import React from 'react';
 import Image from 'next/image';
 import BannerImage from "@/public/images/Banner-board.png";
-import Avater from "@/public/images/avater.png";
+import Avater from "@/public/images/avatar.png";
 
 const Banner = () => {
     return (
