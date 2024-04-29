@@ -8,6 +8,8 @@ import  Flag from "@//public/images/AE@2x.png"
 import Image from "next/image";
 const Details = () => {
 
+
+
     /*//https://www.figma.com/file/OO4BPb5dJMEaRxPvBPx2uC/Figma-ecommerce-UI-Kit-(web-%26-mobile)-(Community)?node-id=238%3A4835&mode=dev
 */
 
