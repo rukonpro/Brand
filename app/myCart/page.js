@@ -6,7 +6,6 @@ import CheckoutCard from "@/app/components/CheckoutCard/CheckoutCard";
 import MyCartItems from "@/app/components/MyCartItems/MyCartItems";
 const MyCart = () => {
 
-
     return (
         <div>
             <Navbar/>
