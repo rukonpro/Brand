@@ -1,6 +1,7 @@
 import React from 'react';
 import OfferCard from './OfferCard';
 import OfferTiming from './OfferTiming';
+import Link from "next/link";
 
 const Offers = () => {
     const products=[
@@ -52,7 +53,9 @@ const Offers = () => {
                             products?.map((product,index)=>{
                                 return (
                                     <li key={index} className='p-2  bg-white cursor-pointer  '>
-                                        <OfferCard/>
+                                        <Link href={`/details/${product.title}`}>
+                                            <OfferCard/>
+                                        </Link>
                                     </li>
                                 )
                             })

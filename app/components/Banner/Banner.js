@@ -75,20 +75,25 @@ const Banner = () => {
                                 <h1 className="col-span-2">Hi, user {"let’s get stated"}</h1>
                             </div>
 
-                            <button className="rounded-lg bg-blue-500 text-white py-1 px-2 mt-2 inline-block w-full">
-                                Join now
-                            </button>
-                            <button className="rounded-lg bg-white py-1 px-2 mt-2 inline-block w-full">
-                                Login
-                            </button>
+                            <Link href="/register">
+                                <button
+                                    className="rounded-lg bg-blue-500 text-white py-1 px-2 mt-2 inline-block w-full">
+                                    Join now
+                                </button>
+                            </Link>
+                            <Link href="/login">
+                                <button className="rounded-lg bg-white py-1 px-2 mt-2 inline-block w-full">
+                                    Login
+                                </button>
+                            </Link>
                         </div>
 
                         <div className=" p-3 rounded-lg bg-[#F38332] text-white w-full h-full">
-                            <h1>Get US $10 off <br/> <span className="text-sm">with a new <br/> supplier</span></h1>
+                        <h1 className="text-lg">Get US $10 off with a new supplier</h1>
                         </div>
 
                         <div className="p-3 rounded-lg bg-[#55BDC3] text-white w-full h-full">
-                            <h1>Get US $10 off <br/> <span className="text-sm">with a new <br/> supplier</span></h1>
+                            <h1 className="text-lg">Send quotes with supplier preferences</h1>
                         </div>
                     </div>
 

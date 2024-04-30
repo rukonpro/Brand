@@ -52,16 +52,23 @@ const Navbar = () => {
                         </Link>
                     </div>
                     <div>
-                        <Link href="/">
-                            <div className="flex justify-center">
-                                <Image src={Cart} alt=''/>
+
+
+                        <Link href="/myCart">
+                            <div className="flex justify-center relative">
+
+                                <Image src={Cart} alt='card icon'/>
+                                <span className="relative flex h-7 w-7">
+  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-75"></span>
+  <span className="relative inline-flex rounded-full h-7 w-7 bg-sky-500 text-xs flex justify-center items-center text-white font-bold">10</span>
+</span>
                             </div>
                             <p className="text-sm text-center sm:block hidden">My Cart</p>
                         </Link>
                     </div>
                     <div>
                         <Link href="/">
-                            <div className="flex justify-center">
+                        <div className="flex justify-center">
                                 <Image src={Avater} alt=''/>
                             </div>
                             <p className="text-sm text-center sm:block hidden">Profile</p>

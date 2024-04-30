@@ -1,7 +1,61 @@
 import React from 'react';
 import RecommendedItemsCard from './RecommendedItemsCard';
 import Product55 from "@/public/images/product55.png";
+import Link from "next/link";
 
+
+export const products=[
+    {
+        image:Product55,
+        title:"Jeans shorts for men blue color",
+        price:10.30
+    },
+    {
+        image:Product55,
+        title:"Jeans shorts for men blue color",
+        price:10.30
+    },
+    {
+        image:Product55,
+        title:"Jeans shorts for men blue color",
+        price:10.30
+    },
+    {
+        image:Product55,
+        title:"Jeans shorts for men blue color",
+        price:10.30
+    },
+    {
+        image:Product55,
+        title:"Jeans shorts for men blue color",
+        price:10.30
+    },
+    {
+        image:Product55,
+        title:"Jeans shorts for men blue color",
+        price:10.30
+    },
+    {
+        image:Product55,
+        title:"Jeans shorts for men blue color",
+        price:10.30
+    },
+    {
+        image:Product55,
+        title:"Jeans shorts for men blue color",
+        price:10.30
+    },
+    {
+        image:Product55,
+        title:"Jeans shorts for men blue color",
+        price:10.30
+    },
+    {
+        image:Product55,
+        title:"Jeans shorts for men blue color",
+        price:10.30
+    },
+]
 const RecommendedItems = () => {
     const products=[
         {
@@ -64,7 +118,9 @@ const RecommendedItems = () => {
                         products.map((product,index)=>{
                             return(
                                <li key={index}>
-                                   <RecommendedItemsCard  product={product} />
+                                   <Link href={`/details/${product.title}`}>
+                                       <RecommendedItemsCard  product={product} />
+                                   </Link>
                                </li>
                             )
                         })

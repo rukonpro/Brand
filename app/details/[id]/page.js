@@ -3,9 +3,14 @@ import Navbar from "@/app/components/navbar/navbar";
 import Nav from "@/app/components/navbar/nav";
 import Product1 from "@/public/images/image34.png";
 import TickSign from "@/public/images/tickSign.png";
-import Avatar from "@//public/images/avatar.png";
-import  Flag from "@//public/images/AE@2x.png"
+import loveIconOutline from "@//public/images/loveIconOutline.png";
 import Image from "next/image";
+import Footer from "@/app/components/Footer/Footer";
+import blueCartIcon from "@/public/images/blue-cart.png";
+import SupplierCard from "@/app/components/SupplierCard/SupplierCard";
+import RelatedProducts from "@/app/components/RelatedProducts/RelatedProducts";
+import backButtonIcon from "@/public/images/left-back-icon.png";
+import BackButton from "@/app/components/BackButtons/BackButton";
 const Details = () => {
 
 
@@ -18,12 +23,18 @@ const Details = () => {
             <Navbar/>
             <Nav/>
 
-            <div className="max-w-[1200px] mx-auto">
+            <div className="max-w-[1200px] mx-auto px-3  pb-5">
 
-                <h1 className="text-2xl py-2 font-bold text-gray-600">Details</h1>
-                <div className="border-2 p-3 py-10 grid grid-cols-12 gap-4 bg-white">
-                    <div className="col-span-4">
-                        <div className="w-[380px] p-3 bg-white border-2 rounded">
+                <div className="flex justify-between items-center">
+                    <h1 className="text-2xl  font-bold text-gray-600 py-5">Details</h1>
+
+                    <div>
+                        <BackButton title="Back"/>
+                    </div>
+                </div>
+                <div className="grid grid-cols-12 gap-4 border-2 p-3 py-10  bg-white rounded-lg">
+                    <div className="col-span-12 md:col-span-4">
+                        <div className="p-3 bg-white border-2 rounded flex justify-center">
                             <Image src={Product1} alt=""/>
                         </div>
                         <ol className="pt-3 flex gap-2 justify-center">
@@ -51,13 +62,14 @@ const Details = () => {
                         </ol>
                     </div>
 
-                    <div className="col-span-5">
+                    <div className="col-span-12 md:col-span-8 lg:col-span-5">
                         <div className="flex  gap-1">
                             <Image src={TickSign} alt=""/>
                             <p className="text-sm">InStock</p>
                         </div>
                         <div className="pt-5">
-                            <h1 className="text-2xl font-bold">Mens Long Sleeve T-shirt Cotton Base Layer Slim Muscle</h1>
+                            <h1 className="text-2xl font-bold">Mens Long Sleeve T-shirt Cotton Base Layer Slim
+                                Muscle</h1>
 
                             <div className="grid grid-cols-3 gap-1 bg-orange-100/50 p-3 mt-3">
                                 <div>
@@ -97,7 +109,7 @@ const Details = () => {
                                 <div className="b-1">
                                     <div className="grid grid-cols-12 pt-1">
                                         <p className="col-span-4">Customization:</p>
-                                        <p className="col-span-8">Customized logo and  design custom packages</p>
+                                        <p className="col-span-8">Customized logo and design custom packages</p>
                                     </div>
                                     <div className="grid grid-cols-12 pt-1">
                                         <p className="col-span-4">Protection:</p>
@@ -112,49 +124,35 @@ const Details = () => {
 
                         </div>
                     </div>
-                    <div className="col-span-3 ">
-                        <div className="border-2 rounded  p-2">
-                            <div className="flex gap-4 py-5">
-                                <Image src={Avatar} alt="Avatar" className="h-10 w-10 rounded-full"/>
-                                <div>
-                                    <h1>Supplier</h1>
-                                    <p>Guanjoi Trading LLC.</p>
-                                </div>
-                            </div>
+                    <div className="col-span-12  lg:col-span-3 grid sm:grid-cols-2 lg:grid-cols-none gap-4 lg:gap-0">
 
-                            <ol className="  border-t-2 py-2">
-                                <li className="flex gap-4 items-center py-2">
-                                    <Image src={Flag} alt="Avatar" className="h-5 w-5"/> <p>Germany, Berlin</p>
-                                </li>
-                                <li className="flex gap-4 items-center py-2">
-                                    <Image src={Flag} alt="Avatar" className="h-5 w-5"/> <p>Verified Seller</p>
-                                </li>
-                                <li className="flex gap-4 items-center py-2">
-                                    <Image src={Flag} alt="Avatar" className="h-5 w-5"/> <p>Worldwide shipping</p>
-                                </li>
-                            </ol>
-
-                            <div>
-                                <button
-                                    className="w-full bg-blue-500 rounded-2xl py-2 text-white font-bold hover:bg-blue-600 ">Send
-                                    inquiry
-                                </button>
-                                <button
-                                    className="w-full bg-gray-100 rounded-2xl py-2 text-blue-500 font-bold hover:bg-gray-200 mt-2 ">{`Seller's Profile`}</button>
-                            </div>
-                        </div>
-
+                        {/************************Supplier Card ***********************/}
+                        <SupplierCard/>
 
                         <div className="pt-8">
+
+                            {/************************Save for later button ***********************/}
                             <button
                                 className="w-full  py-2 text-blue-500   mt-2 flex justify-center items-center gap-4 ">
-                                <Image src={Flag} alt="Avatar" className="h-4 w-4"/>
+                                <Image src={loveIconOutline} alt="loveIconOutline" className="h-4 w-4"/>
                                 <span>Save for later</span>
+                            </button>
+
+                            {/************************Add to cart button ***********************/}
+                            <button type="button"
+                                    className="flex items-center gap-4 py-1 px-5 border-2 rounded-lg text-blue-600 mt-4 w-full justify-center hover:border-blue-500">
+                                <Image src={blueCartIcon} alt="blue Cart Icon"/>
+                                Add to cart
                             </button>
                         </div>
                     </div>
                 </div>
+
+                {/************************Related products ***********************/}
+                <RelatedProducts/>
             </div>
+
+            <Footer/>
         </div>
     );
 };
