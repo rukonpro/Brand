@@ -1,8 +1,6 @@
 import React from 'react';
 import {products} from "@/app/components/RecommendedItems/RecommendedItems";
 import MyCartItemCard from "@/app/components/MyCartItemCard/MyCartItemCard";
-import Image from "next/image";
-import backButtonIcon from "@/public/images/left-back-icon.png";
 import BackButton from "@/app/components/BackButtons/BackButton";
 
 const MyCartItems = () => {

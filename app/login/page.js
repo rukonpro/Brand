@@ -4,7 +4,6 @@ import  FacebookIcon from "@/public/images/facebook-icon.png";
 import Image from "next/image";
 import Link from "next/link";
 import Navbar from "@/app/components/navbar/navbar";
-import bgImage from "@/public/images/image111.png"
 import Footer from "@/app/components/Footer/Footer";
 
 const Login = () => {

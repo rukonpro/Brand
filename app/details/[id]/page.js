@@ -9,7 +9,6 @@ import Footer from "@/app/components/Footer/Footer";
 import blueCartIcon from "@/public/images/blue-cart.png";
 import SupplierCard from "@/app/components/SupplierCard/SupplierCard";
 import RelatedProducts from "@/app/components/RelatedProducts/RelatedProducts";
-import backButtonIcon from "@/public/images/left-back-icon.png";
 import BackButton from "@/app/components/BackButtons/BackButton";
 const Details = () => {
 
