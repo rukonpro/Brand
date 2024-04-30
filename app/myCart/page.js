@@ -10,7 +10,6 @@ const MyCart = () => {
     return (
         <div>
             <Navbar/>
-
             <div className='max-w-[1200px] mx-auto px-3 md:0 py-5'>
                 <div>
                     <h1 className="text-xl font-bold pb-5">My Cart (5)</h1>
