@@ -22,16 +22,16 @@ const Details = () => {
             <Navbar/>
             <Nav/>
 
-            <div className="max-w-[1200px] mx-auto px-3  pb-5">
+            <div className="max-w-[1200px] mx-auto md:px-3  pb-5">
 
-                <div className="flex justify-between items-center">
+                <div className="flex justify-between items-center px-3 md:px-0">
                     <h1 className="text-2xl  font-bold text-gray-600 py-5">Details</h1>
 
                     <div>
                         <BackButton title="Back"/>
                     </div>
                 </div>
-                <div className="grid grid-cols-12 gap-4 border-2 p-3 py-10  bg-white rounded-lg">
+                <div className="grid grid-cols-12 gap-4 border-2 p-3 py-10  md:bg-white md:rounded-lg">
                     <div className="col-span-12 md:col-span-4">
                         <div className="p-3 bg-white border-2 rounded flex justify-center">
                             <Image src={Product1} alt=""/>

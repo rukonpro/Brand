@@ -5,10 +5,10 @@ import RelatedProductCard from "@/app/components/RelatedProductCard/RelatedProdu
 
 const RelatedProducts = () => {
     return (
-        <div className="bg-white p-3 mt-10 rounded-lg border-2">
-            <h1 className="text-xl font-bold text-gray-600 pb-5">Related products</h1>
+        <div className="md:bg-white md:p-3 mt-10 md:rounded-lg border-2">
+            <h1 className="text-xl font-bold text-gray-600 py-5 px-3 md:px-0">Related products</h1>
             <div>
-                <ol className="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                <ol className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 gap-0.5 md:gap-4">
                     {
                         products.slice(0, 4).map((product, index) => {
                             return (

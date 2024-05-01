@@ -9,9 +9,9 @@ const MyCart = () => {
     return (
         <div>
             <Navbar/>
-            <div className='max-w-[1200px] mx-auto px-3 md:0 py-5'>
+            <div className='max-w-[1200px] mx-auto md:px-3 md:0 py-5'>
                 <div>
-                    <h1 className="text-xl font-bold pb-5">My Cart (5)</h1>
+                    <h1 className="text-xl font-bold px-3 md:px-0 pb-5">My Cart (5)</h1>
                 </div>
 
                 <div className="grid grid-cols-12 gap-4">
@@ -26,7 +26,7 @@ const MyCart = () => {
                 </div>
 
                 {/******************************Saved ForLater Items*******************************/}
-                <div className="bg-white p-5 mt-10 rounded-lg border-2">
+                <div className="md:bg-white md:p-5 mt-10 md:rounded-lg border-2">
                   <SavedForLaterItems/>
                 </div>
             </div>

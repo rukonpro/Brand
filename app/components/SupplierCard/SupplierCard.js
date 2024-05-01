@@ -7,7 +7,7 @@ import worldIcon from "@/public/images/worldIcon.png";
 
 const SupplierCard = () => {
     return (
-        <div className="border-2 rounded  p-2">
+        <div className="border-2 rounded  p-2 bg-white">
             <div className="flex gap-4 py-5">
                 <Image src={Avatar} alt="Avatar" className="h-10 w-10 rounded-full"/>
                 <div>

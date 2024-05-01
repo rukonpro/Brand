@@ -4,7 +4,7 @@ import blueCartIcon from "@/public/images/blue-cart.png";
 
 const RelatedProductCard = ({product}) => {
     return (
-        <div className="border-2 border-blue-200 rounded-lg p-5">
+        <div className="bg-white md:border-2 border-blue-200 md:rounded-lg p-3 ">
             <div>
                 <Image src={product.image} alt={product.title}
                        className="w-full h-52 object-contain overflow-hidden"
@@ -17,7 +17,7 @@ const RelatedProductCard = ({product}) => {
 
 
             <button type="button"
-                    className="flex items-center gap-4 py-1 px-5 border-2 rounded-lg text-blue-600 mt-4 w-full justify-center hover:border-blue-500">
+                    className="flex items-center gap-1 md:gap-x-4  py-1 px-5 border-2 rounded-lg text-blue-600 mt-4 w-full justify-center hover:border-blue-500 ">
                 <Image src={blueCartIcon} alt="blue Cart Icon"/>
                 Add to cart
             </button>
