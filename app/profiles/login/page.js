@@ -10,8 +10,8 @@ const Login = () => {
         <div>
             <div className="loginBg flex-1 md:rounded-lg">
                 <div className='max-w-[1200px] mx-auto py-5 lg:py-36 px-3'>
-                    <div className="grid md:grid-cols-2 gap-4">
-                        <div>
+                    <div className="grid grid-cols-12 gap-4">
+                        <div className="md:col-span-5 col-span-12">
                             <h1 className="text-2xl font-bold text-white py-5">Welcome to Brand!</h1>
 
                             <p className="text-lg text-white/70">Registering with Brand allows you to enjoy a seamless
@@ -19,7 +19,7 @@ const Login = () => {
                                 quick and easy!.</p>
                         </div>
 
-                        <div className="bg-gray-200/50 h-full px-5 md:px-10 lg:px-16 py-5">
+                        <div className="md:col-span-7 col-span-12 bg-gray-200/50 h-full px-5 md:px-10 lg:px-16 py-5">
                             <h1 className="text-xl font-bold pb-5">Sign In</h1>
 
                             <input type="email" placeholder="your email address"
@@ -48,7 +48,7 @@ const Login = () => {
                                 </div>
                             </div>
 
-                            <div className="grid grid-cols-2 gap-4 pt-8">
+                            <div className="grid grid-cols-2 md:grid-cols-1 lg:grid-cols-2 gap-4 pt-8">
                                 <button type="button"
                                         className="px-3 py-2 rounded-lg w-full my-1 bg-white text-gray-600 border-2 flex justify-center items-center gap-4"
                                 >

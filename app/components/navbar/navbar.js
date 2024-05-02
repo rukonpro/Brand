@@ -13,7 +13,7 @@ const Navbar = () => {
 
 
     return (
-        <nav className='bg-white px-3 py-3 w-full'>
+        <nav className='bg-white px-3 py-3 w-full '>
             <div className="grid grid-cols-12 max-w-[1200px] mx-auto py-8 items-center gap-4">
                 <div className="h-[46px] w-[150px] md:col-span-2 col-span-6 ">
                   <div className="grid grid-cols-4 items-center">
