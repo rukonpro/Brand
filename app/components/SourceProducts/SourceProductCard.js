@@ -1,6 +1,5 @@
 import React from 'react';
 import Image from 'next/image';
-import Product1 from "@/public/images/image35.png"
 const SourceProductCard = ({product}) => {
     return (
         <div className='grid grid-cols-6 p-2'>

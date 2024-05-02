@@ -75,13 +75,13 @@ const Banner = () => {
                                 <h1 className="col-span-2">Hi, user {"let’s get stated"}</h1>
                             </div>
 
-                            <Link href="/register">
+                            <Link href="/profiles/register">
                                 <button
                                     className="rounded-lg bg-blue-500 text-white py-1 px-2 mt-2 inline-block w-full">
                                     Join now
                                 </button>
                             </Link>
-                            <Link href="/login">
+                            <Link href="/profiles/login">
                                 <button className="rounded-lg bg-white py-1 px-2 mt-2 inline-block w-full">
                                     Login
                                 </button>

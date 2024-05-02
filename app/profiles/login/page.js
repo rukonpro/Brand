@@ -3,15 +3,12 @@ import  GoogleIcon from "@/public/images/google-icon.png";
 import  FacebookIcon from "@/public/images/facebook-icon.png";
 import Image from "next/image";
 import Link from "next/link";
-import Navbar from "@/app/components/navbar/navbar";
-import bgImage from "@/public/images/image111.png"
 import Footer from "@/app/components/Footer/Footer";
 
-const Register = () => {
+const Login = () => {
     return (
-        <div className="h-screen">
-            <Navbar/>
-            <div className="registerbg  ">
+        <div>
+            <div className="loginBg flex-1 md:rounded-lg">
                 <div className='max-w-[1200px] mx-auto py-5 lg:py-36 px-3'>
                     <div className="grid md:grid-cols-2 gap-4">
                         <div>
@@ -23,7 +20,7 @@ const Register = () => {
                         </div>
 
                         <div className="bg-gray-200/50 h-full px-5 md:px-10 lg:px-16 py-5">
-                            <h1 className="text-xl font-bold pb-5">Sign Up</h1>
+                            <h1 className="text-xl font-bold pb-5">Sign In</h1>
 
                             <input type="email" placeholder="your email address"
                                    className="px-3 py-2 rounded-lg w-full my-1 bg-white/50 border-2"
@@ -33,13 +30,10 @@ const Register = () => {
                                    className="px-3 py-2 rounded-lg w-full my-1 bg-white/50 border-2"
                             />
                             <br/>
-                            <input type="password" placeholder="Re-password"
-                                   className="px-3 py-2 rounded-lg w-full my-1 bg-white/50 border-2"
-                            />
-                            <br/>
+
                             <button type="submit"
                                     className="px-3 py-2 rounded-lg w-full my-1 bg-blue-500 text-white  mt-4"
-                            >Sign Up
+                            >Sign In
                             </button>
 
                             <div className="pt-8">
@@ -73,8 +67,8 @@ const Register = () => {
 
 
                             <div className="pt-8 text-center">
-                                <p className="text-gray-600">Already have an account? <Link href="/login"
-                                                                                            className="text-blue-500">Login</Link>
+                                <p className="text-gray-600">Not have an account? <Link href="/profiles/register"
+                                                                                            className="text-blue-500">Sing Up</Link>
                                 </p>
                             </div>
 
@@ -82,9 +76,8 @@ const Register = () => {
                     </div>
                 </div>
             </div>
-            <Footer/>
         </div>
     );
 };
 
-export default Register;
+export default Login;

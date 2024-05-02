@@ -8,7 +8,7 @@ import payCord from "@/public/images/Pay-card.png";
 const CheckoutCard = () => {
     return (
         <div>
-            <div className=" bg-white p-3 border-2 rounded-lg">
+            <div className=" bg-white p-3 rounded-lg">
                 <h1 className="font-bold">Have a coupon?</h1>
                 <div className="grid grid-cols-5 pt-1">
                     <input
@@ -25,7 +25,7 @@ const CheckoutCard = () => {
                 </div>
             </div>
 
-            <div className="bg-white p-3 rounded-lg mt-4 border-2">
+            <div className="bg-white p-3 rounded-lg mt-4">
                 <div className="flex justify-between pb-2  text-gray-600">
                     <p> Subtotal:</p>
                     <p>$1403.97</p>
