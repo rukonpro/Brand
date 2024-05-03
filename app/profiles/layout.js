@@ -23,11 +23,14 @@ const MainLayout = ({children}) => {
 
 
                 <div className=" flex-1 inset-0  p-0  relative ">
-                    <div className="z-10 sticky top-0 md:p-3 w-full  md:rounded-lg  md:overflow-hidden">
-                          <Navbar/>
+                    <div className=" md:p-3 sticky top-0 z-[10] ">
+                        <div className="   w-full  md:rounded-lg md:overflow-hidden shadow-xl shadow-slate-300/50">
+                            <Navbar/>
+                        </div>
                     </div>
+
                     <div
-                    className="pt-5 md:p-3"
+                        className="pt-5 md:p-3"
                     >{children}</div>
                     <div className="pt-8"/>
                     <div className="md:pr-3">
