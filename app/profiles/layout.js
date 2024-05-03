@@ -30,7 +30,9 @@ const MainLayout = ({children}) => {
                     className="pt-5 md:p-3"
                     >{children}</div>
                     <div className="pt-8"/>
-                    <Footer/>
+                    <div className="md:pr-3">
+                        <Footer/>
+                    </div>
                 </div>
             </div>
         </div>
