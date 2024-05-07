@@ -33,7 +33,7 @@ const Navbar = () => {
                     <Search/>
                 </div>
 
-                <div className="grid grid-cols-4 md:grid-cols-3  lg:grid-cols-4 items-center md:col-span-4 col-span-6">
+                <div className="grid grid-cols-4  items-center md:col-span-4 col-span-6">
 
                     <div>
                         <Link href="/profiles/messenger">
@@ -45,7 +45,7 @@ const Navbar = () => {
                             <p className="text-sm text-center sm:block hidden">Massage</p>
                         </Link>
                     </div>
-                    <div className="md:hidden lg:block block">
+                    <div>
                         <Link href="/profiles/myOrders">
                             <div className="flex justify-center">
                                 <Image src={Love} alt=''/>

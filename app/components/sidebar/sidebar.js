@@ -1,16 +1,19 @@
-
+"use client"
 import Link from 'next/link';
 import {profileMenu} from "@/app/components/navbar/profileDrawer";
 import Image from "next/image";
-import CloseIcon from "@/public/images/close-svgrepo-com.svg";
 import profilePhoto from "@/public/images/profile-photo-1.webp";
 import CoverPhoto from "@/public/images/cloth-image-1.jpg";
 import React from "react";
+import SingInIcon from "@/public/images/sign-in-alt-svgrepo-com.svg";
+import SingOut from "@/public/images/sign-out-svgrepo-com.svg";
 
 const Sidebar = () => {
+
+    const isLogin=false;
     return (
         <div
-            className={`h-full inset-y-0 left-0  bg-white text-gray-600 transition-transform duration-300 ease-in-out transform rounded-lg overflow-hidden`}
+            className={`h-full bg-white text-gray-600 transition-transform duration-300 ease-in-out transform rounded-lg overflow-hidden`}
         >
             <div className="relative w-full">
                 <div className=" mb-6  py-2 px-3 h-36 absolute w-full bg-blue-800/50"
@@ -56,7 +59,28 @@ const Sidebar = () => {
                     })
                 }
 
+                {!isLogin?<li>
+                        <Link href="/login" >
+                            <button type="button"
+                                    className="flex items-center gap-2"
+                            >
+                                <div className="flex items-center gap-4">
+                                    <Image src={SingInIcon} alt='avater' height={20} width={20}/> Sign In
+                                </div>
+                            </button>
+                        </Link>
+                    </li>:
+                    <li>
+                        <button type="button"
+                                className="flex items-center gap-2"
+                        >
+                            <div className="flex items-center gap-4">
+                                <Image src={SingOut} alt='avater' className="h-5 w-5"/>
+                                Sign Out
+                            </div>
 
+                        </button>
+                    </li>}
             </ul>
         </div>
     );

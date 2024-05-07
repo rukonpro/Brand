@@ -11,8 +11,10 @@ import SourcesProducts from "@/app/components/SourceProducts/SourcesProducts";
 import fakeData from "@/app/FakeData/FakeData";
 export default function Home({params}) {
   return (
-      <main>
-         <Navbar/>
+      <main className="relative">
+         <div className="sticky top-0 z-[20]">
+             <Navbar/>
+         </div>
           <Nav/>
           <Banner/>
           <Offers/>

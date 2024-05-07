@@ -11,7 +11,7 @@ const SavedForLaterCard = ({product}) => {
                 />
             </div>
             <h1 className="text-xl font-bold text-black pt-2">${product.price}</h1>
-            <h2 className="text-gray-600 text-sm md:text-lg pt-2">GoPro HERO6 4K Action Camera -
+            <h2 className="text-gray-600 text-sm pt-2">GoPro HERO6 4K Action Camera -
                 Black</h2>
 
             <button type="button" className="flex items-center gap-1 md:gap-4 py-1 px-3 border-2 rounded-lg text-blue-600 mt-4">

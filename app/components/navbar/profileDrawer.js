@@ -102,25 +102,25 @@ const ProfileDrawer = () => {
                                 }
 
                                 {!isLogin?<li>
-                                    <Link href="/profiles/login" onClick={handleClose}>
+                                        <Link href="/login" onClick={handleClose}>
+                                            <button type="button"
+                                                    className="w-full bg-gray-100 hover:bg-gray-200 duration-300 text-gray-500 font-bold px-3 py-3 text-left border-b-2 flex justify-between gap-4"
+                                            >
+                                                <div className="flex items-center gap-4">
+                                                    <Image src={SingInIcon} alt='avater' className="h-5 w-5"/> Sign In
+                                                </div>
+                                                <Image src={RightIcon} alt='avater' className="h-5 w-5"/>
+                                            </button>
+                                        </Link>
+                                    </li>:
+                                    <li>
                                         <button type="button"
                                                 className="w-full bg-gray-100 hover:bg-gray-200 duration-300 text-gray-500 font-bold px-3 py-3 text-left border-b-2 flex justify-between gap-4"
                                         >
                                             <div className="flex items-center gap-4">
-                                                <Image src={SingInIcon} alt='avater' className="h-5 w-5"/> Sign In
+                                                <Image src={SingOut} alt='avater' className="h-5 w-5"/>
+                                                Sign Out
                                             </div>
-                                            <Image src={RightIcon} alt='avater' className="h-5 w-5"/>
-                                        </button>
-                                    </Link>
-                                </li>:
-                                    <li>
-                                    <button type="button"
-                                    className="w-full bg-gray-100 hover:bg-gray-200 duration-300 text-gray-500 font-bold px-3 py-3 text-left border-b-2 flex justify-between gap-4"
-                                    >
-                                    <div className="flex items-center gap-4">
-                                    <Image src={SingOut} alt='avater' className="h-5 w-5"/>
-                            Sign Out
-                        </div>
                     <Image src={RightIcon} alt='avater' className="h-5 w-5"/>
                 </button>
             </li>}

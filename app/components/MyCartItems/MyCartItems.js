@@ -5,7 +5,7 @@ import BackButton from "@/app/components/BackButtons/BackButton";
 
 const MyCartItems = () => {
     return (
-        <div className="col-span-12 md:col-span-8 lg:col-span-9 overflow-hidden sm:rounded-lg md:rounded-r-lg md:bg-white ">
+        <div className="col-span-12 md:col-span-12 lg:col-span-8 overflow-hidden sm:rounded-lg md:rounded-r-lg md:bg-white ">
             <ol className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-1 gap-0.5">
                 {
                     products.slice(0, 4).map((product, index) => {
