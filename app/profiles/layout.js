@@ -1,24 +1,9 @@
-"use client"
-import React, {useEffect, useState} from 'react';
-import Navbar from "@/app/components/navbar/navbar";
-import Footer from "@/app/components/Footer/Footer";
+import React from 'react';
 import Sidebar from "@/app/components/sidebar/sidebar";
 
 const MainLayout = ({children}) => {
-
-    const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-
-    const toggleSidebar = () => {
-        setIsSidebarOpen(!isSidebarOpen);
-    };
-
     return (
         <div>
-            <div className="  sticky top-0 z-[10] ">
-                <div className="  w-full  md:rounded-lg md:overflow-hidden shadow-xl shadow-slate-300/50">
-                    <Navbar/>
-                </div>
-            </div>
             <div className="max-w-[1200px] mx-auto">
 
                 <div className=" grid grid-cols-12 relative">
@@ -37,7 +22,6 @@ const MainLayout = ({children}) => {
                     </div>
                 </div>
             </div>
-            <Footer/>
         </div>
     );
 };

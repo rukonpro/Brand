@@ -1,5 +1,5 @@
 "use client"
-import React, {Fragment, useState} from 'react';
+import React, {Fragment, useEffect, useState} from 'react';
 import Drawer from "@/app/components/Drawer/Drawer";
 import Image from "next/image";
 import Avater from "@/public/images/avatar.png";
@@ -12,12 +12,15 @@ import LoveIcon from "@/public/images/love.png";
 import SettingsIcon from "@/public/images/settings-svgrepo-com.svg";
 import SingInIcon from "@/public/images/sign-in-alt-svgrepo-com.svg";
 import SingOut from "@/public/images/sign-out-svgrepo-com.svg";
+import {useRouter} from "next/navigation";
 import Link from "next/link";
-
-
+import axios from "axios";
 
 const ProfileDrawer = () => {
     const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+    const [user,setUser]=useState({});
+    const router = useRouter()
+
 
     const handleToggleDrawer = () => {
         setIsDrawerOpen(!isDrawerOpen);
@@ -26,7 +29,31 @@ const ProfileDrawer = () => {
         setIsDrawerOpen(false);
     };
 
-    const isLogin=false;
+
+    const handleLogout= async ()=>{
+        try {
+            await axios.get('/api/users/signout');
+            alert("Logout successfully");
+            handleClose()
+            router.push('/login');
+
+        } catch (error) {
+            alert(error.message);
+            console.log(error.message);
+        }
+    }
+
+const getUser=async ()=>{
+  try {
+      const user= await axios.get("/api/users/me");
+      setUser(user?.data?.data)
+  }catch (error){
+      console.log(error.message)
+  }
+}
+    useEffect(() => {
+        getUser()
+    }, []);
     return (
         <Fragment>
             <button type="button" onClick={handleToggleDrawer}>
@@ -65,8 +92,8 @@ const ProfileDrawer = () => {
                                             />
 
                                             <div>
-                                                <h1 className="text-xl font-bold text-white">Rukon Uddin</h1>
-                                                <p className="text-sm text-gray-100">rukon.pro@gmail.com</p>
+                                                <h1 className="text-xl font-bold text-white">{user?.name}</h1>
+                                                <p className="text-sm text-gray-100">{user?.email}</p>
                                             </div>
                                         </div>
                                     </div>
@@ -101,7 +128,7 @@ const ProfileDrawer = () => {
                                     })
                                 }
 
-                                {!isLogin?<li>
+                                {!user?.email?<li>
                                         <Link href="/login" onClick={handleClose}>
                                             <button type="button"
                                                     className="w-full bg-gray-100 hover:bg-gray-200 duration-300 text-gray-500 font-bold px-3 py-3 text-left border-b-2 flex justify-between gap-4"
@@ -115,6 +142,7 @@ const ProfileDrawer = () => {
                                     </li>:
                                     <li>
                                         <button type="button"
+                                                onClick={handleLogout}
                                                 className="w-full bg-gray-100 hover:bg-gray-200 duration-300 text-gray-500 font-bold px-3 py-3 text-left border-b-2 flex justify-between gap-4"
                                         >
                                             <div className="flex items-center gap-4">

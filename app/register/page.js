@@ -3,17 +3,15 @@ import  GoogleIcon from "@/public/images/google-icon.png";
 import  FacebookIcon from "@/public/images/facebook-icon.png";
 import Image from "next/image";
 import Link from "next/link";
-import Navbar from "@/app/components/navbar/navbar";
-import Footer from "@/app/components/Footer/Footer";
+import RegisterForm from "@/app/register/registerForm";
 
 const Register = () => {
     return (
         <div>
-            <Navbar/>
             <div className="registerbg flex-1 inset-0 ">
                 <div className='max-w-[1200px] mx-auto py-5 lg:py-36 px-3'>
-                    <div className="grid md:grid-cols-2 gap-4">
-                        <div>
+                    <div className="grid grid-cols-12 gap-4">
+                        <div className="md:col-span-5 col-span-12">
                             <h1 className="text-2xl font-bold text-white py-5">Welcome to Brand!</h1>
 
                             <p className="text-lg text-white/70">Registering with Brand allows you to enjoy a seamless
@@ -21,25 +19,11 @@ const Register = () => {
                                 quick and easy!.</p>
                         </div>
 
-                        <div className="bg-gray-200/50 h-full px-3 sm:8 md:px-5 lg:px-5 py-5">
+                        <div className="md:col-span-7 col-span-12 bg-gray-200/50 h-full px-3 sm:px-10 md:px-5 lg:px-5 py-5">
                             <h1 className="text-xl font-bold pb-5">Sign Up</h1>
 
-                            <input type="email" placeholder="your email address"
-                                   className="px-3 py-2 rounded-lg w-full my-1 bg-white/50 border-2"
-                            />
-                            <br/>
-                            <input type="password" placeholder="New password with 6 digit"
-                                   className="px-3 py-2 rounded-lg w-full my-1 bg-white/50 border-2"
-                            />
-                            <br/>
-                            <input type="password" placeholder="Re-password"
-                                   className="px-3 py-2 rounded-lg w-full my-1 bg-white/50 border-2"
-                            />
-                            <br/>
-                            <button type="submit"
-                                    className="px-3 py-2 rounded-lg w-full my-1 bg-blue-500 text-white  mt-4"
-                            >Sign Up
-                            </button>
+                            {/*Register form*/}
+                           <RegisterForm/>
 
                             <div className="pt-8">
                                 <div className="grid grid-cols-12 items-center ">
@@ -81,7 +65,6 @@ const Register = () => {
                     </div>
                 </div>
             </div>
-            <Footer/>
         </div>
     );
 };

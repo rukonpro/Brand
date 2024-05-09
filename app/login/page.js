@@ -3,13 +3,12 @@ import  GoogleIcon from "@/public/images/google-icon.png";
 import  FacebookIcon from "@/public/images/facebook-icon.png";
 import Image from "next/image";
 import Link from "next/link";
-import Footer from "@/app/components/Footer/Footer";
-import Navbar from "@/app/components/navbar/navbar";
-
+import LoginForm from "@/app/login/loginForm";
 const Login = () => {
+
+
     return (
         <div>
-            <Navbar/>
             <div className="loginBg flex-1 md:rounded-lg">
                 <div className='max-w-[1200px] mx-auto py-5 lg:py-36 px-3'>
                     <div className="grid grid-cols-12 gap-4">
@@ -24,19 +23,9 @@ const Login = () => {
                         <div className="md:col-span-7 col-span-12 bg-gray-200/50 h-full px-3 sm:px-10 md:px-5 lg:px-5 py-5">
                             <h1 className="text-xl font-bold pb-5">Sign In</h1>
 
-                            <input type="email" placeholder="your email address"
-                                   className="px-3 py-2 rounded-lg w-full my-1 bg-white/50 border-2"
-                            />
-                            <br/>
-                            <input type="password" placeholder="New password with 6 digit"
-                                   className="px-3 py-2 rounded-lg w-full my-1 bg-white/50 border-2"
-                            />
-                            <br/>
+                                 {/*login form*/}
 
-                            <button type="submit"
-                                    className="px-3 py-2 rounded-lg w-full my-1 bg-blue-500 text-white  mt-4"
-                            >Sign In
-                            </button>
+                            <LoginForm/>
 
                             <div className="pt-8">
                                 <div className="grid grid-cols-12 items-center ">
@@ -78,7 +67,6 @@ const Login = () => {
                     </div>
                 </div>
             </div>
-            <Footer/>
         </div>
     );
 };

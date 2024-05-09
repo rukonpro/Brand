@@ -19,7 +19,6 @@ const Details = () => {
 
     return (
         <div>
-            <Navbar/>
             <Nav/>
 
             <div className="max-w-[1200px] mx-auto md:px-3  pb-5">
@@ -150,8 +149,6 @@ const Details = () => {
                 {/************************Related products ***********************/}
                 <RelatedProducts/>
             </div>
-
-            <Footer/>
         </div>
     );
 };
