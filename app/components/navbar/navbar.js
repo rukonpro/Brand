@@ -9,8 +9,7 @@ import MenuIcon from "@/public/images/menu.png"
 import Link from "next/link";
 import ProfileDrawer from "@/app/components/navbar/profileDrawer";
 
-const Navbar = () => {
-
+const Navbar =async () => {
 
     return (
         <nav className='bg-white px-3 py-3 w-full '>

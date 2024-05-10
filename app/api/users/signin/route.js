@@ -4,6 +4,7 @@ import bcryptjs from "bcryptjs";
 import jwt from "jsonwebtoken";
 import {connectDB} from "@/dbConfig/dbConfig";
 import User from "@/app/models/userModel";
+import {createSession} from "@/app/lib/session";
 
 connectDB()
 
@@ -35,10 +36,12 @@ export async function POST(request){
         const response = NextResponse.json({
             message: "Login successful",
             success: true,
+            data:user
         })
-        response.cookies.set("token", token, {
+        await createSession(user._id)
+       /* response.cookies.set("token", token, {
             httpOnly: true,
-        })
+        })*/
         return response;
 
     } catch (error) {

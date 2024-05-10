@@ -1,24 +1,17 @@
 "use client"
 import React from 'react';
 import {useRouter} from "next/navigation";
-import {userLogin} from "@/lib/user/login";
+import {userLogin} from "@/lib/user/user";
 import {useFormik} from "formik";
 import * as Yup from 'yup';
 import LoadingIcon from "@/public/images/loading-2-svgrepo-com.svg";
 import Image from "next/image";
 import toast from "react-hot-toast";
 
-
-
-
-
 const validationSchema = Yup.object().shape({
     email: Yup.string().email('Invalid email').required('Email is required'),
     password: Yup.string().min(6, 'Minimum 6 characters').required('Password is required'),
 });
-
-
-
 
 
 const LoginForm = () => {
@@ -29,17 +22,15 @@ const LoginForm = () => {
     const handleLogin = async ({email,password}) => {
         try {
             setLoading(true);
-           await userLogin({email,password});
+     await userLogin({email,password});
+            toast.success("login successfully",{id:"login"})
             router.push("/profiles/myAccount");
         } catch (error) {
-            toast.error(error?.response?.data?.error||error.mesaaage)
+            toast.error(error?.response?.data?.error||error.mesaaage,{id:"login"})
         } finally{
             setLoading(false);
         }
     }
-
-
-
 
     const formik = useFormik({
 
@@ -62,6 +53,7 @@ const LoginForm = () => {
                        className={`px-3 py-2 rounded-lg w-full my-1 bg-white/50 border-2 ${formik.touched.email && formik.errors.email?"border-red-400":"border-white"}`}
                        onChange={formik.handleChange}
                        value={formik.values.email}
+                       autoFocus={true}
                 />
                 {formik.touched.email && formik.errors.email && <div className="text-red-500 text-xs">{formik.errors.email}*</div>}
                 <br/>

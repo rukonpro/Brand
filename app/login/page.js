@@ -6,7 +6,6 @@ import Link from "next/link";
 import LoginForm from "@/app/login/loginForm";
 const Login = () => {
 
-
     return (
         <div>
             <div className="loginBg flex-1 md:rounded-lg">

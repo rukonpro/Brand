@@ -2,45 +2,40 @@
 import Link from 'next/link';
 import {profileMenu} from "@/app/components/navbar/profileDrawer";
 import Image from "next/image";
-import profilePhoto from "@/public/images/profile-photo-1.webp";
-import CoverPhoto from "@/public/images/cloth-image-1.jpg";
-import React from "react";
+import React, {useEffect, useState} from "react";
 import SingInIcon from "@/public/images/sign-in-alt-svgrepo-com.svg";
-import SingOut from "@/public/images/sign-out-svgrepo-com.svg";
+import SingOutIcon from "@/public/images/sign-out-svgrepo-com.svg";
+import ProfileSidebarBanner from "@/app/components/navbar/profileSidebarBanner";
+import {getMe, handleLogout} from "@/lib/user/user";
+import {useRouter} from "next/navigation";
 
 const Sidebar = () => {
+    const [user,setUser]=useState({});
+    const router = useRouter();
 
-    const isLogin=false;
+
+    const getUser=async ()=>{
+        try {
+            const user= await getMe();
+            setUser(user?.data?.data)
+        }catch (error){
+            console.log(error.message)
+        }
+    }
+    useEffect(() => {
+        getUser()
+    }, []);
+
+
+    const logout = async () => {
+       await handleLogout()
+       router.push('/login');
+    }
     return (
         <div
             className={`h-full bg-white text-gray-600 transition-transform duration-300 ease-in-out transform rounded-lg overflow-hidden`}
         >
-            <div className="relative w-full">
-                <div className=" mb-6  py-2 px-3 h-36 absolute w-full bg-blue-800/50"
-                >
-                    <div>
-                        <h2 className="text-xl font-bold text-white py-2">My Profile</h2>
-                        <div className="flex items-center gap-2">
-                            <Image src={profilePhoto} alt="Prfile photo"
-                                   className="h-16 w-16 rounded-full border-2 border-white"
-                            />
-
-                            <div>
-                                <h1 className="text-sm font-bold text-white">Rukon Uddin</h1>
-                                <p className="text-xs text-gray-100">rukon.pro@gmail.com</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div className="w-full">
-                <Image
-                        src={CoverPhoto}
-                        alt="Cover Photo"
-                        className="w-full h-36 object-fill"
-                    />
-                </div>
-            </div>
+            <ProfileSidebarBanner user={user}/>
             <ul className="p-4">
                 {
                     profileMenu.map((menu, index) => {
@@ -59,7 +54,7 @@ const Sidebar = () => {
                     })
                 }
 
-                {!isLogin?<li>
+                {!user?.email?<li>
                         <Link href="/login" >
                             <button type="button"
                                     className="flex items-center gap-2"
@@ -73,9 +68,10 @@ const Sidebar = () => {
                     <li>
                         <button type="button"
                                 className="flex items-center gap-2"
+                                onClick={logout}
                         >
                             <div className="flex items-center gap-4">
-                                <Image src={SingOut} alt='avater' className="h-5 w-5"/>
+                                <Image src={SingOutIcon} alt='avater' className="h-5 w-5"/>
                                 Sign Out
                             </div>
 

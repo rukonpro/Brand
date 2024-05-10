@@ -2,6 +2,7 @@ import {connectDB} from "@/dbConfig/dbConfig";
 import bcryptjs from "bcryptjs";
 import {NextResponse} from "next/server"
 import User from "@/app/models/userModel";
+import {createSession} from "@/app/lib/session";
 
 connectDB()
 
@@ -27,7 +28,8 @@ export async function POST(request){
         })
 
         const savedUser = await newUser.save();
-
+        /**************createSession**************/
+        await createSession(savedUser._id)
         //send verification email
      /*   await sendEmail({email, emailType: "VERIFY", userId: savedUser._id})*/
 
