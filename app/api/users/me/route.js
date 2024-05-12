@@ -3,7 +3,6 @@ import {connectDB} from "@/dbConfig/dbConfig";
 import User from "@/app/models/userModel";
 import {verifySession} from "@/app/lib/dal";
 
-
 connectDB();
 
 export async function GET(){
