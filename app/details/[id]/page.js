@@ -1,17 +1,19 @@
 import React from 'react';
-import Navbar from "@/app/components/navbar/navbar";
 import Nav from "@/app/components/navbar/nav";
 import Product1 from "@/public/images/image34.png";
 import TickSign from "@/public/images/tickSign.png";
 import loveIconOutline from "@//public/images/loveIconOutline.png";
 import Image from "next/image";
-import Footer from "@/app/components/Footer/Footer";
 import blueCartIcon from "@/public/images/blue-cart.png";
 import SupplierCard from "@/app/components/SupplierCard/SupplierCard";
 import RelatedProducts from "@/app/components/RelatedProducts/RelatedProducts";
 import BackButton from "@/app/components/BackButtons/BackButton";
-const Details = () => {
 
+
+
+
+
+const Details = () => {
 
 
     /*//https://www.figma.com/file/OO4BPb5dJMEaRxPvBPx2uC/Figma-ecommerce-UI-Kit-(web-%26-mobile)-(Community)?node-id=238%3A4835&mode=dev

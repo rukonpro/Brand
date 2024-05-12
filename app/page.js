@@ -7,7 +7,11 @@ import SuppliersByRegion from "./components/SuppliersByRegion/SuppliersByRegion"
 import SourcesProducts from "@/app/components/SourceProducts/SourcesProducts";
 import fakeData from "@/app/FakeData/FakeData";
 import Nav from "@/app/components/navbar/nav";
+
+
+
 export default function Home() {
+
   return (
       <>
           <Nav/>
@@ -24,9 +28,6 @@ export default function Home() {
                   )
               })
           }
-{/*
-          <HomeAndOutdoor/>
-          <ConsumerElectronicsAndGadgets/>*/}
           <Requests/>
           <RecommendedItems/>
           <OurExtraServices/>

@@ -14,9 +14,10 @@ import CloseIcon from "@/public/images/close-svgrepo-com.svg";
 import LogoutButton from "@/app/components/navbar/LogoutButton";
 import {getMe} from "@/lib/user/user";
 
+
 const ProfileDrawer = () => {
     const [isDrawerOpen, setIsDrawerOpen] = useState(false);
-const [user,setUser]=useState({});
+    const [user,setUser]=useState({});
     const handleToggleDrawer = () => {
         setIsDrawerOpen(!isDrawerOpen);
     };
@@ -29,9 +30,10 @@ const [user,setUser]=useState({});
             const user= await getMe();
             setUser(user?.data?.data)
         }catch (error){
-            console.log(error.message)
+         
         }
     }
+
     useEffect(() => {
         getUser()
     }, [isDrawerOpen]);

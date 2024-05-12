@@ -57,58 +57,7 @@ export const products=[
     },
 ]
 const RecommendedItems = () => {
-    const products=[
-        {
-            image:Product55,
-            title:"Jeans shorts for men blue color",
-            price:10.30
-        },
-        {
-            image:Product55,
-            title:"Jeans shorts for men blue color",
-            price:10.30
-        },
-        {
-            image:Product55,
-            title:"Jeans shorts for men blue color",
-            price:10.30
-        },
-        {
-            image:Product55,
-            title:"Jeans shorts for men blue color",
-            price:10.30
-        },
-        {
-            image:Product55,
-            title:"Jeans shorts for men blue color",
-            price:10.30
-        },
-        {
-            image:Product55,
-            title:"Jeans shorts for men blue color",
-            price:10.30
-        },
-        {
-            image:Product55,
-            title:"Jeans shorts for men blue color",
-            price:10.30
-        },
-        {
-            image:Product55,
-            title:"Jeans shorts for men blue color",
-            price:10.30
-        },
-        {
-            image:Product55,
-            title:"Jeans shorts for men blue color",
-            price:10.30
-        },
-        {
-            image:Product55,
-            title:"Jeans shorts for men blue color",
-            price:10.30
-        },
-    ]
+    
     return (
         <div className='pt-5 sm:px-3'>
             <div className='max-w-[1200px] mx-auto'>
@@ -117,7 +66,7 @@ const RecommendedItems = () => {
                     {
                         products.map((product,index)=>{
                             return(
-                               <li key={index}>
+                               <li key={index} >
                                    <Link href={`/details/${product.title}`}>
                                        <RecommendedItemsCard  product={product} />
                                    </Link>

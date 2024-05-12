@@ -4,11 +4,11 @@ import profilePhoto from "@/public/images/profile-photo-1.webp";
 import CoverPhoto from "@/public/images/cloth-image-1.jpg";
 
 
-const ProfileSidebarBanner = ({user}) => {
+const ProfileSidebarBanner = ({ user }) => {
 
     return (
         <div className="relative w-full">
-            <div className=" mb-6  py-6 px-3 absolute w-full bg-blue-800/50"
+            <div className=" mb-6  py-7 px-3 absolute w-full bg-blue-800/50"
             >
                 <div>
                     <div className="flex items-center justify-between w-full">
@@ -16,8 +16,13 @@ const ProfileSidebarBanner = ({user}) => {
                     </div>
 
                     <div className="flex items-center gap-4">
-                        <Image src={profilePhoto} alt="Prfile photo"
-                               className="h-16 w-16 rounded-full border-2 border-white"
+                        <Image
+                            src={user?.profilePhoto || profilePhoto}
+                            width={100}
+                            height={100}
+                            loading="lazy"
+                            alt="Prfile photo"
+                            className="h-16 w-16 rounded-full border-2 border-white"
                         />
 
                         <div>
@@ -28,9 +33,12 @@ const ProfileSidebarBanner = ({user}) => {
                 </div>
             </div>
 
-            <div className="w-full">
+            <div className="w-full ">
                 <Image
-                    src={CoverPhoto}
+                    src={user?.coverPhoto || CoverPhoto}
+                    width={100}
+                    height={100}
+                    loading="lazy"
                     alt="Cover Photo"
                     className="w-full h-36 object-fill"
                 />

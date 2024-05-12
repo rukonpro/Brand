@@ -2,9 +2,11 @@ import Link from 'next/link';
 import React from 'react';
 import Image from 'next/image';
 import BannerImage from "@/public/images/Banner-board.png";
-import Avater from "@/public/images/avatar.png";
+import JoinNowCard from "@/app/components/Banner/JoinNowCard";
+
 
 const Banner = () => {
+
     return (
         <div className="md:px-3">
             <div className="max-w-[1200px] mx-auto border md:rounded-lg md:px-3  md:pt-3 pb-3 md:mt-5 bg-white ">
@@ -66,30 +68,10 @@ const Banner = () => {
 
                     <div
                         className='md:col-span-2 col-span-12 grid md:grid-cols-1 sm:grid-cols-3 grid-cols-2 gap-3 px-3 md:px-0'>
-                        <div className=" p-3 bg-[#E3F0FF] rounded-lg sm:col-span-1 col-span-2 ">
-                            <div className='grid grid-cols-3 gap-2 items-center'>
-                                <div className="col-span-1">
-                                    <Image className="rounded-full h-[44px] w-[44px] object-contain bg-white p-1"
-                                           src={Avater} alt=''/>
-                                </div>
-                                <h1 className="col-span-2">Hi, user {"let’s get stated"}</h1>
-                            </div>
-
-                            <Link href="/profiles/register">
-                                <button
-                                    className="rounded-lg bg-blue-500 text-white py-1 px-2 mt-2 inline-block w-full">
-                                    Join now
-                                </button>
-                            </Link>
-                            <Link href="/profiles/login">
-                                <button className="rounded-lg bg-white py-1 px-2 mt-2 inline-block w-full">
-                                    Login
-                                </button>
-                            </Link>
-                        </div>
+                        <JoinNowCard/>
 
                         <div className=" p-3 rounded-lg bg-[#F38332] text-white w-full h-full">
-                        <h1 className="text-lg">Get US $10 off with a new supplier</h1>
+                            <h1 className="text-lg">Get US $10 off with a new supplier</h1>
                         </div>
 
                         <div className="p-3 rounded-lg bg-[#55BDC3] text-white w-full h-full">

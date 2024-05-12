@@ -6,8 +6,8 @@ import {verifySession} from "@/app/lib/dal";
 
 connectDB();
 
-export async function GET(request){
-    const session = await verifySession()
+export async function GET(){
+    const session = await verifySession();
     if (!session) return null
 
     try {

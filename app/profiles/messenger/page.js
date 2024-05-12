@@ -1,6 +1,7 @@
 import React from 'react';
 
-const Messenger = async () => {
+const Messenger =  () => {
+
     return (
         <div>
             messenger
