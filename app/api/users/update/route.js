@@ -4,6 +4,7 @@ import { NextResponse } from "next/server";
 
 const { connectDB } = require("@/dbConfig/dbConfig");
 
+
 connectDB()
 
 export const PATCH = async (request) => {
