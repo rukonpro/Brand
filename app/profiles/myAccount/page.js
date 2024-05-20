@@ -10,7 +10,6 @@ import LoadingIcon from "@/public/images/loading-gray-color-svgrepo-com.svg";
 import uploadImage from "@/lib/imageUploader/imageUploader";
 import { updateUser } from '@/lib/user/user';
 import useUser from '@/lib/user/useUser';
-import toast from 'react-hot-toast';
 const MyAccount = () => {
 
     const [selectedProfilePicture, setSelectedProfilePicture] = useState(null);
@@ -147,8 +146,8 @@ const MyAccount = () => {
 
 
             <div className="border-t-2 mt-8">
-                <div className="flex justify-between items-center">
-                    <h1 className="text-xl font-bold text-gray-600 py-5 px-3 md:px-0">Personal details</h1>
+                <div className="flex justify-between items-center py-5 px-3">
+                    <h1 className="text-xl font-bold text-gray-600   md:px-0">Personal details</h1>
                     <button type="button"
                         onClick={handleSave}
                         className="border-2 border-[#3e8cfe] hover:bg-blue-300 hover:text-white text-gray-500 font-bold  px-3 py-1 rounded-lg flex items-center gap-2">
