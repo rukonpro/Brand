@@ -17,7 +17,6 @@ const Sidebar = () => {
     const { user, isError, isLoading } = useUser();
 
 
-
     const logout = async () => {
         await handleLogout()
         router.push('/login');
