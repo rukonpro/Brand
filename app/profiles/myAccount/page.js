@@ -9,6 +9,8 @@ import SaveIcon from "@/public/images/save-floppy-svgrepo-com.svg";
 import LoadingIcon from "@/public/images/loading-gray-color-svgrepo-com.svg";
 import uploadImage from "@/lib/imageUploader/imageUploader";
 import { updateUser } from '@/lib/user/user';
+import useUser from '@/lib/user/useUser';
+import toast from 'react-hot-toast';
 const MyAccount = () => {
 
     const [selectedProfilePicture, setSelectedProfilePicture] = useState(null);
@@ -19,6 +21,8 @@ const MyAccount = () => {
     const [edit, setEdit] = useState(false);
     const [loading, setLoading] = useState(false);
 
+
+    const { user} = useUser();
 
     const handleProfilePhotoChange = (event) => {
         setSelectedProfilePicture(URL.createObjectURL(event.target.files[0]));
@@ -38,30 +42,33 @@ const MyAccount = () => {
 
             if (profileImageBB || coverImageBB) {
 
-                let profileUrl=undefined;
-                let coverUrl=undefined;
-                
+                let profileUrl = undefined;
+                let coverUrl = undefined;
+
                 if (profileImageBB) {
                     profileUrl = await uploadImage(profileImageBB);
-                    const user = {profilePhoto: profileUrl.data.data?.url};
+                    const user = { profilePhoto: profileUrl.data.data?.url };
                     await updateUser(user);
                 }
                 if (coverImageBB) {
                     coverUrl = await uploadImage(coverImageBB);
-                    const user = {coverPhoto: coverUrl.data.data?.url};
+                    const user = { coverPhoto: coverUrl.data.data?.url };
                     await updateUser(user);
+
+
                 }
             }
         } catch (error) {
 
         } finally {
-
+            setProfileImageBB(null)
+            setSelectedProfilePicture(null)
+            setCoverImageBB(null)
+            setCoverImageBB(null)
             setLoading(false);
         }
     }
-
-
-
+    
     return (
         <div>
             <h1 className="text-xl font-bold text-gray-600 pb-5 px-3 md:px-0">My Profile</h1>
@@ -96,7 +103,7 @@ const MyAccount = () => {
                                 }
 
                                 <Image
-                                    src={selectedProfilePicture || profilePhoto}
+                                    src={selectedProfilePicture || user?.profilePhoto || profilePhoto}
                                     alt="Profile Avatar"
                                     width={100}
                                     height={100}
@@ -104,8 +111,8 @@ const MyAccount = () => {
                                 />
                             </div>
                             <div>
-                                <h1 className="text-2xl sm:text-3xl font-bold text-white">Rukon Uddin</h1>
-                                <p className="text-sm sm:text-lg text-gray-100">rukon.pro@gmail.com</p>
+                                <h1 className="text-2xl sm:text-3xl font-bold text-white">{user?.name}</h1>
+                                <p className="text-sm sm:text-lg text-gray-100">{user?.email}</p>
                             </div>
                         </div>
                     </div>
@@ -129,7 +136,7 @@ const MyAccount = () => {
 
                 <div className="w-full">
                     <Image
-                        src={selectedCoverPhoto || CoverPhoto}
+                        src={selectedCoverPhoto || user?.coverPhoto || CoverPhoto}
                         height={100}
                         width={100}
                         alt="Cover Photo"

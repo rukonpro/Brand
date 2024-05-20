@@ -1,5 +1,5 @@
 "use client"
-import React, {Fragment, useEffect, useState} from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import Link from "next/link";
 import Drawer from "@/app/components/Drawer/Drawer";
 import Image from "next/image";
@@ -12,12 +12,13 @@ import SingInIcon from "@/public/images/sign-in-alt-svgrepo-com.svg";
 import ProfileSidebarBanner from "@/app/components/navbar/profileSidebarBanner";
 import CloseIcon from "@/public/images/close-svgrepo-com.svg";
 import LogoutButton from "@/app/components/navbar/LogoutButton";
-import {getMe} from "@/lib/user/user";
+import useUser from '@/lib/user/useUser';
 
 
 const ProfileDrawer = () => {
     const [isDrawerOpen, setIsDrawerOpen] = useState(false);
-    const [user,setUser]=useState({});
+    const { user, isError, isLoading } = useUser();
+
     const handleToggleDrawer = () => {
         setIsDrawerOpen(!isDrawerOpen);
     };
@@ -25,24 +26,13 @@ const ProfileDrawer = () => {
         setIsDrawerOpen(false);
     };
 
-    const getUser=async ()=>{
-        try {
-            const user= await getMe();
-            setUser(user?.data?.data)
-        }catch (error){
-         
-        }
-    }
 
-    useEffect(() => {
-        getUser()
-    }, [isDrawerOpen]);
 
     return (
         <Fragment>
             <button type="button" onClick={handleToggleDrawer}>
                 <div className="flex justify-center">
-                    <Image src={Avater} alt='avater'/>
+                    <Image src={Avater} alt='avater' />
                 </div>
                 <p className="text-sm text-center sm:block hidden">Profile</p>
             </button>
@@ -56,12 +46,12 @@ const ProfileDrawer = () => {
                 {/* Drawer content goes here */}
                 <div className="flex-1 ">
                     <div className="relative">
-                        <ProfileSidebarBanner user={user}/>
+                        <ProfileSidebarBanner user={user} />
 
                         <button onClick={handleClose}
-                                className="p-1 rounded-full absolute top-0 right-0"
+                            className="p-1 rounded-full absolute top-0 right-0"
                         >
-                            <Image height={25} src={CloseIcon} alt="close icon"/>
+                            <Image height={25} src={CloseIcon} alt="close icon" />
                         </button>
                         <ol>
                             {
@@ -70,13 +60,13 @@ const ProfileDrawer = () => {
                                         <li key={index}>
                                             <Link href={menu.path} onClick={handleClose}>
                                                 <button type="button"
-                                                        className="w-full bg-gray-100 hover:bg-gray-200 duration-300 text-gray-500 font-bold px-3 py-3 text-left border-b-2 flex justify-between gap-4"
+                                                    className="w-full bg-gray-100 hover:bg-gray-200 duration-300 text-gray-500 font-bold px-3 py-3 text-left border-b-2 flex justify-between gap-4"
                                                 >
                                                     <div className="flex items-center gap-4">
                                                         <Image src={menu.icon} alt='avater'
-                                                               className="h-5 w-5"/> {menu.title}
+                                                            className="h-5 w-5" /> {menu.title}
                                                     </div>
-                                                    <Image src={RightIcon} alt='avater' className="h-5 w-5"/>
+                                                    <Image src={RightIcon} alt='avater' className="h-5 w-5" />
                                                 </button>
                                             </Link>
                                         </li>
@@ -86,19 +76,19 @@ const ProfileDrawer = () => {
 
 
                             {!user?.email ? <li>
-                                    <Link href="/login" onClick={handleClose}>
-                                        <button type="button"
-                                                className="w-full bg-gray-100 hover:bg-gray-200 duration-300 text-gray-500 font-bold px-3 py-3 text-left border-b-2 flex justify-between gap-4"
-                                        >
-                                            <div className="flex items-center gap-4">
-                                                <Image src={SingInIcon} alt='avater' className="h-5 w-5"/> Sign In
-                                            </div>
-                                            <Image src={RightIcon} alt='avater' className="h-5 w-5"/>
-                                        </button>
-                                    </Link>
-                                </li> :
+                                <Link href="/login" onClick={handleClose}>
+                                    <button type="button"
+                                        className="w-full bg-gray-100 hover:bg-gray-200 duration-300 text-gray-500 font-bold px-3 py-3 text-left border-b-2 flex justify-between gap-4"
+                                    >
+                                        <div className="flex items-center gap-4">
+                                            <Image src={SingInIcon} alt='avater' className="h-5 w-5" /> Sign In
+                                        </div>
+                                        <Image src={RightIcon} alt='avater' className="h-5 w-5" />
+                                    </button>
+                                </Link>
+                            </li> :
                                 <li>
-                                    <LogoutButton handleClose={handleClose}/>
+                                    <LogoutButton handleClose={handleClose} />
                                 </li>}
                         </ol>
                     </div>
