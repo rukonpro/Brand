@@ -60,7 +60,6 @@ const productsSchema = new mongoose.Schema({
         type: String,
         enum: ["In Stock", "Out of Stock"]
     },
-    relatedProducts: [mongoose.Schema.Types.ObjectId],
     promotionalInfo: String,
     dimensions: {
         length: Number,
