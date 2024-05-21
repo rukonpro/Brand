@@ -1,14 +1,13 @@
-import { NextRequest, NextResponse } from "next/server";
+import {NextResponse } from "next/server";
 import Products from "@/app/models/productsModel";
 import { connectDB } from "@/dbConfig/dbConfig";
-import { parseSearchParams } from "@/helpers/parseSearchParams";
 
 
 connectDB();
 
 
 export const PATCH = async (request, context,) => {
-    const queres = parseSearchParams(request.url);
+  
     const reqBody = await request.json();
     const { id } = context.params;
 
