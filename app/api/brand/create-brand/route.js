@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server"
-import Category from "@/app/models/categoryModel";
+import Brand from "@/app/models/brandModel";
 const { connectDB } = require("@/dbConfig/dbConfig");
 
 
@@ -12,13 +12,12 @@ export async function POST(request) {
     const reqBody = await request.json();
 
     try {
-        // const newCategory = await new Category(reqBody);
-        const saveCategory = await Category.create(reqBody);
+        const saveBrand = await Brand.create(reqBody);
 
         return NextResponse.json({
-            message: "Created a category successfully",
+            message: "Created a brand successfully",
             success: true,
-            category: saveCategory
+            brand: saveBrand
         })
     } catch (error) {
         return NextResponse.json(

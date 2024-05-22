@@ -10,7 +10,7 @@ const productsSchema = new mongoose.Schema({
         type: String,
         required: [true, "Description most be required"]
     },
-    photos: {
+    images: {
         type: [String],
         required: true,
         validate: {
@@ -24,9 +24,22 @@ const productsSchema = new mongoose.Schema({
         type: Number,
         required: true
     },
-    category: mongoose.Schema.Types.ObjectId,
+    category: {
+        type: mongoose.Schema.Types.ObjectId,
+        required: true,
+    },
     material: String,
-    brand: String,
+    brand: {
+        id: {
+            type: mongoose.Schema.Types.ObjectId,
+        },
+        brand: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Brand",
+            required: true,
+        }
+
+    },
     quantity: {
         type: Number,
         default: 0
@@ -38,7 +51,7 @@ const productsSchema = new mongoose.Schema({
         sizes: [String],
         sku: String, // Variant SKU
         availability: String
-      }],
+    }],
     colors: [String],
     sizes: [String],
     rating: {

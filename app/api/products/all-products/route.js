@@ -57,7 +57,7 @@ export const GET = async (request) => {
             .sort(queries.sortBy);
 
 
-        const total = await Products.countDocuments();
+        const total = await Products.countDocuments({});
 
 
 

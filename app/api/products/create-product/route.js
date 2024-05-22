@@ -10,7 +10,7 @@ connectDB();
 
 export async function POST(request) {
     const reqBody = await request.json();
-  
+
     try {
         const newProduct = await new Products(reqBody);
         const saveProduct = await newProduct.save();
@@ -21,6 +21,9 @@ export async function POST(request) {
             product: saveProduct
         })
     } catch (error) {
-        console.log(error)
+        return NextResponse.json(
+            { error: error.message },
+            { status: 500 }
+        );
     }
 }
