@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
-
+import Brand from "@/app/models/brandModel";
+import Category from "./categoryModel";
 
 const productsSchema = new mongoose.Schema({
     name: {
@@ -27,17 +28,14 @@ const productsSchema = new mongoose.Schema({
     category: {
         type: mongoose.Schema.Types.ObjectId,
         required: true,
+        ref: "Category"
+
     },
     material: String,
     brand: {
-        id: {
-            type: mongoose.Schema.Types.ObjectId,
-        },
-        brand: {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: "Brand",
-            required: true,
-        }
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Brand",
+        required: true,
 
     },
     quantity: {

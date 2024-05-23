@@ -54,7 +54,8 @@ export const GET = async (request) => {
             .skip(queries.skip)
             .limit(queries.limit)
             .select(queries.fields)
-            .sort(queries.sortBy);
+            .sort(queries.sortBy)
+            .populate(["brand", "category"]);
 
 
         const total = await Products.countDocuments({});
