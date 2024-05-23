@@ -11,7 +11,7 @@ const SourcesProductsLayout = async () => {
     return (
         <div>
             {
-                catagorys?.categorys.map((category, index) => {
+                catagorys?.categorys?.map((category, index) => {
                     return (
                         <SourcesProducts
                             key={index}
