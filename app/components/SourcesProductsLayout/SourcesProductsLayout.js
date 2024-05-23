@@ -1,6 +1,5 @@
 import React from 'react';
 import SourcesProducts from "@/app/components/SourceProducts/SourcesProducts";
-import fakeData from "@/app/FakeData/FakeData";
 import { getAllCategory } from '@/lib/category/category';
 
 
