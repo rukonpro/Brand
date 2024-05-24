@@ -1,3 +1,5 @@
+"use client"
+
 import React from 'react';
 import Nav from "@/app/components/navbar/nav";
 import TickSign from "@/public/images/tickSign.png";
@@ -7,17 +9,15 @@ import blueCartIcon from "@/public/images/blue-cart.png";
 import SupplierCard from "@/app/components/SupplierCard/SupplierCard";
 import RelatedProducts from "@/app/components/RelatedProducts/RelatedProducts";
 import BackButton from "@/app/components/BackButtons/BackButton";
-import getSingleProduct from '@/lib/product/getSingleProduct';
 import ImageChangeButton from '@/app/components/imageChangeButton/ImageChangeButton';
+import { useSingleProducts } from '@/lib/user/useProducts';
 
 
 
 
 const Details = async ({ params }) => {
+    const { product, isError, isLoading } = useSingleProducts(params.id)
 
-    const product = await getSingleProduct(params?.id);
-
-   
     /*//https://www.figma.com/file/OO4BPb5dJMEaRxPvBPx2uC/Figma-ecommerce-UI-Kit-(web-%26-mobile)-(Community)?node-id=238%3A4835&mode=dev
 */
 
@@ -36,7 +36,7 @@ const Details = async ({ params }) => {
                 </div>
                 <div className="grid grid-cols-12 gap-4 border-2 p-3 py-10  md:bg-white md:rounded-lg">
                     <div className="col-span-12 md:col-span-4">
-                        <ImageChangeButton images={product?.product?.images} />
+                        <ImageChangeButton images={product?.images} />
                     </div>
 
                     <div className="col-span-12 md:col-span-8 lg:col-span-5">
@@ -45,7 +45,7 @@ const Details = async ({ params }) => {
                             <p className="text-sm">InStock</p>
                         </div>
                         <div className="pt-5">
-                            <h1 className="text-2xl font-bold">{product?.product?.name}</h1>
+                            <h1 className="text-2xl font-bold">{product?.name}</h1>
 
                             <div className="grid grid-cols-3 gap-1 bg-orange-100/50 p-3 mt-3">
                                 <div>

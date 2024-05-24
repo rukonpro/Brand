@@ -1,17 +1,21 @@
+"use client"
 import React from 'react';
 import SourceCard from "@/app/components/SourceProducts/SourceCard";
 import Link from "next/link";
 import SourceProductCard from "@/app/components/SourceProducts/SourceProductCard";
-import getProduct from '@/lib/product/getAllProducts';
+import { useProducts } from '@/lib/user/useProducts';
 
 
 const SourcesProducts = async ({ category }) => {
 
-    const products = await getProduct(`/?category=${category?._id}`);
 
+    const { products, isError, isLoading } = useProducts(`/?category=${category?._id}`)
 
+    if (isLoading) {
+        return <h1>Loading...</h1>
+    }
     return (
-        products?.products?.length &&
+
         <div className="sm:px-3">
             <div className='max-w-[1200px] mx-auto mt-5'>
                 <div
@@ -24,7 +28,7 @@ const SourcesProducts = async ({ category }) => {
                     </div>
                     <div className='grid md:grid-cols-5 grid-cols-2 md:col-span-9 col-span-12 gap-[2px]'>
                         {
-                            products?.products?.slice(0, 10).map((product, index) => {
+                            products?.slice(0, 10).map((product, index) => {
                                 return (
                                     <div key={index} className='bg-white'>
                                         <Link href={`/details/${product._id}`}>

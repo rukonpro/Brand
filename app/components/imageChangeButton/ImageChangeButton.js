@@ -8,7 +8,7 @@ const ImageChangeButton = ({ images }) => {
     return (
         <div>
             <div className="p-3 bg-white border-2 rounded flex justify-center">
-                <Image src={changeImage} width={400} height={300} alt="" className='h-full w-full object-cover' />
+                <Image src={changeImage} width={100} height={100} alt="" className='h-full w-full object-cover' />
             </div>
             <ol className="pt-3 flex gap-2 justify-center">
                 {images?.map((image, index) => {

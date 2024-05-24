@@ -6,7 +6,7 @@ import { parseSearchParams } from "@/helpers/parseSearchParams";
 
 connectDB();
 
-export const GET = async (request) => {
+export async function GET(request) {
     try {
         const queres = parseSearchParams(request?.url);
         let filters = { ...queres };

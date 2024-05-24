@@ -1,24 +1,29 @@
+"use client"
+
+import { useCategorys } from '@/lib/user/useCategorys';
 import React from 'react';
-import SourcesProducts from "@/app/components/SourceProducts/SourcesProducts";
-import checkEnvironment from '@/lib/fetcher/checkEnvironment';
+import SourcesProducts from '../SourceProducts/SourcesProducts';
 
 
 
 
-const SourcesProductsLayout = async () => {
 
-    const res = await fetch(checkEnvironment().concat("/api/category/all-category"));
-    const catagorys = await res.json()
+
+const SourcesProductsLayout = () => {
+
+    const { categorys, isError, isLoading } = useCategorys();
 
     return (
         <div>
             {
-                catagorys?.categorys?.map((category, index) => {
+                categorys?.map((category, index) => {
                     return (
-                        <SourcesProducts
-                            key={index}
-                            category={category}
-                        />
+                        <>
+                            {isLoading ? <p>Loading...</p> : <SourcesProducts
+                                key={index}
+                                category={category}
+                            />}
+                        </>
                     )
                 })
             }
