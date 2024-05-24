@@ -3,10 +3,15 @@ import SourceCard from "@/app/components/SourceProducts/SourceCard";
 import Link from "next/link";
 import SourceProductCard from "@/app/components/SourceProducts/SourceProductCard";
 import getProducts from '@/lib/product/getAllProducts';
+import API_BASE_URL from '@/lib/API_BASE_URL/API_BASE_URL';
 
 
 
 const SourcesProducts = async ({ category }) => {
+
+    if (API_BASE_URL) {
+        return null;
+    }
     const products = await getProducts()
 
 
