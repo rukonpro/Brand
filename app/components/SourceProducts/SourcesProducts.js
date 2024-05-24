@@ -9,8 +9,9 @@ const SourcesProducts = async ({ category }) => {
 
     const products = await getProduct(`/?category=${category?._id}`);
 
+
     return (
-        products?.products.length &&
+        products?.products?.length &&
         <div className="sm:px-3">
             <div className='max-w-[1200px] mx-auto mt-5'>
                 <div

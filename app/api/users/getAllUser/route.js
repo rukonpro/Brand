@@ -1,13 +1,10 @@
 import { connectDB } from "@/dbConfig/dbConfig";
-const { NextResponse } = require("next/server");
+import { NextResponse } from "next/server";
 
 connectDB();
 
 export async function GET(){
-
-    console.log("hiiiiiiiiiiiiiiiiiiiiiii")
     try {
-     
         return NextResponse.json({
             massage: "User found",
             data: "user"

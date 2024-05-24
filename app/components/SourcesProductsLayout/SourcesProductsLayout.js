@@ -1,11 +1,14 @@
 import React from 'react';
 import SourcesProducts from "@/app/components/SourceProducts/SourcesProducts";
-import { getAllCategory } from '@/lib/category/category';
+import checkEnvironment from '@/lib/fetcher/checkEnvironment';
+
 
 
 
 const SourcesProductsLayout = async () => {
-    const catagorys = await getAllCategory();
+
+    const res = await fetch(checkEnvironment().concat("/api/category/all-category"));
+    const catagorys = await res.json()
 
     return (
         <div>
