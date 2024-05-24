@@ -9,9 +9,6 @@ import RelatedProducts from "@/app/components/RelatedProducts/RelatedProducts";
 import BackButton from "@/app/components/BackButtons/BackButton";
 import ImageChangeButton from '@/app/components/imageChangeButton/ImageChangeButton';
 import getSingleProduct from '@/lib/product/getSingleProduct';
-import API_BASE_URL from '@/lib/API_BASE_URL/API_BASE_URL';
-
-
 
 
 const Details = async ({ params }) => {
@@ -20,9 +17,6 @@ const Details = async ({ params }) => {
     /*//https://www.figma.com/file/OO4BPb5dJMEaRxPvBPx2uC/Figma-ecommerce-UI-Kit-(web-%26-mobile)-(Community)?node-id=238%3A4835&mode=dev
 */
 
-    if (!API_BASE_URL) {
-        return null
-    }
     const product = await getSingleProduct(params.id);
     return (
         <div>
