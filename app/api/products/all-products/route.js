@@ -10,7 +10,7 @@ export async function GET(request) {
     try {
         // Extract search parameters from the request URL
         const { searchParams } = new URL(request.url);
-        const queres = Object.fromEntries(searchParams.entries());
+        const queres = Object.fromEntries(searchParams?.entries());
 
         let filters = { ...queres };
 
@@ -21,13 +21,13 @@ export async function GET(request) {
         // Handle range filters (gt, lt, gte, lte)
         let filtersString = JSON.stringify(filters);
         filtersString = filtersString.replace(/\b(gt|gte|lt|lte)\b/g, match => `$${match}`);
-        filters = JSON.parse(filtersString);
+        filters = await JSON.parse(filtersString);
 
         const queries = {};
 
         // Handle sorting
         if (queres.sort) {
-            const sortBy = queres.sort.split(',').join(' ');
+            const sortBy =  queres.sort.split(',').join(' ');
             queries.sortBy = sortBy;
         }
 
