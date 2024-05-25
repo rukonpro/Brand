@@ -1,55 +1,51 @@
 import { NextResponse } from "next/server";
 import Products from "@/app/models/productsModel";
 import { connectDB } from "@/dbConfig/dbConfig";
-import { parseSearchParams } from "@/helpers/parseSearchParams";
+// import { parseSearchParams } from "@/helpers/parseSearchParams";
 
 
 connectDB();
 
 export async function GET(request) {
     try {
-        const queres = parseSearchParams(request?.url);
+        // Extract search parameters from the request URL
+        const { searchParams } = new URL(request.url);
+        const queres = Object.fromEntries(searchParams.entries());
+
         let filters = { ...queres };
 
-        //sort , page , limit -> exclude
+        // Exclude certain fields from the filters
         const excludeFields = ['sort', 'page', 'limit'];
         excludeFields.forEach(field => delete filters[field]);
 
-
-        //gt ,lt ,gte .lte
+        // Handle range filters (gt, lt, gte, lte)
         let filtersString = JSON.stringify(filters);
         filtersString = filtersString.replace(/\b(gt|gte|lt|lte)\b/g, match => `$${match}`);
-
         filters = JSON.parse(filtersString);
 
+        const queries = {};
 
-
-
-        const queries = {}
-
+        // Handle sorting
         if (queres.sort) {
-            // price,qunatity   -> 'price quantity'
-            const sortBy = queres.sort.split(',').join(' ')
-            queries.sortBy = sortBy
+            const sortBy = queres.sort.split(',').join(' ');
+            queries.sortBy = sortBy;
         }
 
+        // Handle field selection
         if (queres.fields) {
-            const fields = queres.fields.split(',').join(' ')
-            queries.fields = fields
-
+            const fields = queres.fields.split(',').join(' ');
+            queries.fields = fields;
         }
 
-
+        // Handle pagination
         if (queres.page) {
-
-            const { page = 1, limit = 10 } = queres;      // "3" "10"
-
-            const skip = (page - 1) * parseInt(limit);
+            const { page = 1, limit = 10 } = queres;
+            const skip = (page - 1) * parseInt(limit, 10);
             queries.skip = skip;
-            queries.limit = parseInt(limit);
-
+            queries.limit = parseInt(limit, 10);
         }
 
+        // Fetch products with filters, sorting, field selection, and pagination
         const products = await Products.find(filters)
             .skip(queries.skip)
             .limit(queries.limit)
@@ -57,18 +53,18 @@ export async function GET(request) {
             .sort(queries.sortBy)
             .populate(["brand", "category"]);
 
+        // Count total products
+        const total = await Products.countDocuments(filters);
 
-        const total = await Products.countDocuments({});
-
-
-
+        // Respond with products data
         return NextResponse.json({
             message: "Get all products successfully",
-            sucess: true,
+            success: true,
             totalCount: total,
-            products: products
-        })
+            products: products,
+        });
     } catch (error) {
+        // Handle errors
         return NextResponse.json(
             { error: error.message },
             { status: 404 }

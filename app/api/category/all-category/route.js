@@ -1,14 +1,18 @@
 import { NextResponse } from "next/server";
 import Category from "@/app/models/categoryModel";
 import { connectDB } from "@/dbConfig/dbConfig";
-import { parseSearchParams } from "@/helpers/parseSearchParams";
+
 
 
 connectDB();
 
 export async function GET(request) {
     try {
-        const { page = 1, limit = 10 } = parseSearchParams(request?.url);
+
+        const { searchParams } = new URL(request.url);
+        const queres = Object.fromEntries(searchParams.entries());
+
+        const { page = 1, limit = 10 } = queres;
 
         const options = {
             page: parseInt(page, 10),
