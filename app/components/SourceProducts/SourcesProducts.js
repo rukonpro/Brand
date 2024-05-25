@@ -9,7 +9,7 @@ import getProducts from '@/lib/product/getAllProducts';
 
 const SourcesProducts = async ({ category }) => {
 
-    const products = await getProducts()
+    const products = await getProducts(`/?category=${category?._id}`)
 
 
 
