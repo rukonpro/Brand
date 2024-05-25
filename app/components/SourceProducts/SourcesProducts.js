@@ -10,34 +10,14 @@ import getProducts from '@/lib/product/getAllProducts';
 
 const SourcesProducts = async ({ category }) => {
 
-    /*   const [products, setProducts] = useState({});
-  
-  
-      const getProductsAll = async () => {
-          const products = await getProducts(`/?category=${category?._id}`);
-  
-          setProducts(products);
-  
-  
-      }
-  
-  
-      useEffect(() => {
-          getProductsAll()
-      }, [])
-   */
-
-    let products
-
-    try {
-        const id = await category?._id;
-        if (!id) return
-        products = await getProducts(`/?category=${id}`);
-
-
-    } catch (error) {
-        console.log(error)
+    const id = await category?._id;
+    const searchParams = {
+        category: id
     }
+
+    let products = await getProducts(searchParams);
+
+
 
 
     return (
