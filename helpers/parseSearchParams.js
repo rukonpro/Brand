@@ -1,9 +1,7 @@
-export const parseSearchParams = (url) => {
-    const newURL = new URL(url);
-    const searchParams = new URLSearchParams(newURL.search);
-    let queres = {};
-    for (let [name, value] of searchParams.entries()) {
-        queres[name] = value;
+export const parseSearchParams = (searchParams) => {
+    const params = {};
+    for (const [key, value] of searchParams.entries()) {
+        params[key] = value;
     }
-    return queres
+    return params;
 };

@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import Products from "@/app/models/productsModel";
 import { connectDB } from "@/dbConfig/dbConfig";
-// import { parseSearchParams } from "@/helpers/parseSearchParams";
+import { parseSearchParams } from "@/helpers/parseSearchParams";
 
 
 connectDB();
@@ -10,7 +10,9 @@ export async function GET(request) {
     try {
         // Extract search parameters from the request URL
         const { searchParams } = new URL(request.url);
-        const queres = Object.fromEntries(searchParams?.entries());
+
+        // Convert searchParams to a regular object
+        const queres = parseSearchParams(searchParams);
 
         let filters = { ...queres };
 
