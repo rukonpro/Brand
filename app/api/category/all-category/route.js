@@ -22,8 +22,8 @@ export async function GET() {
 
         const categorys = await Category
             .find({})
-            .skip((options.page - 1) * options.limit)
-            .limit(options.limit);
+        // .skip((options.page - 1) * options.limit)
+        // .limit(options.limit);
 
         const totalCount = await Category.countDocuments({});
 
