@@ -1,4 +1,5 @@
-import React from 'react';
+"use client"
+import React, { useEffect, useState } from 'react';
 import SourceCard from "@/app/components/SourceProducts/SourceCard";
 import Link from "next/link";
 import SourceProductCard from "@/app/components/SourceProducts/SourceProductCard";
@@ -9,7 +10,21 @@ import getProducts from '@/lib/product/getAllProducts';
 
 const SourcesProducts = async ({ category }) => {
 
-    const products = await getProducts(`/?category=${category?._id}`)
+    const [products, setProducts] = useState({});
+
+
+    const getProductsAll = async () => {
+        const products = await getProducts(`/?category=${category?._id}`);
+
+        setProducts(products);
+
+
+    }
+
+
+    useEffect(() => {
+        getProductsAll()
+    }, [])
 
 
 
