@@ -6,18 +6,18 @@ import { connectDB } from "@/dbConfig/dbConfig";
 
 connectDB();
 
-export async function GET(request) {
+export async function GET() {
     try {
 
-        const { searchParams } = new URL(request.url);
-        const queres = Object.fromEntries(searchParams.entries());
+        // const { searchParams } =await new URL(request.url);
+        // const queres =await Object.fromEntries(searchParams.entries());
 
-        const { page = 1, limit = 10 } = queres;
+        // const { page = 1, limit = 10 } = queres;
 
-        const options = {
-            page: parseInt(page, 10),
-            limit: parseInt(limit, 10),
-        };
+        // const options = {
+        //     page: parseInt(page, 10),
+        //     limit: parseInt(limit, 10),
+        // };
 
 
         const categorys = await Category
