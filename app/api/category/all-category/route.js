@@ -12,18 +12,18 @@ export async function GET() {
         // const { searchParams } =await new URL(request.url);
         // const queres =await Object.fromEntries(searchParams.entries());
 
-        // const { page = 1, limit = 10 } = queres;
+        const { page = 1, limit = 10 } = { page: 1, limit: 10 };
 
-        // const options = {
-        //     page: parseInt(page, 10),
-        //     limit: parseInt(limit, 10),
-        // };
+        const options = {
+            page: parseInt(page, 10),
+            limit: parseInt(limit, 10),
+        };
 
 
         const categorys = await Category
             .find({})
-        // .skip((options.page - 1) * options.limit)
-        // .limit(options.limit);
+            .skip((options.page - 1) * options.limit)
+            .limit(options.limit);
 
         const totalCount = await Category.countDocuments({});
 
