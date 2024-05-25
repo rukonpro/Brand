@@ -1,5 +1,5 @@
-"use client"
-import React, { useEffect, useState } from 'react';
+
+import React from 'react';
 import SourceCard from "@/app/components/SourceProducts/SourceCard";
 import Link from "next/link";
 import SourceProductCard from "@/app/components/SourceProducts/SourceProductCard";
@@ -10,22 +10,34 @@ import getProducts from '@/lib/product/getAllProducts';
 
 const SourcesProducts = async ({ category }) => {
 
-    const [products, setProducts] = useState({});
+    /*   const [products, setProducts] = useState({});
+  
+  
+      const getProductsAll = async () => {
+          const products = await getProducts(`/?category=${category?._id}`);
+  
+          setProducts(products);
+  
+  
+      }
+  
+  
+      useEffect(() => {
+          getProductsAll()
+      }, [])
+   */
+
+    let products
+
+    try {
+        const id = await category?._id;
+        if (!id) return
+        products = await getProducts(`/?category=${id}`);
 
 
-    const getProductsAll = async () => {
-        const products = await getProducts(`/?category=${category?._id}`);
-
-        setProducts(products);
-
-
+    } catch (error) {
+        console.log(error)
     }
-
-
-    useEffect(() => {
-        getProductsAll()
-    }, [])
-
 
 
     return (
