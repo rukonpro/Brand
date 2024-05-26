@@ -1,5 +1,5 @@
-"use client"
-import React, { Suspense, useEffect, useState } from 'react';
+
+import React from 'react';
 import SourceCard from "@/app/components/SourceProducts/SourceCard";
 import Link from "next/link";
 import SourceProductCard from "@/app/components/SourceProducts/SourceProductCard";
@@ -8,31 +8,33 @@ import getProducts from '@/lib/product/getAllProducts';
 
 
 
-const SourcesProducts = ({ category }) => {
-    const [products, setProducts] = useState({})
-
-   
-
-    const getAllProducts = async () => {
+const SourcesProducts = async ({ category }) => {
 
 
-        try {
-            const searchParams = {
-                category: await category?._id
-            }
-
-            const products = await getProducts(searchParams);
-            setProducts(products)
-        } catch (error) {
-            console.log(error)
-        }
+    const searchParams = {
+        category: await category?._id
     }
 
-    useEffect(() => {
-        getAllProducts()
-    }, [])
 
 
+
+    async function getCookieData() {
+
+
+        return new Promise((resolve) =>
+            setTimeout(() => {
+                const products = getProducts(searchParams);
+                // cookies will be called outside of the async context, causing a build-time error
+                resolve(products)
+            }, 3000)
+        )
+    }
+
+
+    const products = await getCookieData();
+
+
+ 
     return (
 
         <div className="sm:px-3">
@@ -49,11 +51,11 @@ const SourcesProducts = ({ category }) => {
                         {
                             products?.products?.slice(0, 10).map((product, index) => {
                                 return (
-                                    <Suspense fallback="Loading..." key={index} className='bg-white'>
+                                    <div key={index} className='bg-white'>
                                         <Link href={`/details/${product._id}`}>
                                             <SourceProductCard product={product} />
                                         </Link>
-                                    </Suspense>
+                                    </div>
                                 )
                             })
                         }
