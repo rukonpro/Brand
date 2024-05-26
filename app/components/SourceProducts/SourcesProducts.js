@@ -11,9 +11,7 @@ import getProducts from '@/lib/product/getAllProducts';
 const SourcesProducts = ({ category }) => {
     const [products, setProducts] = useState({})
 
-    if (!category?._id) {
-        return
-    }
+   
 
     const getAllProducts = async () => {
 
