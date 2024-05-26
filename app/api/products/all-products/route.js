@@ -9,12 +9,12 @@ connectDB();
 export async function GET(request) {
 
     try {
-
+              
         // Extract search parameters from the request URL
         const { searchParams } = new URL(request.url);
 
 
-        // console.log(category)
+        
 
         // Convert searchParams to a regular object
         const queres = parseSearchParams(searchParams);

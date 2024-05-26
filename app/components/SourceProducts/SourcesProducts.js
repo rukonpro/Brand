@@ -3,38 +3,43 @@ import React from 'react';
 import SourceCard from "@/app/components/SourceProducts/SourceCard";
 import Link from "next/link";
 import SourceProductCard from "@/app/components/SourceProducts/SourceProductCard";
-import getProducts from '@/lib/product/getAllProducts';
+// import getProducts from '@/lib/product/getAllProducts';
+import Products from '@/app/models/productsModel';
 
 
 
 
 const SourcesProducts = async ({ category }) => {
-
-
-    const searchParams = {
+    // const searchParams = {
+    //     category: await category?._id
+    // }
+    const filters = {
         category: await category?._id
     }
 
+    let products
+    let total
+    try {
+        products = await Products.find(filters)
+            .populate(["brand", "category"]);
 
+        total = await Products.countDocuments(filters);
 
-
-    async function getCookieData() {
-
-
-        return new Promise((resolve) =>
-            setTimeout(() => {
-                const products = getProducts(searchParams);
-                // cookies will be called outside of the async context, causing a build-time error
-                resolve(products)
-            }, 3000)
-        )
+    } catch (error) {
+        console.log(error)
     }
 
 
-    const products = await getCookieData();
 
 
- 
+
+
+
+
+    // const products = getProducts(searchParams);
+
+
+
     return (
 
         <div className="sm:px-3">
@@ -49,7 +54,7 @@ const SourcesProducts = async ({ category }) => {
                     </div>
                     <div className='grid md:grid-cols-5 grid-cols-2 md:col-span-9 col-span-12 gap-[2px]'>
                         {
-                            products?.products?.slice(0, 10).map((product, index) => {
+                            products?.slice(0, 10).map((product, index) => {
                                 return (
                                     <div key={index} className='bg-white'>
                                         <Link href={`/details/${product._id}`}>
