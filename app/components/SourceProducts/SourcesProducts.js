@@ -16,20 +16,24 @@ const SourcesProducts = ({ category }) => {
     }
 
     const getAllProducts = async () => {
-       
 
-        const searchParams = {
-            category: await category?._id
+
+        try {
+            const searchParams = {
+                category: await category?._id
+            }
+
+            const products = await getProducts(searchParams);
+            setProducts(products)
+        } catch (error) {
+            console.log(error)
         }
-
-        const products = await getProducts(searchParams);
-        setProducts(products)
     }
 
     useEffect(() => {
         getAllProducts()
     }, [])
-    
+
 
     return (
 
