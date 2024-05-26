@@ -1,5 +1,5 @@
-
-import React from 'react';
+"use client"
+import React, { Suspense, useEffect, useState } from 'react';
 import SourceCard from "@/app/components/SourceProducts/SourceCard";
 import Link from "next/link";
 import SourceProductCard from "@/app/components/SourceProducts/SourceProductCard";
@@ -8,17 +8,28 @@ import getProducts from '@/lib/product/getAllProducts';
 
 
 
-const SourcesProducts = async ({ category }) => {
+const SourcesProducts = ({ category }) => {
+    const [products, setProducts] = useState({})
 
-    const id = await category?._id;
-    const searchParams = {
-        category: id
+    if (!category?._id) {
+        return
     }
 
-    let products = await getProducts(searchParams);
+    const getAllProducts = async () => {
+       
 
+        const searchParams = {
+            category: await category?._id
+        }
 
+        const products = await getProducts(searchParams);
+        setProducts(products)
+    }
 
+    useEffect(() => {
+        getAllProducts()
+    }, [])
+    
 
     return (
 
@@ -36,11 +47,11 @@ const SourcesProducts = async ({ category }) => {
                         {
                             products?.products?.slice(0, 10).map((product, index) => {
                                 return (
-                                    <div key={index} className='bg-white'>
+                                    <Suspense fallback="Loading..." key={index} className='bg-white'>
                                         <Link href={`/details/${product._id}`}>
                                             <SourceProductCard product={product} />
                                         </Link>
-                                    </div>
+                                    </Suspense>
                                 )
                             })
                         }
