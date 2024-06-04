@@ -10,14 +10,15 @@ const MyCartItemCard = ({product}) => {
         <div className="grid grid-cols-12 gap-0.5 md:gap-4 p-3 border-b bg-white">
             <div className="col-span-12 md:col-span-2">
                 <Image
-                    src={product.image}
-                    alt={product.title}
+                    src={product?.images?.[0]}
+                    alt={product?.name}
+                    height={100}
+                    width={100}
                     className="w-full h-full object-contain"
                 />
             </div>
             <div className="col-span-12 md:col-span-8">
-                <h1 className="text-lg font-bold">T-shirts with multiple colors, for men
-                    and lady</h1>
+                <h1 className="text-lg font-bold">{product?.name}</h1>
                 <p className="text-sm text-gray-600 py-1">Size: medium, Color: blue,
                     Material: Plastic</p>
                 <p className="text-sm text-gray-600">Seller: Artel Market</p>

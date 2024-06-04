@@ -66,7 +66,7 @@ const SuppliersByRegion = () => {
                             return (
                                 <li key={index} className='grid gap-2 grid-cols-12 items-center'>
                                     <div className='col-span-2'>
-                                        <Image src={data.flag} alt='' />
+                                        <Image src={data.flag} alt='flag icon' />
                                     </div>
                                     <div className="col-span-10">
                                         <h1 className='text-sm text-gray-800'>{data?.country}</h1>

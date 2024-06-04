@@ -2,60 +2,64 @@ import React from 'react';
 import RecommendedItemsCard from './RecommendedItemsCard';
 import Product55 from "@/public/images/product55.png";
 import Link from "next/link";
+import getProducts from '@/lib/product/getAllProducts';
 
 
-export const products=[
-    {
-        image:Product55,
-        title:"Jeans shorts for men blue color",
-        price:10.30
-    },
-    {
-        image:Product55,
-        title:"Jeans shorts for men blue color",
-        price:10.30
-    },
-    {
-        image:Product55,
-        title:"Jeans shorts for men blue color",
-        price:10.30
-    },
-    {
-        image:Product55,
-        title:"Jeans shorts for men blue color",
-        price:10.30
-    },
-    {
-        image:Product55,
-        title:"Jeans shorts for men blue color",
-        price:10.30
-    },
-    {
-        image:Product55,
-        title:"Jeans shorts for men blue color",
-        price:10.30
-    },
-    {
-        image:Product55,
-        title:"Jeans shorts for men blue color",
-        price:10.30
-    },
-    {
-        image:Product55,
-        title:"Jeans shorts for men blue color",
-        price:10.30
-    },
-    {
-        image:Product55,
-        title:"Jeans shorts for men blue color",
-        price:10.30
-    },
-    {
-        image:Product55,
-        title:"Jeans shorts for men blue color",
-        price:10.30
-    },
-]
+// export const products=[
+//     {
+//         image:Product55,
+//         title:"Jeans shorts for men blue color",
+//         price:10.30
+//     },
+//     {
+//         image:Product55,
+//         title:"Jeans shorts for men blue color",
+//         price:10.30
+//     },
+//     {
+//         image:Product55,
+//         title:"Jeans shorts for men blue color",
+//         price:10.30
+//     },
+//     {
+//         image:Product55,
+//         title:"Jeans shorts for men blue color",
+//         price:10.30
+//     },
+//     {
+//         image:Product55,
+//         title:"Jeans shorts for men blue color",
+//         price:10.30
+//     },
+//     {
+//         image:Product55,
+//         title:"Jeans shorts for men blue color",
+//         price:10.30
+//     },
+//     {
+//         image:Product55,
+//         title:"Jeans shorts for men blue color",
+//         price:10.30
+//     },
+//     {
+//         image:Product55,
+//         title:"Jeans shorts for men blue color",
+//         price:10.30
+//     },
+//     {
+//         image:Product55,
+//         title:"Jeans shorts for men blue color",
+//         price:10.30
+//     },
+//     {
+//         image:Product55,
+//         title:"Jeans shorts for men blue color",
+//         price:10.30
+//     },
+// ]
+
+
+ const {products} = await getProducts({});
 const RecommendedItems = () => {
     
     return (
@@ -67,7 +71,7 @@ const RecommendedItems = () => {
                         products.map((product,index)=>{
                             return(
                                <li key={index} >
-                                   <Link href={`/details/${product.title}`}>
+                                   <Link href={`/details/${product?._id}`}>
                                        <RecommendedItemsCard  product={product} />
                                    </Link>
                                </li>

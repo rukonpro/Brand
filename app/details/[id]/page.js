@@ -3,13 +3,13 @@ import Nav from "@/app/components/navbar/nav";
 import TickSign from "@/public/images/tickSign.png";
 import loveIconOutline from "@//public/images/loveIconOutline.png";
 import Image from "next/image";
-import blueCartIcon from "@/public/images/blue-cart.png";
 import SupplierCard from "@/app/components/SupplierCard/SupplierCard";
 import RelatedProducts from "@/app/components/RelatedProducts/RelatedProducts";
 import BackButton from "@/app/components/BackButtons/BackButton";
 import ImageChangeButton from '@/app/components/imageChangeButton/ImageChangeButton';
 import getSingleProduct from '@/lib/product/getSingleProduct';
 import getProducts from '@/lib/product/getAllProducts';
+import AddToCartButton from '@/app/components/AddToCartButton/AddToCartButton';
 
 
 const Details = async ({ params }) => {
@@ -20,13 +20,11 @@ const Details = async ({ params }) => {
 
     const product = await getSingleProduct(params?.id);
 
-    const searchParams = {
-        category: await product?.category?._id,
-
-    }
+    const id = await product?.product?.category?._id;
+   
+    const searchParams = { category: id }
 
     const { products } = await getProducts(searchParams);
-
 
     return (
         <div>
@@ -124,11 +122,7 @@ const Details = async ({ params }) => {
                             </button>
 
                             {/************************Add to cart button ***********************/}
-                            <button type="button"
-                                className="flex items-center gap-4 py-1 px-5 border-2 rounded-lg text-blue-600 mt-4 w-full justify-center hover:border-blue-500">
-                                <Image src={blueCartIcon} alt="blue Cart Icon" />
-                                Add to cart
-                            </button>
+                            <AddToCartButton id={product?._id}/>
                         </div>
                     </div>
                 </div>

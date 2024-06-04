@@ -38,7 +38,7 @@ const Navbar = () => {
                         <Link href="/profiles/messenger">
                             <div className="flex justify-center">
                                 <div className="flex justify-center">
-                                    <Image src={Chat} alt=''/>
+                                    <Image src={Chat} alt='Chat icon'/>
                                 </div>
                             </div>
                             <p className="text-sm text-center sm:block hidden">Massage</p>
@@ -47,7 +47,7 @@ const Navbar = () => {
                     <div>
                         <Link href="/profiles/myOrders">
                             <div className="flex justify-center">
-                                <Image src={Love} alt=''/>
+                                <Image src={Love} alt='Love icon'/>
                             </div>
                             <p className="text-sm text-center sm:block hidden">Orders</p>
                         </Link>

@@ -7,7 +7,7 @@ const OurExtraServicesCard = ({ data }) => {
         <div>
 
             <div className='h-[55px] w-[55px] rounded-full border-2 border-white bg-[#D1E7FF] flex justify-center items-center absolute top-[85px] right-5 z-[10]'>
-                <Image src={data?.icon} alt=''
+                <Image src={data?.icon}  alt={data?.title}
                     className='h-5 w-5'
                 />
             </div>

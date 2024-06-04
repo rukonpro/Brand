@@ -38,7 +38,7 @@ const OfferTiming = () => {
             </div>
 
             <div className="h-[256px]">
-                <Image className='w-full h-full object-cover' src={image} alt=''/>
+                <Image className='w-full h-full object-cover' src={image} alt='offter photo'/>
             </div>
         </div>
 

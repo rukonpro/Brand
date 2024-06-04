@@ -28,7 +28,7 @@ const JoinNowCard = () => {
             {!user?.email && <div className='grid grid-cols-3 gap-2 items-center'>
                 <div className="col-span-1">
                     <Image className="rounded-full h-[44px] w-[44px] object-contain bg-white p-1"
-                        src={Avater} alt='' />
+                        src={Avater} alt='Avater' />
                 </div>
                 <div className="col-span-2">
                     <span>{

@@ -146,7 +146,7 @@ const Footer = () => {
                 <SubscribeOnOurNewsletter/>
                 <div className='grid grid-cols-12 gap-5 max-w-[1200px] mx-auto px-3 py-10'>
                     <div className='md:col-span-3 col-span-12'>
-                        <Image src={FooterData?.logo} alt='' />
+                        <Image src={FooterData?.logo} alt='Brand logo' />
                         <p className='pt-5'>{FooterData?.description}</p>
 
                         <ul className='flex gap-3 pt-5'>
@@ -155,7 +155,7 @@ const Footer = () => {
                                     return (
                                         <li key={index}>
                                             <a href='/' >
-                                                <Image src={data} alt='' />
+                                                <Image src={data} alt={data?.title} />
                                             </a>
                                         </li>
                                     )
@@ -181,7 +181,7 @@ const Footer = () => {
                                                                     <Link href={link?.path}>{link?.title}</Link> :
 
                                                                     <a href={link?.link} >
-                                                                        <Image src={link.icon} alt=''/>
+                                                                        <Image src={link.icon} alt={link?.title}/>
                                                                     </a>
                                                             }
                                                         </li>

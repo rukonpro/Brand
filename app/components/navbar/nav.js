@@ -11,7 +11,7 @@ const Nav = () => {
                     <div className=" flex justify-between">
                         <div className="flex gap-3 font-bold">
                             <button>
-                                <Image src={MenuIcon} alt=''/>
+                                <Image src={MenuIcon} alt='MenuIcon'/>
                             </button>
                             <Link href="/">All Cetagory</Link>
                             <Link href="/">Hot offers</Link>

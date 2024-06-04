@@ -2,6 +2,8 @@ import React from 'react';
 import Link from "next/link";
 import RelatedProductCard from "@/app/components/RelatedProductCard/RelatedProductCard";
 
+import AddToCartButton from '../AddToCartButton/AddToCartButton';
+
 const RelatedProducts = async ({ products }) => {
 
 
@@ -13,13 +15,16 @@ const RelatedProducts = async ({ products }) => {
                     {
                         products?.map((product, index) => {
                             return (
-                                <li key={index}>
+                                <li key={index} className='bg-white md:border-2 border-blue-200 md:rounded-lg p-3 flex-1 flex flex-col justify-between'>
                                     <Link href={`/details/${product._id}`}>
 
                                         {/************************Related products Card ***********************/}
 
                                         <RelatedProductCard product={product} />
+
                                     </Link>
+
+                                    <AddToCartButton id={product?._id} />
                                 </li>
                             )
                         })

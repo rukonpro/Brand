@@ -6,7 +6,11 @@ const SavedForLaterCard = ({product}) => {
     return (
         <div className="lg:border-2 border-blue-200 md:rounded-lg p-3 bg-white">
             <div>
-                <Image src={product.image} alt={product.title}
+                <Image 
+                src={product?.images?.[0]}
+                 alt={product.name}
+                 height={300}
+                 width={300}
                        className="w-full h-28 md:h-36 object-contain overflow-hidden"
                 />
             </div>

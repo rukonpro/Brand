@@ -63,7 +63,7 @@ const Banner = () => {
                                 Learn more
                             </button>
                         </div>
-                        <Image src={BannerImage} alt='' className='h-full w-full object-cover  '/>
+                        <Image src={BannerImage} alt='Electronic items' className='h-full w-full object-cover  '/>
                     </div>
 
                     <div

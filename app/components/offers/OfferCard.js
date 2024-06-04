@@ -1,11 +1,10 @@
 import React from 'react';
-import Product1 from "@/public/images/image35.png";
 import Image from 'next/image';
 const OfferCard = ({product}) => {
     return (
         <div className="w-36 h-[240px] flex flex-col justify-between  ">
             <div className='flex justify-center p-2'>
-                <Image src={product.image} alt='' className="h-36 w-full object-contain" />
+                <Image src={product.image} alt={product?.title} className="h-36 w-full object-contain" />
             </div>
 
             <div className='flex justify-center'>
