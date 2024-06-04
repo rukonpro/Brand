@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Suspense } from 'react';
 import Nav from "@/app/components/navbar/nav";
 import TickSign from "@/public/images/tickSign.png";
 import loveIconOutline from "@//public/images/loveIconOutline.png";
@@ -10,6 +10,7 @@ import ImageChangeButton from '@/app/components/imageChangeButton/ImageChangeBut
 import getSingleProduct from '@/lib/product/getSingleProduct';
 import getProducts from '@/lib/product/getAllProducts';
 import AddToCartButton from '@/app/components/AddToCartButton/AddToCartButton';
+import Loading from '@/app/loading';
 
 
 const Details = async ({ params }) => {
@@ -21,8 +22,8 @@ const Details = async ({ params }) => {
     const product = await getSingleProduct(params?.id);
 
     const id = await product?.product?.category?._id;
-   
-    const searchParams = { category: id }
+
+    const searchParams = { category: await id }
 
     const { products } = await getProducts(searchParams);
 
@@ -122,13 +123,15 @@ const Details = async ({ params }) => {
                             </button>
 
                             {/************************Add to cart button ***********************/}
-                            <AddToCartButton id={product?._id}/>
+                            <AddToCartButton id={product?._id} />
                         </div>
                     </div>
                 </div>
 
                 {/************************Related products ***********************/}
-                <RelatedProducts products={products} />
+                <Suspense fallback={<Loading />}>
+                    <RelatedProducts products={products} />
+                </Suspense>
             </div>
         </div>
     );

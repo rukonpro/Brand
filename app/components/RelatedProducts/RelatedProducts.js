@@ -4,7 +4,7 @@ import RelatedProductCard from "@/app/components/RelatedProductCard/RelatedProdu
 
 import AddToCartButton from '../AddToCartButton/AddToCartButton';
 
-const RelatedProducts = async ({ products }) => {
+const RelatedProducts = ({ products }) => {
 
 
     return (

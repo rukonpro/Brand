@@ -14,7 +14,7 @@ const RecommendedItemsCard = ({ product }) => {
                     className=" w-auto h-28 object-fill"
                     alt={product?.name} />
             </div>
-            <h1 className='text-lg pt-5 font-bold'>${product.price}</h1>
+            <h1 className='text-lg pt-5 font-bold'>${product?.price}</h1>
             <p className="text-gray-500 pt-1 truncate hover:text-clip">{product?.name}</p>
         </div>
     );
