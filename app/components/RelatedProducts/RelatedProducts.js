@@ -3,10 +3,16 @@ import Link from "next/link";
 import RelatedProductCard from "@/app/components/RelatedProductCard/RelatedProductCard";
 
 import AddToCartButton from '../AddToCartButton/AddToCartButton';
+import getProducts from '@/lib/product/getAllProducts';
 
-const RelatedProducts = ({ products }) => {
+const RelatedProducts = async ({ id }) => {
+    const searchParams = {
+        category:  id
+    };
 
+    const { products } = await getProducts(searchParams);
 
+    
     return (
         <div className="md:bg-white md:p-3 mt-10 md:rounded-lg border-2">
             <h1 className="text-xl font-bold text-gray-600 py-5 px-3 md:px-0">Related products</h1>

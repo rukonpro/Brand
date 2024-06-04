@@ -10,6 +10,7 @@ import ImageChangeButton from '@/app/components/imageChangeButton/ImageChangeBut
 import getSingleProduct from '@/lib/product/getSingleProduct';
 import getProducts from '@/lib/product/getAllProducts';
 import AddToCartButton from '@/app/components/AddToCartButton/AddToCartButton';
+import RelatedProducts from '@/app/components/RelatedProducts/RelatedProducts';
 
 
 
@@ -19,11 +20,9 @@ const Details = async ({ params }) => {
 
     const product = await getSingleProduct(params?.id);
 
-    // category: await product?.product?.category?._id
 
-    const searchParams = {};
 
-    const reletedProducts = await getProducts(searchParams);
+
 
     return (
         <div>
@@ -128,7 +127,7 @@ const Details = async ({ params }) => {
 
                 {/************************Related products ***********************/}
 
-                {/* <RelatedProducts products={reletedProducts?.products} /> */}
+                <RelatedProducts id={product?.product?.category?._id} />
 
             </div>
         </div>
