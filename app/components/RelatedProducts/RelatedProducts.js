@@ -16,7 +16,7 @@ const RelatedProducts = ({ products }) => {
                         products?.map((product, index) => {
                             return (
                                 <li key={index} className='bg-white md:border-2 border-blue-200 md:rounded-lg p-3 flex-1 flex flex-col justify-between'>
-                                    <Link href={`/details/${product._id}`}>
+                                    <Link href={`/details/${product?._id}`}>
 
                                         {/************************Related products Card ***********************/}
 
