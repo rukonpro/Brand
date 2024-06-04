@@ -21,9 +21,9 @@ const Details = async ({ params }) => {
 
 
 
-    const searchParams = { category: await product?.product?.category?._id}
+    const searchParams = { category: await product?.product?.category?._id }
 
-    const { products } = await getProducts(searchParams);
+    const reletedProducts = await getProducts(searchParams);
 
     return (
         <div>
@@ -128,7 +128,7 @@ const Details = async ({ params }) => {
 
                 {/************************Related products ***********************/}
 
-                <RelatedProducts products={products} />
+                <RelatedProducts products={reletedProducts?.products} />
 
             </div>
         </div>
