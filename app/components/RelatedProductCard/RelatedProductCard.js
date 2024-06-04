@@ -7,12 +7,12 @@ const RelatedProductCard = ({ product }) => {
         <div>
             <div>
                 <Image
-                    src={product.images?.[0]}
+                    src={product?.images?.[0]}
                     alt={product?.name}
                     width={300}
                     height={300}
                     loading='lazy'
-                    blurDataURL={product.images?.[0]}
+                    blurDataURL={product?.images?.[0]}
                     className="w-full h-52 object-contain overflow-hidden"
                 />
             </div>
