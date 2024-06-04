@@ -1,4 +1,4 @@
-import React, { Suspense } from 'react';
+import React from 'react';
 import Nav from "@/app/components/navbar/nav";
 import TickSign from "@/public/images/tickSign.png";
 import loveIconOutline from "@//public/images/loveIconOutline.png";
@@ -10,12 +10,10 @@ import ImageChangeButton from '@/app/components/imageChangeButton/ImageChangeBut
 import getSingleProduct from '@/lib/product/getSingleProduct';
 import getProducts from '@/lib/product/getAllProducts';
 import AddToCartButton from '@/app/components/AddToCartButton/AddToCartButton';
-import Loading from '@/app/loading';
+
 
 
 const Details = async ({ params }) => {
-    // const { product, isError, isLoading } = useSingleProducts(params.id)
-
     /*//https://www.figma.com/file/OO4BPb5dJMEaRxPvBPx2uC/Figma-ecommerce-UI-Kit-(web-%26-mobile)-(Community)?node-id=238%3A4835&mode=dev
 */
 
@@ -129,12 +127,23 @@ const Details = async ({ params }) => {
                 </div>
 
                 {/************************Related products ***********************/}
-                <Suspense fallback={<Loading />}>
-                    <RelatedProducts products={products} />
-                </Suspense>
+
+                <RelatedProducts products={products} />
+
             </div>
         </div>
     );
 };
 
-export default Details;
+
+
+
+// export async function generateStaticParams() {
+//     const searchParams = {};
+//     const { products } = await getProducts(searchParams);
+
+//     return products?.map((product) => ({
+//         id: product?._id,
+//     }))
+// }
+// export default Details;
