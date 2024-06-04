@@ -19,9 +19,9 @@ const Details = async ({ params }) => {
 
     const product = await getSingleProduct(params?.id);
 
+    // category: await product?.product?.category?._id
 
-
-    const searchParams = { category: await product?.product?.category?._id }
+    const searchParams = {};
 
     const reletedProducts = await getProducts(searchParams);
 
