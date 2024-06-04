@@ -146,4 +146,4 @@ const Details = async ({ params }) => {
 //         id: product?._id,
 //     }))
 // }
-// export default Details;
+export default Details;
