@@ -4,7 +4,7 @@ import TickSign from "@/public/images/tickSign.png";
 import loveIconOutline from "@//public/images/loveIconOutline.png";
 import Image from "next/image";
 import SupplierCard from "@/app/components/SupplierCard/SupplierCard";
-import RelatedProducts from "@/app/components/RelatedProducts/RelatedProducts";
+// import RelatedProducts from "@/app/components/RelatedProducts/RelatedProducts";
 import BackButton from "@/app/components/BackButtons/BackButton";
 import ImageChangeButton from '@/app/components/imageChangeButton/ImageChangeButton';
 import getSingleProduct from '@/lib/product/getSingleProduct';
@@ -128,7 +128,7 @@ const Details = async ({ params }) => {
 
                 {/************************Related products ***********************/}
 
-                <RelatedProducts products={reletedProducts?.products} />
+                {/* <RelatedProducts products={reletedProducts?.products} /> */}
 
             </div>
         </div>
