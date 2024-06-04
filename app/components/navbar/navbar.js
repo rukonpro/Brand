@@ -18,7 +18,7 @@ const Navbar = () => {
                   <div className="grid grid-cols-4 items-center">
                      <div className="col-span-1 md:hidden block">
                         <button type="button">
-                            <Image src={MenuIcon} alt=""/>
+                            <Image src={MenuIcon} alt="MenuIcon"/>
                         </button>
                      </div>
                     <div className="md:col-span-4 col-span-3">

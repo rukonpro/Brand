@@ -1,44 +1,20 @@
-
 import React from 'react';
 import SourceCard from "@/app/components/SourceProducts/SourceCard";
 import Link from "next/link";
 import SourceProductCard from "@/app/components/SourceProducts/SourceProductCard";
-// import getProducts from '@/lib/product/getAllProducts';
-import Products from '@/app/models/productsModel';
+import getProducts from '@/lib/product/getAllProducts';
 
 
 
 
 const SourcesProducts = async ({ category }) => {
-    // const searchParams = {
-    //     category: await category?._id
-    // }
-    const filters = {
-        category: await category?._id
+
+    const searchParams = {
+        category: await category._id,
+        limit: 10,
+        page: 1
     }
-
-    let products
-    let total
-    try {
-        products = await Products.find(filters)
-            .populate(["brand", "category"]);
-
-        total = await Products.countDocuments(filters);
-
-    } catch (error) {
-        console.log(error)
-    }
-
-
-
-
-
-
-
-
-    // const products = getProducts(searchParams);
-
-
+    const { products } = await getProducts(searchParams);
 
     return (
 

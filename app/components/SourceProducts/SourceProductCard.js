@@ -12,8 +12,8 @@ const SourceProductCard = ({ product }) => {
                     src={product?.images?.[0]}
                     height={100}
                     width={100}
+                    loading="lazy"
                     alt={product.name}
-                    loading='lazy'
                     blurDataURL={product?.images?.[0]}
                     className=" w-full object-cover"
                 />

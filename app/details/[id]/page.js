@@ -9,6 +9,7 @@ import RelatedProducts from "@/app/components/RelatedProducts/RelatedProducts";
 import BackButton from "@/app/components/BackButtons/BackButton";
 import ImageChangeButton from '@/app/components/imageChangeButton/ImageChangeButton';
 import getSingleProduct from '@/lib/product/getSingleProduct';
+import getProducts from '@/lib/product/getAllProducts';
 
 
 const Details = async ({ params }) => {
@@ -17,7 +18,16 @@ const Details = async ({ params }) => {
     /*//https://www.figma.com/file/OO4BPb5dJMEaRxPvBPx2uC/Figma-ecommerce-UI-Kit-(web-%26-mobile)-(Community)?node-id=238%3A4835&mode=dev
 */
 
-    const product = await getSingleProduct(params.id);
+    const product = await getSingleProduct(params?.id);
+
+    const searchParams = {
+        category: await product?.category?._id,
+
+    }
+
+    const { products } = await getProducts(searchParams);
+
+
     return (
         <div>
             <Nav />
@@ -33,12 +43,14 @@ const Details = async ({ params }) => {
                 </div>
                 <div className="grid grid-cols-12 gap-4 border-2 p-3 py-10  md:bg-white md:rounded-lg">
                     <div className="col-span-12 md:col-span-4">
-                        <ImageChangeButton images={product?.product?.images} />
+                        <ImageChangeButton
+                            images={product?.product?.images}
+                            name={product?.product?.name} />
                     </div>
 
                     <div className="col-span-12 md:col-span-8 lg:col-span-5">
                         <div className="flex  gap-1">
-                            <Image src={TickSign} alt="" />
+                            <Image src={TickSign} alt="TickSign" />
                             <p className="text-sm">InStock</p>
                         </div>
                         <div className="pt-5">
@@ -122,7 +134,7 @@ const Details = async ({ params }) => {
                 </div>
 
                 {/************************Related products ***********************/}
-                <RelatedProducts />
+                <RelatedProducts products={products} />
             </div>
         </div>
     );
