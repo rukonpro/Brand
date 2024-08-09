@@ -21,7 +21,11 @@ const Details = async ({ params }) => {
     const product = await getSingleProduct(params?.id);
 
 
+    const searchParams = {
+        category: product?.product?.category?._id
+    };
 
+    const { products } = await getProducts(searchParams);
 
 
     return (
@@ -128,10 +132,9 @@ const Details = async ({ params }) => {
                 </Suspense>
 
                 {/************************Related products ***********************/}
-               {product?.product?.category?._id? <Suspense fallback={<h1>Loading...</h1>}>
-
-                    <RelatedProducts id={product?.product?.category?._id} />
-                </Suspense>:<h1>Loading...</h1>}
+                <Suspense fallback={<h1>Loading...</h1>}>
+                    <RelatedProducts products={products} />
+                </Suspense>
 
             </div>
         </div>

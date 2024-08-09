@@ -3,18 +3,11 @@ import Link from "next/link";
 import RelatedProductCard from "@/app/components/RelatedProductCard/RelatedProductCard";
 
 import AddToCartButton from '../AddToCartButton/AddToCartButton';
-import getProducts from '@/lib/product/getAllProducts';
 
-const RelatedProducts = async ({ id }) => {
 
-    if (!id) {
-        return
-    }
-    const searchParams = {
-        category: id
-    };
+const RelatedProducts = async ({ products}) => {
 
-    const { products } = await getProducts(searchParams);
+   
 
 
     return (
