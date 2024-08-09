@@ -8,9 +8,9 @@ import SupplierCard from "@/app/components/SupplierCard/SupplierCard";
 import BackButton from "@/app/components/BackButtons/BackButton";
 import ImageChangeButton from '@/app/components/imageChangeButton/ImageChangeButton';
 import getSingleProduct from '@/lib/product/getSingleProduct';
-import getProducts from '@/lib/product/getAllProducts';
+
 import AddToCartButton from '@/app/components/AddToCartButton/AddToCartButton';
-import RelatedProducts from '@/app/components/RelatedProducts/RelatedProducts';
+// import RelatedProducts from '@/app/components/RelatedProducts/RelatedProducts';
 
 
 
@@ -21,11 +21,11 @@ const Details = async ({ params }) => {
     const product = await getSingleProduct(params?.id);
 
 
-    const searchParams = {
-        category: product?.product?.category?._id
-    };
+    // const searchParams = {
+    //     category: product?.product?.category?._id
+    // };
 
-    const { products } = await getProducts(searchParams);
+    // const { products } = await getProducts(searchParams);
 
 
     return (
@@ -132,9 +132,9 @@ const Details = async ({ params }) => {
                 </Suspense>
 
                 {/************************Related products ***********************/}
-                <Suspense fallback={<h1>Loading...</h1>}>
+                {/* <Suspense fallback={<h1>Loading...</h1>}>
                     <RelatedProducts products={products} />
-                </Suspense>
+                </Suspense> */}
 
             </div>
         </div>
