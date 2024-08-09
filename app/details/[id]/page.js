@@ -128,10 +128,10 @@ const Details = async ({ params }) => {
                 </Suspense>
 
                 {/************************Related products ***********************/}
-                <Suspense fallback={<h1>Loading...</h1>}>
+               {product?.product?.category?._id? <Suspense fallback={<h1>Loading...</h1>}>
 
                     <RelatedProducts id={product?.product?.category?._id} />
-                </Suspense>
+                </Suspense>:<h1>Loading...</h1>}
 
             </div>
         </div>
