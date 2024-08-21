@@ -125,7 +125,7 @@ const Details = async ({ params }) => {
                                 </button>
 
                                 {/************************Add to cart button ***********************/}
-                                <AddToCartButton id={product?._id} />
+                                <AddToCartButton id={product?.product?._id} />
                             </div>
                         </div>
                     </div>
