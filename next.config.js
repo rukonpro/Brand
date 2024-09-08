@@ -1,6 +1,14 @@
 module.exports = {
     images: {
-        domains: ['https://rukonpro.imgbb.com', 'i.ibb.co', "adminapi.applegadgetsbd.com", "chenabazar.com"],
+        domains: ['rukonpro.imgbb.com', 'i.ibb.co', "i.ibb.co.com","adminapi.applegadgetsbd.com", "chenabazar.com","i.imghippo.com"],
+        // remotePatterns: [
+        //     {
+        //         protocol: 'https',
+        //         hostname: 'i.ibb.co',
+        //         port: '',
+        //         pathname: '/**',
+        //     },
+        // ],
     }
     
 }

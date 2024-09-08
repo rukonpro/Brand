@@ -4,28 +4,29 @@ import TickSign from "@/public/images/tickSign.png";
 import loveIconOutline from "@//public/images/loveIconOutline.png";
 import Image from "next/image";
 import SupplierCard from "@/app/components/SupplierCard/SupplierCard";
-// import RelatedProducts from "@/app/components/RelatedProducts/RelatedProducts";
 import BackButton from "@/app/components/BackButtons/BackButton";
 import ImageChangeButton from '@/app/components/imageChangeButton/ImageChangeButton';
-import getSingleProduct from '@/lib/product/getSingleProduct';
-
 import AddToCartButton from '@/app/components/AddToCartButton/AddToCartButton';
-// import RelatedProducts from '@/app/components/RelatedProducts/RelatedProducts';
+import axios from "axios";
+import RelatedProducts from "@/app/components/RelatedProducts/RelatedProducts";
+import Loading from "@/app/loading";
 
 
+
+const getProduct= async ({id})=>{
+    try {
+        return await axios.get(`http://localhost:3000/api/product/${id}/details`)
+    }catch (e) {
+        console.log(e)
+    }
+}
 
 const Details = async ({ params }) => {
     /*//https://www.figma.com/file/OO4BPb5dJMEaRxPvBPx2uC/Figma-ecommerce-UI-Kit-(web-%26-mobile)-(Community)?node-id=238%3A4835&mode=dev
 */
 
-    const product = await getSingleProduct(params?.id);
+    const product = await getProduct({id: params.id});
 
-
-    // const searchParams = {
-    //     category: product?.product?.category?._id
-    // };
-
-    // const { products } = await getProducts(searchParams);
 
 
     return (
@@ -45,8 +46,8 @@ const Details = async ({ params }) => {
                     <div className="grid grid-cols-12 gap-4 border-2 p-3 py-10  md:bg-white md:rounded-lg">
                         <div className="col-span-12 md:col-span-4">
                             <ImageChangeButton
-                                images={product?.product?.images}
-                                name={product?.product?.name} />
+                                images={product?.data?.photos}
+                                name={product?.data?.name} />
                         </div>
 
                         <div className="col-span-12 md:col-span-8 lg:col-span-5">
@@ -55,7 +56,7 @@ const Details = async ({ params }) => {
                                 <p className="text-sm">InStock</p>
                             </div>
                             <div className="pt-5">
-                                <h1 className="text-2xl font-bold">{product?.product?.name}</h1>
+                                <h1 className="text-2xl font-bold">{product?.data?.name}</h1>
 
                                 <div className="grid grid-cols-3 gap-1 bg-orange-100/50 p-3 mt-3">
                                     <div>
@@ -125,16 +126,16 @@ const Details = async ({ params }) => {
                                 </button>
 
                                 {/************************Add to cart button ***********************/}
-                                <AddToCartButton id={product?.product?._id} />
+                                <AddToCartButton id={product?.data?.id} />
                             </div>
                         </div>
                     </div>
                 </Suspense>
 
                 {/************************Related products ***********************/}
-                {/* <Suspense fallback={<h1>Loading...</h1>}>
-                    <RelatedProducts products={products} />
-                </Suspense> */}
+                 <Suspense fallback={<Loading/>}>
+                    <RelatedProducts categoryId={product?.data?.categoryId} />
+                </Suspense>
 
             </div>
         </div>
@@ -142,14 +143,4 @@ const Details = async ({ params }) => {
 };
 
 
-
-
-// export async function generateStaticParams() {
-//     const searchParams = {};
-//     const { products } = await getProducts(searchParams);
-
-//     return products?.map((product) => ({
-//         id: product?._id,
-//     }))
-// }
 export default Details;

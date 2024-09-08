@@ -1,0 +1,75 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+model Category {
+  id          String    @id @default(auto()) @map("_id") @db.ObjectId
+  name        String
+  photo       String
+  description String?
+  Products Product[]
+}
+
+model Brand {
+  id          String    @id @default(auto()) @map("_id") @db.ObjectId
+  name        String
+  logo        String
+  website     String?
+  Products Product[]
+}
+
+model Review {
+  id         String   @id @default(auto()) @map("_id") @db.ObjectId
+  user       String
+  body       String
+  rating     Int
+  createdAt  DateTime @default(now())
+}
+
+model Dimension {
+  id      String  @id @default(auto()) @map("_id") @db.ObjectId
+  length  Float?
+  width   Float?
+  height  Float?
+  Product Product? @relation
+}
+
+model Product {
+  id              String        @id @default(auto()) @map("_id") @db.ObjectId
+  name            String
+  description     String
+  photos          String[]      // Array of photo URLs
+  price           Float
+  material        String?
+  quantity        Int
+  colors          String[]      @default([])
+  sizes           String[]      @default([])
+  rating          Float         @default(0)
+  tags            String[]      @default([])
+  availability    Availability  @default(IN_STOCK)
+  status          Status        @default(ACTIVE)
+  brand           Brand?        @relation(fields: [brandId], references: [id])
+  brandId         String?       @db.ObjectId
+  category        Category?     @relation(fields: [categoryId], references: [id])
+  categoryId      String?       @db.ObjectId
+  dimension       Dimension?    @relation(fields: [dimensionId], references: [id])
+  dimensionId     String?       @db.ObjectId @unique
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+}
+
+
+enum Availability {
+  IN_STOCK
+  OUT_OF_STOCK
+}
+
+enum Status {
+  ACTIVE
+  INACTIVE
+  DISCONTINUED
+}

@@ -9,12 +9,12 @@ const SourceProductCard = ({ product }) => {
             </div>
             <div className='col-span-3 flex items-end'>
                 <Image
-                    src={product?.images?.[0]}
+                    src={product?.photos?.[0]}
                     height={100}
                     width={100}
-                    loading="lazy"
+                    loading="eager"
                     alt={product.name}
-                    blurDataURL={product?.images?.[0]}
+                    blurDataURL={product?.photos?.[0]}
                     className=" w-full object-cover"
                 />
             </div>

@@ -3,11 +3,24 @@ import Link from "next/link";
 import RelatedProductCard from "@/app/components/RelatedProductCard/RelatedProductCard";
 
 import AddToCartButton from '../AddToCartButton/AddToCartButton';
+import axios from "axios";
 
 
-const RelatedProducts = async ({ products}) => {
+const getProducts= async ({categoryId})=>{
+    try {
+        return await axios.get("http://localhost:3000/api/product/findMany",{
+            params:{
+                categoryId:categoryId
+            }
+        });
+    }catch(error){
+        console.log(error);
+    }
+}
 
-   
+const RelatedProducts = async ({ categoryId}) => {
+
+   const products=await getProducts({categoryId});
 
 
     return (
@@ -16,10 +29,10 @@ const RelatedProducts = async ({ products}) => {
             <Suspense fallback={<h1>Loading...</h1>}>
                 <ol className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 gap-0.5 md:gap-4">
                     {
-                      products?.length?  products?.map((product, index) => {
+                      products?.data?.map((product, index) => {
                             return (
                                 <li key={index} className='bg-white md:border-2 border-blue-200 md:rounded-lg p-3 flex-1 flex flex-col justify-between'>
-                                    <Link href={`/details/${product?._id}`}>
+                                    <Link href={`/details/${product?.id}`}>
 
                                         {/************************Related products Card ***********************/}
 
@@ -27,10 +40,10 @@ const RelatedProducts = async ({ products}) => {
 
                                     </Link>
 
-                                    <AddToCartButton id={product?._id} />
+                                    <AddToCartButton id={product?.id} />
                                 </li>
                             )
-                        }):null
+                        })
                     }
                 </ol>
             </Suspense>

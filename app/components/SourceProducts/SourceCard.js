@@ -16,12 +16,12 @@ const SourceCard = ({ photo, name, id }) => {
             </div>
 
             <div>
-                <Image 
-                className='w-full h-full object-cover' 
-                src={photo} 
-                height={300} 
-                width={300} 
-                loading='lazy'
+                <Image
+                className='w-full h-full object-cover'
+                src={photo}
+                height={300}
+                width={300}
+                loading="lazy"
                 blurDataURL={photo}
                 alt={name} />
             </div>
