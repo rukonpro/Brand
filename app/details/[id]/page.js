@@ -10,12 +10,13 @@ import AddToCartButton from '@/app/components/AddToCartButton/AddToCartButton';
 import axios from "axios";
 import RelatedProducts from "@/app/components/RelatedProducts/RelatedProducts";
 import Loading from "@/app/loading";
+import baseURL from "@/app/utils/baseURL";
 
 
 
 const getProduct= async ({id})=>{
     try {
-        return await axios.get(`http://localhost:3000/api/product/${id}/details`)
+        return await axios.get(`${baseURL}/api/product/${id}/details`)
     }catch (e) {
         console.log(e)
     }

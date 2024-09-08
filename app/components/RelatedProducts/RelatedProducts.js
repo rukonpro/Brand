@@ -4,11 +4,12 @@ import RelatedProductCard from "@/app/components/RelatedProductCard/RelatedProdu
 
 import AddToCartButton from '../AddToCartButton/AddToCartButton';
 import axios from "axios";
+import baseURL from "@/app/utils/baseURL";
 
 
 const getProducts= async ({categoryId})=>{
     try {
-        return await axios.get("http://localhost:3000/api/product/findMany",{
+        return await axios.get(`${baseURL}/api/product/findMany`,{
             params:{
                 categoryId:categoryId
             }

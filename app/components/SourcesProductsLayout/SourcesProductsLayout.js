@@ -2,13 +2,14 @@ import React, {Suspense} from 'react';
 import SourcesProducts from '../SourceProducts/SourcesProducts';
 import axios from "axios";
 import Loading from "@/app/loading";
+import baseURL from "@/app/utils/baseURL";
 
 
 
 
 export const getAllCategory= async ()=> {
     try {
-        return await axios.get(`http://localhost:3000/api/category/findMany`);
+        return await axios.get(`${baseURL}/api/category/findMany`);
     } catch (error) {
         console.log(error);
     }

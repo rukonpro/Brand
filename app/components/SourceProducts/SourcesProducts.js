@@ -3,14 +3,15 @@ import SourceCard from "@/app/components/SourceProducts/SourceCard";
 import Link from "next/link";
 import SourceProductCard from "@/app/components/SourceProducts/SourceProductCard";
 import axios from "axios";
-// import getProducts from '@/lib/product/getAllProducts';
+import baseURL from "@/app/utils/baseURL";
+
 
 
 
 
 const getProducts= async ({categoryId})=>{
        try {
-           return await axios.get("http://localhost:3000/api/product/findMany",{
+           return await axios.get(`${baseURL}/api/product/findMany`,{
                params:{
                    categoryId:categoryId
                }
