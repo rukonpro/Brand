@@ -5,28 +5,28 @@ import loveIconOutline from "@//public/images/loveIconOutline.png";
 import Image from "next/image";
 import SupplierCard from "@/app/components/SupplierCard/SupplierCard";
 import BackButton from "@/app/components/BackButtons/BackButton";
-import ImageChangeButton from '@/app/components/imageChangeButton/ImageChangeButton';
-import AddToCartButton from '@/app/components/AddToCartButton/AddToCartButton';
-import axios from "axios";
-import RelatedProducts from "@/app/components/RelatedProducts/RelatedProducts";
-import Loading from "@/app/loading";
-import baseURL from "@/app/utils/baseURL";
+// import ImageChangeButton from '@/app/components/imageChangeButton/ImageChangeButton';
+// import AddToCartButton from '@/app/components/AddToCartButton/AddToCartButton';
+// import axios from "axios";
+// import RelatedProducts from "@/app/components/RelatedProducts/RelatedProducts";
+// import Loading from "@/app/loading";
+// import baseURL from "@/app/utils/baseURL";
 
 
 
-const getProduct= async ({id})=>{
-    try {
-        return await axios.get(`${baseURL}/api/product/${id}/details`)
-    }catch (e) {
-        console.log(e)
-    }
-}
+// const getProduct= async ({id})=>{
+//     try {
+//         return await axios.get(`${baseURL}/api/product/${id}/details`)
+//     }catch (e) {
+//         console.log(e)
+//     }
+// }
 
-const Details = async ({ params }) => {
+const Details =  ({ params }) => {
     /*//https://www.figma.com/file/OO4BPb5dJMEaRxPvBPx2uC/Figma-ecommerce-UI-Kit-(web-%26-mobile)-(Community)?node-id=238%3A4835&mode=dev
 */
 
-    const product = await getProduct({id: params.id});
+    // const product = await getProduct({id: params.id});
 
 
 
@@ -46,9 +46,9 @@ const Details = async ({ params }) => {
                 <Suspense fallback={<h1>Loading...</h1>}>
                     <div className="grid grid-cols-12 gap-4 border-2 p-3 py-10  md:bg-white md:rounded-lg">
                         <div className="col-span-12 md:col-span-4">
-                            <ImageChangeButton
-                                images={product?.data?.photos}
-                                name={product?.data?.name} />
+                            {/*<ImageChangeButton*/}
+                            {/*    images={product?.data?.photos}*/}
+                            {/*    name={product?.data?.name} />*/}
                         </div>
 
                         <div className="col-span-12 md:col-span-8 lg:col-span-5">
@@ -57,7 +57,7 @@ const Details = async ({ params }) => {
                                 <p className="text-sm">InStock</p>
                             </div>
                             <div className="pt-5">
-                                <h1 className="text-2xl font-bold">{product?.data?.name}</h1>
+                                {/*<h1 className="text-2xl font-bold">{product?.data?.name}</h1>*/}
 
                                 <div className="grid grid-cols-3 gap-1 bg-orange-100/50 p-3 mt-3">
                                     <div>
@@ -127,16 +127,16 @@ const Details = async ({ params }) => {
                                 </button>
 
                                 {/************************Add to cart button ***********************/}
-                                <AddToCartButton id={product?.data?.id} />
+                                {/*<AddToCartButton id={product?.data?.id} />*/}
                             </div>
                         </div>
                     </div>
                 </Suspense>
 
                 {/************************Related products ***********************/}
-                 <Suspense fallback={<Loading/>}>
-                    <RelatedProducts categoryId={product?.data?.categoryId} />
-                </Suspense>
+                {/* <Suspense fallback={<Loading/>}>*/}
+                {/*    <RelatedProducts categoryId={product?.data?.categoryId} />*/}
+                {/*</Suspense>*/}
 
             </div>
         </div>
