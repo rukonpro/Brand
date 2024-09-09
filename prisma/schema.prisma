@@ -60,6 +60,7 @@ model Product {
   categoryId      String?       @db.ObjectId
   dimension       Dimension?    @relation(fields: [dimensionId], references: [id])
   dimensionId     String?       @db.ObjectId @unique
+  offers          Offer[]    @relation("ProductOffers")
   createdAt       DateTime      @default(now())
   updatedAt       DateTime      @updatedAt
 }
@@ -74,4 +75,22 @@ enum Status {
   ACTIVE
   INACTIVE
   DISCONTINUED
+}
+
+
+model Offer {
+  id              String     @id @default(auto()) @map("_id") @db.ObjectId
+  description     String?
+  discountType    DiscountType
+  discountValue   Float
+  startDate       DateTime
+  endDate         DateTime
+  isActive        Boolean    @default(true)
+  product         Product    @relation("ProductOffers", fields: [productId], references: [id])
+  productId       String     @db.ObjectId
+}
+
+enum DiscountType {
+  PERCENTAGE
+  FLAT
 }
