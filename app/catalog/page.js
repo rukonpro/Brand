@@ -12,9 +12,7 @@ const Catalog = async () => {
                 <div className="grid grid-cols-12 gap-4">
                     <CatalogAside />
                     <Catalogs products={JSON.stringify(products)} />
-
                 </div>
-
             </div>
 
             <Footer />
