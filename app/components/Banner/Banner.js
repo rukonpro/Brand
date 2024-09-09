@@ -12,7 +12,7 @@ const category=await getAllCategory();
         <div className="md:px-3">
             <div className="max-w-[1200px] mx-auto border md:rounded-lg md:px-3  md:pt-3 pb-3 md:mt-5 bg-white ">
                 <div className='grid grid-cols-12 gap-3'>
-                    <div className='md:col-span-3 col-span-12 px-3 md:px-0 overflow-y-auto scroll-smooth  h-96 md:block hidden'>
+                    <div className='md:col-span-3 col-span-12 px-3 md:px-0 overflow-y-auto scroll-smooth  max-h-96 md:block hidden'>
                         <ul>
                             {category?.data?.map((item)=> {
                                 return (
@@ -22,38 +22,13 @@ const category=await getAllCategory();
                                     </li>
                                 )
                             })}
-                            {category?.data?.map((item)=> {
-                                return (
-                                    <li key={item?.id} className="my-0.5 rounded-lg bg-[#E3F0FF] hover:bg-blue-400 hover:text-white">
-                                        <Link href={`/source/${item?.id}`}
-                                              className='w-full inline-block px-3 py-2 '>{item?.name}</Link>
-                                    </li>
-                                )
-                            })}
-                            {category?.data?.map((item)=> {
-                                return (
-                                    <li key={item?.id} className="my-0.5 rounded-lg bg-[#E3F0FF] hover:bg-blue-400 hover:text-white">
-                                        <Link href={`/source/${item?.id}`}
-                                              className='w-full inline-block px-3 py-2 '>{item?.name}</Link>
-                                    </li>
-                                )
-                            })}
-                            {category?.data?.map((item)=> {
-                                return (
-                                    <li key={item?.id} className="my-0.5 rounded-lg bg-[#E3F0FF] hover:bg-blue-400 hover:text-white">
-                                        <Link href={`/source/${item?.id}`}
-                                              className='w-full inline-block px-3 py-2 '>{item?.name}</Link>
-                                    </li>
-                                )
-                            })}
-
                         </ul>
                     </div>
                     <div className='md:col-span-7 col-span-12 relative'>
                         <BannerSlider banners={category?.data}/>
                     </div>
 
-                    <div className='md:col-span-2 col-span-12 grid md:grid-cols-1 sm:grid-cols-3 grid-cols-2 gap-3 px-3 md:px-0 h-96 overflow-y-auto overflow-hidden'>
+                    <div className='md:col-span-2 col-span-12 grid md:grid-cols-1 sm:grid-cols-3 grid-cols-2 gap-3 px-3 md:px-0 max-h-96 overflow-y-auto overflow-hidden'>
                         <JoinNowCard/>
 
                         <div className=" p-3 rounded-lg bg-[#F38332] text-white w-full h-full">
