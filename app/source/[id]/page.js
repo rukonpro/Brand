@@ -31,7 +31,9 @@ const Source = async ({params}) => {
                                className="w-full h-60 object-cover"/>
 
                         <div className="flex justify-between items-center top-1/2   absolute  w-full px-5">
-                            <h1 className="text-4xl  font-bold px-3 rounded  backdrop-blur  text-blue-500/80 ">Source Items</h1>
+                            <h1 className="text-2xl  font-bold px-3   text-blue-500/80 ">
+                                <span className="rounded  backdrop-blur">Source Items</span>
+                            </h1>
                             <div>
                                 <BackButton title="Back"/>
                             </div>
