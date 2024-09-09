@@ -1,12 +1,7 @@
-// pages/api/offers/index.js
-
 import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
 
-// pages/api/offers/index.js
-
-import prisma from '@/lib/prisma';
 
 export default async function handler(req, res) {
     if (req.method === 'GET') {
