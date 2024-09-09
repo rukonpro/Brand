@@ -1,19 +1,7 @@
 import React, {Suspense} from 'react';
 import SourcesProducts from '../SourceProducts/SourcesProducts';
-import axios from "axios";
 import Loading from "@/app/loading";
-import baseURL from "@/app/utils/baseURL";
-
-
-
-
-export const getAllCategory= async ()=> {
-    try {
-        return await axios.get(`${baseURL}/api/category/findMany`);
-    } catch (error) {
-        console.log(error);
-    }
-}
+import {getAllCategory} from "@/app/utils/Category/fetch_category_api";
 
 
 const SourcesProductsLayout = async () => {

@@ -1,14 +1,55 @@
-import React from 'react';
-import Navbar from "@/app/components/navbar/navbar";
-import Nav from "@/app/components/navbar/nav";
-import Footer from "@/app/components/Footer/Footer";
+import React, {Suspense} from 'react';
+import {getProducts} from "@/app/utils/product/fetch_products_api";
+import Link from "next/link";
+import RecommendedItemsCard from "@/app/components/RecommendedItems/RecommendedItemsCard";
+import BackButton from "@/app/components/BackButtons/BackButton";
+import RelatedProductCard from "@/app/components/RelatedProductCard/RelatedProductCard";
+import AddToCartButton from "@/app/components/AddToCartButton/AddToCartButton";
 
-const Page = ({params}) => {
+const Source = async ({params}) => {
+
+    const products = await getProducts(
+        {
+            categoryId: params?.id,
+            limit: 10,
+            page: 1
+        }
+    );
+
     return (
-        <div>
-            <h1>source {params.id}</h1>
+        <div className='py-5 sm:px-3'>
+            <div className='max-w-[1200px] mx-auto'>
+                <div className="flex justify-between items-center px-3 md:px-0">
+                    <h1 className="text-2xl  font-bold text-gray-600 py-5">Source Items</h1>
+
+                    <div>
+                        <BackButton title="Back"/>
+                    </div>
+                </div>
+                <Suspense fallback={<h1>Loading...</h1>}>
+                    <ul className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 gap-0.5 md:gap-4">
+                        {
+                            products?.data?.map((product, index) => {
+                                return (
+                                    <li key={index} className='bg-white md:border-2 border-blue-200 md:rounded-lg p-3 flex-1 flex flex-col justify-between'>
+                                        <Link href={`/details/${product?.id}`}>
+
+                                            {/************************Related products Card ***********************/}
+
+                                            <RelatedProductCard product={product} />
+
+                                        </Link>
+
+                                        <AddToCartButton id={product?.id} />
+                                    </li>
+                                )
+                            })
+                        }
+                    </ul>
+                </Suspense>
+            </div>
         </div>
     );
 };
 
-export default Page;
+export default Source;

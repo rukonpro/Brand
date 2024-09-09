@@ -2,33 +2,16 @@ import React from 'react';
 import SourceCard from "@/app/components/SourceProducts/SourceCard";
 import Link from "next/link";
 import SourceProductCard from "@/app/components/SourceProducts/SourceProductCard";
-import axios from "axios";
-import baseURL from "@/app/utils/baseURL";
-
-
-
-
-
-const getProducts= async ({categoryId})=>{
-       try {
-           return await axios.get(`${baseURL}/api/product/findMany`,{
-               params:{
-                   categoryId:categoryId
-               }
-           });
-       }catch(error){
-           console.log(error);
-       }
-}
+import {getProducts} from "@/app/utils/product/fetch_products_api";
 
 const SourcesProducts = async ({ category }) => {
 
-    const searchParams = {
+    const params = {
         categoryId: category?.id,
         limit: 10,
         page: 1
     }
-    const products = await getProducts(searchParams);
+    const products = await getProducts(params);
 
 
 
@@ -48,7 +31,7 @@ const SourcesProducts = async ({ category }) => {
                         {
                             products?.data.map((product) => {
                                 return (
-                                    <div key={product.id} className='bg-white'>
+                                    <div key={product.id} >
                                         <Link href={`/details/${product.id}`}>
                                             <SourceProductCard product={product} />
                                         </Link>

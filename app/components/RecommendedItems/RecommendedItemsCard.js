@@ -5,10 +5,10 @@ const RecommendedItemsCard = ({ product }) => {
         <div className='p-5 sm:border-2 sm:rounded-lg bg-white'>
             <div className='flex justify-center'>
                 <Image
-                    src={product?.images?.[0]}
+                    src={product?.photos?.[0]}
                     height={300}
                     width={300}
-                    blurDataURL={product?.images?.[0]}
+                    blurDataURL={product?.photos?.[0]}
                     loading='lazy'
                     placeholder='blur'
                     className=" w-auto h-28 object-fill"

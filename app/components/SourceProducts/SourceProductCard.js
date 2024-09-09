@@ -2,7 +2,7 @@ import React from 'react';
 import Image from 'next/image';
 const SourceProductCard = ({ product }) => {
     return (
-        <div className='grid grid-cols-8 p-2'>
+        <div className='grid grid-cols-8 p-2 bg-white rounded'>
             <div className='col-span-5'>
                 <h1 className="text-lg">{product?.name}</h1>
                 <p className="text-gray-600 pt-2">USD ${product.price}</p>
