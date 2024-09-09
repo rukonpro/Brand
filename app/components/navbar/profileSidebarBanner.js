@@ -5,7 +5,6 @@ import CoverPhoto from "@/public/images/cloth-image-1.jpg";
 
 
 const ProfileSidebarBanner = ({ user }) => {
-
     return (
         <div className="relative w-full">
             <div className=" mb-6  py-7 px-3 absolute w-full bg-blue-800/50"
