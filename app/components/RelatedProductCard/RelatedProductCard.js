@@ -5,7 +5,7 @@ import Image from "next/image";
 const RelatedProductCard = ({ product }) => {
     return (
         <div>
-            <div>
+            <div className="h-52  overflow-hidden">
                 <Image
                     src={product?.photos?.[0]}
                     alt={product?.name}
@@ -13,7 +13,7 @@ const RelatedProductCard = ({ product }) => {
                     height={300}
                     loading='lazy'
                     blurDataURL={product?.photos?.[0]}
-                    className="w-full h-52 object-contain overflow-hidden"
+                    className="w-full h-full object-cover"
                 />
             </div>
             <h2 className="text-gray-600 text-sm pt-2">{product?.name}</h2>

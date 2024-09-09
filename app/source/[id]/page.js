@@ -26,7 +26,7 @@ const Source = async ({params}) => {
             <div className='max-w-[1200px] mx-auto'>
 
 
-                <div className="flex justify-between items-center w-full">
+                <div className="flex justify-between items-center w-full md:px-0 px-3">
                     <h1 className="text-2xl  font-bold   text-blue-500/80 ">
                         <span className="rounded  backdrop-blur">{categoryById?.data?.name}</span>
                     </h1>
