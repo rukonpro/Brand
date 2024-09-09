@@ -1,13 +1,10 @@
 import Footer from "@/app/components/Footer/Footer";
-import fakeData from "@/app/FakeData/FakeData";
 import CatalogAside from './CatalogAside';
 import Catalogs from './Catalogs';
-import getProducts from "@/lib/product/getAllProducts";
+
 
 const Catalog = async () => {
-    const searchParams = {};
-
-    const { products } = await getProducts(searchParams);
+  const products = [{}]
 
     return (
         <div>

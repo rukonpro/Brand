@@ -2,10 +2,10 @@ import React from 'react';
 
 import MyCartItemCard from "@/app/components/MyCartItemCard/MyCartItemCard";
 import BackButton from "@/app/components/BackButtons/BackButton";
-import getProducts from '@/lib/product/getAllProducts';
+
 
 const MyCartItems = async () => {
-    const { products } = await getProducts({});
+  const products=[{}]
     return (
         <div className="col-span-12 md:col-span-12 lg:col-span-8 overflow-hidden sm:rounded-lg md:rounded-r-lg md:bg-white ">
             <ol className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-1 gap-0.5">

@@ -1,7 +1,7 @@
 import Banner from "./components/Banner/Banner";
 import Offers from "./components/offers/Offers";
 import Requests from "./components/requests/Requests";
-import RecommendedItems from "./components/RecommendedItems/RecommendedItems";
+// import RecommendedItems from "./components/RecommendedItems/RecommendedItems";
 import OurExtraServices from "./components/OurExtraServices/OurExtraServices";
 import SuppliersByRegion from "./components/SuppliersByRegion/SuppliersByRegion";
 import Nav from "@/app/components/navbar/nav";
@@ -23,9 +23,9 @@ export default function Home() {
             {/*    <SourcesProductsLayout />*/}
             {/*</Suspense>*/}
             <Requests />
-           <Suspense fallback={<Loading/>}>
-               <RecommendedItems />
-           </Suspense>
+           {/*<Suspense fallback={<Loading/>}>*/}
+           {/*    <RecommendedItems />*/}
+           {/*</Suspense>*/}
             <OurExtraServices />
             <SuppliersByRegion />
         </>

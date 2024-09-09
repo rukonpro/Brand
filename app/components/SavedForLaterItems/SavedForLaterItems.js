@@ -1,12 +1,13 @@
 import React from 'react';
-import { products } from "@/app/components/RecommendedItems/RecommendedItems";
+
 import SavedForLaterCard from "@/app/components/SavedForLaterCard/SavedForLaterCard";
 import Link from "next/link";
-import getProducts from '@/lib/product/getAllProducts';
+
 
 const SavedForLaterItems = async () => {
 
-    const { products } = await getProducts({});
+    const products=[{}]
+
     return (
         <div>
             <h1 className="text-xl font-bold text-gray-600 pb-5 px-3 md:px-0">Saved for later</h1>

@@ -2,13 +2,12 @@ import React from 'react';
 import Image from "next/image";
 import SingOut from "@/public/images/sign-out-svgrepo-com.svg";
 import RightIcon from "@/public/images/right-chevron-svgrepo-com.svg";
-import {handleLogout} from "@/lib/user/user";
 import {useRouter} from "next/navigation";
 
 const LogoutButton = ({handleClose}) => {
     const router = useRouter();
     const logout = async () => {
-        await handleLogout()
+        // await handleLogout()
         handleClose()
         router.push('/login');
     }

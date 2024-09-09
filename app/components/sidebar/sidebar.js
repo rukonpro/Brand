@@ -2,23 +2,22 @@
 import Link from 'next/link';
 import { profileMenu } from "@/app/components/navbar/profileDrawer";
 import Image from "next/image";
-import React, { useEffect, useState } from "react";
+import React, {  useState } from "react";
 import SingInIcon from "@/public/images/sign-in-alt-svgrepo-com.svg";
 import SingOutIcon from "@/public/images/sign-out-svgrepo-com.svg";
 import ProfileSidebarBanner from "@/app/components/navbar/profileSidebarBanner";
-import { handleLogout } from "@/lib/user/user";
 import { useRouter } from "next/navigation";
-import useUser from '@/lib/user/useUser';
+
 
 const Sidebar = () => {
     const router = useRouter();
 
 
-    const { user, isError, isLoading } = useUser();
+    const { user, setUser } = useState({});
 
 
     const logout = async () => {
-        await handleLogout()
+
         router.push('/login');
     }
     return (

@@ -1,5 +1,5 @@
 "use client"
-import React, { Fragment, useEffect, useState } from 'react';
+import React, { Fragment, useState } from 'react';
 import Link from "next/link";
 import Drawer from "@/app/components/Drawer/Drawer";
 import Image from "next/image";
@@ -12,12 +12,12 @@ import SingInIcon from "@/public/images/sign-in-alt-svgrepo-com.svg";
 import ProfileSidebarBanner from "@/app/components/navbar/profileSidebarBanner";
 import CloseIcon from "@/public/images/close-svgrepo-com.svg";
 import LogoutButton from "@/app/components/navbar/LogoutButton";
-import useUser from '@/lib/user/useUser';
+
 
 
 const ProfileDrawer = () => {
     const [isDrawerOpen, setIsDrawerOpen] = useState(false);
-    const { user, isError, isLoading } = useUser();
+
 
     const handleToggleDrawer = () => {
         setIsDrawerOpen(!isDrawerOpen);
@@ -25,7 +25,7 @@ const ProfileDrawer = () => {
     const handleClose = () => {
         setIsDrawerOpen(false);
     };
-
+const user={}
 
     return (
         <Fragment>
@@ -45,7 +45,7 @@ const ProfileDrawer = () => {
                 {/* Drawer content goes here */}
                 <div className="flex-1 ">
                     <div className="relative">
-                        <ProfileSidebarBanner user={user} />
+                        <ProfileSidebarBanner  />
 
                         <button onClick={handleClose}
                             className="p-1 rounded-full absolute top-0 right-0"

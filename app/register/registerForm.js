@@ -3,7 +3,6 @@ import React from 'react';
 import * as Yup from "yup";
 import {useFormik} from "formik";
 import {useRouter} from "next/navigation";
-import {userLogin, userSignup} from "@/lib/user/user";
 import toast from "react-hot-toast";
 import Image from "next/image";
 import LoadingIcon from "@/public/images/loading-2-svgrepo-com.svg";
@@ -38,8 +37,8 @@ const RegisterForm = () => {
     const handleSignup=async ({firstName,lastName,email,password,rePassword})=>{
         try {
             setLoading(true);
-            await userSignup({name:firstName+" "+lastName,email:email,password:password});
-            await userLogin({email, password})
+            // await userSignup({name:firstName+" "+lastName,email:email,password:password});
+            // await userLogin({email, password})
             toast.success("Register successfully",{id:"register"})
             toast.success("Login successfully",{id:"register"})
             router.push("/profiles/myAccount");

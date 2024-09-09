@@ -1,5 +1,4 @@
 import React from 'react';
-import Footer from "@/app/components/Footer/Footer";
 import SavedForLaterItems from "@/app/components/SavedForLaterItems/SavedForLaterItems";
 import CheckoutCard from "@/app/components/CheckoutCard/CheckoutCard";
 import MyCartItems from "@/app/components/MyCartItems/MyCartItems";

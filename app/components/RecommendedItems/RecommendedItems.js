@@ -1,13 +1,13 @@
 import React from 'react';
 import RecommendedItemsCard from './RecommendedItemsCard';
 import Link from "next/link";
-import getProducts from '@/lib/product/getAllProducts';
+
 
 
 const RecommendedItems = async () => {
-    const searchParams = {};
 
-    const { products } = await getProducts(searchParams);
+
+
     return (
         <div className='pt-5 sm:px-3'>
             <div className='max-w-[1200px] mx-auto'>

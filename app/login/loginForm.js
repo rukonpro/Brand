@@ -1,7 +1,6 @@
 "use client"
 import React from 'react';
 import {useRouter} from "next/navigation";
-import {userLogin} from "@/lib/user/user";
 import {useFormik} from "formik";
 import * as Yup from 'yup';
 import LoadingIcon from "@/public/images/loading-2-svgrepo-com.svg";
@@ -22,7 +21,7 @@ const LoginForm = () => {
     const handleLogin = async ({email,password}) => {
         try {
             setLoading(true);
-     await userLogin({email,password});
+     // await userLogin({email,password});
             toast.success("login successfully",{id:"login"})
             router.push("/profiles/myAccount");
         } catch (error) {

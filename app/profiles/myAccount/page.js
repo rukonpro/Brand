@@ -7,9 +7,6 @@ import CameraIcon from "@/public/images/camera-icon.svg";
 import EditIcon from "@/public/images/edit-2-svgrepo-com.svg";
 import SaveIcon from "@/public/images/save-floppy-svgrepo-com.svg";
 import LoadingIcon from "@/public/images/loading-gray-color-svgrepo-com.svg";
-import uploadImage from "@/lib/imageUploader/imageUploader";
-import { updateUser } from '@/lib/user/user';
-import useUser from '@/lib/user/useUser';
 const MyAccount = () => {
 
     const [selectedProfilePicture, setSelectedProfilePicture] = useState(null);
@@ -21,7 +18,7 @@ const MyAccount = () => {
     const [loading, setLoading] = useState(false);
 
 
-    const { user} = useUser();
+    const user={}
 
     const handleProfilePhotoChange = (event) => {
         setSelectedProfilePicture(URL.createObjectURL(event.target.files[0]));
@@ -45,14 +42,14 @@ const MyAccount = () => {
                 let coverUrl = undefined;
 
                 if (profileImageBB) {
-                    profileUrl = await uploadImage(profileImageBB);
-                    const user = { profilePhoto: profileUrl.data.data?.url };
-                    await updateUser(user);
+                    // profileUrl = await uploadImage(profileImageBB);
+                    // const user = { profilePhoto: profileUrl.data.data?.url };
+                    // await updateUser(user);
                 }
                 if (coverImageBB) {
-                    coverUrl = await uploadImage(coverImageBB);
-                    const user = { coverPhoto: coverUrl.data.data?.url };
-                    await updateUser(user);
+                    // coverUrl = await uploadImage(coverImageBB);
+                    // const user = { coverPhoto: coverUrl.data.data?.url };
+                    // await updateUser(user);
 
 
                 }
@@ -67,7 +64,9 @@ const MyAccount = () => {
             setLoading(false);
         }
     }
-    
+
+
+
     return (
         <div>
             <h1 className="text-xl font-bold text-gray-600 pb-5 px-3 md:px-0">My Profile</h1>

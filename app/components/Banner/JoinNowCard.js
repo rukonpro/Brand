@@ -1,9 +1,9 @@
 "use client"
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import Image from "next/image";
 import Avater from "@/public/images/avatar.png";
 import Link from "next/link";
-import { getMe } from "@/lib/user/user";
+
 
 
 const JoinNowCard = () => {
@@ -11,16 +11,16 @@ const JoinNowCard = () => {
 
     const getUser = async () => {
         try {
-            const user = await getMe();
-            setUser(user?.data?.data)
+            // const user = await getMe();
+            // setUser(user?.data?.data)
         } catch (error) {
 
             console.log(error.message)
         }
     }
-    useEffect(() => {
-        getUser()
-    }, []);
+    // useEffect(() => {
+    //
+    // }, []);
 
 
     return (
