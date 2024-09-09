@@ -46,7 +46,7 @@ model Product {
   price           Float
   material        String?
   quantity        Int
-  warranty        String
+  warranty        String?
   protection      String
   colors          String[]      @default([])
   sizes           String[]      @default([])

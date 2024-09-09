@@ -26,36 +26,32 @@ const Source = async ({params}) => {
             <div className='max-w-[1200px] mx-auto'>
 
 
-                    <div className="w-full relative ">
-                        <Image src={categoryById?.data?.photo} height={500} width={500} alt='product'
-                               className="w-full h-60 object-cover"/>
-
-                        <div className="flex justify-between items-center top-1/2   absolute  w-full px-5">
-                            <h1 className="text-2xl  font-bold px-3   text-blue-500/80 ">
-                                <span className="rounded  backdrop-blur">Source Items</span>
-                            </h1>
-                            <div>
-                                <BackButton title="Back"/>
-                            </div>
-                        </div>
+                <div className="flex justify-between items-center w-full">
+                    <h1 className="text-2xl  font-bold   text-blue-500/80 ">
+                        <span className="rounded  backdrop-blur">{categoryById?.data?.name}</span>
+                    </h1>
+                    <div>
+                        <BackButton title="Back"/>
                     </div>
+                </div>
 
 
-                <Suspense fallback={<Loading/>} >
+                <Suspense fallback={<Loading/>}>
                     <ul className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 gap-0.5 md:gap-4 pt-10">
                         {
                             products?.data?.map((product, index) => {
                                 return (
-                                    <li key={index} className='bg-white md:border-2 border-blue-200 md:rounded-lg p-3 flex-1 flex flex-col justify-between'>
+                                    <li key={index}
+                                        className='bg-white md:border-2 border-blue-200 md:rounded-lg p-3 flex-1 flex flex-col justify-between'>
                                         <Link href={`/details/${product?.id}`}>
 
                                             {/************************Related products Card ***********************/}
 
-                                            <RelatedProductCard product={product} />
+                                            <RelatedProductCard product={product}/>
 
                                         </Link>
 
-                                        <AddToCartButton id={product?.id} />
+                                        <AddToCartButton id={product?.id}/>
                                     </li>
                                 )
                             })
