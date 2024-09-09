@@ -47,7 +47,7 @@ const Details = async ({ params }) => {
                         <div className="col-span-12 md:col-span-8 lg:col-span-5">
                             <div className="flex  gap-1">
                                 <Image src={TickSign} alt="TickSign" />
-                                <p className="text-sm">InStock</p>
+                                <p className="text-sm">{product?.data?.availability}</p>
                             </div>
                             <div className="pt-5">
                                 <h1 className="text-2xl font-bold">{product?.data?.name}</h1>
@@ -68,19 +68,61 @@ const Details = async ({ params }) => {
                                 </div>
 
                                 <div className="pt-5">
-                                    <div className="grid grid-cols-12 border-b-2 border-b-gray-700/50 pb-1">
+                                    {product?.data?.price && <div className="grid grid-cols-12 border-b-2 border-b-gray-700/50 pb-1">
                                         <p className="col-span-4">Price:</p>
-                                        <p className="col-span-8">Negotiable</p>
+                                        <p className="col-span-8">${product?.data?.price}</p>
                                     </div>
+                                    }
+
                                     <div className="border-b-2 border-b-gray-700/50 pb-3">
-                                        <div className="grid grid-cols-12 pt-3 ">
-                                            <p className="col-span-4">Type:</p>
-                                            <p className="col-span-8">Classic shoes</p>
-                                        </div>
-                                        <div className="grid grid-cols-12 pt-1 ">
+                                        {product?.data?.colors?.length &&
+                                            <div className="grid grid-cols-12 pt-3 ">
+                                            <p className="col-span-4">color:</p>
+                                            <p className="col-span-8">{
+                                                product?.data?.colors?.map((color) => {
+                                                    return (
+                                                        <span
+                                                            className="mx-1 bg-blue-400 py-0.5 px-1 text-white rounded">{color}</span>
+                                                    )
+                                                })
+                                            }</p>
+                                        </div>}
+
+                                        {product?.data?.sizes?.length &&
+                                            <div className="grid grid-cols-12 pt-3 ">
+                                            <p className="col-span-4">Sizes:</p>
+                                            <p className="col-span-8">{
+                                                product?.data?.sizes?.map((size) => {
+                                                    return (
+                                                        <span
+                                                            className="mx-1 bg-blue-400 py-0.5 px-1 text-white rounded">{size}</span>
+                                                    )
+                                                })
+                                            }</p>
+                                        </div>}
+
+
+                                        {product?.data?.dimension &&
+                                            <div className="grid grid-cols-12 pt-1 bg-blue-200 px-3 my-2">
+                                            <p className="col-span-4">Dimension:</p>
+                                            <div className="col-span-8">
+                                                <p>Height: {product?.data?.dimension?.height} m</p>
+                                                <p>Weight: {product?.data?.dimension?.width} m</p>
+                                                <p>Length: {product?.data?.dimension?.length} m</p>
+                                            </div>
+                                        </div>}
+                                        {product?.data?.brand?.name &&
+                                            <div className="grid grid-cols-12 pt-1 ">
+                                            <p className="col-span-4">Brand:</p>
+                                            <p className="col-span-8">{product?.data?.brand?.name}</p>
+                                        </div>}
+
+                                        {product?.data?.material && <div className="grid grid-cols-12 pt-1 ">
                                             <p className="col-span-4">Material:</p>
-                                            <p className="col-span-8">Plastic material</p>
+                                            <p className="col-span-8">{product?.data?.material}</p>
                                         </div>
+                                        }
+
                                         <div className="grid grid-cols-12 pt-1">
                                             <p className="col-span-4">Design:</p>
                                             <p className="col-span-8">Modern nice</p>
@@ -88,17 +130,18 @@ const Details = async ({ params }) => {
                                     </div>
 
                                     <div className="b-1">
-                                        <div className="grid grid-cols-12 pt-1">
-                                            <p className="col-span-4">Customization:</p>
-                                            <p className="col-span-8">Customized logo and design custom packages</p>
-                                        </div>
+                                        {product?.data?.description &&
+                                            <div className="grid grid-cols-12 pt-1">
+                                            <p className="col-span-4">Description:</p>
+                                            <p className="col-span-8">{product?.data?.description}</p>
+                                        </div>}
                                         <div className="grid grid-cols-12 pt-1">
                                             <p className="col-span-4">Protection:</p>
                                             <p className="col-span-8">Refund Policy</p>
                                         </div>
                                         <div className="grid grid-cols-12 pt-1">
                                             <p className="col-span-4">Warranty:</p>
-                                            <p className="col-span-8">2 years full warranty </p>
+                                            <p className="col-span-8">N/A</p>
                                         </div>
                                     </div>
                                 </div>
