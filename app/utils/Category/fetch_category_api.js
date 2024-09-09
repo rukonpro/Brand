@@ -10,3 +10,11 @@ export const getAllCategory= async (prams)=> {
         console.log(error);
     }
 }
+
+export const getCategoryById= async (id)=> {
+    try {
+        return await axios.get(`${baseURL}/api/category/${id}/details`);
+    } catch (error) {
+        console.log(error);
+    }
+}

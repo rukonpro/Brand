@@ -1,11 +1,12 @@
 import Link from 'next/link';
 import React from 'react';
-import Image from 'next/image';
-import BannerImage from "@/public/images/Banner-board.png";
 import JoinNowCard from "@/app/components/Banner/JoinNowCard";
+import {getAllCategory} from "@/app/utils/Category/fetch_category_api";
+import BannerSlider from "@/app/components/Banner/BannerSlider";
 
 
-const Banner = () => {
+const Banner =async () => {
+const category=await getAllCategory();
 
     return (
         <div className="md:px-3">
@@ -55,15 +56,7 @@ const Banner = () => {
                         </ul>
                     </div>
                     <div className='md:col-span-7 col-span-12 relative'>
-                        <div className='absolute top-8 left-5'>
-                            <h1 className='text-3xl text-gray-950'><span>Latest trending</span> <br/> <span
-                                className='font-extrabold '> Electronic items</span></h1>
-
-                            <button type='button' className="bg-white rounded-xl px-4 py-2 mt-5">
-                                Learn more
-                            </button>
-                        </div>
-                        <Image src={BannerImage} alt='Electronic items' className='h-full w-full object-cover  '/>
+                        <BannerSlider banners={category?.data}/>
                     </div>
 
                     <div
@@ -81,6 +74,9 @@ const Banner = () => {
 
                 </div>
             </div>
+
+
+
         </div>
     );
 };

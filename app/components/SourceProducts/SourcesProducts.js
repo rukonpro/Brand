@@ -4,7 +4,11 @@ import Link from "next/link";
 import SourceProductCard from "@/app/components/SourceProducts/SourceProductCard";
 import {getProducts} from "@/app/utils/product/fetch_products_api";
 
+
 const SourcesProducts = async ({ category }) => {
+
+
+
 
     const params = {
         categoryId: category?.id,
@@ -12,6 +16,7 @@ const SourcesProducts = async ({ category }) => {
         page: 1
     }
     const products = await getProducts(params);
+
 
 
 
