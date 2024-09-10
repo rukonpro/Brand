@@ -19,9 +19,9 @@ export default function Home() {
             <Suspense fallback={<Loading/>}>
                 <OffersLayout />
             </Suspense>
-            {/*<Suspense fallback={<Loading/>}>*/}
-            {/*    <SourcesProductsLayout />*/}
-            {/*</Suspense>*/}
+            <Suspense fallback={<Loading/>}>
+                <SourcesProductsLayout />
+            </Suspense>
             <Requests />
            <Suspense fallback={<Loading/>}>
                <RecommendedItems />
