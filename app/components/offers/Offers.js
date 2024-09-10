@@ -1,5 +1,5 @@
 "use client"
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useRef, useState} from 'react';
 import OfferCard from './OfferCard';
 import OfferTiming from './OfferTiming';
 import Link from "next/link";
@@ -11,7 +11,7 @@ import product4 from "@/public/images/image98.png";
 import backIcon from "@/public/images/left-back-icon.png";
 import Image from "next/image";
 
-const Offers = () => {
+const Offers = ({offers}) => {
 
     const [showLeft,setShowLeft]=useState(false);
     const [showRight,setShowRight]=useState(true);
@@ -29,82 +29,6 @@ const Offers = () => {
         }
 
     };
-
-    const products=[
-        {
-            title:"Smart watches",
-            discount:50,
-            image:product1
-        },
-        {
-            title:"Smart watches",
-            discount:50,
-            image:product2
-        },
-        {
-            title:"Smart watches",
-            discount:50,
-            image:product3
-        },
-        {
-            title:"Smart watches",
-            discount:50,
-            image:product4
-        },
-        {
-            title:"Smart watches",
-            discount:50,
-            image:product1
-        },
-        {
-            title:"Smart watches",
-            discount:50,
-            image:product2
-        },
-        {
-            title:"Smart watches",
-            discount:50,
-            image:product3
-        },
-        {
-            title:"Smart watches",
-            discount:50,
-            image:product1
-        },
-        {
-            title:"Smart watches",
-            discount:50,
-            image:product2
-        },
-        {
-            title:"Smart watches",
-            discount:50,
-            image:product3
-        },
-        {
-            title:"Smart watches",
-            discount:50,
-            image:product4
-        },
-        {
-            title:"Smart watches",
-            discount:50,
-            image:product1
-        },
-        {
-            title:"Smart watches",
-            discount:50,
-            image:product2
-        },
-        {
-            title:"Smart watches",
-            discount:50,
-            image:product3
-        },
-    ]
-
-
-
 
 
     return (
@@ -129,11 +53,11 @@ const Offers = () => {
                             /*     onFocus={handleScrollButtonClick}*/
                         >
                             {
-                                products?.map((product, index) => {
+                                offers?.map((offer) => {
                                     return (
-                                        <li key={index} className='p-2  bg-white cursor-pointer  '>
-                                            <Link href={`/details/${product.title}`}>
-                                                <OfferCard product={product}/>
+                                        <li key={offer?.id} className='p-2  bg-white cursor-pointer  '>
+                                            <Link href={`/details/${offer?.product?.id}`}>
+                                                <OfferCard offer={offer}/>
                                             </Link>
                                         </li>
                                     )

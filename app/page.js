@@ -1,5 +1,4 @@
 import Banner from "./components/Banner/Banner";
-import Offers from "./components/offers/Offers";
 import Requests from "./components/requests/Requests";
 import RecommendedItems from "./components/RecommendedItems/RecommendedItems";
 import OurExtraServices from "./components/OurExtraServices/OurExtraServices";
@@ -8,6 +7,7 @@ import Nav from "@/app/components/navbar/nav";
 import SourcesProductsLayout from "./components/SourcesProductsLayout/SourcesProductsLayout";
 import {Suspense} from "react";
 import Loading from "@/app/loading";
+import OffersLayout from "@/app/components/offers/OffersLayout";
 
 
 export default function Home() {
@@ -17,11 +17,11 @@ export default function Home() {
             <Nav />
             <Banner />
             <Suspense fallback={<Loading/>}>
-                <Offers />
+                <OffersLayout />
             </Suspense>
-            <Suspense fallback={<Loading/>}>
-                <SourcesProductsLayout />
-            </Suspense>
+            {/*<Suspense fallback={<Loading/>}>*/}
+            {/*    <SourcesProductsLayout />*/}
+            {/*</Suspense>*/}
             <Requests />
            <Suspense fallback={<Loading/>}>
                <RecommendedItems />

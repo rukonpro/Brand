@@ -6,10 +6,10 @@ import Image from "next/image";
 import SupplierCard from "@/app/components/SupplierCard/SupplierCard";
 import BackButton from "@/app/components/BackButtons/BackButton";
 import ImageChangeButton from '@/app/components/imageChangeButton/ImageChangeButton';
-import AddToCartButton from '@/app/components/AddToCartButton/AddToCartButton';
 import RelatedProducts from "@/app/components/RelatedProducts/RelatedProducts";
 import Loading from "@/app/loading";
 import {getDetailsProduct} from "@/app/utils/product/fetch_products_api";
+import AddToCartButton from "@/app/components/AddToCartButton/AddToCartButton";
 
 
 
@@ -45,27 +45,34 @@ const Details = async ({ params }) => {
                         </div>
 
                         <div className="col-span-12 md:col-span-8 lg:col-span-5">
-                            <div className="flex  gap-1">
-                                <Image src={TickSign} alt="TickSign" />
-                                <p className="text-sm">{product?.data?.availability}</p>
+                            <div className="flex justify-between items-center">
+                                <div className="flex  gap-1">
+                                    <Image src={TickSign} alt="TickSign"/>
+                                    <p className="text-sm">{product?.data?.availability}</p>
+                                </div>
+                                {product?.data?.offers?.[0]?.discountValue&&
+                                    <div>
+                                    <p className="font-bold text-2xl text-red-500 bg-green-100 px-2 rounded-full">{product?.data?.offers?.[0]?.discountValue}% Discount</p>
+                                </div>
+                                }
                             </div>
                             <div className="pt-5">
                                 <h1 className="text-2xl font-bold">{product?.data?.name}</h1>
 
-                                <div className="grid grid-cols-3 gap-1 bg-orange-100/50 p-3 mt-3">
-                                    <div>
-                                        <h1 className="font-bold text-xl text-gray-700">$98.00</h1>
-                                        <p>50-100 pcs</p>
-                                    </div>
-                                    <div className="border-l-2 border-gray-700/50 pl-3">
-                                        <h1 className="font-bold text-xl text-gray-700">$98.00</h1>
-                                        <p>100-700 pcs</p>
-                                    </div>
-                                    <div className="border-l-2 border-gray-700/50 pl-3">
-                                        <h1 className="font-bold text-xl text-gray-700">$98.00</h1>
-                                        <p>700+ pcs</p>
-                                    </div>
-                                </div>
+                                {/*<div className="grid grid-cols-3 gap-1 bg-orange-100/50 p-3 mt-3">*/}
+                                {/*    <div>*/}
+                                {/*        <h1 className="font-bold text-xl text-gray-700">$98.00</h1>*/}
+                                {/*        <p>50-100 pcs</p>*/}
+                                {/*    </div>*/}
+                                {/*    <div className="border-l-2 border-gray-700/50 pl-3">*/}
+                                {/*        <h1 className="font-bold text-xl text-gray-700">$98.00</h1>*/}
+                                {/*        <p>100-700 pcs</p>*/}
+                                {/*    </div>*/}
+                                {/*    <div className="border-l-2 border-gray-700/50 pl-3">*/}
+                                {/*        <h1 className="font-bold text-xl text-gray-700">$98.00</h1>*/}
+                                {/*        <p>700+ pcs</p>*/}
+                                {/*    </div>*/}
+                                {/*</div>*/}
 
                                 <div className="pt-5">
                                     {product?.data?.price && <div className="grid grid-cols-12 border-b-2 border-b-gray-700/50 pb-1">
@@ -105,7 +112,7 @@ const Details = async ({ params }) => {
 
 
                                         {product?.data?.dimension &&
-                                            <div className="grid grid-cols-12 pt-1 bg-blue-200 px-3 my-2">
+                                            <div className="grid grid-cols-12 pt-1 bg-orange-100/50 px-3 my-2">
                                             <p className="col-span-4">Dimension:</p>
                                             <div className="col-span-8">
                                                 <p>Height: {product?.data?.dimension?.height} m</p>
@@ -137,6 +144,13 @@ const Details = async ({ params }) => {
                                             <p className="col-span-4">Description:</p>
                                             <p className="col-span-8">{product?.data?.description}</p>
                                         </div>
+                                        }
+                                        {
+                                            product?.data?.offers?.[0]?.description &&
+                                            <div className="grid grid-cols-12 pt-1">
+                                                <p className="col-span-4">Discount:</p>
+                                                <p className="col-span-8">{product?.data?.offers?.[0]?.description}</p>
+                                            </div>
                                         }
                                         <div className="grid grid-cols-12 pt-1">
                                             <p className="col-span-4">Protection:</p>

@@ -4,7 +4,7 @@ import "./globals.css";
 import Navbar from "@/app/components/navbar/navbar";
 import { Analytics } from '@vercel/analytics/react';
 import Footer from "@/app/components/Footer/Footer";
-import axios from "axios";
+import {AppProvider} from "@/app/context/BrandContext";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
@@ -19,6 +19,7 @@ export default function RootLayout({ children}) {
     <html lang="en">
       <body className={`${inter.className} bg-gray-100`}>
         <main className="relative">
+          <AppProvider>
           <div className="sticky top-0 z-[20]">
             <Navbar />
           </div>
@@ -26,6 +27,7 @@ export default function RootLayout({ children}) {
           <Footer />
           <Toaster />
           <Analytics />
+          </AppProvider>
         </main>
       </body>
     </html>
