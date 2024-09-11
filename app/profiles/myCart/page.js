@@ -1,24 +1,30 @@
 import React from 'react';
 import SavedForLaterItems from "@/app/components/SavedForLaterItems/SavedForLaterItems";
-import CheckoutCard from "@/app/components/CheckoutCard/CheckoutCard";
-import MyCartItems from "@/app/components/MyCartItems/MyCartItems";
+import BackButton from "@/app/components/BackButtons/BackButton";
+import MyCartItemsLayout from "@/app/profiles/myCart/MyCartItemsLayout";
+
+
+
+
+
 const MyCart = () => {
+
+
 
     return (
         <div>
-            <div>
-                <h1 className="text-xl font-bold px-3 md:px-0 pb-5">My Cart (5)</h1>
+            <div className="flex justify-between items-center pb-5 px-3 md:px-0">
+                <h1 className="text-xl font-bold">My Cart (5)</h1>
+                <BackButton title="Back" />
             </div>
 
             <div className="grid grid-cols-12 gap-4">
                 {/******************************My cart items*******************************/}
-                <MyCartItems/>
+               <MyCartItemsLayout/>
 
 
                 {/******************************Checkout Card*******************************/}
-                <div className="col-span-12 sm:col-span-8 md:col-span-6 lg:col-span-4 ">
-                    <CheckoutCard/>
-                </div>
+
             </div>
 
             {/******************************Saved ForLater Items*******************************/}

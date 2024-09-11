@@ -183,7 +183,7 @@ const Details = async ({ params }) => {
                                 </button>
 
                                 {/************************Add to cart button ***********************/}
-                                <AddToCartButton id={product?.data?.id} />
+                                <AddToCartButton product={product?.data} />
                             </div>
                         </div>
                     </div>

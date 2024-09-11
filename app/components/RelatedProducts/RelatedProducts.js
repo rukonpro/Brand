@@ -34,7 +34,7 @@ const RelatedProducts = async ({ categoryId}) => {
 
                                     </Link>
 
-                                    <AddToCartButton id={product?.id} />
+                                    <AddToCartButton product={product} />
                                 </li>
                             )
                         })

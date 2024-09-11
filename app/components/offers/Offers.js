@@ -3,10 +3,6 @@ import React, {useRef, useState} from 'react';
 import OfferCard from './OfferCard';
 import OfferTiming from './OfferTiming';
 import Link from "next/link";
-import product1 from "@/public/images/product55.png"
-import product2 from "@/public/images/image34.png";
-import product3 from "@/public/images/image35.png";
-import product4 from "@/public/images/image98.png";
 
 import backIcon from "@/public/images/left-back-icon.png";
 import Image from "next/image";

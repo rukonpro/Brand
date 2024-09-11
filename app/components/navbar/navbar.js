@@ -61,12 +61,11 @@ const Navbar = () => {
                             <div className="flex justify-center relative">
 
                                 <Image src={Cart} alt='card icon'/>
-                                <span className="relative flex h-7 w-7">
-  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-sky-400 opacity-75"></span>
+
 
       <NavCart/>
 
-</span>
+
                             </div>
                             <p className="text-sm text-center sm:block hidden">My Cart</p>
                         </Link>

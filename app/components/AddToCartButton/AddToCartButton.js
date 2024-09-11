@@ -1,5 +1,5 @@
 "use client"
-import React, {useContext, useEffect} from 'react';
+import React, {useContext} from 'react';
 import Image from 'next/image';
 import Cookies from 'js-cookie';
 import blueCartIcon from "@/public/images/blue-cart.png";
@@ -7,17 +7,9 @@ import {AppContext} from "@/app/context/BrandContext";
 
 
 
-const AddToCartButton = ({id}) => {
-    const { cart, setCart } = useContext(AppContext);
-
-    // Load cart data from cookies on component mount
-    useEffect(() => {
-        const storedCart = Cookies.get('cart');
-        if (storedCart) {
-            setCart(JSON.parse(storedCart));
-        }
-    }, []);
-
+const AddToCartButton = ({product,formCartPage}) => {
+    const { cart, setCart,products,setProducts } = useContext(AppContext);
+    const id=product?.id;
     // Function to add item to cart
     const addToCart = (productId, quantity = 1) => {
         // Create a new cart array so we can update state without mutating
@@ -31,11 +23,12 @@ const AddToCartButton = ({id}) => {
             updatedCart[existingProductIndex].quantity += quantity;
         } else {
             // If the product is new, add it to the cart
-            updatedCart.push({ productId, quantity });
+            updatedCart.push({product, productId, quantity });
         }
 
         // Update state
         setCart(updatedCart);
+
 
         // Save the updated cart to cookies (sync it back to cookies)
         Cookies.set('cart', JSON.stringify(updatedCart), { expires: 7, sameSite: 'Lax' }); // 7 days expiry
@@ -55,9 +48,10 @@ const AddToCartButton = ({id}) => {
             } else {
                 // Remove the product from the cart if the quantity reaches 1 or less
                 updatedCart.splice(existingProductIndex, 1);
+                const updateProducts=products?.filter((item) => item.id !== productId);
+                setProducts(updateProducts);
             }
         }
-
         setCart(updatedCart);
         Cookies.set('cart', JSON.stringify(updatedCart), { expires: 7, sameSite: 'Lax' });
     };
@@ -72,7 +66,10 @@ const AddToCartButton = ({id}) => {
                 type="button"
                 className="flex items-center gap-1 md:gap-x-4  py-1 px-5 border-2 rounded-lg text-blue-600 mt-4 w-full justify-center hover:border-blue-500 ">
                 <Image src={blueCartIcon} alt="blue Cart Icon"/>
-                Add to cart {cartProduct?.quantity && `${cartProduct?.quantity}`}
+                {
+                    formCartPage?null:"Add to cart"
+                }
+
             </button> :
             <div
                 className="flex items-center justify-between hover:border-blue-500  rounded-lg text-blue-600 font-bold mt-4 w-full border-2 overflow-hidden">

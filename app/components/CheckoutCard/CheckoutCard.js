@@ -5,7 +5,7 @@ import masterCard from "@/public/images/master-card.png";
 import pPCard from "@/public/images/PP-Card.png";
 import payCord from "@/public/images/Pay-card.png";
 
-const CheckoutCard = () => {
+const CheckoutCard = ({totalPrice,totalDiscount,totalTax,taxPercentage,totalPriceWithTax}) => {
     return (
         <div>
             <div className=" bg-white p-3 rounded-lg">
@@ -28,20 +28,20 @@ const CheckoutCard = () => {
             <div className="bg-white p-3 rounded-lg mt-4">
                 <div className="flex justify-between pb-2  text-gray-600">
                     <p> Subtotal:</p>
-                    <p>$1403.97</p>
+                    <p>${totalPrice?.toFixed(2)}</p>
                 </div>
                 <div className="flex justify-between  text-gray-600">
                     <p> Discount:</p>
-                    <p className="text-red-500">- $60.00</p>
+                    <p className="text-red-500">- ${totalDiscount?.toFixed(2)}</p>
                 </div>
                 <div className="flex justify-between border-b-2 py-2 text-gray-600">
-                    <p>Tax:</p>
-                    <p className="text-green-500">+ $14.00</p>
+                    <p>Tax({taxPercentage}%):</p>
+                    <p className="text-green-500">+ ${totalTax?.toFixed(2)}</p>
                 </div>
 
                 <div className="flex justify-between text-xl font-bold  py-3">
                     <p>Total:</p>
-                    <p>$1357.97</p>
+                    <p>${totalPriceWithTax?.toFixed(2)}</p>
                 </div>
 
                 <div className="pt-8">

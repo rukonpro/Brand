@@ -12,7 +12,7 @@ const MainLayout = ({children}) => {
                         <Sidebar/>
                     </div>
 
-                    <div className="col-span-12 md:col-span-8 pt-5  relative ">
+                    <div className="col-span-12 md:col-span-8  relative ">
                         <div className="pt-5 md:p-3"
                         >{children}</div>
                         <div className="pt-8"/>

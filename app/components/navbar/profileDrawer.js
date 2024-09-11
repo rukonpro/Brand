@@ -103,6 +103,11 @@ export const profileMenu = [
         icon: Avater
     },
     {
+        title: "My Cart",
+        path: "/profiles/myCart",
+        icon: CartOrderIcon
+    },
+    {
         title: "My Orders",
         path: "/profiles/myOrders",
         icon: CartOrderIcon
