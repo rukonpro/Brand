@@ -5,22 +5,22 @@ import Love from "@/public/images/love.png";
 import Chat from "@/public/images/chat.png";
 import Cart from "@/public/images/cart.png";
 import Search from "@/app/components/Search/Search";
-import MenuIcon from "@/public/images/menu.png"
 import Link from "next/link";
 import ProfileDrawer from "@/app/components/navbar/profileDrawer";
 import NavCart from "@/app/components/navbar/navCart";
 import CategoryDrawer from "@/app/components/navbar/CategoryDrawer";
+import {getAllCategory} from "@/app/utils/Category/fetch_category_api";
 
 
-const Navbar = () => {
-
+const Navbar =async () => {
+    const category=await getAllCategory();
     return (
         <nav className='bg-white px-3 py-3 w-full '>
             <div className="grid grid-cols-12 max-w-[1200px] mx-auto py-8 items-center gap-4">
                 <div className="h-[46px] w-[150px] md:col-span-2 col-span-6 ">
                   <div className="grid grid-cols-4 items-center">
                      <div className="col-span-1 md:hidden block">
-                        <CategoryDrawer/>
+                        <CategoryDrawer categories={category?.data} />
                      </div>
                     <div className="md:col-span-4 col-span-3">
                        <Link href="/">

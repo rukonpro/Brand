@@ -16,7 +16,6 @@ const SourcesProducts = async ({ category }) => {
     const products = await getProducts(params);
 
 
-// console.log(category);
 
     return (
 

@@ -59,8 +59,9 @@ const NestedDropdown = ({ category }) => {
 const CategoryManu = ({categories}) => {
 
     return (
-        <nav >
-            <ul className="menu bg-base-200 rounded-box">
+        <nav className="relative">
+            <h1 className="text-lg px-3 py-4 bg-blue-500 text-white sticky top-0 z-10 mb-1 font-bold">Categorise</h1>
+            <ul className="menu bg-base-200 rounded-box overflow-y-auto px-1">
                 {categories?.map((category) => (
                     <NestedDropdown key={category?.id} category={category}/>
                 ))}
