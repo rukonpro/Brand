@@ -7,9 +7,6 @@ import {getProducts} from "@/app/utils/product/fetch_products_api";
 
 const SourcesProducts = async ({ category }) => {
 
-
-
-
     const params = {
         categoryId: category?.id,
         limit: 10,

@@ -36,7 +36,6 @@ export default async function handler(req, res) {
                     offers:true
                 },
             });
-
             res.status(200).json(products);
         } catch (error) {
             res.status(500).json({ error: 'An error occurred while fetching the products.' });

@@ -5,9 +5,7 @@ import {getAllCategory} from "@/app/utils/Category/fetch_category_api";
 
 
 const SourcesProductsLayout = async () => {
-   
-    const allCategory = await getAllCategory();
-
+       const allCategory = await getAllCategory();
     return (
         <div>
             {

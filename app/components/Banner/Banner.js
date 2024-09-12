@@ -14,18 +14,12 @@ const category=await getAllCategory();
         <div className="md:px-3">
             <div className="max-w-[1200px] mx-auto border md:rounded-lg md:px-3  md:pt-3 pb-3 md:mt-5 bg-white ">
                 <div className='grid grid-cols-12 gap-3'>
-                    <div className='md:col-span-3 col-span-12 px-3 md:px-0 overflow-y-auto scroll-smooth  max-h-96 md:block hidden'>
-                        <ul>
-                            {category?.data?.map((item)=> {
-                                return (
-                                    <li key={item?.id} className="my-0.5 rounded-lg bg-[#E3F0FF] hover:bg-blue-400 hover:text-white">
-                                        <Link href={`/source/${item?.id}`}
-                                              className='w-full inline-block px-3 py-2 '>{item?.name}</Link>
-                                    </li>
-                                )
-                            })}
-                        </ul>
-                        <CategoryManu categories={categories} />
+                    <div className='relative md:col-span-3 col-span-12 px-3 md:px-0 overflow-y-auto scroll-smooth  max-h-96 md:block hidden bg-blue-100 rounded-lg'>
+                      <h1 className="text-lg px-3 py-4 bg-blue-500 text-white sticky top-0 z-10 mb-1 font-bold">Categorise</h1>
+
+                       <div className="px-1">
+                           <CategoryManu categories={category?.data} />
+                       </div>
                     </div>
                     <div className='md:col-span-7 col-span-12 relative'>
                         <BannerSlider banners={category?.data}/>

@@ -21,6 +21,7 @@ const Source = async ({params}) => {
         }
     );
 
+    // console.log(products)
     return (
         <div className='py-5 sm:px-3'>
             <div className='max-w-[1200px] mx-auto'>
@@ -37,26 +38,32 @@ const Source = async ({params}) => {
 
 
                 <Suspense fallback={<Loading/>}>
-                    <ul className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 gap-0.5 md:gap-4 pt-10">
-                        {
-                            products?.data?.map((product, index) => {
-                                return (
-                                    <li key={index}
-                                        className='bg-white md:border-2 border-blue-200 md:rounded-lg p-3 flex-1 flex flex-col justify-between'>
-                                        <Link href={`/details/${product?.id}`}>
+                    {
+                        !products?.data?.length ? (
+                                <h1 className="text-red-500 text-center text-2xl font-bold">Product not found</h1>
+                            ) :
+                            <ul className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 gap-0.5 md:gap-4 pt-10">
+                                {
+                                    products?.data?.map((product, index) => {
+                                        return (
+                                            <li key={index}
+                                                className='bg-white md:border-2 border-blue-200 md:rounded-lg p-3 flex-1 flex flex-col justify-between'>
+                                                <Link href={`/details/${product?.id}`}>
 
-                                            {/************************Related products Card ***********************/}
+                                                    {/************************Related products Card ***********************/}
 
-                                            <RelatedProductCard product={product}/>
+                                                    <RelatedProductCard product={product}/>
 
-                                        </Link>
+                                                </Link>
 
-                                        <AddToCartButton id={product?.id}/>
-                                    </li>
-                                )
-                            })
-                        }
-                    </ul>
+                                                <AddToCartButton id={product?.id}/>
+                                            </li>
+                                        )
+                                    })
+                                }
+                            </ul>
+                    }
+
                 </Suspense>
             </div>
         </div>
