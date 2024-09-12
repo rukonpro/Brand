@@ -9,6 +9,7 @@ import MenuIcon from "@/public/images/menu.png"
 import Link from "next/link";
 import ProfileDrawer from "@/app/components/navbar/profileDrawer";
 import NavCart from "@/app/components/navbar/navCart";
+import CategoryDrawer from "@/app/components/navbar/CategoryDrawer";
 
 
 const Navbar = () => {
@@ -19,9 +20,7 @@ const Navbar = () => {
                 <div className="h-[46px] w-[150px] md:col-span-2 col-span-6 ">
                   <div className="grid grid-cols-4 items-center">
                      <div className="col-span-1 md:hidden block">
-                        <button type="button">
-                            <Image src={MenuIcon} alt="MenuIcon"/>
-                        </button>
+                        <CategoryDrawer/>
                      </div>
                     <div className="md:col-span-4 col-span-3">
                        <Link href="/">

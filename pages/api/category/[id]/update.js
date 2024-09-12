@@ -1,28 +1,37 @@
-// /pages/api/category/[id]/update.js
 import { PrismaClient } from '@prisma/client';
-
 const prisma = new PrismaClient();
 
 export default async function handler(req, res) {
-    const { id } = req.query;  // Extract the id from the URL parameter
+    if (req.method === 'PATCH') {
+        const { id } = req.query;
+        const { name, photo, description, parentId } = req.body;
 
-    if (req.method !== 'PATCH') {
-        return res.status(405).json({ error: 'Method not allowed' });
-    }
+        if (!id) {
+            return res.status(400).json({ error: 'Category ID is required' });
+        }
 
-    const { name, photo, description } = req.body;
+        // Build the update data object
+        const updateData = {};
+        if (name) updateData.name = name;
+        if (photo) updateData.photo = photo;
+        if (description !== undefined) updateData.description = description;
+        if (parentId !== undefined) updateData.parentId = parentId || null; // Handle null values
 
-    try {
-        const updatedCategory = await prisma.category.update({
-            where: { id },
-            data: {
-                name,
-                photo,
-                description,
-            },
-        });
-        res.status(200).json(updatedCategory);
-    } catch (error) {
-        res.status(500).json({ error: 'Error updating category' });
+        try {
+            const updatedCategory = await prisma.category.update({
+                where: {
+                    id,
+                },
+                data: updateData,
+            });
+
+            res.status(200).json(updatedCategory);
+        } catch (error) {
+            console.error('Error updating category:', error.message);
+            res.status(500).json({ error: 'Failed to update category' });
+        }
+    } else {
+        res.setHeader('Allow', ['PATCH']);
+        res.status(405).end(`Method ${req.method} Not Allowed`);
     }
 }

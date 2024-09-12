@@ -11,6 +11,9 @@ model Category {
   name        String
   photo       String
   description String?
+  parentId String?    @db.ObjectId
+  parent   Category?  @relation("CategoryToParent", fields: [parentId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  children Category[] @relation("CategoryToParent")
   Products Product[]
 }
 
@@ -93,4 +96,39 @@ model Offer {
 enum DiscountType {
   PERCENTAGE
   FLAT
+}
+
+
+
+model User {
+  id             String     @id @default(auto()) @map("_id") @db.ObjectId
+  firstName      String
+  lastName       String
+  gender         Gender?
+  dateOfBirth    DateTime?
+  phoneNumber    String?    @unique
+  email          String    @unique
+  country        String?
+  houseNumber    String?
+  street         String?
+  city           String?
+  postalCode     String?
+  state          String?
+  role           Role      @default(USER) // Default role
+  profilePhoto   String?   // Nullable field for profile photo URL
+  coverPhoto     String?   // Nullable field for cover photo URL
+  password       String?    // Add this line for password
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+}
+
+enum Gender {
+  MALE
+  FEMALE
+  OTHER
+}
+enum Role {
+  ADMIN
+  USER
+  SUPPLIER
 }

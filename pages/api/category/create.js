@@ -1,29 +1,29 @@
-import { PrismaClient } from '@prisma/client';
 
+import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
 
 export default async function handler(req, res) {
     if (req.method !== 'POST') {
-        return res.status(405).json({ error: 'Method not allowed' });
+        return res.status(405).json({ message: 'Method Not Allowed' });
     }
 
-    const { name, photo, description } = req.body;
-
-    // Validate the input data
-    if (!name || !photo || !description) {
+    const { name, photo, description, parentId } = req.body;
+// Validate the input data
+    if (!name || !photo ) {
         return res.status(400).json({ error: 'Missing required fields' });
     }
-
     try {
         const newCategory = await prisma.category.create({
             data: {
                 name,
                 photo,
                 description,
+                parentId:parentId||null, // Optionally set the parentId if the category has a parent
             },
         });
-        res.status(201).json(newCategory);
+        return res.status(201).json(newCategory);
     } catch (error) {
-        res.status(500).json({ error: 'Error creating category' });
+        console.error(error);
+        return res.status(500).json({ error: 'Failed to create category' });
     }
 }

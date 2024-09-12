@@ -3,6 +3,8 @@ import React from 'react';
 import JoinNowCard from "@/app/components/Banner/JoinNowCard";
 import {getAllCategory} from "@/app/utils/Category/fetch_category_api";
 import BannerSlider from "@/app/components/Banner/BannerSlider";
+import CategoryManu from "@/app/components/navbar/CategoryManu";
+import {categories} from "@/app/components/navbar/CategoryDrawer";
 
 
 const Banner =async () => {
@@ -23,6 +25,7 @@ const category=await getAllCategory();
                                 )
                             })}
                         </ul>
+                        <CategoryManu categories={categories} />
                     </div>
                     <div className='md:col-span-7 col-span-12 relative'>
                         <BannerSlider banners={category?.data}/>
