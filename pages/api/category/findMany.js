@@ -14,7 +14,23 @@ export default async function handler(req, res) {
                 include: {
                     children: {
                         include: {
-                            children: true, // Recursively include nested children
+                            children: {
+                                include:{
+                                    children: {
+                                        include:{
+                                            children: {
+                                                include:{
+                                                    children:{
+                                                        include:{
+                                                            children:true
+                                                        }
+                                                    },
+                                                }
+                                            },
+                                        }
+                                    },
+                                }
+                            }, // Recursively include nested children
                         },
                     },
                 },
