@@ -5,6 +5,7 @@ import Navbar from "@/app/components/navbar/navbar";
 import { Analytics } from '@vercel/analytics/react';
 import Footer from "@/app/components/Footer/Footer";
 import {AppProvider} from "@/app/context/BrandContext";
+import ClientSessionProvider from "@/app/context/ClientSessionProvider";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
@@ -18,7 +19,8 @@ export default function RootLayout({ children}) {
   return (
     <html lang="en">
       <body className={`${inter.className} bg-gray-100`}>
-        <main className="relative">
+      <main className="relative">
+          <ClientSessionProvider>
           <AppProvider>
           <div className="sticky top-0 z-[20]">
             <Navbar />
@@ -28,6 +30,7 @@ export default function RootLayout({ children}) {
           <Toaster />
           <Analytics />
           </AppProvider>
+          </ClientSessionProvider>
         </main>
       </body>
     </html>

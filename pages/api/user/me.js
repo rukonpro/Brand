@@ -1,32 +1,28 @@
 import { PrismaClient } from '@prisma/client';
-import jwt from 'jsonwebtoken';
+import { getSession } from 'next-auth/react';
+
+// import {authorize} from "@/lib/auth/authorize";
 
 const prisma = new PrismaClient();
 
 export default async function handler(req, res) {
     if (req.method === 'GET') {
+
         try {
-            const token = req.headers.authorization?.split(' ')[1];
-
-            if (!token) {
-                return res.status(401).json({ error: 'Token not provided' });
+            const session = await getSession({ req });
+            if (!session) {
+                return res.status(401).json({ message: 'Unauthorized' });
             }
-
-            // Verify the token
-            const decoded = jwt.verify(token, process.env.SECRET_KEY);
-
             // Fetch the user from the database
             const user = await prisma.user.findUnique({
-                where: { id: decoded.userId },
+                where: { email: session?.user?.email },
             });
 
             if (!user) {
                 return res.status(404).json({ error: 'User not found' });
             }
-
             return res.status(200).json({ user });
         } catch (error) {
-            console.error('Error fetching user:', error);
             return res.status(401).json({ error: 'Invalid or expired token' });
         }
     } else {

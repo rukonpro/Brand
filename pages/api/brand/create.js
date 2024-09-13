@@ -1,9 +1,11 @@
 
 import { PrismaClient } from '@prisma/client';
+import {authorize} from "@/lib/auth/authorize";
 
 const prisma = new PrismaClient();
 
-export default async function handler(req, res) {
+export default  async function handler(req, res) {
+    authorize('ADMIN')
     if (req.method !== 'POST') {
         return res.status(405).json({ error: 'Method not allowed' });
     }

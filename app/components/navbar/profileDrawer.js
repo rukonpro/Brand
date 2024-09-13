@@ -1,5 +1,5 @@
 "use client"
-import React, { Fragment, useState } from 'react';
+import React, {Fragment, useContext, useState} from 'react';
 import Link from "next/link";
 import Drawer from "@/app/components/Drawer/Drawer";
 import Image from "next/image";
@@ -12,12 +12,13 @@ import SingInIcon from "@/public/images/sign-in-alt-svgrepo-com.svg";
 import ProfileSidebarBanner from "@/app/components/navbar/profileSidebarBanner";
 import CloseIcon from "@/public/images/close-svgrepo-com.svg";
 import LogoutButton from "@/app/components/navbar/LogoutButton";
+import {AppContext} from "@/app/context/BrandContext";
 
 
 
 const ProfileDrawer = () => {
     const [isDrawerOpen, setIsDrawerOpen] = useState(false);
-
+const {user}=useContext(AppContext);
 
     const handleToggleDrawer = () => {
         setIsDrawerOpen(!isDrawerOpen);
@@ -25,7 +26,6 @@ const ProfileDrawer = () => {
     const handleClose = () => {
         setIsDrawerOpen(false);
     };
-const user={}
 
     return (
         <Fragment>

@@ -1,7 +1,8 @@
 "use client"
-
 import {createContext, useEffect, useState} from 'react';
+import { useSession } from 'next-auth/react';
 import getMe from "@/app/utils/user/me";
+import Loading from "@/app/loading";
 
 // Create the context
 export const AppContext = createContext();
@@ -12,20 +13,33 @@ export const AppProvider = ({ children }) => {
     const [products, setProducts] = useState([]);
     const [user, setUser] = useState({});
 
+    const { data: session, status } = useSession();
+
+
     useEffect(() => {
         const fetchProducts = async () => {
             const me=await getMe();
             setUser(me?.user);
         }
-        fetchProducts();
-    },[])
+        fetchProducts()
 
+    },[session])
 
+    if (status === 'loading') {
+        return (
+            <div className="flex justify-center items-center h-screen w-screen overflow-hidden">
+                <Loading/>
+            </div>
+        );
+    }
 
+    const providerValue={ cart, setCart,products,setProducts,user,setUser }
     return (
-        <AppContext.Provider value={{ cart, setCart,products,setProducts,user,setUser }}>
+
+        <AppContext.Provider value={providerValue}>
             {children}
         </AppContext.Provider>
+
     );
 };
 

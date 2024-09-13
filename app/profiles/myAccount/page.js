@@ -8,6 +8,7 @@ import EditIcon from "@/public/images/edit-2-svgrepo-com.svg";
 import SaveIcon from "@/public/images/save-floppy-svgrepo-com.svg";
 import LoadingIcon from "@/public/images/loading-gray-color-svgrepo-com.svg";
 import {AppContext} from "@/app/context/BrandContext";
+
 import {updateUser} from "@/app/utils/user/fatch_user_update_api";
 const MyAccount = () => {
 const {user}=useContext(AppContext)
@@ -36,7 +37,7 @@ const {user}=useContext(AppContext)
 
     }
 
-
+console.log(user)
 
     return (
         <div>
@@ -219,7 +220,7 @@ const {user}=useContext(AppContext)
                         <br />
                         <input type="number" id="postal_code" name="postal_code"
                             placeholder="Postal code"
-                               defaultValue={user.postalCode}
+                               defaultValue={user?.postalCode}
                             className="px-3 py-2 rounded-lg mt-1  w-full" />
                     </div>
 
