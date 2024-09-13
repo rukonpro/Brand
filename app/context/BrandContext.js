@@ -27,7 +27,7 @@ export const AppProvider = ({ children }) => {
 
     if (status === 'loading') {
         return (
-            <div className="flex justify-center items-center h-screen w-screen overflow-hidden">
+            <div className="flex justify-center items-center h-screen w-screen overflow-hidden bg-blue-200">
                 <Loading/>
             </div>
         );
