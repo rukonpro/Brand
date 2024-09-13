@@ -6,34 +6,49 @@ const prisma = new PrismaClient();
 export default async function handler(req, res) {
     if (req.method === 'GET') {
         try {
-            // Fetch all categories with their nested children
-            const categories = await prisma.category.findMany({
-                where: {
-                    parentId: null, // Get only root categories
-                },
-                include: {
-                    children: {
-                        include: {
-                            children: {
-                                include:{
-                                    children: {
-                                        include:{
-                                            children: {
-                                                include:{
-                                                    children:{
-                                                        include:{
-                                                            children:true
-                                                        }
-                                                    },
-                                                }
-                                            },
-                                        }
-                                    },
-                                }
-                            }, // Recursively include nested children
-                        },
+            const { name, parentId } = req.query;
+
+            const filters = {};
+            if(!name){
+                filters.parentId = parentId||null;
+            }
+
+            if (name) {
+                filters.name = {
+                    contains: name, // Use 'contains' for partial matching, case-sensitive
+                    mode: 'insensitive', // Case-insensitive matching
+                };
+            }
+
+            const include= {
+                children: {
+                    include: {
+                        children: {
+                            include:{
+                                children: {
+                                    include:{
+                                        children: {
+                                            include:{
+                                                children:{
+                                                    include:{
+                                                        children:true
+                                                    }
+                                                },
+                                            }
+                                        },
+                                    }
+                                },
+                            }
+                        }, // Recursively include nested children
                     },
                 },
+            }
+
+
+
+            const categories = await prisma.category.findMany({
+                where: filters,
+                include:name?{}:include,
             });
 
             res.status(200).json(categories);

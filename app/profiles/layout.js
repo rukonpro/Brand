@@ -1,7 +1,9 @@
 import React from 'react';
 import Sidebar from "@/app/components/sidebar/sidebar";
 
+
 const MainLayout = ({children}) => {
+
     return (
         <div>
             <div className="max-w-[1200px] mx-auto">
@@ -17,7 +19,6 @@ const MainLayout = ({children}) => {
                         >{children}</div>
                         <div className="pt-8"/>
                         <div className="md:pr-3">
-
                         </div>
                     </div>
                 </div>

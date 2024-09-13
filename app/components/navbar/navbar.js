@@ -12,7 +12,7 @@ import CategoryDrawer from "@/app/components/navbar/CategoryDrawer";
 import {getAllCategory} from "@/app/utils/Category/fetch_category_api";
 
 
-const Navbar =async () => {
+const Navbar = async () => {
     const category=await getAllCategory();
     return (
         <nav className='bg-white px-3 py-3 w-full '>

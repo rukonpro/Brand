@@ -5,6 +5,7 @@ import {useFormik} from "formik";
 import * as Yup from 'yup';
 import LoadingIcon from "@/public/images/loading-2-svgrepo-com.svg";
 import Image from "next/image";
+import Cookies from 'js-cookie';
 import toast from "react-hot-toast";
 
 const validationSchema = Yup.object().shape({
@@ -18,18 +19,40 @@ const LoginForm = () => {
     const router = useRouter();
     const [loading, setLoading] = React.useState(false);
 
+
     const handleLogin = async ({email,password}) => {
+        setLoading(true);
         try {
-            setLoading(true);
-     // await userLogin({email,password});
-            toast.success("login successfully",{id:"login"})
-            router.push("/profiles/myAccount");
+            const res = await fetch('/api/user/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ email, password }),
+            });
+
+            const data = await res.json();
+
+            if (res.ok) {
+                // Save the token in cookies for authentication
+                Cookies.set('token', data.token, { expires: 10 });
+                Cookies.set('user', data.user, { expires: 10 });
+                // Redirect to a protected page
+                router.push('/profiles/myAccount');
+            } else {
+                toast.error(data.error,{
+                    id: 'login',
+                });
+            }
         } catch (error) {
-            toast.error(error?.response?.data?.error||error.mesaaage,{id:"login"})
-        } finally{
+            toast.error('Something went wrong. Please try again.',{
+                id:"login"
+            })
+
+        }finally {
             setLoading(false);
         }
-    }
+    };
 
     const formik = useFormik({
 
@@ -44,6 +67,10 @@ const LoginForm = () => {
         },
 
     });
+
+
+
+
     return (
             <form onSubmit={formik.handleSubmit}>
                 <input type="email"

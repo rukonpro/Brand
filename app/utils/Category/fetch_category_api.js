@@ -1,10 +1,10 @@
 import axios from "axios";
 import baseURL from "@/app/utils/baseURL";
 
-export const getAllCategory= async (prams)=> {
+export const getAllCategory= async (params)=> {
     try {
         return await axios.get(`${baseURL}/api/category/findMany`,{
-            params:prams,
+            params:params,
         });
     } catch (error) {
         console.log(error);
