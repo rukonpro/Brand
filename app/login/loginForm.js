@@ -5,10 +5,8 @@ import * as Yup from 'yup';
 import LoadingIcon from "@/public/images/loading-2-svgrepo-com.svg";
 import Image from "next/image";
 import { signIn } from 'next-auth/react'
-// import Cookies from 'js-cookie';
 import toast from "react-hot-toast";
-// import { useState } from 'react';
-import { useRouter } from 'next/navigation';
+import {useRouter, useSearchParams} from 'next/navigation';
 
 const validationSchema = Yup.object().shape({
     email: Yup.string().email('Invalid email').required('Email is required'),
@@ -20,52 +18,32 @@ const LoginForm = () => {
 
     const router = useRouter();
     const [loading, setLoading] = React.useState(false);
+    const searchParams = useSearchParams();
 
 
     const handleLogin = async ({email,password}) => {
-        const result = await signIn('credentials', {
-            redirect: false,
-            email,
-            password,
-        });
+        try {
+            setLoading(true)
+            const result = await signIn('credentials', {
+                redirect: false,
+                email,
+                password,
+            });
 
-        if (result?.error) {
-            toast.error(result.error,{id: 'login'});
-        } else {
-            router.push('/');
+            if (result?.error) {
+                toast.error(result.error,{id: 'login'});
+                setLoading(false)
+                console.log(result?.error)
+            }
+            if(result?.status===200){
+                setLoading(false);
+                router.push('/')
+
+            }
         }
-
-        // setLoading(true);
-        // try {
-        //     const res = await fetch('/api/user/login', {
-        //         method: 'POST',
-        //         headers: {
-        //             'Content-Type': 'application/json',
-        //         },
-        //         body: JSON.stringify({ email, password }),
-        //     });
-        //
-        //     const data = await res.json();
-        //
-        //     if (res.ok) {
-        //         // Save the token in cookies for authentication
-        //         Cookies.set('token', data.token, { expires: 10 });
-        //         Cookies.set('user', data.user, { expires: 10 });
-        //         // Redirect to a protected page
-        //         router.push('/profiles/myAccount');
-        //     } else {
-        //         toast.error(data.error,{
-        //             id: 'login',
-        //         });
-        //     }
-        // } catch (error) {
-        //     toast.error('Something went wrong. Please try again.',{
-        //         id:"login"
-        //     })
-        //
-        // }finally {
-        //     setLoading(false);
-        // }
+        catch (e) {
+                console.log(e)
+        }
     };
 
     const formik = useFormik({
