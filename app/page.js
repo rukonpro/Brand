@@ -10,7 +10,6 @@ import OffersLayout from "@/app/components/offers/OffersLayout";
 
 
 export default  function Home() {
-
     return (
         <>
             <Nav />
