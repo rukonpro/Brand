@@ -21,3 +21,7 @@ export const getDetailsProduct= async ({id})=>{
     }
 }
 
+
+
+
+

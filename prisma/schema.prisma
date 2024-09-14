@@ -132,3 +132,17 @@ enum Role {
   USER
   SUPPLIER
 }
+
+
+
+model Banner {
+  id          String     @id @default(auto()) @map("_id") @db.ObjectId
+  image       String   // ব্যানারের চিত্রের URL
+  title       String?  // ব্যানারে প্রদর্শিত টেক্সট
+  link        String?  // ব্যানারে কোনো লিঙ্ক দেওয়া থাকলে
+  status      Status @default(ACTIVE)
+  startDate   DateTime @default(now())// ব্যানার প্রদর্শনের শুরু তারিখ
+  endDate     DateTime // ব্যানার প্রদর্শনের শেষ তারিখ
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+}

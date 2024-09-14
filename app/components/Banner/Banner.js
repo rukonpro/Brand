@@ -3,12 +3,13 @@ import JoinNowCard from "@/app/components/Banner/JoinNowCard";
 import {getAllCategory} from "@/app/utils/Category/fetch_category_api";
 import BannerSlider from "@/app/components/Banner/BannerSlider";
 import CategoryManu from "@/app/components/navbar/CategoryManu";
+import {getBanners} from "@/app/utils/banner/fetch_banners_api";
 
 
 
 const Banner =async () => {
 const category=await getAllCategory();
-
+const banners=await getBanners()
     return (
         <div className="md:px-3">
             <div className="max-w-[1200px] mx-auto border md:rounded-lg md:px-3  md:pt-3 pb-3 md:mt-5 bg-white ">
@@ -19,7 +20,7 @@ const category=await getAllCategory();
                        </div>
                     </div>
                     <div className='md:col-span-7 col-span-12 relative'>
-                        <BannerSlider banners={category?.data}/>
+                        <BannerSlider banners={banners?.data}/>
                     </div>
 
                     <div className='md:col-span-2 col-span-12 grid md:grid-cols-1 sm:grid-cols-3 grid-cols-2 gap-3 px-3 md:px-0 max-h-96 overflow-y-auto overflow-hidden'>
