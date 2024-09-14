@@ -1,4 +1,4 @@
-// import Banner from "./components/Banner/Banner";
+import Banner from "./components/Banner/Banner";
 import Requests from "./components/requests/Requests";
 import RecommendedItems from "./components/RecommendedItems/RecommendedItems";
 import OurExtraServices from "./components/OurExtraServices/OurExtraServices";
@@ -13,7 +13,7 @@ export default  function Home() {
     return (
         <>
             <Nav />
-            {/*<Banner />*/}
+            <Banner />
             <Suspense fallback={<Loading/>}>
                 <OffersLayout />
             </Suspense>
