@@ -30,14 +30,14 @@ const BannerSlider = ({banners}) => {
         <div className="relative w-full h-96 overflow-hidden">
             {banners?.map((banner,index) => (
                 <div
-                    key={banner?.id}
+                    key={index}
                     className={`absolute top-0 left-0 w-full h-full bg-cover bg-center transition-opacity duration-500 ${currentSlide === index ? 'opacity-100' : 'opacity-0'}`}
                     style={{ backgroundImage: `url(${banner?.image})` }}
                 >
                     <div className="absolute top-10 left-5 text-slate-700  font-bold  w-60 ">
                         <h1 className="text-xl  p-0 backdrop-blur"><span className="">{banner?.title}</span></h1>
 
-                        <Link href={banner?.link}>
+                        <Link href={banner?.link} >
                             <button type='button' className="bg-white rounded-xl px-4 py-2 mt-5">
                                 Learn more
                             </button>

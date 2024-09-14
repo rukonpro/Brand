@@ -14,6 +14,7 @@ const banners=await getBanners()
         <div className="md:px-3">
             <div className="max-w-[1200px] mx-auto border md:rounded-lg md:px-3  md:pt-3 pb-3 md:mt-5 bg-white ">
                 <div className='grid grid-cols-12 gap-3'>
+
                     <div className='md:col-span-3 col-span-12 px-3 md:px-0 overflow-y-auto scroll-smooth  max-h-96 md:block hidden bg-blue-100 rounded-lg'>
                        <div>
                            <CategoryManu categories={category?.data} />
