@@ -9,6 +9,6 @@ module.exports = {
         //         pathname: '/**',
         //     },
         // ],
-    }
-    
+    },
+    outputFileTracing: false,
 }
