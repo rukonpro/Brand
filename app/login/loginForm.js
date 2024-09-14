@@ -8,6 +8,7 @@ import { signIn } from 'next-auth/react'
 import toast from "react-hot-toast";
 import {useRouter, useSearchParams} from 'next/navigation';
 
+
 const validationSchema = Yup.object().shape({
     email: Yup.string().email('Invalid email').required('Email is required'),
     password: Yup.string().min(6, 'Minimum 6 characters').required('Password is required'),
@@ -19,6 +20,11 @@ const LoginForm = () => {
     const router = useRouter();
     const [loading, setLoading] = React.useState(false);
     const searchParams = useSearchParams();
+
+
+const callbackUrl=searchParams.get("callbackUrl");
+
+console.log(callbackUrl);
 
 
     const handleLogin = async ({email,password}) => {
@@ -37,7 +43,7 @@ const LoginForm = () => {
             }
             if(result?.status===200){
                 setLoading(false);
-                router.push('/')
+                router.push(callbackUrl || '/')
 
             }
         }

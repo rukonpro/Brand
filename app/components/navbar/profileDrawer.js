@@ -99,28 +99,28 @@ const {user}=useContext(AppContext);
 export const profileMenu = [
     {
         title: "My Account",
-        path: "/profiles/myAccount",
+        path: "/myAccount",
         icon: Avater
     },
     {
         title: "My Cart",
-        path: "/profiles/myCart",
+        path: "/myCart",
         icon: CartOrderIcon
     },
     {
         title: "My Orders",
-        path: "/profiles/myOrders",
+        path: "/myOrders",
         icon: CartOrderIcon
     },
     {
         title: "Save For Later",
-        path: "/profiles/saveForLater",
+        path: "/saveForLater",
         icon: LoveIcon
     },
     {
         title: "Settings",
         icon: SettingsIcon,
-        path: "/profiles/settings",
+        path: "/settings",
         submenu: [
             {
                 title: "Password change",

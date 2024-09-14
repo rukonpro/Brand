@@ -2,20 +2,16 @@ import React from 'react';
 import Image from "next/image";
 import SingOut from "@/public/images/sign-out-svgrepo-com.svg";
 import RightIcon from "@/public/images/right-chevron-svgrepo-com.svg";
-import {useRouter} from "next/navigation";
 import {signOut} from "next-auth/react";
 import Cookies from "js-cookie";
 
 const LogoutButton = ({handleClose}) => {
-    const router = useRouter();
     const logout = async () => {
         // await handleLogout()
-
         await  Cookies.remove('next-auth.session-token');
         await   Cookies.remove('next-auth.csrf-token');
         await  signOut({ callbackUrl: '/login' })
         handleClose()
-        router.push('/login');
     }
 
     return (

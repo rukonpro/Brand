@@ -36,7 +36,7 @@ const Navbar = async () => {
                 <div className="grid grid-cols-4  items-center md:col-span-4 col-span-6">
 
                     <div>
-                        <Link href="/profiles/messenger">
+                        <Link href="/messenger">
                             <div className="flex justify-center">
                                 <div className="flex justify-center">
                                     <Image src={Chat} alt='Chat icon'/>
@@ -46,7 +46,7 @@ const Navbar = async () => {
                         </Link>
                     </div>
                     <div>
-                        <Link href="/profiles/myOrders">
+                        <Link href="/myOrders">
                             <div className="flex justify-center">
                                 <Image src={Love} alt='Love icon'/>
                             </div>
@@ -56,7 +56,7 @@ const Navbar = async () => {
                     <div>
 
 
-                        <Link href="/profiles/myCart">
+                        <Link href="/myCart">
                             <div className="flex justify-center relative">
 
                                 <Image src={Cart} alt='card icon'/>

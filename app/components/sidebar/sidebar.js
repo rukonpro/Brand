@@ -2,24 +2,29 @@
 import Link from 'next/link';
 import { profileMenu } from "@/app/components/navbar/profileDrawer";
 import Image from "next/image";
-import React, {  useState } from "react";
+import React, {useContext} from "react";
 import SingInIcon from "@/public/images/sign-in-alt-svgrepo-com.svg";
 import SingOutIcon from "@/public/images/sign-out-svgrepo-com.svg";
 import ProfileSidebarBanner from "@/app/components/navbar/profileSidebarBanner";
 import { useRouter } from "next/navigation";
+import {AppContext} from "@/app/context/BrandContext";
+import {signOut} from "next-auth/react";
+import Cookies from "js-cookie";
 
 
 const Sidebar = () => {
-    const router = useRouter();
+
+    const { user, setUser } = useContext(AppContext);
 
 
-    const { user, setUser } = useState({});
 
+        const logout = async () => {
+            await  Cookies.remove('next-auth.session-token');
+            await   Cookies.remove('next-auth.csrf-token');
+            await  signOut({ callbackUrl: '/login' });
+            setUser({});
+        }
 
-    const logout = async () => {
-
-        router.push('/login');
-    }
     return (
         <div
             className={`h-full bg-white text-gray-600 transition-transform duration-300 ease-in-out transform rounded-lg overflow-hidden`}

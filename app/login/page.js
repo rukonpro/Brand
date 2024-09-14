@@ -57,8 +57,8 @@ const Login = () => {
 
 
                             <div className="pt-8 text-center">
-                                <p className="text-gray-600">Not have an account? <Link href="/register"
-                                                                                            className="text-blue-500">Sing Up</Link>
+                                <p className="text-gray-600">Not have an account?
+                                    <Link href="/register" className="text-blue-500">Sing Up</Link>
                                 </p>
                             </div>
 

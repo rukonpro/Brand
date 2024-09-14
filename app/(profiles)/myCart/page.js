@@ -1,7 +1,7 @@
 import React from 'react';
 import SavedForLaterItems from "@/app/components/SavedForLaterItems/SavedForLaterItems";
 import BackButton from "@/app/components/BackButtons/BackButton";
-import MyCartItemsLayout from "@/app/profiles/myCart/MyCartItemsLayout";
+import MyCartItemsLayout from "@/app/(profiles)/myCart/MyCartItemsLayout";
 
 
 
