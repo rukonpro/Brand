@@ -9,7 +9,6 @@ import Loading from "@/app/loading";
 import OffersLayout from "@/app/components/offers/OffersLayout";
 
 
-
 export default  function Home() {
 
     return (
