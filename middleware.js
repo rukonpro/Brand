@@ -15,10 +15,10 @@ export async function middleware(req) {
 
 export const config = {
     matcher: [
-        '/myAccount/:path*',
-        '/myCart/:path*',
-        '/myOrders/:path*',
-        '/saveForLater/:path*',
-        '/settings/:path*'
+       // '/myAccount/:path*',
+       // '/myCart/:path*',
+       // '/myOrders/:path*',
+       // '/saveForLater/:path*',
+       // '/settings/:path*'
     ],
 };
