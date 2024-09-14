@@ -21,7 +21,7 @@ const LogoutButton = ({handleClose}) => {
     return (
         <button type="button"
                 onClick={logout}
-                className="w-full bg-gray-100 hover:bg-gray-200 duration-300 text-gray-500 font-bold px-3 py-3 text-left border-b-2 flex justify-between gap-4"
+                className="w-full  hover:text-blue-500 duration-300 text-slate-700  px-3 py-1 text-left  flex justify-between gap-4"
         >
             <div className="flex items-center gap-4">
                 <Image src={SingOut} alt='avater' className="h-5 w-5"/>

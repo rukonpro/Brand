@@ -10,6 +10,7 @@ import RelatedProducts from "@/app/components/RelatedProducts/RelatedProducts";
 import Loading from "@/app/loading";
 import {getDetailsProduct} from "@/app/utils/product/fetch_products_api";
 import AddToCartButton from "@/app/components/AddToCartButton/AddToCartButton";
+import SaveForLaterButton from "@/app/components/SavedForLaterItems/SaveForLaterButton";
 
 
 
@@ -176,11 +177,7 @@ const Details = async ({ params }) => {
                             <div className="pt-8">
 
                                 {/************************Save for later button ***********************/}
-                                <button
-                                    className="w-full  py-2 text-blue-500   mt-2 flex justify-center items-center gap-4 ">
-                                    <Image src={loveIconOutline} alt="loveIconOutline" className="h-4 w-4" />
-                                    <span>Save for later</span>
-                                </button>
+                                <SaveForLaterButton product={product?.data}/>
 
                                 {/************************Add to cart button ***********************/}
                                 <AddToCartButton product={product?.data} />

@@ -9,7 +9,6 @@ import SaveIcon from "@/public/images/save-floppy-svgrepo-com.svg";
 import LoadingIcon from "@/public/images/loading-gray-color-svgrepo-com.svg";
 import {AppContext} from "@/app/context/BrandContext";
 
-import {updateUser} from "@/app/utils/user/fatch_user_update_api";
 const MyAccount = () => {
 const {user}=useContext(AppContext)
     const [selectedProfilePicture, setSelectedProfilePicture] = useState(null);
@@ -37,7 +36,6 @@ const {user}=useContext(AppContext)
 
     }
 
-console.log(user)
 
     return (
         <div>
@@ -81,7 +79,7 @@ console.log(user)
                                 />
                             </div>
                             <div>
-                                <h1 className="text-2xl sm:text-3xl font-bold text-white">{user?.name}</h1>
+                                <h1 className="text-2xl sm:text-3xl font-bold text-white">{user?.firstName} {user?.lastName}</h1>
                                 <p className="text-sm sm:text-lg text-gray-100">{user?.email}</p>
                             </div>
                         </div>

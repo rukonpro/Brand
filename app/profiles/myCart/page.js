@@ -5,8 +5,6 @@ import MyCartItemsLayout from "@/app/profiles/myCart/MyCartItemsLayout";
 
 
 
-
-
 const MyCart = () => {
 
 
@@ -28,7 +26,7 @@ const MyCart = () => {
             </div>
 
             {/******************************Saved ForLater Items*******************************/}
-            <div className="lg:bg-white md:p-3 mt-10 md:rounded-r-lg">
+            <div >
                 <SavedForLaterItems/>
             </div>
         </div>
