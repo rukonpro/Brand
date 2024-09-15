@@ -1,14 +1,17 @@
 "use client"
 import { useState, useEffect } from 'react';
 import Link from "next/link";
-
+import {useRouter} from "next/navigation";
 
 
 const BannerSlider = ({banners}) => {
 
     const [currentSlide, setCurrentSlide] = useState(0);
+
+
     const slideCount = banners?.length;
 
+    const router = useRouter();
     // Auto-slide after every 3 seconds
     useEffect(() => {
         const slideInterval = setInterval(() => {
@@ -16,15 +19,15 @@ const BannerSlider = ({banners}) => {
         }, 3000);
 
         return () => clearInterval(slideInterval);
-    }, [currentSlide]);
+    }, []);
 
     const nextSlide = () => {
-        setCurrentSlide((prev) => (prev === slideCount - 1 ? 0 : prev + 1));
+        setCurrentSlide((prev) => ( prev === slideCount - 1 ? 0 : prev + 1))
     };
-
     const prevSlide = () => {
         setCurrentSlide((prev) => (prev === 0 ? slideCount - 1 : prev - 1));
     };
+
 
     return (
         <div className="relative w-full h-96 overflow-hidden">
@@ -36,12 +39,13 @@ const BannerSlider = ({banners}) => {
                 >
                     <div className="absolute top-10 left-5 text-slate-700  font-bold  w-60 ">
                         <h1 className="text-xl  p-0 backdrop-blur"><span className="">{banner?.title}</span></h1>
-
-                        <Link href={banner?.link} >
-                            <button type='button' className="bg-white rounded-xl px-4 py-2 mt-5">
+                        {banner?.link&&
+                            <Link href={banner?.link} prefetch={true}>   <button
+                                type='button' className="bg-white rounded-xl px-4 py-2 mt-5">
                                 Learn more
                             </button>
-                        </Link>
+                            </Link>
+                        }
                     </div>
                 </div>
             ))}
