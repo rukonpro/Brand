@@ -40,9 +40,9 @@ const BannerSlider = ({banners}) => {
                     <div className="absolute top-10 left-5 text-slate-700  font-bold  w-60 ">
                         <h1 className="text-xl  p-0 backdrop-blur"><span className="">{banner?.title}</span></h1>
                         {banner?.link&&
-                            <Link href={banner?.link} prefetch={true}>   <button
+                            <Link href={banner?.link+slideCount} prefetch>   <button
                                 type='button' className="bg-white rounded-xl px-4 py-2 mt-5">
-                                Learn more
+                                Learn more ({index})
                             </button>
                             </Link>
                         }

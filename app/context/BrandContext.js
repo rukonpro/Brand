@@ -25,13 +25,13 @@ export const AppProvider = ({ children }) => {
 
     },[session])
 
-    if (status === 'loading') {
-        return (
-            <div className="flex justify-center items-center h-screen w-screen overflow-hidden bg-blue-200">
-                <Loading/>
-            </div>
-        );
-    }
+    // if (status === 'loading') {
+    //     return (
+    //         <div className="flex justify-center items-center h-screen w-screen overflow-hidden bg-blue-200">
+    //             <Loading/>
+    //         </div>
+    //     );
+    // }
 
     const providerValue={ cart, setCart,products,setProducts,user,setUser }
     return (

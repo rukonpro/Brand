@@ -25,7 +25,7 @@ const ProfileSidebarBanner = ({ user }) => {
                         />
 
                         <div>
-                            <h1 className="text-xl font-bold text-white">{user?.name}</h1>
+                            <h1 className="text-xl font-bold text-white">{user?.firstName} {user?.lastName}</h1>
                             <p className="text-sm text-gray-100">{user?.email}</p>
                         </div>
                     </div>

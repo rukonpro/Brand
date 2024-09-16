@@ -4,8 +4,9 @@ import visaCard from "@/public/images/visa-card.png";
 import masterCard from "@/public/images/master-card.png";
 import pPCard from "@/public/images/PP-Card.png";
 import payCord from "@/public/images/Pay-card.png";
+import Link from "next/link";
 
-const CheckoutCard = ({totalPrice,totalDiscount,totalTax,taxPercentage,totalPriceWithTax}) => {
+const CheckoutCard = ({totalPrice,totalDiscount,totalTax,taxPercentage,totalPriceWithTax,children}) => {
     return (
         <div>
             <div className=" bg-white p-3 rounded-lg">
@@ -44,12 +45,7 @@ const CheckoutCard = ({totalPrice,totalDiscount,totalTax,taxPercentage,totalPric
                     <p>${totalPriceWithTax?.toFixed(2)}</p>
                 </div>
 
-                <div className="pt-8">
-                    <button type="button"
-                            className="text-xl bg-green-500 text-white px-5 py-2 rounded-lg w-full"
-                    >Checkout
-                    </button>
-                </div>
+                {children}
 
 
                 <div className="flex justify-center gap-x-2 pt-8">

@@ -12,7 +12,7 @@ const MyCart = () => {
     return (
         <div>
             <div className="flex justify-between items-center pb-5 px-3 md:px-0">
-                <h1 className="text-xl font-bold">My Cart (5)</h1>
+                <h1 className="text-xl font-bold">My Cart</h1>
                 <BackButton title="Back" />
             </div>
 
@@ -21,7 +21,7 @@ const MyCart = () => {
                <MyCartItemsLayout/>
 
 
-                {/******************************Checkout Card*******************************/}
+                {/******************************checkout Card*******************************/}
 
             </div>
 

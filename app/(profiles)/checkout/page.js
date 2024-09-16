@@ -1,13 +1,13 @@
 "use client"
 import React, {useCallback, useContext, useEffect, useState} from 'react';
+import CheckoutCard from "@/app/components/CheckoutCard/CheckoutCard";
 import {AppContext} from "@/app/context/BrandContext";
 import {getProducts} from "@/app/utils/product/fetch_products_api";
-import MyCartItems from "@/app/components/MyCartItems/MyCartItems";
-import CheckoutCard from "@/app/components/CheckoutCard/CheckoutCard";
-import Link from "next/link";
+import ShippingForm from "@/app/components/ShippingForm/ShippingForm";
 
-const MyCartItemsLayout = () => {
-    const {cart,products,setProducts}=useContext(AppContext);
+const Checkout = () => {
+    const {cart,products,setProducts,user}=useContext(AppContext);
+
     const [loading,setLoading] = useState(false);
     const productIds = cart?.map(item => item.productId).join(',');
 
@@ -31,8 +31,6 @@ const MyCartItemsLayout = () => {
     useEffect(()=>{
         handleGetProducts()
     },[handleGetProducts]);
-
-
 
 
     let totalPrice = 0;
@@ -63,13 +61,12 @@ const MyCartItemsLayout = () => {
 // Calculate the total price after applying the tax
     const totalPriceWithTax = totalPriceWithDiscount + totalTax;
 
-
-
     return (
-        <>
-            <MyCartItems products={products} loading={loading}/>
+        <div>
 
-            <div className="col-span-12 sm:col-span-8 md:col-span-6 lg:col-span-4 ">
+            <ShippingForm user={user}/>
+
+            <div className="pt-11">
                 <CheckoutCard
                     cart={cart}
                     products={products}
@@ -79,20 +76,17 @@ const MyCartItemsLayout = () => {
                     totalPriceWithTax={totalPriceWithTax}
                     totalDiscount={totalDiscount}
                     totalTax={totalTax}
-
                 >
-
                     <div className="pt-8">
-                        <Link href="/checkout"
-                              className="text-xl bg-green-500 text-white px-5 py-2 rounded-lg w-full inline-block text-center items-center"
-                        >Checkout
-                        </Link>
+                        <button type="button"
+                                className="text-xl bg-green-500 text-white px-5 py-2 rounded-lg w-full inline-block text-center items-center"
+                        >Order
+                        </button>
                     </div>
                 </CheckoutCard>
             </div>
-
-        </>
+        </div>
     );
 };
 
-export default MyCartItemsLayout;
+export default Checkout;
