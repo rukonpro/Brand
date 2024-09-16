@@ -70,12 +70,12 @@ const [loading, setLoading] = React.useState(false);
         <form onSubmit={formik.handleSubmit} className=" p-3 rounded-lg">
             <div className="flex justify-between items-center">
                 <h1 className="text-md font-bold pb-2 text-slate-700">Shipping address:</h1>
-                <button type="button"
-                        onClick={()=>setNewAddress(false)}
-                        className="text-sm px-2 py-1 rounded-md  border-1 border-blue-500 bg-white hover:bg-slate-300 shadow  text-slate-700">Cancel</button>
+                {setNewAddress&&<button type="button"
+                         onClick={() => setNewAddress(false)}
+                         className="text-sm px-2 py-1 rounded-md  border-1 border-blue-500 bg-white hover:bg-slate-300 shadow  text-slate-700">Cancel</button>}
             </div>
-            <div className="grid sm:grid-cols-4 md:grid-cols-4 gap-4 px-3 md:px-0">
-                <div className="col-span-2">
+            <div className="grid sm:grid-cols-4 md:grid-cols-4 gap-4  md:px-0">
+                <div className="sm:col-span-2 col-span-4">
                     <label htmlFor="firstName" className="text-lg">First Name:</label>
                     <input
                         type="text"
@@ -91,7 +91,7 @@ const [loading, setLoading] = React.useState(false);
                         <div className="text-red-500">{formik.errors.firstName}</div> : null}
                 </div>
 
-                <div className="col-span-2">
+                <div className="sm:col-span-2 col-span-4">
                     <label htmlFor="lastName" className="text-lg">Last Name:</label>
                     <input
                         type="text"
@@ -107,7 +107,7 @@ const [loading, setLoading] = React.useState(false);
                         <div className="text-red-500">{formik.errors.lastName}</div> : null}
                 </div>
 
-                <div className="col-span-2">
+                <div className="sm:col-span-2 col-span-4">
                     <label htmlFor="phoneNumber" className="text-lg">Phone Number:</label>
                     <input
                         type="text"
@@ -123,7 +123,7 @@ const [loading, setLoading] = React.useState(false);
                         <div className="text-red-500">{formik.errors.phoneNumber}</div> : null}
                 </div>
 
-                <div className="col-span-2">
+                <div className="sm:col-span-2 col-span-4">
                     <label htmlFor="country" className="text-lg">Country:</label>
                     <input
                         type="text"
@@ -139,7 +139,7 @@ const [loading, setLoading] = React.useState(false);
                         <div className="text-red-500">{formik.errors.country}</div> : null}
                 </div>
 
-                <div className="col-span-2">
+                <div className="sm:col-span-2 col-span-4">
                     <label htmlFor="houseNumber" className="text-lg">House/Office number:</label>
                     <input
                         type="text"
@@ -155,7 +155,7 @@ const [loading, setLoading] = React.useState(false);
                         <div className="text-red-500">{formik.errors.houseNumber}</div> : null}
                 </div>
 
-                <div className="col-span-2">
+                <div className="sm:col-span-2 col-span-4">
                     <label htmlFor="street" className="text-lg">Street name:</label>
                     <input
                         type="text"
@@ -171,7 +171,7 @@ const [loading, setLoading] = React.useState(false);
                         <div className="text-red-500">{formik.errors.street}</div> : null}
                 </div>
 
-                <div className="col-span-2">
+                <div className="sm:col-span-2 col-span-4">
                     <label htmlFor="city" className="text-lg">City:</label>
                     <input
                         type="text"

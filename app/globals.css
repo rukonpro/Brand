@@ -53,3 +53,15 @@ body {
   background-repeat: no-repeat;
   background-size: cover;
 }
+
+@media print {
+  /* Hide print button on print view */
+  button {
+    display: none;
+  }
+
+  /* Ensure the invoice takes full page width */
+  .max-w-4xl {
+    max-width: 100%;
+  }
+}
