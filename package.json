@@ -21,6 +21,7 @@
     "jose": "^5.2.4",
     "js-cookie": "^3.0.5",
     "jsonwebtoken": "^9.0.2",
+    "libphonenumber-js": "^1.11.8",
     "mongodb": "^6.8.1",
     "mongoose": "^8.3.4",
     "next": "^14.2.11",

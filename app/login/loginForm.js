@@ -24,8 +24,6 @@ const LoginForm = () => {
 
 const callbackUrl=searchParams.get("callbackUrl");
 
-console.log(callbackUrl);
-
 
     const handleLogin = async ({email,password}) => {
         try {
@@ -83,7 +81,7 @@ console.log(callbackUrl);
                 <br/>
                 <input type="password"
                        name="password"
-                       placeholder="New password with 6 digit"
+                       placeholder="Password"
                        className={`px-3 py-2 rounded-lg w-full my-1 bg-white/50 border-2 ${formik.touched.password && formik.errors.password?"border-red-400":"border-white"}`}
                        onChange={formik.handleChange}
                        onBlur={formik.handleBlur}

@@ -33,7 +33,7 @@ export const AppProvider = ({ children }) => {
     //     );
     // }
 
-    const providerValue={ cart, setCart,products,setProducts,user,setUser }
+    const providerValue={ cart, setCart,products,setProducts,user,setUser,userStatus:status }
     return (
 
         <AppContext.Provider value={providerValue}>
