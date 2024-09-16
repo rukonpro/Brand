@@ -25,7 +25,7 @@ export default function OrderSuccess() {
                         Thank you! Your order was successful.
                     </h1>
                     <p className="mt-2 text-sm text-gray-600">
-                        We've received your order and will begin processing it soon.
+                        {"We've received your order and will begin processing it soon."}
                     </p>
                 </div>
 
@@ -58,8 +58,7 @@ export default function OrderSuccess() {
                             </thead>
                             <tbody>
                             <tr>
-                                <td className="border border-gray-300 px-4 py-2 text-sm text-gray-600">Women's Floral
-                                    Dress
+                                <td className="border border-gray-300 px-4 py-2 text-sm text-gray-600">{"Women's Floral Dress"}
                                 </td>
                                 <td className="border border-gray-300 px-4 py-2 text-sm text-gray-600">2</td>
                                 <td className="border border-gray-300 px-4 py-2 text-sm text-gray-600">$49.99</td>
@@ -73,7 +72,7 @@ export default function OrderSuccess() {
                                 <td className="border border-gray-300 px-4 py-2 text-sm text-gray-600">$89.99</td>
                             </tr>
                             <tr>
-                                <td className="border border-gray-300 px-4 py-2 text-sm text-gray-600">Men's T-Shirt
+                                <td className="border border-gray-300 px-4 py-2 text-sm text-gray-600">{"Men's T-Shirt"}
                                 </td>
                                 <td className="border border-gray-300 px-4 py-2 text-sm text-gray-600">3</td>
                                 <td className="border border-gray-300 px-4 py-2 text-sm text-gray-600">$19.99</td>

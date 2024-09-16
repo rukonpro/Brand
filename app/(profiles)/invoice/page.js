@@ -119,7 +119,7 @@ export default function Invoice() {
                                 </thead>
                                 <tbody>
                                 <tr>
-                                    <td className="border border-gray-300 px-4 py-2 text-sm text-gray-600">Women's Floral Dress</td>
+                                    <td className="border border-gray-300 px-4 py-2 text-sm text-gray-600">{"Women's Floral Dress"}</td>
                                     <td className="border border-gray-300 px-4 py-2 text-sm text-gray-600">2</td>
                                     <td className="border border-gray-300 px-4 py-2 text-sm text-gray-600">$49.99</td>
                                     <td className="border border-gray-300 px-4 py-2 text-sm text-gray-600">$99.98</td>
@@ -131,7 +131,7 @@ export default function Invoice() {
                                     <td className="border border-gray-300 px-4 py-2 text-sm text-gray-600">$89.99</td>
                                 </tr>
                                 <tr>
-                                    <td className="border border-gray-300 px-4 py-2 text-sm text-gray-600">Men's T-Shirt</td>
+                                    <td className="border border-gray-300 px-4 py-2 text-sm text-gray-600">{"Men's T-Shirt"}</td>
                                     <td className="border border-gray-300 px-4 py-2 text-sm text-gray-600">3</td>
                                     <td className="border border-gray-300 px-4 py-2 text-sm text-gray-600">$19.99</td>
                                     <td className="border border-gray-300 px-4 py-2 text-sm text-gray-600">$59.97</td>
