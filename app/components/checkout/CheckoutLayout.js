@@ -105,7 +105,7 @@ const CheckoutLayout = () => {
 
 
 
-
+console.log(cart)
 
     return (
         <div>

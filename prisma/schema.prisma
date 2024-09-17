@@ -64,6 +64,12 @@ model Product {
   dimension       Dimension?    @relation(fields: [dimensionId], references: [id])
   dimensionId     String?       @db.ObjectId @unique
   offers          Offer[]    @relation("ProductOffers")
+  orderItem       OrderItem[]
+  // New fields
+  discountPercentage Float?    @default(0)   // Discount percentage for the product
+  taxPercentage      Float?    @default(0)   // Tax percentage for the product
+  deliveryFee        Float?    @default(0)   // Delivery fee for the product
+
   createdAt       DateTime      @default(now())
   updatedAt       DateTime      @updatedAt
 }
@@ -165,4 +171,52 @@ model ShippingAddress {
   isDefault   Boolean?    @default(false) // Whether this is the default address
   createdAt   DateTime   @default(now())
   updatedAt   DateTime   @updatedAt
+}
+
+
+
+model Order {
+  id                     String       @id @default(auto()) @map("_id") @db.ObjectId
+  userId                 String       @db.ObjectId
+  status                 String       @default("PENDING")
+  paymentStatus          String       @default("PENDING")
+  createdAt              DateTime     @default(now())
+  updatedAt              DateTime     @updatedAt
+  totalTax               Float        // Total tax for the entire order
+  totalPriceWithDiscount Float        // Total price with discount for the entire order
+  totalPrice             Float        // Total price without discount for the entire order
+  items                  OrderItem[]  // Order items
+  totalDeliveryFee       Float        @default(0)
+}
+
+
+
+model OrderItem {
+  id                     String  @id @default(auto()) @map("_id") @db.ObjectId
+  quantity               Int     // Quantity of the product
+  price                  Float   // Price of the product
+  totalPrice             Float   // Total price without discount
+  discountPercentage     Float?  // Discount percentage for the item
+  totalPriceWithDiscount Float   // Price after discount
+  taxPercentage          Float?  // Tax percentage for the item
+  totalTax               Float   // Total tax amount
+  deliveryFee            Float   @default(0)
+  order                  Order   @relation(fields: [orderId], references: [id])
+  orderId                String  @db.ObjectId
+  product                Product @relation(fields: [productId], references: [id])
+  productId              String  @db.ObjectId// The product in the order
+}
+
+
+enum PaymentStatus {
+  PENDING
+  COMPLETED
+  FAILED
+}
+
+enum OrderStatus {
+  PENDING
+  SHIPPED
+  DELIVERED
+  CANCELED
 }
