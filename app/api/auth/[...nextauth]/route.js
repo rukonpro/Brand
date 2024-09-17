@@ -38,23 +38,50 @@ export const authOptions = {
         }),
     ],
     pages: {
-        signIn: '/login', // Redirect to custom sign-in page if needed
+        signIn: '/login',
+        error: "/login",
+        newUser:"/register",
+
     },
     callbacks: {
         async jwt({ token, user }) {
             if (user) {
                 token.id = user.id;
+                token.firstName = user.firstName;
+                token.lastName = user.lastName;
+                token.gender = user.gender;
+                token.dateOfBirth = user.dateOfBirth;
+                token.phoneNumber = user.phoneNumber;
+                token.email = user.email;
+                token.country = user.country;
+                token.houseNumber = user.houseNumber;
+                token.street = user.street;
+                token.city = user.city;
+                token.postalCode = user.postalCode;
+                token.state = user.state;
                 token.role = user.role;
-                token.firstName=user.firstName;
-                token.lastName=user.lastName;
+                token.profilePhoto = user.profilePhoto;
+                token.coverPhoto = user.coverPhoto;
             }
             return token;
         },
         async session({ session, token }) {
             session.user.id = token.id;
-            session.user.role = token.role;
             session.user.firstName = token.firstName;
             session.user.lastName = token.lastName;
+            session.user.gender = token.gender;
+            session.user.dateOfBirth = token.dateOfBirth;
+            session.user.phoneNumber = token.phoneNumber;
+            session.user.email = token.email;
+            session.user.country = token.country;
+            session.user.houseNumber = token.houseNumber;
+            session.user.street = token.street;
+            session.user.city = token.city;
+            session.user.postalCode = token.postalCode;
+            session.user.state = token.state;
+            session.user.role = token.role;
+            session.user.profilePhoto = token.profilePhoto;
+            session.user.coverPhoto = token.coverPhoto;
             return session;
         },
     },
@@ -64,7 +91,7 @@ export const authOptions = {
     jwt: {
         maxAge: 60 * 60 * 24 * 10, // 10 days in seconds
     },
-    secret: process.env.SECRET_KEY,
+    secret: process.env.NEXT_PUBLIC_SECRET_KEY,
 };
 
 const handler = NextAuth(authOptions);
