@@ -160,7 +160,7 @@ const [loading, setLoading] = React.useState(false);
                     <input
                         type="text"
                         id="street"
-                        name="street_name"
+                        name="street"
                         placeholder="Street name"
                         value={formik.values.street}
                         onChange={formik.handleChange}
