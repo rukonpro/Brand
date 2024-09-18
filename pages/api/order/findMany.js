@@ -4,7 +4,7 @@ const prisma = new PrismaClient();
 
 export default async function handler(req, res) {
     if (req.method === 'GET') {
-        const { page = 1, pageSize = 10, status, userId, startDate, endDate, paymentStatus, shippingAddressId } = req.query;
+        const { page = 1, pageSize = 10, status, userId, startDate, endDate, paymentStatus, shippingAddressId,orderId } = req.query;
 
         try {
             const skip = (page - 1) * pageSize;
@@ -19,6 +19,9 @@ export default async function handler(req, res) {
             }
             if (userId) {
                 filters.userId = userId;
+            }
+            if (orderId) {
+                filters.id = orderId;
             }
             if (shippingAddressId !== undefined) {
                 filters.shippingAddressId = shippingAddressId;
@@ -39,7 +42,6 @@ export default async function handler(req, res) {
                 };
             }
 
-            console.log("Filters:", filters); // Log filters to debug
 
             const orders = await prisma.order.findMany({
                 where: filters,

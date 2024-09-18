@@ -1,5 +1,5 @@
 "use client"
-import React, {useEffect} from 'react';
+import React from 'react';
 import {useFormik} from "formik";
 import * as Yup from 'yup';
 import LoadingIcon from "@/public/images/loading-2-svgrepo-com.svg";

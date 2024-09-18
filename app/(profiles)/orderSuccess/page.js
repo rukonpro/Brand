@@ -1,10 +1,22 @@
 import Link from 'next/link';
 import React from "react";
+import {getSingleOrder} from "@/app/utils/order/fetch_order_api";
 
-export default function OrderSuccess() {
+export default async function OrderSuccess({searchParams}) {
+
+    const {orderId,userId}=searchParams;
+
+const params = {
+    orderId,
+    userId
+}
+    const getOrder= await getSingleOrder(params);
+
+    const order=getOrder?.data;
+
     return (
-        <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
-            <div className="max-w-3xl w-full space-y-8 bg-white p-10 rounded-lg shadow-md">
+        <div className=" ">
+            <div className="max-w-3xl w-full space-y-8 bg-white md:p-10  rounded-lg">
                 {/* Success Icon and Message */}
                 <div className="flex flex-col items-center">
                     <svg
@@ -33,14 +45,14 @@ export default function OrderSuccess() {
                 <div className="bg-gray-100 p-6 rounded-lg">
                     <h2 className="text-lg font-medium text-gray-900">Order Summary</h2>
                     <p className="text-sm text-gray-600 mt-2">
-                        <strong>Order Number:</strong> #123456789
+                        <strong>Order Number:</strong> {order?.id}
                     </p>
                     <p className="text-sm text-gray-600 mt-1">
                         <strong>Estimated Delivery:</strong> Sep 25, 2024
                     </p>
-                    <p className="text-sm text-gray-600 mt-1">
-                        <strong>Shipping Address:</strong> 123 Main St, Sunamganj, Bangladesh
-                    </p>
+                    <span className="text-sm text-gray-600 mt-1">
+                        <strong>Shipping Address:</strong> {order?.shippingAddress?.houseNumber}, {order?.shippingAddress?.street}, {order?.shippingAddress?.state}({order?.shippingAddress?.postalCode}),{order?.shippingAddress?.city},{order?.shippingAddress?.country}.
+                    </span>
                 </div>
 
                 {/* Ordered Items */}
@@ -53,78 +65,28 @@ export default function OrderSuccess() {
                                 <th className="border border-gray-300 px-4 py-2 text-left text-sm font-medium text-gray-700">Item</th>
                                 <th className="border border-gray-300 px-4 py-2 text-left text-sm font-medium text-gray-700">Qty</th>
                                 <th className="border border-gray-300 px-4 py-2 text-left text-sm font-medium text-gray-700">Price</th>
+                                <th className="border border-gray-300 px-4 py-2 text-left text-sm font-medium text-gray-700">Dic</th>
+                                <th className="border border-gray-300 px-4 py-2 text-left text-sm font-medium text-gray-700">Tax</th>
+                                <th className="border border-gray-300 px-4 py-2 text-left text-sm font-medium text-gray-700">DelFree</th>
                                 <th className="border border-gray-300 px-4 py-2 text-left text-sm font-medium text-gray-700">Total</th>
                             </tr>
                             </thead>
                             <tbody>
-                            <tr>
-                                <td className="border border-gray-300 px-4 py-2 text-sm text-gray-600">{"Women's Floral Dress"}
-                                </td>
-                                <td className="border border-gray-300 px-4 py-2 text-sm text-gray-600">2</td>
-                                <td className="border border-gray-300 px-4 py-2 text-sm text-gray-600">$49.99</td>
-                                <td className="border border-gray-300 px-4 py-2 text-sm text-gray-600">$99.98</td>
-                            </tr>
-                            <tr>
-                                <td className="border border-gray-300 px-4 py-2 text-sm text-gray-600">Leather Handbag
-                                </td>
-                                <td className="border border-gray-300 px-4 py-2 text-sm text-gray-600">1</td>
-                                <td className="border border-gray-300 px-4 py-2 text-sm text-gray-600">$89.99</td>
-                                <td className="border border-gray-300 px-4 py-2 text-sm text-gray-600">$89.99</td>
-                            </tr>
-                            <tr>
-                                <td className="border border-gray-300 px-4 py-2 text-sm text-gray-600">{"Men's T-Shirt"}
-                                </td>
-                                <td className="border border-gray-300 px-4 py-2 text-sm text-gray-600">3</td>
-                                <td className="border border-gray-300 px-4 py-2 text-sm text-gray-600">$19.99</td>
-                                <td className="border border-gray-300 px-4 py-2 text-sm text-gray-600">$59.97</td>
-                            </tr>
-                            <tr>
-                                <td className="border border-gray-300 px-4 py-2 text-sm text-gray-600">Sports Watch</td>
-                                <td className="border border-gray-300 px-4 py-2 text-sm text-gray-600">1</td>
-                                <td className="border border-gray-300 px-4 py-2 text-sm text-gray-600">$129.99</td>
-                                <td className="border border-gray-300 px-4 py-2 text-sm text-gray-600">$129.99</td>
-                            </tr>
-                            <tr>
-                                <td className="border border-gray-300 px-4 py-2 text-sm text-gray-600">Sunglasses</td>
-                                <td className="border border-gray-300 px-4 py-2 text-sm text-gray-600">1</td>
-                                <td className="border border-gray-300 px-4 py-2 text-sm text-gray-600">$79.99</td>
-                                <td className="border border-gray-300 px-4 py-2 text-sm text-gray-600">$79.99</td>
-                            </tr>
-                            <tr>
-                                <td className="border border-gray-300 px-4 py-2 text-sm text-gray-600">Backpack</td>
-                                <td className="border border-gray-300 px-4 py-2 text-sm text-gray-600">1</td>
-                                <td className="border border-gray-300 px-4 py-2 text-sm text-gray-600">$89.99</td>
-                                <td className="border border-gray-300 px-4 py-2 text-sm text-gray-600">$89.99</td>
-                            </tr>
-                            <tr>
-                                <td className="border border-gray-300 px-4 py-2 text-sm text-gray-600">Bluetooth
-                                    Speaker
-                                </td>
-                                <td className="border border-gray-300 px-4 py-2 text-sm text-gray-600">1</td>
-                                <td className="border border-gray-300 px-4 py-2 text-sm text-gray-600">$49.99</td>
-                                <td className="border border-gray-300 px-4 py-2 text-sm text-gray-600">$49.99</td>
-                            </tr>
-                            <tr>
-                                <td className="border border-gray-300 px-4 py-2 text-sm text-gray-600">Notebook</td>
-                                <td className="border border-gray-300 px-4 py-2 text-sm text-gray-600">5</td>
-                                <td className="border border-gray-300 px-4 py-2 text-sm text-gray-600">$12.99</td>
-                                <td className="border border-gray-300 px-4 py-2 text-sm text-gray-600">$64.95</td>
-                            </tr>
-                            <tr>
-                                <td className="border border-gray-300 px-4 py-2 text-sm text-gray-600">Smartphone Case
-                                </td>
-                                <td className="border border-gray-300 px-4 py-2 text-sm text-gray-600">2</td>
-                                <td className="border border-gray-300 px-4 py-2 text-sm text-gray-600">$24.99</td>
-                                <td className="border border-gray-300 px-4 py-2 text-sm text-gray-600">$49.98</td>
-                            </tr>
-                            <tr>
-                                <td className="border border-gray-300 px-4 py-2 text-sm text-gray-600">Portable
-                                    Charger
-                                </td>
-                                <td className="border border-gray-300 px-4 py-2 text-sm text-gray-600">1</td>
-                                <td className="border border-gray-300 px-4 py-2 text-sm text-gray-600">$39.99</td>
-                                <td className="border border-gray-300 px-4 py-2 text-sm text-gray-600">$39.99</td>
-                            </tr>
+                            {
+                                order?.items?.map((item, index) => (
+                                    <tr key={index}>
+                                        <td className="border border-gray-300 px-4 py-2 text-sm text-gray-600">{item?.product?.name}
+                                        </td>
+                                        <td className="border border-gray-300 px-4 py-2 text-sm text-gray-600">{item?.quantity}</td>
+                                        <td className="border border-gray-300 px-4 py-2 text-sm text-gray-600">${item?.price}</td>
+                                        <td className="border border-gray-300 px-4 py-2 text-sm text-gray-600">${item?.totalPriceWithDiscount - item?.totalPrice} ({item?.discountPercentage}%)</td>
+                                        <td className="border border-gray-300 px-4 py-2 text-sm text-gray-600">${item?.totalTax}</td>
+                                        <td className="border border-gray-300 px-4 py-2 text-sm text-gray-600">${item?.deliveryFee}</td>
+                                        <td className="border border-gray-300 px-4 py-2 text-sm text-gray-600">${item?.totalPrice}</td>
+                                    </tr>
+                                ))
+                            }
+
                             </tbody>
                         </table>
                     </div>
@@ -140,13 +102,16 @@ export default function OrderSuccess() {
                         </div>
                         <div className="text-right">
                             <p className="text-sm text-gray-600">
-                                <strong>Subtotal:</strong> $774.80
+                                <strong>Subtotal:</strong> ${order?.totalPrice}
                             </p>
                             <p className="text-sm text-gray-600">
-                                <strong>Shipping:</strong> Free
+                                <strong>Delivery Fee:</strong> ${order?.totalDeliveryFee}
                             </p>
                             <p className="text-sm text-gray-600">
-                                <strong>Total:</strong> $774.80
+                                <strong>Tax:</strong> ${order?.totalTax}
+                            </p>
+                            <p className="text-sm text-gray-600">
+                                <strong>Total:</strong> ${order?.totalPriceWithDiscount}
                             </p>
                         </div>
                     </div>

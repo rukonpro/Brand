@@ -9,9 +9,11 @@ import findManyShippingAdressApi from "@/app/utils/shippingAdress/findManyShippi
 import toast from "react-hot-toast";
 import ShippingCard from "@/app/components/checkout/ShippingCard";
 import {useSession} from "next-auth/react";
-
+import {postOrder} from "@/app/utils/order/fetch_order_api";
+import Cookies from "js-cookie";
+import {useRouter} from "next/navigation";
 const CheckoutLayout = () => {
-    const {cart,products,setProducts,}=useContext(AppContext);
+    const {cart,setCart,products,setProducts,}=useContext(AppContext);
     const [shippingAddresses,setShippingAddresses] = useState({
         addresses:[],
         pagination:{}
@@ -26,7 +28,7 @@ const CheckoutLayout = () => {
     const productIds = cart?.map(item => item.productId).join(',');
 
     const user=userData?.user;
-
+    const router = useRouter();
 
     const params = {
         limit: 10,
@@ -43,6 +45,42 @@ const CheckoutLayout = () => {
 
         setLoading(false);
     },[productIds,setProducts])
+
+
+
+
+
+
+    const handleOrder= async ()=>{
+
+        const newCart=await cart.map(item => ({
+            productId: item.productId,
+            quantity: item.quantity
+        }));
+
+
+        if (newCart?.[0]?.productId&&shippingAddresses?.addresses?.[0]?.id&&user?.id){
+            const res=await postOrder({
+                userId:user?.id,
+                shippingAddressId:shippingAddresses?.addresses?.[0]?.id,
+                items:newCart
+            });
+
+            if (res.status===201){
+                toast.success("Order successfully")
+                setCart([]);
+                setProducts([]);
+                Cookies.remove('cart');
+                router.push(`/orderSuccess?orderId=${res?.data?.id}&${res?.data?.userId}`);
+            }
+            if (res?.data?.error?.message){
+                toast.error(res?.data?.error?.message,{
+                    id:"order",
+                })
+            }
+        }
+
+    }
 
 
     useEffect(()=>{
@@ -140,7 +178,9 @@ const CheckoutLayout = () => {
                         totalTax={totalTax}
                     >
                         <div className="pt-8">
-                            <button type="button"
+                            <button
+                                onClick={handleOrder}
+                                type="button"
                                     disabled={cart.length === 0}
                                     className={`text-xl  ${cart.length === 0?"bg-green-200 text-slate-700":"bg-green-500 text-white"}  px-5 py-2 rounded-lg w-full inline-block text-center items-center`}
                             >Order

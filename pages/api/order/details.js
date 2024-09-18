@@ -4,7 +4,7 @@ const prisma = new PrismaClient();
 
 export default async function handler(req, res) {
     if (req.method === 'GET') {
-        const { orderId } = req.query;
+        const { orderId,userId } = req.query;
 
         if (!orderId) {
             return res.status(400).json({ error: 'Order ID is required' });
@@ -15,9 +15,14 @@ export default async function handler(req, res) {
             const order = await prisma.order.findUnique({
                 where: {
                     id: orderId,
+                    userId: userId,
                 },
                 include: {
-                    items: true,
+                    items:{
+                        include:{
+                            product:true
+                        }
+                    },
                     shippingAddress:true,
                     user:true// Include items related to the order
                 },

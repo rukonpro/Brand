@@ -25,7 +25,7 @@ export default function RootLayout({ children}) {
           <div className="sticky top-0 z-[20]">
             <Navbar />
           </div>
-          {children}
+          {/*{children}*/}
           <Footer />
           <Toaster />
           <Analytics />
