@@ -1,39 +1,14 @@
 "use client"
-import {createContext, useEffect, useState} from 'react';
-import { useSession } from 'next-auth/react';
-import getMe from "@/app/utils/user/me";
-import Loading from "@/app/loading";
+import {createContext, useState} from 'react';
 
 // Create the context
-export const AppContext = createContext();
+export const AppContext = createContext(undefined);
 
 // Create a provider component
 export const AppProvider = ({ children }) => {
     const [cart, setCart] = useState([]);
     const [products, setProducts] = useState([]);
-    const [user, setUser] = useState({});
-
-    const { data: session, status } = useSession();
-
-
-    useEffect(() => {
-        const fetchProducts = async () => {
-            const me=await getMe();
-            setUser(me?.user);
-        }
-        fetchProducts()
-
-    },[session])
-
-    // if (status === 'loading') {
-    //     return (
-    //         <div className="flex justify-center items-center h-screen w-screen overflow-hidden bg-blue-200">
-    //             <Loading/>
-    //         </div>
-    //     );
-    // }
-
-    const providerValue={ cart, setCart,products,setProducts,user,setUser,userStatus:status }
+    const providerValue={ cart, setCart,products,setProducts }
     return (
 
         <AppContext.Provider value={providerValue}>

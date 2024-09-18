@@ -1,28 +1,25 @@
 "use client"
+import React from "react";
 import Link from 'next/link';
 import { profileMenu } from "@/app/components/navbar/profileDrawer";
 import Image from "next/image";
-import React, {useContext} from "react";
+
 import SingInIcon from "@/public/images/sign-in-alt-svgrepo-com.svg";
 import SingOutIcon from "@/public/images/sign-out-svgrepo-com.svg";
 import ProfileSidebarBanner from "@/app/components/navbar/profileSidebarBanner";
-import { useRouter } from "next/navigation";
-import {AppContext} from "@/app/context/BrandContext";
 import {signOut} from "next-auth/react";
 import Cookies from "js-cookie";
-
+import {useSession} from "next-auth/react";
 
 const Sidebar = () => {
 
-    const { user, setUser } = useContext(AppContext);
+    const {data:userData}=useSession();
 
-
-
+    const user=userData?.user
         const logout = async () => {
             await  Cookies.remove('next-auth.session-token');
-            await   Cookies.remove('next-auth.csrf-token');
+            await  Cookies.remove('next-auth.csrf-token');
             await  signOut({ callbackUrl: '/login' });
-            setUser({});
         }
 
     return (

@@ -83,10 +83,19 @@ const MyCartItemsLayout = () => {
                 >
 
                     <div className="pt-8">
-                        <Link href="/checkout"
-                              className="text-xl bg-green-500 text-white px-5 py-2 rounded-lg w-full inline-block text-center items-center"
+                        {cart?.length!==0?
+                            <Link href="/checkout"
+                               type="button"
+                               className={`text-xl ${cart.length === 0 ? "bg-green-200 text-slate-700" : "bg-green-500 text-white"} px-5 py-2 rounded-lg w-full inline-block text-center items-center`}
                         >Checkout
-                        </Link>
+                        </Link>:
+                            <button type="button"
+                            disabled
+                            className={`text-xl ${cart.length === 0?"bg-green-200 text-slate-700 cursor-not-allowed":"bg-green-500 text-white"}e px-5 py-2 rounded-lg w-full inline-block text-center items-center`}
+                    >
+                        Checkout
+                    </button>
+                    }
                     </div>
                 </CheckoutCard>
             </div>

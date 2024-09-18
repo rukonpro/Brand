@@ -1,17 +1,18 @@
 "use client"
 import React, {useContext, useState} from 'react';
 import Image from "next/image";
-import profilePhoto from "@/public/images/profile-photo-1.webp";
-import CoverPhoto from "@/public/images/cloth-image-1.jpg";
+import avatar from "@/public/images/avatar.png";
+import CoverPhoto from "@/public/images/BannerEcommerce-Nordics.png";
 import CameraIcon from "@/public/images/camera-icon.svg";
 import EditIcon from "@/public/images/edit-2-svgrepo-com.svg";
 import SaveIcon from "@/public/images/save-floppy-svgrepo-com.svg";
 import LoadingIcon from "@/public/images/loading-gray-color-svgrepo-com.svg";
-import {AppContext} from "@/app/context/BrandContext";
 import ProfileForm from "@/app/components/ProfileForm/ProfileForm";
+import {useSession} from "next-auth/react";
 
 const MyAccount = () => {
-const {user}=useContext(AppContext)
+const {data:userData}=useSession();
+const user=userData?.user;
     const [selectedProfilePicture, setSelectedProfilePicture] = useState(null);
     const [selectedCoverPhoto, setSelectedCoverPhoto] = useState(null);
     const [profileImageBB, setProfileImageBB] = useState(null);
@@ -71,13 +72,15 @@ const {user}=useContext(AppContext)
 
                                 }
 
-                                <Image
-                                    src={selectedProfilePicture || user?.profilePhoto || profilePhoto}
-                                    alt="Profile Avatar"
-                                    width={100}
-                                    height={100}
-                                    className="h-36 w-36 rounded-full shadow-2xl shadow-blue-600 object-fill"
-                                />
+                                <div className="p-1 bg-white rounded-full">
+                                    <Image
+                                        src={selectedProfilePicture || user?.profilePhoto || avatar}
+                                        alt="Profile Avatar"
+                                        width={100}
+                                        height={100}
+                                        className="h-36 w-36 rounded-full shadow-2xl shadow-blue-600 object-fill"
+                                    />
+                                </div>
                             </div>
                             <div>
                                 <h1 className="text-2xl sm:text-3xl font-bold text-white">{user?.firstName} {user?.lastName}</h1>
@@ -106,8 +109,8 @@ const {user}=useContext(AppContext)
                 <div className="w-full">
                     <Image
                         src={selectedCoverPhoto || user?.coverPhoto || CoverPhoto}
-                        height={100}
-                        width={100}
+                        height={500}
+                        width={700}
                         alt="Cover Photo"
                         className="w-full h-60 object-cover"
                     />
@@ -116,8 +119,8 @@ const {user}=useContext(AppContext)
 
 
             <div className="border-t-2 mt-8">
-                <div className="flex justify-between items-center py-5 px-3">
-                    <h1 className="text-xl font-bold text-gray-600   md:px-0">Personal details</h1>
+                <div className="flex justify-between items-center px-3 py-5 md:px-0">
+                    <h1 className="text-xl font-bold text-gray-600 ">Personal details</h1>
                     <button type="button"
                         onClick={handleSave}
                         className="border-2 border-[#3e8cfe] hover:bg-blue-300 hover:text-white text-gray-500 font-bold  px-3 py-1 rounded-lg flex items-center gap-2">

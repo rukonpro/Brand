@@ -8,8 +8,11 @@ import {getBanners} from "@/app/utils/banner/fetch_banners_api";
 
 
 const Banner =async () => {
-const category=await getAllCategory();
-const banners=await getBanners()
+    const [category, banners] = await Promise.all([
+        getAllCategory(),
+        getBanners()
+    ]);
+
     return (
         <div className="md:px-3">
             <div className="max-w-[1200px] mx-auto border md:rounded-lg md:px-3  md:pt-3 pb-3 md:mt-5 bg-white ">

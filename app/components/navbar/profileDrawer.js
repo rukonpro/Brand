@@ -1,5 +1,5 @@
 "use client"
-import React, {Fragment, useContext, useState} from 'react';
+import React, {Fragment, useState} from 'react';
 import Link from "next/link";
 import Drawer from "@/app/components/Drawer/Drawer";
 import Image from "next/image";
@@ -12,13 +12,16 @@ import SingInIcon from "@/public/images/sign-in-alt-svgrepo-com.svg";
 import ProfileSidebarBanner from "@/app/components/navbar/profileSidebarBanner";
 import CloseIcon from "@/public/images/close-svgrepo-com.svg";
 import LogoutButton from "@/app/components/navbar/LogoutButton";
-import {AppContext} from "@/app/context/BrandContext";
+import {useSession} from "next-auth/react";
+import SkeletonProfileSidebarBanner from "@/app/components/Skeletons/SkeletonProfileSidebarBanner";
+
 
 
 
 const ProfileDrawer = () => {
     const [isDrawerOpen, setIsDrawerOpen] = useState(false);
-const {user}=useContext(AppContext);
+    const {data:userData,status}=useSession();
+    const user=userData?.user
 
     const handleToggleDrawer = () => {
         setIsDrawerOpen(!isDrawerOpen);
@@ -31,7 +34,13 @@ const {user}=useContext(AppContext);
         <Fragment>
             <button type="button" onClick={handleToggleDrawer}>
                 <div className="flex justify-center">
-                    <Image src={Avater} alt='avater' />
+                    <Image src={user?.profilePhoto||Avater}
+                           height={24}
+                           width={24}
+                           alt='avater'
+                           placeholder="blur"
+                           blurDataURL={user?.profilePhoto||null}
+                           className="rounded-full" />
                 </div>
                 <p className="text-sm text-center sm:block hidden">Profile</p>
             </button>
@@ -45,7 +54,12 @@ const {user}=useContext(AppContext);
                 {/* Drawer content goes here */}
                 <div className="flex-1 ">
                     <div className="relative">
-                        <ProfileSidebarBanner  />
+
+                        {
+                            status==="loading"?<SkeletonProfileSidebarBanner/>:
+                                <ProfileSidebarBanner  user={user}/>
+                        }
+
 
                         <button onClick={handleClose}
                             className="p-1 rounded-full absolute top-0 right-0"
@@ -63,7 +77,7 @@ const {user}=useContext(AppContext);
                                                 >
                                                     <div className="flex items-center gap-4">
                                                         <Image src={menu.icon} alt='avater'
-                                                            className="h-5 w-5" /> {menu.title}
+                                                            className="h-5 w-5 rounded-full" /> {menu.title}
                                                     </div>
                                                     <Image src={RightIcon} alt='avater' className="h-5 w-5" />
                                                 </button>

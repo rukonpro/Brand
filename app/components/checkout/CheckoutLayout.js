@@ -8,13 +8,15 @@ import Loading from "@/app/loading";
 import findManyShippingAdressApi from "@/app/utils/shippingAdress/findManyShippingAdressApi";
 import toast from "react-hot-toast";
 import ShippingCard from "@/app/components/checkout/ShippingCard";
+import {useSession} from "next-auth/react";
 
 const CheckoutLayout = () => {
-    const {cart,products,setProducts,user,userStatus}=useContext(AppContext);
+    const {cart,products,setProducts,}=useContext(AppContext);
     const [shippingAddresses,setShippingAddresses] = useState({
         addresses:[],
         pagination:{}
     })
+    const {data:userData,status:userStatus}=useSession();
     const [currentPage, setCurrentPage] = useState(1);
     const [loading,setLoading] = useState(false);
 
@@ -22,6 +24,9 @@ const CheckoutLayout = () => {
 
     const [newAddress,setNewAddress]=useState(false);
     const productIds = cart?.map(item => item.productId).join(',');
+
+    const user=userData?.user;
+
 
     const params = {
         limit: 10,
@@ -48,7 +53,6 @@ const CheckoutLayout = () => {
     useEffect(()=>{
 
         if (userStatus!=="loading"){
-
             setShippingLoading(true)
             const getShippingAddresses=async ()=>{
                 const params={
@@ -137,7 +141,8 @@ const CheckoutLayout = () => {
                     >
                         <div className="pt-8">
                             <button type="button"
-                                    className="text-xl bg-green-500 text-white px-5 py-2 rounded-lg w-full inline-block text-center items-center"
+                                    disabled={cart.length === 0}
+                                    className={`text-xl  ${cart.length === 0?"bg-green-200 text-slate-700":"bg-green-500 text-white"}  px-5 py-2 rounded-lg w-full inline-block text-center items-center`}
                             >Order
                             </button>
                         </div>
