@@ -8,7 +8,7 @@ import Link from "next/link";
 
 const CheckoutCard = ({totalPrice,totalDiscount,totalTax,taxPercentage,totalPriceWithTax,children}) => {
     return (
-        <div>
+        <div >
             <div className=" bg-white p-3 rounded-lg">
                 <h1 className="font-bold">Have a coupon?</h1>
                 <div className="grid grid-cols-5 pt-1">

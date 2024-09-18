@@ -17,7 +17,9 @@ export default async function handler(req, res) {
                     id: orderId,
                 },
                 include: {
-                    items: true, // Include items related to the order
+                    items: true,
+                    shippingAddress:true,
+                    user:true// Include items related to the order
                 },
             });
 
@@ -27,7 +29,7 @@ export default async function handler(req, res) {
 
             return res.status(200).json(order);
         } catch (error) {
-            console.error(error);
+
             return res.status(500).json({ error: 'Failed to retrieve order' });
         }
     } else {

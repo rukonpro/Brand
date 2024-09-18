@@ -1,12 +1,12 @@
 import { PrismaClient } from '@prisma/client';
-import {getSession} from "next-auth/react";
-
-
 const prisma = new PrismaClient();
 
 export default async function handler(req, res) {
 
+
+
     if (req.method === 'POST') {
+
         try {
             const {
                 firstName,
@@ -37,6 +37,7 @@ export default async function handler(req, res) {
                     country,
                     isDefault:false,
                     userId
+
                 }
             });
 
@@ -44,7 +45,6 @@ export default async function handler(req, res) {
             res.status(201).json(newAddress);
         } catch (error) {
             res.status(500).json({ error: "Failed to create shipping address" });
-            console.log(error);
         }
     } else {
         res.setHeader('Allow', ['POST']);

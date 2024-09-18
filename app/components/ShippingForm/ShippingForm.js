@@ -4,7 +4,7 @@ import * as Yup from "yup";
 import { parsePhoneNumberFromString } from "libphonenumber-js";
 import create_sipping_address from "@/app/utils/shippingAdress/create_sipping_address_api";
 import toast from "react-hot-toast";
-
+import {useSession} from "next-auth/react";
 // Custom validation function for phone numbers
 const validatePhoneNumber = (value) => {
     const phoneNumber = parsePhoneNumberFromString(value, "BD"); // Default to Bangladesh or change to your preference
@@ -32,8 +32,10 @@ const validationSchema = Yup.object({
 });
 
 
-const ShippingForm = ({user,setNewAddress}) => {
+const ShippingForm = ({setNewAddress}) => {
 const [loading, setLoading] = React.useState(false);
+const {data:userData}=useSession();
+const {user}=userData;
     const formik = useFormik({
         initialValues: {
             firstName: user?.firstName || "",
@@ -49,17 +51,20 @@ const [loading, setLoading] = React.useState(false);
         validationSchema,
         onSubmit: async (values) => {
            values.userId=user?.id
-            setLoading(true)
+            setLoading(true);
+
           const res= await create_sipping_address(values);
            if (res?.data?.error){
                toast.error(res.data.error,{
                    id:"shipping"
-               })
+               });
+
            }
             if (res?.data?.id){
                 toast.success("Sipping address add is successfully",{
                     id:"shipping"
-                })
+                });
+                setNewAddress(false)
             }
             setLoading(false)
         },

@@ -5,7 +5,7 @@ import Dropdown from "@/app/components/ShippingAdressDropdown/ShippingAdressDrop
 const ShippingCard = ({shippingAddress,setCurrentPage,currentPage,setNewAddress}) => {
 
     return (
-        <div className="border p-4 rounded-lg bg-white">
+        <div className="border p-4 rounded-lg bg-white ">
 
             {shippingAddress?.addresses?.map((address) => (
                 <div key={address?.id}>
@@ -54,7 +54,6 @@ const ShippingCard = ({shippingAddress,setCurrentPage,currentPage,setNewAddress}
                             <span className="block text-lg font-medium">{address.street}</span>
                         </div>
                     </div>
-
 
                     <TailwindPagination
                         totalPages={shippingAddress.pagination?.totalPages}
