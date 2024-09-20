@@ -15,52 +15,105 @@ const MyOrders =async () => {
     const getOrders= await getOrderMany(params);
     const orders=getOrders?.data?.orders;
 
+
     return (
-        <div>
-            <h1 className="text-2xl font-bold mb-4">My Orders</h1>
-            <div className="overflow-x-auto">
-                <table className="min-w-full bg-white border  rounded-lg shadow-md">
-                    <thead>
-                    <tr className="border-b border-gray-300 bg-blue-50">
-                        <th className="px-6 py-3 text-left text-gray-600 font-medium">Order ID</th>
-                        <th className="px-6 py-3 text-left text-gray-600 font-medium">Status</th>
-                        <th className="px-6 py-3 text-left text-gray-600 font-medium">Payment Status</th>
-                        <th className="px-6 py-3 text-left text-gray-600 font-medium">Order Date</th>
-                        <th className="px-6 py-3 text-left text-gray-600 font-medium">Tax</th>
-                        <th className="px-6 py-3 text-left text-gray-600 font-medium">Discount</th>
-                        <th className="px-6 py-3 text-left text-gray-600 font-medium">Delivery Fee</th>
+        <div className="max-w-7xl mx-auto p-6">
+            <div className="flex justify-between items-center mb-6">
+                <h1 className="text-2xl font-semibold">My Orders</h1>
+                <div className="space-x-2">
+                    <button className="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg">All</button>
+                    <button className="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg">Unfulfilled</button>
+                    <button className="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg">Unpaid</button>
+                    <button className="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg">Open</button>
+                    <button className="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg">Closed</button>
+                    <button className="px-4 py-2 bg-blue-500 text-white rounded-lg">Add</button>
+                </div>
+            </div>
+
+            <div className="overflow-x-auto bg-white shadow-lg rounded-lg">
+                <table className="min-w-full table-auto">
+                    <thead className="bg-blue-500 text-white">
+                    <tr>
+                        <th className="px-6 py-4 text-left text-sm font-semibold ">Order</th>
+                        <th className="px-6 py-4 text-left text-sm font-semibold ">Date</th>
+                        <th className="px-6 py-4 text-left text-sm font-semibold ">Customer</th>
+                        <th className="px-6 py-4 text-left text-sm font-semibold ">Total Items</th>
+                        <th className="px-6 py-4 text-left text-sm font-semibold ">Total Price</th>
+                        <th className="px-6 py-4 text-left text-sm font-semibold ">Discount</th>
+                        <th className="px-6 py-4 text-left text-sm font-semibold ">Tax</th>
+                        <th className="px-6 py-4 text-left text-sm font-semibold ">Sub Total</th>
+                        <th className="px-6 py-4 text-left text-sm font-semibold ">Payment</th>
+                        <th className="px-6 py-4 text-left text-sm font-semibold ">Status</th>
+                        <th className="px-6 py-4 text-left text-sm font-semibold ">Action</th>
                     </tr>
                     </thead>
                     <tbody>
-                    {orders?.map(order => (
-                        <Link
-                            key={order?.id}
-                            href={`/orderDetails/${order?.id}`}
-                            passHref
-                        >
-                            <tr
+                    {orders.map((order) => (
+                        <tr key={order?.id} className="border-b">
+                            <td className="px-6 py-4 text-sm text-gray-700">{order?.id}</td>
+                            <td className="px-6 py-4 text-sm text-gray-700">
+                                <p>{new Date(order?.createdAt).toDateString()}</p>
+                            </td>
+                            <td className="px-6 py-4 text-sm text-gray-700">{order?.user?.firstName}</td>
+                            <td className="px-6 py-4 text-sm text-gray-700">{order.items?.length} items</td>
+                            <td className="px-6 py-4 text-sm text-gray-700">${order?.totalPrice.toFixed(2)}</td>
+                            <td className="px-6 py-4 text-sm text-gray-700">${order?.totalTax.toFixed(2)}</td>
+                            <td className="px-6 py-4 text-sm text-gray-700">${(order?.totalPrice - order?.totalPriceWithDiscount).toFixed(2)}</td>
+                            <td className="px-6 py-4 text-sm text-gray-700">${order?.totalPriceWithDiscount.toFixed(2)}</td>
+                            <td className="px-6 py-4">
+                  <span
+                      className={`px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full 
+                      ${order?.paymentStatus === "PENDING" && "bg-yellow-100 text-yellow-800"}
+                      ${order?.paymentStatus === "COMPLETED" && "bg-green-100 text-green-800"}
+                      ${order?.paymentStatus === "FAILED" && "bg-red-100 text-red-800"}    
+                              
+                              
+                              
+                              `}
+                  >
+                    {order.paymentStatus}
+                  </span>
+                            </td>
+                            <td className="px-6 py-4">
+                  <span
+                      className={`px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full 
+                      ${order?.status === "PENDING" && "bg-yellow-100 text-yellow-800"}
+                      ${order?.status === "SHIPPED" && "bg-blue-100 text-blue-800"}
+                      ${order?.status === "DELIVERED" && "bg-green-100 text-green-800"}
+                      ${order?.status === "CANCELED" && "bg-red-100 text-red-800"}    
+                      
+                      `}
+                  >
+                    {order?.status}
+                  </span>
+                            </td>
+                            <td className="px-6 py-4 space-x-2">
+                                <button className="text-blue-600 hover:text-blue-900">
+                    <span role="img" aria-label="edit">
+                      ✏️
+                    </span>
+                                </button>
+                                <button className="text-red-600 hover:text-red-900">
+                    <span role="img" aria-label="delete">
+                      🗑️
+                    </span>
+                                </button>
 
-                                className="border-b border-gray-300 hover:bg-gray-100 transition-colors duration-300 ease-in-out cursor-pointer"
-                            >
-                                <td className="px-6 py-4 text-gray-800">{order?.id}</td>
-                                <td className={`px-6 py-4 ${order?.status === 'PENDING' ? 'text-yellow-600' : 'text-green-600'}`}>
-                                    {order?.status}
-                                </td>
-                                <td className={`px-6 py-4 ${order.paymentStatus === 'PENDING' ? 'text-yellow-600' : 'text-green-600'}`}>
-                                    {order?.paymentStatus}
-                                </td>
-                                <td className="px-6 py-4">{new Date(order?.createdAt).toLocaleDateString()}</td>
-                                <td className="px-6 py-4">${order?.totalTax?.toFixed(2)}</td>
-                                <td className="px-6 py-4">${(order?.totalPriceWithDiscount - order?.totalPrice).toFixed(2)}</td>
-                                <td className="px-6 py-4">${order?.totalDeliveryFee.toFixed(2)}</td>
-                            </tr>
-                        </Link>
+                                <Link href={`/orderDetails/${order?.id}`}>
+                                    <button className="text-blue-600 hover:text-blue-900">
+                    <span role="img" aria-label="delete">
+                      Details
+                    </span>
+                                    </button>
+                                </Link>
+                            </td>
+                        </tr>
                     ))}
                     </tbody>
                 </table>
             </div>
         </div>
-    );
+    )
 };
 
 export default MyOrders;

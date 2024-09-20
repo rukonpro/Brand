@@ -1,89 +1,35 @@
-"use client"
 import React from 'react';
+import Link from "next/link";
 
 export default function Invoice({order}) {
 
-    const handlePrint = () => {
-        const invoiceContent = document.getElementById('invoiceToPrint').innerHTML;
-        const originalContents = document.body.innerHTML;
-
-        // Replace the body content with invoice content
-        document.body.innerHTML = `
-      <html>
-      <head>
-        <title>Invoice</title>
-        <style>
-          /* Add any styles needed for printing here */
-          body {
-            font-family: Arial, sans-serif;
-          }
-          .container {
-            width: 100%;
-            margin: 0 auto;
-            padding: 20px;
-          }
-          /* Add other print styles as needed */
-        </style>
-      </head>
-      <body>
-        <div class="container">
-          ${invoiceContent}
-        </div>
-      </body>
-      </html>
-    `;
-
-        // Trigger the print dialog
-        window.print();
-
-        // Restore the original content after printing
-        window.onafterprint = () => {
-            document.body.innerHTML = originalContents;
-            window.location.reload(); // Refresh the page to restore the original state
-        };
-    };
-
     return (
         <div className="min-h-screen bg-gray-100 ">
-            <div className="max-w-4xl mx-auto bg-white p-6 shadow-lg rounded-lg">
+            <div className="max-w-4xl mx-auto bg-white md:p-6 p-3  rounded-lg">
 
                 {/* Print Button */}
                 <div className="text-right mb-2">
-                    <button
-                        onClick={handlePrint}
-                        className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded"
-                    >
-                        Print Invoice
-                    </button>
+                    <Link href={`/invoice/${order?.id}`}>
+                        <button
+                            className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded"
+                        >
+                            Invoice
+                        </button>
+                    </Link>
                 </div>
 
                 {/* Invoice Content with ID */}
-                <div id="invoiceToPrint">
+                <div>
                     {/* Invoice Header */}
                     <header className="flex justify-between items-center mb-2">
                         <div>
-                            <h1 className="text-3xl font-bold text-gray-800">Invoice</h1>
-                            <p className="text-sm text-gray-500">Order: {order?.id}</p>
+                            <h2 className="text-lg font-semibold mb-4">Order Details <span
+                                className="text-gray-500">({order?.items?.length})</span></h2>
                         </div>
                         <div>
-                            <p className="text-sm text-gray-600">Date: September 16, 2024</p>
-                            <p className="text-sm text-gray-600">Invoice #: INV-00012345</p>
+                        <p className="text-sm text-gray-600">Date: {new Date(order?.createdAt).toDateString()}</p>
                         </div>
                     </header>
-
-                    {/* Company Information */}
-                    <section className="mb-3">
-                        <h2 className="text-lg font-semibold text-gray-800 ">Company Information</h2>
-                        <div className="grid grid-cols-1 gap-4">
-                            <div>
-                                <h3 className="text-md font-bold text-gray-700">Brand</h3>
-                                <p className="text-sm text-gray-600">Sunamganj,Sylhet, Bangladesh.</p>
-                                <p className="text-sm text-gray-600">Phone: +880765459224</p>
-                                <p className="text-sm text-gray-600">Email: info@brand.com</p>
-                                <p className="text-sm text-gray-600">Website: www.brand.com</p>
-                            </div>
-                        </div>
-                    </section>
 
                     {/* Billing and Shipping Information */}
                     <section className="mb-3">
@@ -91,9 +37,11 @@ export default function Invoice({order}) {
                         <div className="grid grid-cols-2 gap-4">
                             <div>
                                 <h3 className="text-md font-medium text-gray-700">Billed To:</h3>
-                                <p className="text-sm text-gray-600">{order?.user?.firstName}</p>
+
+                                    <p className="text-sm text-gray-600">{order?.user?.firstName}</p>
+
                                 <span className="text-sm text-gray-600">
-                        <strong>Shipping Address:</strong> {order?.user?.houseNumber}, {order?.user?.street}, {order?.user?.state}({order?.user?.postalCode}),{order?.user?.city},{order?.user?.country}.
+                        <strong>Shipping Address:</strong> <span>{order?.user?.houseNumber}</span>, <span>{order?.user?.street},</span> <span>{order?.user?.state}({order?.user?.postalCode}),</span> <span>{order?.user?.city}</span>,<span>{order?.user?.country}</span>.
                     </span>
                                 <p className="text-sm text-gray-600">Phone: {order?.user?.phoneNumber}</p>
                                 <p className="text-sm text-gray-600">Email: {order?.user?.email}</p>
@@ -102,7 +50,7 @@ export default function Invoice({order}) {
                                 <h3 className="text-md font-medium text-gray-700">Shipped To:</h3>
                                 <p className="text-sm text-gray-600">{order?.shippingAddress?.firstName}</p>
                                 <span className="text-sm text-gray-600 ">
-                        <strong>Shipping Address:</strong> {order?.shippingAddress?.houseNumber}, {order?.shippingAddress?.street}, {order?.shippingAddress?.state}({order?.shippingAddress?.postalCode}),{order?.shippingAddress?.city},{order?.shippingAddress?.country}.
+                        <strong>Shipping Address:</strong> <span>{order?.shippingAddress?.houseNumber},</span> <span>{order?.shippingAddress?.street},</span> <span>{order?.shippingAddress?.state}({order?.shippingAddress?.postalCode}),</span> <span>{order?.shippingAddress?.city},</span><span>{order?.shippingAddress?.country}.</span>
                     </span>
                                 <p className="text-sm text-gray-600">Phone: {order?.shippingAddress?.phoneNumber}</p>
                             </div>
@@ -110,67 +58,105 @@ export default function Invoice({order}) {
                     </section>
 
                     {/* Order Summary */}
-                    <section className="mb-8">
-                        <h2 className="text-lg font-semibold text-gray-800 mb-4">Ordered Items</h2>
-                        <div className="overflow-x-auto">
-                            <table className="min-w-full border-collapse border border-gray-300">
-                                <thead>
+                    <div className="max-w-6xl mx-auto ">
+                        {/* Order Details Header */}
+
+
+                        {/* Products Table */}
+                        <div className="overflow-x-auto ">
+                            <table className="min-w-full table-auto">
+                                <thead className="bg-blue-500 text-white">
                                 <tr>
-                                    <th className="border border-gray-300 px-4 py-2 text-left text-sm font-medium text-gray-700">Item</th>
-                                    <th className="border border-gray-300 px-4 py-2 text-left text-sm font-medium text-gray-700">Qty</th>
-                                    <th className="border border-gray-300 px-4 py-2 text-left text-sm font-medium text-gray-700">Price</th>
-                                    <th className="border border-gray-300 px-4 py-2 text-left text-sm font-medium text-gray-700">Dic</th>
-                                    <th className="border border-gray-300 px-4 py-2 text-left text-sm font-medium text-gray-700">Tax</th>
-                                    <th className="border border-gray-300 px-4 py-2 text-left text-sm font-medium text-gray-700">DelFree</th>
-                                    <th className="border border-gray-300 px-4 py-2 text-left text-sm font-medium text-gray-700">Total</th>
+                                    <th className="px-3 py-3 text-left text-sm font-medium">Product Name</th>
+                                    <th className="px-3 py-3 text-left text-sm font-medium">Product Code</th>
+                                    <th className="px-3 py-3 text-left text-sm font-medium">Quantity</th>
+                                    <th className="px-3 py-3 text-left text-sm font-medium">Price</th>
+                                    <th className="px-3 py-3 text-left text-sm font-medium">Total Price</th>
+                                    <th className="px-3 py-3 text-left text-sm font-medium">Action</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                {
-                                    order?.items?.map((item, index) => (
-                                        <tr key={index}>
-                                            <td className="border border-gray-300 px-4 py-2 text-sm text-gray-600">{item?.product?.name}
-                                            </td>
-                                            <td className="border border-gray-300 px-4 py-2 text-sm text-gray-600">{item?.quantity}</td>
-                                            <td className="border border-gray-300 px-4 py-2 text-sm text-gray-600">${item?.price.toFixed(2)}</td>
-                                            <td className="border border-gray-300 px-4 py-2 text-sm text-gray-600">${(item?.totalPriceWithDiscount - item?.totalPrice).toFixed(2)} ({item?.discountPercentage}%)</td>
-                                            <td className="border border-gray-300 px-4 py-2 text-sm text-gray-600">${item?.totalTax.toFixed(2)}</td>
-                                            <td className="border border-gray-300 px-4 py-2 text-sm text-gray-600">${item?.deliveryFee.toFixed(2)}</td>
-                                            <td className="border border-gray-300 px-4 py-2 text-sm text-gray-600">${item?.totalPrice.toFixed(2)}</td>
-                                        </tr>
-                                    ))
-                                }
+                                {order?.items?.map((product, index) => {
 
+                                    return(
+                                        <tr key={index} className="border-b">
+                                            <td className="px-3 py-3 flex items-center">
+                                                <img src={product?.product?.photos?.[0]} alt={product?.name}
+                                                     className="w-10 h-10 rounded mr-4"/>
+                                                <div>
+                                                    <Link href={`/details/${product?.product?.id}`} className="hover:!text-blue-500" >
+                                                    <p className="text-sm font-medium ">{product?.product?.name}</p>
+                                                    </Link>
+                                                    <p className="text-xs text-gray-500">Color: {product?.product?.colors?.[0]}</p>
+                                                </div>
+                                            </td>
+                                            <td className="px-3 py-3 text-sm text-gray-700">{product?.productId}</td>
+                                            <td className="px-3 py-3 text-sm text-gray-700">x{product?.quantity}</td>
+                                            <td className="px-3 py-3 text-sm text-blue-600 font-semibold">{product?.price}</td>
+                                            <td className="px-3 py-3 text-sm text-blue-600 font-semibold">{product?.totalPrice}</td>
+                                            <td className="px-3 py-3">
+                                                <button className="text-gray-500 hover:text-gray-700">
+                                                    <span role="img" aria-label="edit">✏️</span>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    )
+                                })}
                                 </tbody>
                             </table>
                         </div>
-                    </section>
 
-                    {/* Payment Information */}
-                    <section className="mb-8">
-                        <h2 className="text-lg font-semibold text-gray-800 mb-4">Payment Information</h2>
-                        <div className="grid grid-cols-2 gap-4">
-                            <div>
-                                <p className="text-sm text-gray-600">
-                                    <strong>Payment Method:</strong> Credit Card (**** **** **** 1234)
-                                </p>
+                        {/* Order Summary */}
+                        <div className="mt-6 ">
+                            <h3 className="text-lg font-semibold mb-4">Order Summary</h3>
+                            <div className="flex justify-between items-center mb-2">
+                                <span className="text-sm text-gray-600">Subtotal</span>
+                                <span className="text-sm font-semibold">${order?.totalPrice.toFixed(2)}</span>
                             </div>
-                            <div className="text-right">
-                                <p className="text-sm text-gray-600">
-                                    <strong>Subtotal:</strong> ${order?.totalPrice}
-                                </p>
-                                <p className="text-sm text-gray-600">
-                                    <strong>Delivery Fee:</strong> ${order?.totalDeliveryFee}
-                                </p>
-                                <p className="text-sm text-gray-600">
-                                    <strong>Tax:</strong> ${order?.totalTax}
-                                </p>
-                                <p className="text-sm text-gray-600">
-                                    <strong>Total:</strong> ${order?.totalPriceWithDiscount}
-                                </p>
+                            <div className="flex justify-between items-center mb-2">
+                                <span className="text-sm text-gray-600">Shipping Fee</span>
+                                <span className="text-sm font-semibold">${order?.totalDeliveryFee.toFixed(2)}</span>
+                            </div>
+                            <div className="flex justify-between items-center mb-2">
+                                <span className="text-sm text-gray-600">Tax</span>
+                                <span className="text-sm font-semibold"> ${order?.totalTax.toFixed(2)}</span>
+                            </div>
+                            <div className="flex justify-between items-center mb-2">
+                                <span className="text-sm text-gray-600">Discount</span>
+                                <span className="text-sm font-semibold"> ${(order?.totalPriceWithDiscount-order?.totalPrice).toFixed(2)}</span>
+                            </div>
+                            <div className="flex justify-between items-center border-t border-gray-300 pt-4">
+                                <span className="text-lg font-semibold">Total</span>
+                                <span className="text-lg font-semibold">${order?.totalPriceWithDiscount.toFixed(2)}</span>
                             </div>
                         </div>
-                    </section>
+                    </div>
+
+                    {/* Payment Information */}
+                    {/*<section className="mb-8">*/}
+                    {/*    <h2 className="text-lg font-semibold text-gray-800 mb-4">Payment Information</h2>*/}
+                    {/*    <div className="grid grid-cols-2 gap-4">*/}
+                    {/*        <div>*/}
+                    {/*            <p className="text-sm text-gray-600">*/}
+                    {/*                <strong>Payment Method:</strong> Credit Card (**** **** **** 1234)*/}
+                    {/*            </p>*/}
+                    {/*        </div>*/}
+                    {/*        <div className="text-right">*/}
+                    {/*            <p className="text-sm text-gray-600">*/}
+                    {/*                <strong>Subtotal:</strong> ${order?.totalPrice}*/}
+                    {/*            </p>*/}
+                    {/*            <p className="text-sm text-gray-600">*/}
+                    {/*                <strong>Delivery Fee:</strong> ${order?.totalDeliveryFee}*/}
+                    {/*            </p>*/}
+                    {/*            <p className="text-sm text-gray-600">*/}
+                    {/*                <strong>Tax:</strong> ${order?.totalTax}*/}
+                    {/*            </p>*/}
+                    {/*            <p className="text-sm text-gray-600">*/}
+                    {/*                <strong>Total:</strong> ${order?.totalPriceWithDiscount}*/}
+                    {/*            </p>*/}
+                    {/*        </div>*/}
+                    {/*    </div>*/}
+                    {/*</section>*/}
 
                     {/* Footer */}
                     <footer className="text-center">
