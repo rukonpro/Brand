@@ -61,7 +61,6 @@ export default function Invoice({order}) {
                     <div className="max-w-6xl mx-auto ">
                         {/* Order Details Header */}
 
-
                         {/* Products Table */}
                         <div className="overflow-x-auto ">
                             <table className="min-w-full table-auto">
