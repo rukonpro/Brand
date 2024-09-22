@@ -8,7 +8,7 @@ export default async function handler(req, res) {
     if (req.method === 'GET') {
         try {
             // Optionally handle query parameters for filtering, sorting, or pagination
-            const { categoryId, brandId, availability, status,productIds, page = 1, pageSize = 10 } = req.query;
+            const {name, categoryId, brandId, availability, status,productIds, page = 1, pageSize = 10 } = req.query;
 
             // If productIds are provided, we need to fetch specific products based on the provided IDs
             let whereCondition = {
@@ -24,6 +24,10 @@ export default async function handler(req, res) {
                 whereCondition.id = {
                     in: idsArray,
                 };
+            }
+
+            if(name){
+                whereCondition.name = { contains: name, mode: 'insensitive' };
             }
             const products = await prisma.product.findMany({
                 where: whereCondition,
