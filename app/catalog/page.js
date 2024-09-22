@@ -1,22 +1,19 @@
-import Footer from "@/app/components/Footer/Footer";
-import CatalogAside from './CatalogAside';
 import Catalogs from './Catalogs';
+import React from "react";
+import {getProducts} from "@/app/utils/product/fetch_products_api";
 
 
 const Catalog = async () => {
-  const products = [{}]
+
+   const params={
+       page: 1,
+       pageSize: 10,
+   }
+  const products = await getProducts(params);
+
 
     return (
-        <div>
-            <div className=" p-3 max-w-[1200px] mx-auto">
-                <div className="grid grid-cols-12 gap-4">
-                    <CatalogAside />
-                    <Catalogs products={JSON.stringify(products)} />
-                </div>
-            </div>
-
-            <Footer />
-        </div>
+        <Catalogs products={products?.data}/>
     );
 };
 

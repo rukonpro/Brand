@@ -22,7 +22,7 @@ const CategoryDrawer = ({categories}) => {
                 <Image src={MenuIcon} alt="MenuIcon"/>
             </button>
             <Drawer
-                destination="left"
+                destination="right"
                 isDrawerOpen={isDrawerOpen}
                 handleClose={handleClose}
             >

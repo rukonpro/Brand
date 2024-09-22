@@ -3,11 +3,11 @@ import React from 'react';
 import GridViewIcon from "@/public/images/gridview.png";
 import LineViewIcon from "@/public/images/listview.png";
 
-const CatalogNav = ({setGitView}) => {
+const CatalogNav = ({setGitView,itemsCount}) => {
     return (
-        <nav className=" grid grid-cols-2 items-center gap-3 rounded-md w-full flex-row bg-white  p-3">
+        <nav className=" grid grid-cols-2 items-center gap-3 rounded-md w-full flex-row bg-white  p-3 sticky top-0">
             <span className="inline-block  text-sm text-gray-700">
-                12,911 items in Mobile accessory
+                {itemsCount} items {/*in Mobile accessory*/}
             </span>
 
             <div className="grid grid-cols-4 items-center">

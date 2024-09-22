@@ -8,7 +8,17 @@ export default async function handler(req, res) {
     }
 
     try {
-        const brands = await prisma.brand.findMany();
+
+        const {name} = req.query;
+        let filter={};
+
+        if(name){
+            filter.name = name;
+        }
+
+        const brands = await prisma.brand.findMany({
+            where:filter,
+        });
         res.status(200).json(brands);
     } catch (error) {
         res.status(500).json({ error: 'Error fetching brands' });
