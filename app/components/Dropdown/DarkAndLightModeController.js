@@ -1,5 +1,9 @@
 "use client"
 import React, {useState,useEffect} from 'react';
+import DarkModeIcon from "@/public/images/dark-mode.png";
+import LightModeIcon from "@/public/images/light-mode.png";
+import SystemModeIcon from "@/public/images/system-mode.png";
+import Image from "next/image";
 
 
 
@@ -17,7 +21,12 @@ const getLocalStorageItem = async (key) => {
         resolve(value);
     });
 };
+
+
 const DarkAndLightModeController = () => {
+    const [dropdownOpen, setDropdownOpen] = useState(false);
+
+
     const [theme, setTheme] = useState(null); // Start with null to determine theme from system or storage
     const [loading, setLoading] = useState(true); // Loading state
 
@@ -80,31 +89,59 @@ const DarkAndLightModeController = () => {
             applyTheme(); // Apply theme asynchronously
         }
     }, [theme]);
+
+    const toggleDropdown = () => {
+        setDropdownOpen(!dropdownOpen);
+    };
     return (
-        <div className="min-h-screen flex flex-col items-center justify-center bg-white dark:bg-gray-900">
-            <h1 className="text-3xl font-bold text-center text-black dark:text-white mb-8">
-                Toggle Dark, Light, and System Mode
-            </h1>
-            {loading ? (
-                <p className="text-lg text-gray-500 dark:text-gray-300">Loading theme...</p>
-            ) : (
-                <div className="flex space-x-4">
+        <div className="relative">
+            {/* Dropdown Button */}
+            <button
+                onClick={toggleDropdown}
+            >
+              <div className="flex items-center justify-center">
+
+                  <Image src={theme==="dark"?DarkModeIcon:theme==="light"?LightModeIcon:SystemModeIcon} height={25} width={25} alt="theme"/>
+                  {/*<Image src={DarkModeIcon} height={25} width={25} alt="theme"/>*/}
+                  {/*<Image src={SystemModeIcon} height={25} width={25} alt="theme"/>*/}
+              </div>
+                <p className="text-sm text-center  sm:block hidden">Theme</p>
+            </button>
+
+            {/* Dropdown Menu */}
+            {dropdownOpen && (
+                <div className="absolute mt-2 bg-white dark:bg-slate-600 rounded shadow-lg w-48 right-0">
                     <button
-                        onClick={() => setTheme('dark')}
-                        className="p-2 bg-gray-200 dark:bg-gray-800 text-black dark:text-white rounded"
+                        onClick={() => {
+                            setTheme('dark');
+                            setDropdownOpen(false);
+                        }}
+                        className="flex gap-3 items-center p-2 hover:bg-gray-100 dark:hover:bg-slate-700 w-full"
                     >
+                        {/* Dark Mode Icon (Moon) */}
+                        <Image src={DarkModeIcon} height={25} width={25} alt="theme"/>
                         Dark Mode
                     </button>
                     <button
-                        onClick={() => setTheme('light')}
-                        className="p-2 bg-gray-200 dark:bg-gray-800 text-black dark:text-white rounded"
+                        onClick={() => {
+                            setTheme('light');
+                            setDropdownOpen(false);
+                        }}
+                        className="flex gap-3 items-center p-2 hover:bg-gray-100 dark:hover:bg-slate-700 w-full"
                     >
+                        {/* Light Mode Icon (Sun) */}
+                        <Image src={LightModeIcon} height={25} width={25} alt="theme"/>
                         Light Mode
                     </button>
                     <button
-                        onClick={() => setTheme('system')}
-                        className="p-2 bg-gray-200 dark:bg-gray-800 text-black dark:text-white rounded"
+                        onClick={() => {
+                            setTheme('system');
+                            setDropdownOpen(false);
+                        }}
+                        className="flex gap-3 items-center p-2 hover:bg-gray-100 dark:hover:bg-slate-700 w-full"
                     >
+                        {/* System Mode Icon (Monitor) */}
+                        <Image src={SystemModeIcon} height={25} width={25} alt="theme"/>
                         System Default
                     </button>
                 </div>

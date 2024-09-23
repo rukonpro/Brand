@@ -35,8 +35,8 @@ const ProfileDrawer = () => {
             <button type="button" onClick={handleToggleDrawer}>
                 <div className="flex justify-center">
                     <Image src={user?.profilePhoto||Avater}
-                           height={24}
-                           width={24}
+                           height={25}
+                           width={25}
                            alt='avater'
                            placeholder="blur"
                            blurDataURL={user?.profilePhoto||null}

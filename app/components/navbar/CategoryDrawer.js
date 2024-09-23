@@ -19,7 +19,7 @@ const CategoryDrawer = ({categories}) => {
             <button type="button"
                     onClick={handleToggleDrawer}
             >
-                <Image src={MenuIcon} alt="MenuIcon"/>
+                <Image src={MenuIcon} height={25} width={50} alt="MenuIcon"/>
             </button>
             <Drawer
                 destination="left"

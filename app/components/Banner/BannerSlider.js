@@ -42,7 +42,7 @@ const BannerSlider = ({banners}) => {
                         {banner?.link&&
                             <Link href={banner?.link+slideCount} prefetch>   <button
                                 type='button' className="bg-white rounded-xl px-4 py-2 mt-5">
-                                Learn more ({index})
+                                Learn more
                             </button>
                             </Link>
                         }

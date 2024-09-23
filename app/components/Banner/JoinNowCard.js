@@ -14,13 +14,13 @@ const JoinNowCard = () => {
     const user=data?.user;
 
     return (
-        <div className={`p-3  rounded-lg sm:col-span-1 col-span-2 ${user?.email ? "bg-[#3f8bf8] " : "bg-[#E3F0FF]"}`}>
+        <div className={`p-3  rounded-lg sm:col-span-1 col-span-2 ${user?.email ? "bg-[#3f8bf8] " : "bg-[#E3F0FF] dark:bg-slate-600"}`}>
 
             {
                 status==="loading"?<JoinNowCardSkeleton/>:<>
                     {!user?.email && <div className='grid grid-cols-3 gap-2 items-center'>
                         <div className="col-span-1">
-                            <Image className="rounded-full h-[44px] w-[44px] object-contain bg-white p-1"
+                            <Image className="rounded-full h-[44px] w-[44px] object-contain bg-white dark:bg-slate-400 p-1"
                                    src={Avater} alt='Avater' />
                         </div>
                         <div className="col-span-2">
@@ -51,7 +51,7 @@ const JoinNowCard = () => {
                             </button>
                         </Link>
                             <Link href="/login">
-                                <button className="rounded-lg bg-white py-1 px-2 mt-2 inline-block w-full">
+                                <button className="rounded-lg bg-white py-1 px-2 mt-2 inline-block w-full dark:bg-slate-700">
                                     Login
                                 </button>
                             </Link>
