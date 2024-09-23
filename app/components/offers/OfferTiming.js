@@ -3,12 +3,12 @@ import Image from "next/image";
 import image from "@//public/images/offer-image-1.png";
 const OfferTiming = () => {
     return (
-        <div className=' relative overflow-hidden grid grid-cols-1 bg-gray-700/50'>
+        <div className=' relative overflow-hidden grid grid-cols-1 bg-gray-700/50 '>
 
             <div className='absolute p-5'>
                 <div className='px-3 py-3 grid grid-cols-1 gap-y-10'>
                     <div>
-                        <h1 className="md:text-2xl text-2xl font-bold">Deals and offers</h1>
+                        <h1 className="md:text-2xl text-2xl font-bold dark:text-slate-900">Deals and offers</h1>
                         <p className="text-gray-700 text-sm">Hygiene equipments</p>
                     </div>
 

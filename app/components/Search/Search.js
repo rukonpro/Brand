@@ -38,7 +38,7 @@ const Search = () => {
                     type="text"
                     onClick={toggleDrawer}
                     placeholder="Search"
-                    className="h-[40px] w-full px-3 border-2 border-blue-500 rounded-l-lg "/>
+                    className="h-[40px] w-full px-3 border-2 border-blue-500 rounded-l-lg dark:bg-slate-600 dark:text-stone-100"/>
                 <button type="button"
                         className="h-[40px] w-[100px] px-3 col-span-3 border-2 border-blue-500 rounded-r-lg bg-blue-500 text-white">Search
                 </button>

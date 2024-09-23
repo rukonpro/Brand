@@ -64,13 +64,13 @@ const SuppliersByRegion = () => {
                     {
                         datas?.map((data, index) => {
                             return (
-                                <li key={index} className='grid gap-2 grid-cols-12 items-center'>
+                                <li key={index} className='grid gap-2 grid-cols-12 items-center dark:bg-slate-700 p-4 rounded-lg'>
                                     <div className='col-span-2'>
                                         <Image src={data.flag} alt='flag icon' />
                                     </div>
                                     <div className="col-span-10">
-                                        <h1 className='text-sm text-gray-800'>{data?.country}</h1>
-                                        <small className='text-gray-500'>{data?.shop}</small>
+                                        <h1 className='text-sm text-gray-800 dark:text-slate-50'>{data?.country}</h1>
+                                        <small className='text-gray-500 dark:text-slate-400'>{data?.shop}</small>
                                     </div>
                                 </li>
                             )

@@ -46,7 +46,7 @@ const OurExtraServices = () => {
                     {
                         datas?.map((data,index) => {
                             return (
-                               <li key={index} className="sm:rounded-lg bg-white relative overflow-hidden">
+                               <li key={index} className="sm:rounded-lg bg-white dark:bg-slate-700 relative overflow-hidden">
                                    <OurExtraServicesCard  data={data} />
                                </li>
                             )

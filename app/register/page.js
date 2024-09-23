@@ -1,9 +1,7 @@
 import React from 'react';
-import  GoogleIcon from "@/public/images/google-icon.png";
-import  FacebookIcon from "@/public/images/facebook-icon.png";
-import Image from "next/image";
 import Link from "next/link";
 import RegisterForm from "@/app/register/registerForm";
+import GoogleAndFacebookLogin from "@/app/login/GoogleAndFacebookLogin";
 
 const Register = () => {
     return (
@@ -19,44 +17,17 @@ const Register = () => {
                                 quick and easy!.</p>
                         </div>
 
-                        <div className="md:col-span-7 col-span-12 bg-gray-200/50 h-full px-3 sm:px-10 md:px-5 lg:px-5 py-5">
+                        <div className="md:col-span-7 col-span-12  backdrop-blur-3xl bg-gray-200/10 h-full px-3 sm:px-10 md:px-5 lg:px-5 py-5 rounded-lg drop-shadow-lg dark:bg-gray-700/10">
                             <h1 className="text-xl font-bold pb-5">Sign Up</h1>
 
                             {/*Register form*/}
                            <RegisterForm/>
 
-                            <div className="pt-8">
-                                <div className="grid grid-cols-12 items-center ">
-                                    <div className="col-span-5 border-b-2 border-gray-300">
-                                    </div>
-                                    <div className="col-span-2 flex justify-center text-white ">Or</div>
-                                    <div className="col-span-5 border-b-2  border-gray-300">
 
-                                    </div>
-
-                                </div>
-                            </div>
-
-                            <div className="grid grid-cols-2 md:grid-cols-1 lg:grid-cols-2 gap-4 pt-8">
-                                <button type="button"
-                                        className="px-3 py-2 rounded-lg w-full my-1 bg-white text-gray-600 border-2 flex justify-center items-center gap-4"
-                                >
-                                    <Image src={GoogleIcon} alt="google icon"/>
-                                    Google
-                                </button>
-
-
-                                <button type="button"
-                                        className="px-3 py-2 rounded-lg w-full my-1 bg-white text-gray-600 border-2 flex justify-center items-center gap-4"
-                                >
-                                    <Image src={FacebookIcon} alt="google icon"/>
-                                    Facebook
-                                </button>
-                            </div>
-
+                                <GoogleAndFacebookLogin/>
 
                             <div className="pt-8 text-center">
-                                <p className="text-gray-600">Already have an account? <Link href="/login"
+                                <p className="text-gray-600 dark:text-slate-300">Already have an account? <Link href="/login"
                                                                                             className="text-blue-500">Login</Link>
                                 </p>
                             </div>

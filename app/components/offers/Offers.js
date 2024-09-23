@@ -30,17 +30,17 @@ const Offers = ({offers}) => {
     return (
         <div className="sm:px-3">
             <div className='max-w-[1200px] mx-auto mt-5 '>
-                <div className='grid grid-cols-12 gap-[2px]  sm:rounded-lg  bg-gray-200 border-2 border-gray-200 overflow-hidden'>
+                <div className='grid grid-cols-12 gap-[2px]  sm:rounded-lg  bg-gray-200 dark:bg-slate-800 border-2 border-gray-200 dark:border-slate-600 overflow-hidden'>
                     <div className="md:col-span-3 col-span-12  bg-white overflow-hidden  ">
                         <OfferTiming />
                     </div>
                     <div className="md:col-span-9 col-span-12 relative">
                         {<button onClick={() => handleScrollButtonClick("left")}
-                                 className="absolute left-0 top-1/2 bg-gray-600/70 hover:bg-gray-600 px-2 py-1 md:block hidden">
+                                 className="absolute left-0 top-1/2 bg-gray-600/70 rounded-r-full hover:bg-gray-600 px-2 py-1 md:block hidden">
                             <Image src={backIcon} alt="backIcon"/>
                         </button>}
                         {<button onClick={() => handleScrollButtonClick("right")}
-                                 className="absolute right-0 top-1/2 bg-gray-600/70 hover:bg-gray-600 rotate-180 px-2 py-1 md:block hidden">
+                                 className="absolute right-0 top-1/2 bg-gray-600/70 rounded-r-full hover:bg-gray-600 rotate-180 px-2 py-1 md:block hidden">
                             <Image src={backIcon} alt="backIcon"/>
                         </button>}
                         <ul
@@ -51,7 +51,7 @@ const Offers = ({offers}) => {
                             {
                                 offers?.map((offer) => {
                                     return (
-                                        <li key={offer?.id} className='p-2  bg-white cursor-pointer  '>
+                                        <li key={offer?.id} className='p-2  bg-white cursor-pointer  dark:bg-slate-700'>
                                             <Link href={`/details/${offer?.product?.id}`}>
                                                 <OfferCard offer={offer}/>
                                             </Link>

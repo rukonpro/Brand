@@ -24,7 +24,7 @@ const Sidebar = () => {
 
     return (
         <div
-            className={`h-full bg-white text-gray-600 transition-transform duration-300 ease-in-out transform rounded-lg overflow-hidden`}
+            className={`h-full bg-white text-gray-600 dark:bg-slate-700 dark:text-slate-300 transition-transform duration-300 ease-in-out transform rounded-lg overflow-hidden`}
         >
             <ProfileSidebarBanner user={user} />
             <ul className="p-4">

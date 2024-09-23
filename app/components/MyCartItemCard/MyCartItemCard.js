@@ -7,7 +7,7 @@ import RemoveAddToCartButton from "@/app/components/AddToCartButton/RemoveAddToC
 
 const MyCartItemCard = ({product}) => {
     return (
-        <div className="grid grid-cols-12 gap-0.5 md:gap-4 p-3 border-b bg-white">
+        <div className="grid grid-cols-12  md:gap-4 p-3 border-b bg-white dark:bg-slate-600 dark:border-slate-500">
             <div className="col-span-12 md:col-span-2">
                 <Image
                     src={product?.photos?.[0]}
@@ -19,9 +19,9 @@ const MyCartItemCard = ({product}) => {
             </div>
             <div className="col-span-12 md:col-span-8">
                 <h1 className="text-lg font-bold">{product?.name}</h1>
-                <p className="text-sm text-gray-600 py-1">Size: medium, Color: blue,
+                <p className="text-sm text-gray-600 py-1 dark:text-slate-300">Size: medium, Color: blue,
                     Material: Plastic</p>
-                <p className="text-sm text-gray-600">Seller: Artel Market</p>
+                <p className="text-sm text-gray-600 dark:text-slate-300">Seller: Artel Market</p>
 
                 <div className="flex gap-4 pt-2 justify-between md:justify-start ">
                     <RemoveAddToCartButton productId={product?.id}/>
@@ -41,7 +41,7 @@ const MyCartItemCard = ({product}) => {
 
                 <div className="md:mt-5 flex justify-end md:justify-self-start">
                     <Link href={`/details/${product?.id}`}
-                          className="text-gray-600 hover:text-blue-500 hover:underline">
+                          className="text-gray-600 hover:text-blue-500 hover:underline dark:text-slate-300">
                         Details
                     </Link>
                 </div>

@@ -41,7 +41,7 @@ const user=userData?.user;
 
     return (
         <div>
-            <h1 className="text-xl font-bold text-gray-600 pb-5 px-3 md:px-0">My Profile</h1>
+            <h1 className="text-xl font-bold text-gray-600 dark:text-slate-50 pb-5 px-3 md:px-0">My Profile</h1>
             <div className="relative w-full">
                 <div className=" mb-6  py-6 px-3 absolute w-full bg-blue-800/50 h-60">
                     <div>
@@ -118,12 +118,12 @@ const user=userData?.user;
             </div>
 
 
-            <div className="border-t-2 mt-8">
+            <div className="border-t-2 mt-8 dark:border-slate-500">
                 <div className="flex justify-between items-center px-3 py-5 md:px-0">
-                    <h1 className="text-xl font-bold text-gray-600 ">Personal details</h1>
+                    <h1 className="text-xl font-bold text-gray-600 dark:text-slate-50">Personal details</h1>
                     <button type="button"
                         onClick={handleSave}
-                        className="border-2 border-[#3e8cfe] hover:bg-blue-300 hover:text-white text-gray-500 font-bold  px-3 py-1 rounded-lg flex items-center gap-2">
+                        className="border-2 border-[#3e8cfe] hover:bg-blue-300 hover:text-white text-gray-500 font-bold  px-3 py-1 rounded-lg flex items-center gap-2 dark:bg-slate-700 dark:hover:bg-slate-600 dark:text-slate-50">
 
                         {
                             loading ? <Image src={LoadingIcon} height={24} alt="eidt icon" className="animate-spin" /> :

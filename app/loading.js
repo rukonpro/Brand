@@ -6,7 +6,7 @@ const Loading = () => {
         <div className="flex justify-center items-center">
             <div className="flex items-center gap-4  ">
                 <Image src={LoadingIcon} height={40} width={40} alt="loading icon" className="animate-spin"/>
-                <h1 className="text-xl text-gray-600"> Loading...</h1>
+                <h1 className="text-xl text-gray-600 dark:text-slate-50"> Loading...</h1>
             </div>
         </div>
     );

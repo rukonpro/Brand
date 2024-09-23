@@ -21,20 +21,20 @@ const MyOrders =async () => {
             <div className="flex justify-between items-center mb-6">
                 <h1 className="text-2xl font-semibold">My Orders</h1>
                 <div className="space-x-2">
-                    <button className="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg">All</button>
-                    <button className="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg">Unfulfilled</button>
-                    <button className="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg">Unpaid</button>
-                    <button className="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg">Open</button>
-                    <button className="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg">Closed</button>
+                    <button className="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg dark:bg-slate-700 dark:text-slate-50 ">All</button>
+                    <button className="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg dark:bg-slate-700 dark:text-slate-50 ">Unfulfilled</button>
+                    <button className="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg dark:bg-slate-700 dark:text-slate-50 ">Unpaid</button>
+                    <button className="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg dark:bg-slate-700 dark:text-slate-50 ">Open</button>
+                    <button className="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg dark:bg-slate-700 dark:text-slate-50 ">Closed</button>
                     <button className="px-4 py-2 bg-blue-500 text-white rounded-lg">Add</button>
                 </div>
             </div>
 
-            <div className="overflow-x-auto bg-white shadow-lg rounded-lg">
+            <div className="overflow-x-auto bg-white shadow-lg rounded-lg dark:bg-slate-700">
                 <table className="min-w-full table-auto">
                     <thead className="bg-blue-500 text-white">
                     <tr>
-                        <th className="px-6 py-4 text-left text-sm font-semibold ">Order</th>
+                        <th className="px-6 py-4 text-left text-sm font-semibold ">Order ID</th>
                         <th className="px-6 py-4 text-left text-sm font-semibold ">Date</th>
                         <th className="px-6 py-4 text-left text-sm font-semibold ">Customer</th>
                         <th className="px-6 py-4 text-left text-sm font-semibold ">Total Items</th>
@@ -50,16 +50,16 @@ const MyOrders =async () => {
                     <tbody>
                     {orders.map((order) => (
                         <tr key={order?.id} className="border-b">
-                            <td className="px-6 py-4 text-sm text-gray-700">{order?.id}</td>
-                            <td className="px-6 py-4 text-sm text-gray-700">
+                            <td className="px-6 py-4 text-sm text-gray-700 dark:text-slate-300">{order?.id}</td>
+                            <td className="px-6 py-4 text-sm text-gray-700 dark:text-slate-300">
                                 <p>{new Date(order?.createdAt).toDateString()}</p>
                             </td>
-                            <td className="px-6 py-4 text-sm text-gray-700">{order?.user?.firstName}</td>
-                            <td className="px-6 py-4 text-sm text-gray-700">{order.items?.length} items</td>
-                            <td className="px-6 py-4 text-sm text-gray-700">${order?.totalPrice.toFixed(2)}</td>
-                            <td className="px-6 py-4 text-sm text-gray-700">${order?.totalTax.toFixed(2)}</td>
-                            <td className="px-6 py-4 text-sm text-gray-700">${(order?.totalPrice - order?.totalPriceWithDiscount).toFixed(2)}</td>
-                            <td className="px-6 py-4 text-sm text-gray-700">${order?.totalPriceWithDiscount.toFixed(2)}</td>
+                            <td className="px-6 py-4 text-sm text-gray-700 dark:text-slate-300">{order?.user?.firstName}</td>
+                            <td className="px-6 py-4 text-sm text-gray-700 dark:text-slate-300">{order.items?.length} items</td>
+                            <td className="px-6 py-4 text-sm text-gray-700 dark:text-slate-300">${order?.totalPrice.toFixed(2)}</td>
+                            <td className="px-6 py-4 text-sm text-gray-700 dark:text-slate-300">${order?.totalTax.toFixed(2)}</td>
+                            <td className="px-6 py-4 text-sm text-gray-700 dark:text-slate-300">${(order?.totalPrice - order?.totalPriceWithDiscount).toFixed(2)}</td>
+                            <td className="px-6 py-4 text-sm text-gray-700 dark:text-slate-300">${order?.totalPriceWithDiscount.toFixed(2)}</td>
                             <td className="px-6 py-4">
                   <span
                       className={`px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full 

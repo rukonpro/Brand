@@ -7,7 +7,7 @@ import worldIcon from "@/public/images/worldIcon.png";
 
 const SupplierCard = () => {
     return (
-        <div className="border-2 rounded  p-2 bg-white">
+        <div className="border-2 rounded  p-2 bg-white dark:bg-slate-600 dark:border-slate-500">
             <div className="flex gap-4 py-5">
                 <Image src={Avatar} alt="Avatar" className="h-10 w-10 rounded-full"/>
                 <div>
@@ -16,7 +16,7 @@ const SupplierCard = () => {
                 </div>
             </div>
 
-            <ol className="  border-t-2 py-2">
+            <ol className="  border-t-2 py-2 dark:border-slate-500">
                 <li className="flex gap-4 items-center py-2">
                     <Image src={Flag} alt="Avatar" className="h-5 w-5"/> <p>Germany, Berlin</p>
                 </li>
@@ -36,7 +36,7 @@ const SupplierCard = () => {
                     inquiry
                 </button>
                 <button
-                    className="w-full bg-gray-100 rounded-2xl py-2 text-blue-500 font-bold hover:bg-gray-200 mt-2 ">{`Seller's Profile`}</button>
+                    className="w-full bg-gray-100 dark:border-2 dark:border-slate-500 dark:bg-slate-700 border-2  hover:border-blue-500  rounded-2xl py-2 text-blue-500 font-bold  mt-2 ">{`Seller's Profile`}</button>
             </div>
         </div>
     );

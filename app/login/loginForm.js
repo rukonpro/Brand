@@ -90,7 +90,7 @@ const LoginForm = () => {
             <input type="email"
                    name="email"
                    placeholder="your email address"
-                   className={`px-3 py-2 rounded-lg w-full my-1 bg-white/50 border-2 ${formik.touched.email && formik.errors.email ? "border-red-400" : "border-white"}`}
+                   className={`px-3 py-2 rounded-lg w-full my-1 bg-white/50 border-2 dark:bg-slate-700/50 dark:border-slate-500 ${formik.touched.email && formik.errors.email ? "border-red-400" : "border-white"}`}
                    onChange={formik.handleChange}
                    value={formik.values.email}
                    autoFocus={true}
@@ -101,7 +101,7 @@ const LoginForm = () => {
             <input type="password"
                    name="password"
                    placeholder="Password"
-                   className={`px-3 py-2 rounded-lg w-full my-1 bg-white/50 border-2 ${formik.touched.password && formik.errors.password ? "border-red-400" : "border-white"}`}
+                   className={`px-3 py-2 rounded-lg w-full my-1 bg-white/50 border-2 dark:bg-slate-700/50 dark:border-slate-500 ${formik.touched.password && formik.errors.password ? "border-red-400" : "border-white"}`}
                    onChange={formik.handleChange}
                    onBlur={formik.handleBlur}
             />

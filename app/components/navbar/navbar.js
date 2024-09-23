@@ -15,7 +15,7 @@ import {getAllCategory} from "@/app/utils/Category/fetch_category_api";
 const Navbar = async () => {
     const category=await getAllCategory();
     return (
-        <nav className='bg-white px-3 py-3 w-full '>
+        <nav className='bg-white dark:bg-slate-700 dark:text-stone-100 px-3 py-3 w-full '>
             <div className="grid grid-cols-12 max-w-[1200px] mx-auto py-8 items-center gap-4">
                 <div className="h-[46px] w-[150px] md:col-span-2 col-span-6 ">
                   <div className="grid grid-cols-4 items-center">
@@ -42,7 +42,7 @@ const Navbar = async () => {
                                     <Image src={Chat} alt='Chat icon'/>
                                 </div>
                             </div>
-                            <p className="text-sm text-center sm:block hidden">Massage</p>
+                            <p className="text-sm text-center  sm:block hidden">Massage</p>
                         </Link>
                     </div>
                     <div>

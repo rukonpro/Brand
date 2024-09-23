@@ -13,7 +13,7 @@ const MyCartItems =  ({loading,products}) => {
 
 
     return (
-        <div className="col-span-12 md:col-span-12 lg:col-span-8 overflow-hidden sm:rounded-lg md:rounded-r-lg md:bg-white ">
+        <div className="col-span-12 md:col-span-12 lg:col-span-8 overflow-hidden sm:rounded-lg md:rounded-r-lg md:bg-white dark:bg-slate-700">
             {loading?
                 <div className="flex items-center justify-center w-full h-full">
                     <Loading/>

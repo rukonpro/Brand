@@ -142,7 +142,7 @@ const Footer = () => {
     }
     return (
         <footer>
-            <div className='bg-white'>
+            <div className='bg-white dark:bg-slate-600'>
                 <SubscribeOnOurNewsletter/>
                 <div className='grid grid-cols-12 gap-5 max-w-[1200px] mx-auto px-3 py-10'>
                     <div className='md:col-span-3 col-span-12'>
@@ -175,7 +175,7 @@ const Footer = () => {
                                             {
                                                 cetagory?.links?.map((link, index) => {
                                                     return (
-                                                        <li key={index} className='mt-2 text-gray-500'>
+                                                        <li key={index} className='mt-2 text-gray-500 dark:text-slate-300'>
                                                             {
                                                                 link?.path ?
                                                                     <Link href={link?.path}>{link?.title}</Link> :
@@ -197,7 +197,7 @@ const Footer = () => {
                 </div>
             </div>
 
-            <div className='bg-gray-200 py-10'>
+            <div className='bg-gray-200 py-10 dark:bg-slate-700'>
                 <div className='max-w-[1200px] mx-auto'>
                     <h1 className='text-center'>© {new Date().getFullYear()} Ecommerce. </h1>
 

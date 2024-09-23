@@ -5,14 +5,14 @@ import Link from 'next/link';
 
 const Nav = () => {
     return (
-        <div className=" border-y-2 py-4 bg-white px-3 hidden md:block">
+        <div className=" border-y-2 py-4 bg-white dark:bg-slate-700 dark:text-stone-100 dark:border-slate-600 px-3 hidden md:block">
             <div className="max-w-[1200px] mx-auto ">
                 <div >
                     <div className=" flex justify-between">
                         <div className="flex gap-3 font-bold">
-                            <button>
-                                <Image src={MenuIcon} alt='MenuIcon'/>
-                            </button>
+                            {/*<button>*/}
+                            {/*    <Image src={MenuIcon} alt='MenuIcon'/>*/}
+                            {/*</button>*/}
                             <Link href="/">All Cetagory</Link>
                             <Link href="/">Hot offers</Link>
                             <Link href="/">Gift boxes</Link>

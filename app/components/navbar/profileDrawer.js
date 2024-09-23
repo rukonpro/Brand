@@ -73,7 +73,7 @@ const ProfileDrawer = () => {
                                         <li key={index}>
                                             <Link href={menu.path} onClick={handleClose}>
                                                 <button type="button"
-                                                    className="w-full  hover:text-blue-500 duration-300 text-slate-700  px-3 py-1 text-left  flex justify-between gap-4"
+                                                    className="w-full  hover:text-blue-500  duration-300 text-slate-700 dark:text-slate-300  px-3 py-1 text-left  flex justify-between gap-4"
                                                 >
                                                     <div className="flex items-center gap-4">
                                                         <Image src={menu.icon} alt='avater'
@@ -91,7 +91,7 @@ const ProfileDrawer = () => {
                             {!user?.email ? <li>
                                 <Link href="/login" onClick={handleClose}>
                                     <button type="button"
-                                        className="w-full  hover:text-blue-500 duration-300 text-slate-700  px-3 py-1 text-left  flex justify-between gap-4"
+                                        className="w-full  hover:text-blue-500 duration-300 text-slate-700 dark:text-slate-300 px-3 py-1 text-left  flex justify-between gap-4"
                                     >
                                         <div className="flex items-center gap-4">
                                             <Image src={SingInIcon} alt='avater' className="h-5 w-5" /> Sign In

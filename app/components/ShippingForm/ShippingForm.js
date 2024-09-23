@@ -74,10 +74,10 @@ const {user}=userData;
     return (
         <form onSubmit={formik.handleSubmit} className=" p-3 rounded-lg">
             <div className="flex justify-between items-center">
-                <h1 className="text-md font-bold pb-2 text-slate-700">Shipping address:</h1>
+                <h1 className="text-md font-bold pb-2 text-slate-700 dark:text-slate-400">Shipping address:</h1>
                 {setNewAddress&&<button type="button"
                          onClick={() => setNewAddress(false)}
-                         className="text-sm px-2 py-1 rounded-md  border-1 border-blue-500 bg-white hover:bg-slate-300 shadow  text-slate-700">Cancel</button>}
+                         className="text-sm px-2 py-1 rounded-md  border-1 border-blue-500 bg-white hover:bg-slate-300 shadow  text-slate-700 dark:bg-slate-700 dark:text-slate-300 hover:dark:bg-slate-600">Cancel</button>}
             </div>
             <div className="grid sm:grid-cols-4 md:grid-cols-4 gap-4  md:px-0">
                 <div className="sm:col-span-2 col-span-4">
@@ -90,7 +90,7 @@ const {user}=userData;
                         value={formik.values.firstName}
                         onChange={formik.handleChange}
                         onBlur={formik.handleBlur}
-                        className={`px-3 py-2 rounded-lg mt-1 w-full ${formik.touched.firstName && formik.errors.firstName ? 'border-red-500' : ''}`}
+                        className={`px-3 py-2 rounded-lg mt-1 w-full dark:bg-slate-700 ${formik.touched.firstName && formik.errors.firstName ? 'border-red-500' : ''}`}
                     />
                     {formik.touched.firstName && formik.errors.firstName ?
                         <div className="text-red-500">{formik.errors.firstName}</div> : null}
@@ -106,7 +106,7 @@ const {user}=userData;
                         value={formik.values.lastName}
                         onChange={formik.handleChange}
                         onBlur={formik.handleBlur}
-                        className={`px-3 py-2 rounded-lg mt-1 w-full ${formik.touched.lastName && formik.errors.lastName ? 'border-red-500' : ''}`}
+                        className={`px-3 py-2 rounded-lg mt-1 w-full dark:bg-slate-700 ${formik.touched.lastName && formik.errors.lastName ? 'border-red-500' : ''}`}
                     />
                     {formik.touched.lastName && formik.errors.lastName ?
                         <div className="text-red-500">{formik.errors.lastName}</div> : null}
@@ -122,7 +122,7 @@ const {user}=userData;
                         value={formik.values.phoneNumber}
                         onChange={formik.handleChange}
                         onBlur={formik.handleBlur}
-                        className={`px-3 py-2 rounded-lg mt-1 w-full ${formik.touched.phoneNumber && formik.errors.phoneNumber ? 'border-red-500' : ''}`}
+                        className={`px-3 py-2 rounded-lg mt-1 w-full dark:bg-slate-700 ${formik.touched.phoneNumber && formik.errors.phoneNumber ? 'border-red-500' : ''}`}
                     />
                     {formik.touched.phoneNumber && formik.errors.phoneNumber ?
                         <div className="text-red-500">{formik.errors.phoneNumber}</div> : null}
@@ -138,7 +138,7 @@ const {user}=userData;
                         value={formik.values.country}
                         onChange={formik.handleChange}
                         onBlur={formik.handleBlur}
-                        className={`px-3 py-2 rounded-lg mt-1 w-full ${formik.touched.country && formik.errors.country ? 'border-red-500' : ''}`}
+                        className={`px-3 py-2 rounded-lg mt-1 w-full dark:bg-slate-700 ${formik.touched.country && formik.errors.country ? 'border-red-500' : ''}`}
                     />
                     {formik.touched.country && formik.errors.country ?
                         <div className="text-red-500">{formik.errors.country}</div> : null}
@@ -154,7 +154,7 @@ const {user}=userData;
                         value={formik.values.houseNumber}
                         onChange={formik.handleChange}
                         onBlur={formik.handleBlur}
-                        className={`px-3 py-2 rounded-lg mt-1 w-full ${formik.touched.houseNumber && formik.errors.houseNumber ? 'border-red-500' : ''}`}
+                        className={`px-3 py-2 rounded-lg mt-1 w-full dark:bg-slate-700 ${formik.touched.houseNumber && formik.errors.houseNumber ? 'border-red-500' : ''}`}
                     />
                     {formik.touched.houseNumber && formik.errors.houseNumber ?
                         <div className="text-red-500">{formik.errors.houseNumber}</div> : null}
@@ -170,7 +170,7 @@ const {user}=userData;
                         value={formik.values.street}
                         onChange={formik.handleChange}
                         onBlur={formik.handleBlur}
-                        className={`px-3 py-2 rounded-lg mt-1 w-full ${formik.touched.street && formik.errors.street ? 'border-red-500' : ''}`}
+                        className={`px-3 py-2 rounded-lg mt-1 w-full dark:bg-slate-700 ${formik.touched.street && formik.errors.street ? 'border-red-500' : ''}`}
                     />
                     {formik.touched.street && formik.errors.street ?
                         <div className="text-red-500">{formik.errors.street}</div> : null}
@@ -186,7 +186,7 @@ const {user}=userData;
                         value={formik.values.city}
                         onChange={formik.handleChange}
                         onBlur={formik.handleBlur}
-                        className={`px-3 py-2 rounded-lg mt-1 w-full ${formik.touched.city && formik.errors.city ? 'border-red-500' : ''}`}
+                        className={`px-3 py-2 rounded-lg mt-1 w-full dark:bg-slate-700 ${formik.touched.city && formik.errors.city ? 'border-red-500' : ''}`}
                     />
                     {formik.touched.city && formik.errors.city ?
                         <div className="text-red-500">{formik.errors.city}</div> : null}
@@ -202,7 +202,7 @@ const {user}=userData;
                         value={formik.values.postalCode}
                         onChange={formik.handleChange}
                         onBlur={formik.handleBlur}
-                        className={`px-3 py-2 rounded-lg mt-1 w-full ${formik.touched.postalCode && formik.errors.postalCode ? 'border-red-500' : ''}`}
+                        className={`px-3 py-2 rounded-lg mt-1 w-full dark:bg-slate-700 ${formik.touched.postalCode && formik.errors.postalCode ? 'border-red-500' : ''}`}
                     />
                     {formik.touched.postalCode && formik.errors.postalCode ?
                         <div className="text-red-500">{formik.errors.postalCode}</div> : null}
@@ -218,7 +218,7 @@ const {user}=userData;
                         value={formik.values.state}
                         onChange={formik.handleChange}
                         onBlur={formik.handleBlur}
-                        className={`px-3 py-2 rounded-lg mt-1 w-full ${formik.touched.state && formik.errors.state ? 'border-red-500' : ''}`}
+                        className={`px-3 py-2 rounded-lg mt-1 w-full dark:bg-slate-700 ${formik.touched.state && formik.errors.state ? 'border-red-500' : ''}`}
                     />
                     {formik.touched.state && formik.errors.state ?
                         <div className="text-red-500">{formik.errors.state}</div> : null}

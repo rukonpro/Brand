@@ -11,7 +11,7 @@ const NestedDropdown = ({ category }) => {
             {
                 category?.children?.length === 0 || !category?.children ?(
                         <Link href={`/source/${category?.id}`}>
-                            <button  className="py-2 px-4 flex justify-between items-center w-full text-left hover:bg-blue-500 hover:text-white rounded-lg">
+                            <button  className="py-2 px-4 flex justify-between items-center w-full text-left hover:bg-blue-500 hover:text-white hover:dark:bg-slate-600 rounded-lg">
                                 {category?.name}
                             </button>
                         </Link>
@@ -19,7 +19,7 @@ const NestedDropdown = ({ category }) => {
                     (
                         <button
                             onClick={() => setIsOpen(!isOpen)}
-                            className="py-2 px-4 flex justify-between items-center w-full text-left hover:bg-blue-500 hover:text-white rounded-lg"
+                            className="py-2 px-4 flex justify-between items-center w-full text-left hover:bg-blue-500 hover:text-white hover:dark:bg-slate-600 rounded-lg"
                         >
 
                                 {category?.name}
@@ -46,7 +46,7 @@ const NestedDropdown = ({ category }) => {
 
 
             {isOpen && category?.children?.length > 0 && (
-                <ul className="ml-4 pl-4 border-l border-blue-500">
+                <ul className="ml-4 pl-4 border-l border-blue-500 dark:border-slate-600">
                     {category?.children?.map((child) => (
                         <NestedDropdown key={child?.id} category={child}/>
                     ))}
@@ -60,8 +60,8 @@ const CategoryManu = ({categories}) => {
 
     return (
         <nav className="relative">
-            <h1 className="text-lg px-3 py-4 bg-blue-500 text-white sticky top-0 z-10 mb-1 font-bold">Categorise</h1>
-            <ul className="menu bg-base-200 rounded-box overflow-y-auto px-1">
+            <h1 className="text-lg px-3 py-4 bg-blue-500 text-white dark:bg-slate-600 sticky top-0 z-10 mb-1 font-bold ">Categorise</h1>
+            <ul className="menu bg-base-200 rounded-box overflow-y-auto px-1 dark:bg-slate-700 dark:text-stone-100">
                 {categories?.map((category) => (
                     <NestedDropdown key={category?.id} category={category}/>
                 ))}

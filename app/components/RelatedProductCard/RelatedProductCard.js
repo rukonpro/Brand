@@ -16,8 +16,8 @@ const RelatedProductCard = ({ product }) => {
                     className="w-full h-full object-cover"
                 />
             </div>
-            <h2 className="text-gray-600 text-sm pt-2">{product?.name}</h2>
-            <p className="text-xl font-bold text-black pt-2">${product?.price}</p>
+            <h2 className="text-gray-600 text-sm pt-2 dark:text-slate-50">{product?.name}</h2>
+            <p className="text-xl font-bold text-black pt-2 dark:text-slate-200">${product?.price}</p>
         </div>
     );
 };
