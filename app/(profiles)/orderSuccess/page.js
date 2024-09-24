@@ -16,7 +16,7 @@ const params = {
 
     return (
         <div className=" ">
-            <div className="max-w-3xl w-full space-y-8 bg-white md:p-10  rounded-lg dark:bg-slate-700  ">
+            <div className="max-w-3xl w-full space-y-8 bg-white md:p-10  rounded-lg dark:bg-slate-800  ">
                 {/* Success Icon and Message */}
                 <div className="flex flex-col items-center">
                     <svg
@@ -42,7 +42,7 @@ const params = {
                 </div>
 
                 {/* Order Summary */}
-                <div className="bg-gray-100 p-6 rounded-lg dark:bg-slate-600">
+                <div className="bg-gray-100 p-6 rounded-lg dark:bg-slate-700">
                     <h2 className="text-lg font-medium text-gray-900 dark:text-slate-50">Order Summary</h2>
                     <p className="text-sm text-gray-600 mt-2 dark:text-slate-300">
                         <strong>Order Number:</strong> {order?.id}
@@ -59,30 +59,30 @@ const params = {
                 <section className="mb-8">
                     <h2 className="text-lg font-semibold text-gray-800 mb-4 dark:text-slate-50">Ordered Items</h2>
                     <div className="overflow-x-auto">
-                        <table className="min-w-full border-collapse border border-gray-300 dark:border-slate-500">
+                        <table className="min-w-full border-collapse border border-gray-300 dark:border-slate-700">
                             <thead>
                             <tr>
-                                <th className="border border-gray-300 px-4 py-2 text-left text-sm font-medium text-gray-700 dark:border-slate-500 dark:text-slate-200">Item</th>
-                                <th className="border border-gray-300 px-4 py-2 text-left text-sm font-medium text-gray-700 dark:border-slate-500 dark:text-slate-200">Qty</th>
-                                <th className="border border-gray-300 px-4 py-2 text-left text-sm font-medium text-gray-700 dark:border-slate-500 dark:text-slate-200">Price</th>
-                                <th className="border border-gray-300 px-4 py-2 text-left text-sm font-medium text-gray-700 dark:border-slate-500 dark:text-slate-200">Dic</th>
-                                <th className="border border-gray-300 px-4 py-2 text-left text-sm font-medium text-gray-700 dark:border-slate-500 dark:text-slate-200">Tax</th>
-                                <th className="border border-gray-300 px-4 py-2 text-left text-sm font-medium text-gray-700 dark:border-slate-500 dark:text-slate-200">DelFree</th>
-                                <th className="border border-gray-300 px-4 py-2 text-left text-sm font-medium text-gray-700 dark:border-slate-500 dark:text-slate-200">Total</th>
+                                <th className="border border-gray-300 px-4 py-2 text-left text-sm font-medium text-gray-700 dark:border-slate-700 dark:text-slate-200">Item</th>
+                                <th className="border border-gray-300 px-4 py-2 text-left text-sm font-medium text-gray-700 dark:border-slate-700 dark:text-slate-200">Qty</th>
+                                <th className="border border-gray-300 px-4 py-2 text-left text-sm font-medium text-gray-700 dark:border-slate-700 dark:text-slate-200">Price</th>
+                                <th className="border border-gray-300 px-4 py-2 text-left text-sm font-medium text-gray-700 dark:border-slate-700 dark:text-slate-200">Dic</th>
+                                <th className="border border-gray-300 px-4 py-2 text-left text-sm font-medium text-gray-700 dark:border-slate-700 dark:text-slate-200">Tax</th>
+                                <th className="border border-gray-300 px-4 py-2 text-left text-sm font-medium text-gray-700 dark:border-slate-700 dark:text-slate-200">DelFree</th>
+                                <th className="border border-gray-300 px-4 py-2 text-left text-sm font-medium text-gray-700 dark:border-slate-700 dark:text-slate-200">Total</th>
                             </tr>
                             </thead>
                             <tbody>
                             {
                                 order?.items?.map((item, index) => (
                                     <tr key={index}>
-                                        <td className="border border-gray-300 px-4 py-2 text-sm text-gray-600 dark:border-slate-500 dark:text-slate-300">{item?.product?.name}
+                                        <td className="border border-gray-300 px-4 py-2 text-sm text-gray-600 dark:border-slate-700 dark:text-slate-300">{item?.product?.name}
                                         </td>
-                                        <td className="border border-gray-300 px-4 py-2 text-sm text-gray-600 dark:border-slate-500 dark:text-slate-300">{item?.quantity}</td>
-                                        <td className="border border-gray-300 px-4 py-2 text-sm text-gray-600 dark:border-slate-500 dark:text-slate-300">${item?.price}</td>
-                                        <td className="border border-gray-300 px-4 py-2 text-sm text-gray-600 dark:border-slate-500 dark:text-slate-300">${item?.totalPriceWithDiscount - item?.totalPrice} ({item?.discountPercentage}%)</td>
-                                        <td className="border border-gray-300 px-4 py-2 text-sm text-gray-600 dark:border-slate-500 dark:text-slate-300">${item?.totalTax}</td>
-                                        <td className="border border-gray-300 px-4 py-2 text-sm text-gray-600 dark:border-slate-500 dark:text-slate-300">${item?.deliveryFee}</td>
-                                        <td className="border border-gray-300 px-4 py-2 text-sm text-gray-600 dark:border-slate-500 dark:text-slate-300">${item?.totalPrice}</td>
+                                        <td className="border border-gray-300 px-4 py-2 text-sm text-gray-600 dark:border-slate-700 dark:text-slate-300">{item?.quantity}</td>
+                                        <td className="border border-gray-300 px-4 py-2 text-sm text-gray-600 dark:border-slate-700 dark:text-slate-300">${item?.price}</td>
+                                        <td className="border border-gray-300 px-4 py-2 text-sm text-gray-600 dark:border-slate-700 dark:text-slate-300">${item?.totalPriceWithDiscount - item?.totalPrice} ({item?.discountPercentage}%)</td>
+                                        <td className="border border-gray-300 px-4 py-2 text-sm text-gray-600 dark:border-slate-700 dark:text-slate-300">${item?.totalTax}</td>
+                                        <td className="border border-gray-300 px-4 py-2 text-sm text-gray-600 dark:border-slate-700 dark:text-slate-300">${item?.deliveryFee}</td>
+                                        <td className="border border-gray-300 px-4 py-2 text-sm text-gray-600 dark:border-slate-700 dark:text-slate-300">${item?.totalPrice}</td>
                                     </tr>
                                 ))
                             }
@@ -125,7 +125,7 @@ const params = {
 
                     </Link>
                     <Link href="/"
-                          className="block w-full text-center mt-4 py-3 px-4 border border-blue-500 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 dark:text-slate-50 hover:dark:bg-slate-600">
+                          className="block w-full text-center mt-4 py-3 px-4 border border-blue-500 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 dark:text-slate-50 hover:dark:bg-slate-700">
 
                         Continue Shopping
 

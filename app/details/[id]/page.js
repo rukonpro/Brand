@@ -37,7 +37,7 @@ const Details = async ({ params }) => {
                     </div>
                 </div>
                 <Suspense fallback={<Loading/>}>
-                    <div className="grid grid-cols-12 gap-4 border-2 p-3 py-10  md:bg-white md:rounded-lg dark:bg-slate-700 dark:border-slate-500">
+                    <div className="grid grid-cols-12 gap-4 border-2 p-3 py-10  md:bg-white md:rounded-lg dark:bg-slate-800 dark:border-slate-700">
                         <div className="col-span-12 md:col-span-4">
                             <ImageChangeButton
                                 images={product?.data?.photos}
@@ -52,7 +52,7 @@ const Details = async ({ params }) => {
                                 </div>
                                 {product?.data?.offers?.[0]?.discountValue&&
                                     <div>
-                                    <p className="font-bold text-2xl text-red-500 bg-green-100 px-2 rounded-full dark:bg-slate-600 dark:text-green-500">{product?.data?.offers?.[0]?.discountValue}% Discount</p>
+                                    <p className="font-bold text-2xl text-red-500 bg-green-100 px-2 rounded-full dark:bg-slate-700 dark:text-green-500">{product?.data?.offers?.[0]?.discountValue}% Discount</p>
                                 </div>
                                 }
                             </div>
@@ -112,7 +112,7 @@ const Details = async ({ params }) => {
 
 
                                         {product?.data?.dimension &&
-                                            <div className="grid grid-cols-12 pt-1 bg-orange-100/50 px-3 my-2 dark:bg-slate-600">
+                                            <div className="grid grid-cols-12 pt-1 bg-orange-100/50 px-3 my-2 dark:bg-slate-700">
                                             <p className="col-span-4">Dimension:</p>
                                             <div className="col-span-8">
                                                 <p>Height: {product?.data?.dimension?.height} m</p>

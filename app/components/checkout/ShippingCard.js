@@ -5,7 +5,7 @@ import Dropdown from "@/app/components/ShippingAdressDropdown/ShippingAdressDrop
 const ShippingCard = ({shippingAddress,setCurrentPage,currentPage,setNewAddress}) => {
 
     return (
-        <div className="border p-4 rounded-lg bg-white dark:bg-slate-700 dark:border-slate-500">
+        <div className="border p-4 rounded-lg bg-white dark:bg-slate-800 dark:border-slate-700">
 
             {shippingAddress?.addresses?.map((address) => (
                 <div key={address?.id}>

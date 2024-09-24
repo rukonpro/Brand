@@ -5,7 +5,7 @@ import Link from 'next/link';
 
 const Nav = () => {
     return (
-        <div className=" border-y-2 py-4 bg-white dark:bg-slate-700 dark:text-stone-100 dark:border-slate-600 px-3 hidden md:block">
+        <div className=" border-y-2 py-4 bg-white dark:bg-slate-800 dark:text-stone-100 dark:border-slate-700 px-3 hidden md:block">
             <div className="max-w-[1200px] mx-auto ">
                 <div >
                     <div className=" flex justify-between">

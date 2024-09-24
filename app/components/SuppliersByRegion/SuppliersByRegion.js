@@ -64,7 +64,7 @@ const SuppliersByRegion = () => {
                     {
                         datas?.map((data, index) => {
                             return (
-                                <li key={index} className='grid gap-2 grid-cols-12 items-center dark:bg-slate-700 p-4 rounded-lg'>
+                                <li key={index} className='grid gap-2 grid-cols-12 items-center dark:bg-slate-800 p-4 rounded-lg'>
                                     <div className='col-span-2'>
                                         <Image src={data.flag} alt='flag icon' />
                                     </div>

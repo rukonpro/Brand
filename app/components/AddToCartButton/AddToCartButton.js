@@ -64,7 +64,7 @@ const AddToCartButton = ({product,formCartPage}) => {
             <button
                 onClick={() => addToCart(id)}
                 type="button"
-                className="flex items-center gap-1 md:gap-x-2  py-1  border-2 rounded-lg text-blue-600 mt-4 w-full justify-center hover:border-blue-500 dark:border-slate-500 dark:bg-slate-700">
+                className="flex items-center gap-1 md:gap-x-2  py-1  border-2 rounded-lg text-blue-600 mt-4 w-full justify-center hover:border-blue-500 dark:border-slate-700 dark:bg-slate-800">
                 <Image src={blueCartIcon} alt="blue Cart Icon"/>
                 {
                     formCartPage?null:"Add to cart"
@@ -72,7 +72,7 @@ const AddToCartButton = ({product,formCartPage}) => {
 
             </button> :
             <div
-                className="flex items-center justify-between hover:border-blue-500  rounded-lg text-blue-600 font-bold mt-4 w-full border-2 overflow-hidden dark:border-slate-500">
+                className="flex items-center justify-between hover:border-blue-500  rounded-lg text-blue-600 font-bold mt-4 w-full border-2 overflow-hidden dark:border-slate-700">
                 <button
                     onClick={() => decrementQuantity(id)}
                     type="button"
@@ -81,7 +81,7 @@ const AddToCartButton = ({product,formCartPage}) => {
                 </button>
                 <button
                     type="button"
-                    className="  py-1 w-full h-full  justify-center dark:bg-slate-700">
+                    className="  py-1 w-full h-full  justify-center dark:bg-slate-800">
                     {cartProduct?.quantity && `${cartProduct?.quantity}`}
                 </button>
                 <button

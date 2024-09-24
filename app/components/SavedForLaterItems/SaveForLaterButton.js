@@ -24,7 +24,7 @@ const SaveForLaterButton = ({product}) => {
 
                 getHandler()
             }}
-            className="w-full  py-1 text-blue-500   mt-2 flex justify-center items-center gap-4  hover:border-blue-500 hover:border-2 border-2 border-white rounded-lg dark:border-slate-500 ">
+            className="w-full  py-1 text-blue-500   mt-2 flex justify-center items-center gap-4  hover:border-blue-500 hover:border-2 border-2 border-white rounded-lg dark:border-slate-700 ">
             <Image src={loveIconOutline} alt="loveIconOutline" className="h-4 w-4"/>
             <span>{isSaved?'Unsaved for later':'Save for later'}</span>
         </button>

@@ -16,7 +16,7 @@ const RecommendedItems = async () => {
 
     return (
         <div className='pt-5 sm:px-3 '>
-            <div className='max-w-[1200px] mx-auto border-2 pb-10 px-5 rounded-lg dark:border-slate-600'>
+            <div className='max-w-[1200px] mx-auto border-2 pb-10 px-5 rounded-lg dark:border-slate-700'>
                 <h1 className='text-2xl py-5 sm:px-0 px-3'>Recommended items</h1>
                 <ul className='grid xl:grid-cols-5 lg:grid-cols-5 md:grid-cols-4 sm:grid-cols-3 grid-cols-2 sm:gap-2 gap-1 '>
                     {

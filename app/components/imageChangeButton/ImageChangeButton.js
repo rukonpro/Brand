@@ -7,7 +7,7 @@ const ImageChangeButton = ({ images, name }) => {
 
     return (
         <div>
-            <div className="p-3 bg-white border-2 rounded flex justify-center dark:bg-slate-600 dark:border-slate-500">
+            <div className="p-3 bg-white border-2 rounded flex justify-center dark:bg-slate-700 dark:border-slate-700">
                 <Image
                     src={changeImage}
                     width={400}
@@ -22,7 +22,7 @@ const ImageChangeButton = ({ images, name }) => {
                 {images?.map((image, index) => {
                     return (
                         <li key={index}>
-                            <button onClick={() => setChnageImage(image)} className="w-[56px] h-[56px] border-2 rounded p-1 dark:border-slate-500">
+                            <button onClick={() => setChnageImage(image)} className="w-[56px] h-[56px] border-2 rounded p-1 dark:border-slate-700">
                                 <Image
                                     src={image}
                                     height={50}

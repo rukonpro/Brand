@@ -6,7 +6,7 @@ import removeFormLaterItemHandler from "@/app/components/SavedForLaterItems/remo
 
 const SavedForLaterCard = ({product,getHandler}) => {
     return (
-        <div className="lg:border-2 border-blue-200 md:rounded-lg p-3 bg-white dark:bg-slate-600 dark:border-slate-500">
+        <div className="lg:border-2 border-blue-200 md:rounded-lg p-3 bg-white dark:bg-slate-700 dark:border-slate-700">
             <Link href={`/details/${product?.id}`}>
                 <div>
                     {product?.photos?.[0]?<Image
@@ -30,7 +30,7 @@ const SavedForLaterCard = ({product,getHandler}) => {
                     getHandler();
                 }}
                 type="button"
-                className="rounded text-red-500 font-bold text-sm py-0 px-1 border border-white  hover:underline dark:border-slate-500 dark:bg-slate-700"
+                className="rounded text-red-500 font-bold text-sm py-0 px-1 border border-white  hover:underline dark:border-slate-700 dark:bg-slate-800"
             >
 
                 {/*<Image src={RemoveIcon} height={18} width={18} alt="remove icon"/>*/}

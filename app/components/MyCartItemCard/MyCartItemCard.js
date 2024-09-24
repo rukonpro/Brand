@@ -7,7 +7,7 @@ import RemoveAddToCartButton from "@/app/components/AddToCartButton/RemoveAddToC
 
 const MyCartItemCard = ({product}) => {
     return (
-        <div className="grid grid-cols-12  md:gap-4 p-3 border-b bg-white dark:bg-slate-600 dark:border-slate-500">
+        <div className="grid grid-cols-12  md:gap-4 p-3 border-b bg-white dark:bg-slate-700 dark:border-slate-700">
             <div className="col-span-12 md:col-span-2">
                 <Image
                     src={product?.photos?.[0]}

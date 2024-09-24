@@ -10,7 +10,7 @@ const OfferCard = ({offer}) => {
             <div className='flex justify-center'>
                 <div>
                     <h1 className='text-center py-3 truncate'>{offer?.product?.name}</h1>
-                    <span className='text-[#EB001B] bg-[#FFE3E3] dark:bg-slate-600 dark:text-stone-100 px-3 py-1 rounded-full'>{offer?.discountValue}%</span>
+                    <span className='text-[#EB001B] bg-[#FFE3E3] dark:bg-slate-700 dark:text-stone-100 px-3 py-1 rounded-full'>{offer?.discountValue}%</span>
                 </div>
             </div>
         </div>

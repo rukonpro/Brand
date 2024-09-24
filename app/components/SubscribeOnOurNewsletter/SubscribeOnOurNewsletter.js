@@ -3,7 +3,7 @@ import Image from 'next/image';
 import EmailIcon from "@/public/images/emailIcon.png";
 const SubscribeOnOurNewsletter = () => {
     return (
-        <div className='bg-gray-200  px-3 dark:bg-slate-700'>
+        <div className='bg-gray-200  px-3 dark:bg-slate-800'>
             <div className='max-w-[1200px] mx-auto py-10'>
                 <div className='flex justify-center'>
                     <div className=''>
@@ -16,7 +16,7 @@ const SubscribeOnOurNewsletter = () => {
                                 <input
                                     type="text"
                                     placeholder="Email"
-                                    className="border border-blue-300 rounded-md py-2 pl-10  focus:outline-none focus:border-blue-500 w-full dark:bg-slate-600 dark:border-slate-500"
+                                    className="border border-blue-300 rounded-md py-2 pl-10  focus:outline-none focus:border-blue-500 w-full dark:bg-slate-700 dark:border-slate-700"
                                 />
                                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                                     <Image src={EmailIcon} className="h-5 w-5 text-gray-400" alt='EmailIcon' />

@@ -14,7 +14,7 @@ const JoinNowCard = () => {
     const user=data?.user;
 
     return (
-        <div className={`p-3  rounded-lg sm:col-span-1 col-span-2 ${user?.email ? "bg-[#3f8bf8] " : "bg-[#E3F0FF] dark:bg-slate-600"}`}>
+        <div className={`p-3  rounded-lg sm:col-span-1 col-span-2 ${user?.email ? "bg-[#3f8bf8] " : "bg-[#E3F0FF] dark:bg-slate-700"}`}>
 
             {
                 status==="loading"?<JoinNowCardSkeleton/>:<>
@@ -51,7 +51,7 @@ const JoinNowCard = () => {
                             </button>
                         </Link>
                             <Link href="/login">
-                                <button className="rounded-lg bg-white py-1 px-2 mt-2 inline-block w-full dark:bg-slate-700">
+                                <button className="rounded-lg bg-white py-1 px-2 mt-2 inline-block w-full dark:bg-slate-800">
                                     Login
                                 </button>
                             </Link>

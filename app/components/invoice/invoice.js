@@ -5,7 +5,7 @@ export default function Invoice({order}) {
 
     return (
         <div className=" ">
-            <div className="max-w-4xl mx-auto min-h-screen bg-gray-100 md:p-6 p-3  rounded-lg dark:bg-slate-700 dark:text-slate-50">
+            <div className="max-w-4xl mx-auto min-h-screen bg-gray-100 md:p-6 p-3  rounded-lg dark:bg-slate-800 dark:text-slate-50">
 
                 {/* Print Button */}
                 <div className="text-right mb-2">

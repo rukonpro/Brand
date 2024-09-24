@@ -21,16 +21,16 @@ const MyOrders =async () => {
             <div className="flex justify-between items-center mb-6">
                 <h1 className="text-2xl font-semibold">My Orders</h1>
                 <div className="space-x-2">
-                    <button className="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg dark:bg-slate-700 dark:text-slate-50 ">All</button>
-                    <button className="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg dark:bg-slate-700 dark:text-slate-50 ">Unfulfilled</button>
-                    <button className="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg dark:bg-slate-700 dark:text-slate-50 ">Unpaid</button>
-                    <button className="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg dark:bg-slate-700 dark:text-slate-50 ">Open</button>
-                    <button className="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg dark:bg-slate-700 dark:text-slate-50 ">Closed</button>
+                    <button className="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg dark:bg-slate-800 dark:text-slate-50 ">All</button>
+                    <button className="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg dark:bg-slate-800 dark:text-slate-50 ">Unfulfilled</button>
+                    <button className="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg dark:bg-slate-800 dark:text-slate-50 ">Unpaid</button>
+                    <button className="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg dark:bg-slate-800 dark:text-slate-50 ">Open</button>
+                    <button className="px-4 py-2 bg-gray-200 text-gray-700 rounded-lg dark:bg-slate-800 dark:text-slate-50 ">Closed</button>
                     <button className="px-4 py-2 bg-blue-500 text-white rounded-lg">Add</button>
                 </div>
             </div>
 
-            <div className="overflow-x-auto bg-white shadow-lg rounded-lg dark:bg-slate-700">
+            <div className="overflow-x-auto bg-white shadow-lg rounded-lg dark:bg-slate-800">
                 <table className="min-w-full table-auto">
                     <thead className="bg-blue-500 text-white">
                     <tr>

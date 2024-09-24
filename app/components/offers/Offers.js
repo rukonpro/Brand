@@ -30,7 +30,7 @@ const Offers = ({offers}) => {
     return (
         <div className="sm:px-3">
             <div className='max-w-[1200px] mx-auto mt-5 '>
-                <div className='grid grid-cols-12 gap-[2px]  sm:rounded-lg  bg-gray-200 dark:bg-slate-800 border-2 border-gray-200 dark:border-slate-600 overflow-hidden'>
+                <div className='grid grid-cols-12 gap-[2px]  sm:rounded-lg  bg-gray-200 dark:bg-slate-800 border-2 border-gray-200 dark:border-slate-700 overflow-hidden'>
                     <div className="md:col-span-3 col-span-12  bg-white overflow-hidden  ">
                         <OfferTiming />
                     </div>
@@ -51,7 +51,7 @@ const Offers = ({offers}) => {
                             {
                                 offers?.map((offer) => {
                                     return (
-                                        <li key={offer?.id} className='p-2  bg-white cursor-pointer  dark:bg-slate-700'>
+                                        <li key={offer?.id} className='p-2  bg-white cursor-pointer  dark:bg-slate-800'>
                                             <Link href={`/details/${offer?.product?.id}`}>
                                                 <OfferCard offer={offer}/>
                                             </Link>

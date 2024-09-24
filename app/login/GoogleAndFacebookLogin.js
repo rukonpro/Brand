@@ -8,10 +8,10 @@ const GoogleAndFacebookLogin = () => {
         <div>
             <div className="pt-8">
                 <div className="grid grid-cols-12 items-center ">
-                    <div className="col-span-5 border-b-2 border-gray-300 dark:border-slate-500">
+                    <div className="col-span-5 border-b-2 border-gray-300 dark:border-slate-700">
                     </div>
                     <div className="col-span-2 flex justify-center text-white ">Or</div>
-                    <div className="col-span-5 border-b-2  border-gray-300 dark:border-slate-500">
+                    <div className="col-span-5 border-b-2  border-gray-300 dark:border-slate-700">
 
                     </div>
 
