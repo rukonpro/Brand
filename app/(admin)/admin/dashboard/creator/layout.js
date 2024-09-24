@@ -1,6 +1,6 @@
 import React from 'react';
 
-const DashboardLayout = ({children}) => {
+const CreatorLayout = ({children}) => {
     return (
         <div>
             {children}
@@ -8,4 +8,4 @@ const DashboardLayout = ({children}) => {
     );
 };
 
-export default DashboardLayout;
+export default CreatorLayout;

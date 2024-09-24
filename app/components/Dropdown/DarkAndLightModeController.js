@@ -6,21 +6,21 @@ import SystemModeIcon from "@/public/images/system-mode.png";
 import Image from "next/image";
 
 
-
-const setLocalStorageItem = async (key, value) => {
-    return new Promise((resolve) => {
-        localStorage.setItem(key, value);
-        resolve(true);
-    });
-};
-
-// Async localStorage getter
-const getLocalStorageItem = async (key) => {
-    return new Promise((resolve) => {
-        const value = localStorage.getItem(key);
-        resolve(value);
-    });
-};
+//
+// const setLocalStorageItem = async (key, value) => {
+//     return new Promise((resolve) => {
+//         localStorage.setItem(key, value);
+//         resolve(true);
+//     });
+// };
+//
+// // Async localStorage getter
+// const getLocalStorageItem = async (key) => {
+//     return new Promise((resolve) => {
+//         const value = localStorage.getItem(key);
+//         resolve(value);
+//     });
+// };
 
 
 const DarkAndLightModeController = () => {
@@ -28,11 +28,11 @@ const DarkAndLightModeController = () => {
 
 
     const [theme, setTheme] = useState(null); // Start with null to determine theme from system or storage
-    const [loading, setLoading] = useState(true); // Loading state
+
 
     // Async function to initialize theme
     const initializeTheme = async () => {
-        const savedTheme = await getLocalStorageItem('theme');
+        const savedTheme = localStorage.getItem('theme');
 
         if (savedTheme) {
             // If a saved theme is found, use that theme
@@ -53,7 +53,7 @@ const DarkAndLightModeController = () => {
                 document.documentElement.classList.remove('dark');
             }
         }
-        setLoading(false); // Stop loading once theme is applied
+
     };
 
     useEffect(() => {
@@ -64,14 +64,13 @@ const DarkAndLightModeController = () => {
     useEffect(() => {
         if (theme !== null) {
             const applyTheme = async () => {
-                setLoading(true); // Start loading when theme change begins
 
                 if (theme === 'dark') {
                     document.documentElement.classList.add('dark');
-                    await setLocalStorageItem('theme', 'dark'); // Save user-selected theme
+                    localStorage.setItem('theme', 'dark'); // Save user-selected theme
                 } else if (theme === 'light') {
                     document.documentElement.classList.remove('dark');
-                    await setLocalStorageItem('theme', 'light'); // Save user-selected theme
+                    localStorage.setItem('theme', 'light'); // Save user-selected theme
                 } else if (theme === 'system') {
                     // If system theme is selected, remove saved theme and apply system preference
                     localStorage.removeItem('theme');
@@ -83,7 +82,6 @@ const DarkAndLightModeController = () => {
                     }
                 }
 
-                setLoading(false); // Stop loading once theme is applied
             };
 
             applyTheme(); // Apply theme asynchronously

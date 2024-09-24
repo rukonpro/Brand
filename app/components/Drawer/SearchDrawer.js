@@ -2,14 +2,16 @@
 
 import React, {useEffect, useState,useCallback} from 'react';
 import {getProducts} from "@/app/utils/product/fetch_products_api";
+import { IoCloseSharp } from "react-icons/io5";
 import Link from "next/link";
 import Loading from "@/app/loading";
 import Image from "next/image";
+import {FaSearch} from "react-icons/fa";
 
-const SearchDrawer = ({isOpen,toggleDrawer}) => {
+const SearchDrawer = ({isOpen,toggleDrawer,handleSearchChange,search}) => {
 
     const [products, setProducts] = useState([]);
-    const [search, setSearch] = useState('');
+
     const [isLoading, setIsLoading] = useState(false);
 
     // Debounce search function to limit API calls
@@ -23,10 +25,7 @@ const SearchDrawer = ({isOpen,toggleDrawer}) => {
         };
     };
 
-    const handleSearchChange = (e) => {
-        const searchValue = e.target.value.trim();
-        setSearch(searchValue);
-    };
+
 
     const fetchProducts = useCallback(async () => {
         if (!search) {
@@ -54,68 +53,72 @@ const SearchDrawer = ({isOpen,toggleDrawer}) => {
 
     return (
         <div>
-             <div className={`fixed  top-0 left-0 right-0 inset-0 z-50 overflow-hidden  duration-700  ${isOpen ? 'block' : 'hidden'}`}>
+             <div className={`fixed flex justify-center items-center h-full  w-full inset-0 z-50 overflow-hidden  duration-700  ${isOpen ? 'block' : 'hidden'}`}>
                 <div className="fixed inset-0 transition-opacity" aria-hidden="true" onClick={toggleDrawer}>
-                    <div className="absolute inset-0 bg-slate-700/50 "></div>
+                    <div className="absolute inset-0 backdrop-blur-sm "></div>
                 </div>
                 <div
-                    className={`fixed top-0 left-0 right-0 mx-auto flex  w-full backdrop-blur-xl bg-blue-100/50  shadow-xl transform transition ease-in-out duration-300 overflow-y-auto`}>
-                    <div className="w-full ">
-                        <div className="max-w-[1200px] mx-auto py-10 px-5">
-                            <div className="flex items-center justify-between ">
-                                            <h2 className="text-lg font-semibold">Search Products</h2>
-                                            <button onClick={toggleDrawer} className="text-gray-600">
-                                                X
-                                            </button>
-                                        </div>
-                            <div className="flex md:w-4/6 w-full mx-auto  pb-10 pt-5">
+                    className={` max-w-[700px] max-h-[600px] h-full border-2 border-slate-50 dark:border-slate-700  w-full  bg-white/50 dark:bg-gray-800/50 backdrop-blur-3xl shadow-xl overflow-auto transform transition ease-in-out duration-700 rounded-lg relative`}>
+
+                    <div className=" pb-10 pt-5 px-5">
+                        <div className="flex items-center justify-between ">
+                            <h2 className="text-lg font-semibold">Search your products</h2>
+                            <button onClick={toggleDrawer}>
+                                <IoCloseSharp size={25} className="text-red-500"/>
+                            </button>
+                        </div>
+                        <div className=" py-5 flex justify-center">
+                            <div className="relative w-full max-w-xs">
                                 <input
                                     type="text"
-                                    placeholder="Search"
+                                    className="bg-slate-200 dark:bg-slate-700 w-full px-4 py-2 rounded-full focus:outline-none"
                                     onChange={handleSearchChange}
-                                    className="h-[40px] w-full px-3 border-2 bg-slate-50 border-blue-500 rounded-l-lg "/>
-                                <button type="button"
-                                        className="h-[40px] w-[100px] px-3 col-span-3 border-2 border-blue-500 rounded-r-lg bg-blue-500 text-white">Search
-                                </button>
+                                    value={search}
+                                    placeholder="Search..."
+                                />
+                                <FaSearch className="absolute top-3 right-3 text-gray-400"/>
                             </div>
-
-                            <ul className=" border-t border-gray-50-50">
-
-                                {
-                                    isLoading ? <Loading/> : products?.length ? products?.map(product => {
-                                        return (
-                                            <li  key={product?.id} className="border-b border-gray-200 py-2">
-                                                <Link
-                                                    href={`/details/${product.id}`}
-
-                                                    onClick={toggleDrawer}
-                                                    className="flex items-center gap-3"
-                                                >
-                                                 <Image
-                                                     src={product?.photos?.[0]}
-                                                     height={100}
-                                                     width={100}
-                                                     placeholder="blur"
-                                                     blurDataURL={product?.photos?.[0]}
-                                                     alt={product?.name}/>
-                                                    <div>
-                                                        <h1>{product?.name}</h1>
-                                                        <p>Price ${product?.price}</p>
-                                                    </div>
-
-                                                </Link>
-                                            </li>
-                                        )
-                                    }) : <p>No products found</p>
-                                }
-
-                            </ul>
                         </div>
+
+                        <ul className=" border-t-2 border-slate-200 dark:border-slate-700 grid grid-cols-1 gap-3 py-2">
+
+                            {
+                                isLoading ? <Loading/> : products?.length ? products?.map(product => {
+                                    return (
+                                        <li key={product?.id} className="border-b border-gray-200 dark:border-slate-700 p-2 hover:bg-slate-100/50 dark:hover:bg-slate-700/50 rounded-lg overflow-hidden">
+                                            <Link
+                                                href={`/details/${product.id}`}
+
+                                                onClick={toggleDrawer}
+                                                className="flex items-center gap-3"
+                                            >
+                                                <Image
+                                                    src={product?.photos?.[0]}
+                                                    height={100}
+                                                    width={100}
+                                                    placeholder="blur"
+                                                    blurDataURL={product?.photos?.[0]}
+                                                    alt={product?.name}
+                                                className="h-36 w-36"
+                                                />
+                                                <div>
+                                                    <h1>{product?.name}</h1>
+                                                    <p>Price ${product?.price}</p>
+                                                </div>
+
+                                            </Link>
+                                        </li>
+                                    )
+                                }) : <p>No products found</p>
+                            }
+
+
+                        </ul>
                     </div>
 
 
                 </div>
-            </div>
+             </div>
         </div>
     );
 };

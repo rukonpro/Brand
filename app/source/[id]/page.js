@@ -47,7 +47,7 @@ const Source = async ({params}) => {
                                     products?.data?.map((product, index) => {
                                         return (
                                             <li key={index}
-                                                className='bg-white md:border-2 border-blue-200 md:rounded-lg p-3 flex-1 flex flex-col justify-between'>
+                                                className='bg-white dark:bg-slate-800 dark:border-slate-700 md:border-2 border-blue-200 md:rounded-lg p-3 flex-1 flex flex-col justify-between'>
                                                 <Link href={`/details/${product?.id}`}>
 
                                                     {/************************Related products Card ***********************/}
@@ -56,7 +56,7 @@ const Source = async ({params}) => {
 
                                                 </Link>
 
-                                                <AddToCartButton id={product?.id}/>
+                                                <AddToCartButton product={product}/>
                                             </li>
                                         )
                                     })
