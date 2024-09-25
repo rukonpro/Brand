@@ -88,7 +88,7 @@ const CreateProductForm = ({ categories, brands }) => {
                }
 
                const res=await createProduct(data)
-console.log(res)
+
             } else {
 
             }
