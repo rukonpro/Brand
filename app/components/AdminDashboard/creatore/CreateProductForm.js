@@ -3,6 +3,8 @@ import React, { useState } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import BackButton from "@/app/components/BackButtons/BackButton";
+import {uploadImages} from "@/app/utils/imageUploader/imageUploader";
+import {createProduct} from "@/app/utils/product/fetch_products_api";
 
 const CreateProductForm = ({ categories, brands }) => {
     const [colors, setColors] = useState([]);
@@ -48,16 +50,53 @@ const CreateProductForm = ({ categories, brands }) => {
             taxPercentage: Yup.number().min(0).nullable(), // Validate tax
             deliveryFee: Yup.number().min(0).nullable(), // Validate delivery fee
         }),
-        onSubmit: (values) => {
-            const formData = { ...values, colors, sizes, photos, tags };
-            handleSubmit(formData); // Submit the form data
+        onSubmit:async (values) => {
+
+            //
+            const data =await { ...values, colors, sizes, photos, tags };
+
+            const res = await uploadImages(photos);
+            const uploadedPhotos= res?.photos
+
+
+            if (res.photos) {
+               const data={
+                   name: values?.name,
+                   description: values?.name,
+                   photos: uploadedPhotos,
+                   price: values?.price,
+                   material: values?.material,
+                   quantity: values?.quantity,
+                   colors: colors,
+                   sizes: sizes,
+                   rating: values?.rating,
+                   tags: tags,
+                   availability: values?.availability,
+                   status: values?.status,
+                   brandId: values?.brandId,
+                   categoryId: values?.categoryId,
+               }
+
+               if(!values?.length||!values?.width||!values?.height){
+                   data.dimension=undefined
+               }else {
+                   data.description={
+                       length: values?.length,
+                       width: values?.width,
+                       height: values?.height,
+                   }
+               }
+
+               const res=await createProduct(data)
+console.log(res)
+            } else {
+
+            }
         },
     });
 
 
-    const handleSubmit = (values) => {
-        console.log(values)
-    }
+
 
     // Add and remove functions for colors
     const addColorField = () => setColors([...colors, '']);

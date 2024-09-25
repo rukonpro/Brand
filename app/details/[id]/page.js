@@ -82,7 +82,7 @@ const Details = async ({ params }) => {
                                     }
 
                                     <div className="border-b-2 border-b-gray-700/50 pb-3">
-                                        {product?.data?.colors?.length &&
+                                        {product?.data?.colors?.length?
                                             <div className="grid grid-cols-12 pt-3 ">
                                             <p className="col-span-4">color:</p>
                                             <p className="col-span-8">{
@@ -94,9 +94,9 @@ const Details = async ({ params }) => {
                                                     )
                                                 })
                                             }</p>
-                                        </div>}
+                                        </div>:null}
 
-                                        {product?.data?.sizes?.length &&
+                                        {product?.data?.sizes?.length?
                                             <div className="grid grid-cols-12 pt-3 ">
                                             <p className="col-span-4">Sizes:</p>
                                             <p className="col-span-8">{
@@ -108,7 +108,7 @@ const Details = async ({ params }) => {
                                                     )
                                                 })
                                             }</p>
-                                        </div>}
+                                        </div>:null}
 
 
                                         {product?.data?.dimension &&
@@ -186,9 +186,14 @@ const Details = async ({ params }) => {
                 </Suspense>
 
                 {/************************Related products ***********************/}
-                 <Suspense fallback={<Loading/>}>
-                    <RelatedProducts categoryId={product?.data?.categoryId} />
-                </Suspense>
+
+                {
+                    product?.data?.categoryId&&
+                    <Suspense fallback={<Loading/>}>
+                        <RelatedProducts categoryId={product?.data?.categoryId} />
+                    </Suspense>
+                }
+
 
             </div>
         </div>

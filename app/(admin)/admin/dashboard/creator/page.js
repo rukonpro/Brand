@@ -12,7 +12,7 @@ const Creator = () => {
                 <h1 className="text-lg font-bold pb-5">Creator</h1>
 
 
-            <ul className="grid grid-cols-4 gap-4">
+            <ul className="grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-4">
 
                 <li >
                     <CreatorCard Icon={AiFillProduct} title="Create a product" path="/admin/dashboard/creator/createProduct"/>
