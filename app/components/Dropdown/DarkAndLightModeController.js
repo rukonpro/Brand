@@ -105,7 +105,7 @@ const DarkAndLightModeController = () => {
 
             {/* Dropdown Menu */}
             {dropdownOpen && (
-                <div className="absolute mt-2 bg-white dark:bg-slate-700 rounded shadow-lg w-48 right-0">
+                <div className="absolute mt-2 bg-white dark:bg-slate-700 rounded shadow-lg w-48 right-0 z-50">
                     <button
                         onClick={() => {
                             setTheme('dark');
