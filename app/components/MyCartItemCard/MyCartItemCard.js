@@ -4,10 +4,13 @@ import Link from "next/link";
 import SaveIcon from "@/public/images/save-icon.svg";
 import AddToCartButton from "@/app/components/AddToCartButton/AddToCartButton";
 import RemoveAddToCartButton from "@/app/components/AddToCartButton/RemoveAddToCartButton";
-
+import { FaSave } from "react-icons/fa";
 const MyCartItemCard = ({product}) => {
     return (
-        <div className="grid grid-cols-12  md:gap-4 p-3 border-b bg-white dark:bg-slate-700 dark:border-slate-700">
+        <div className="grid grid-cols-12  md:gap-4 p-3 border-b bg-white dark:bg-slate-700 dark:border-slate-700 relative">
+           <div className="absolute top-0 right-0 ">
+               <RemoveAddToCartButton productId={product?.id}/>
+           </div>
             <div className="col-span-12 md:col-span-2">
                 <Image
                     src={product?.photos?.[0]}
@@ -17,18 +20,28 @@ const MyCartItemCard = ({product}) => {
                     className="w-full h-full object-contain"
                 />
             </div>
-            <div className="col-span-12 md:col-span-8">
-                <h1 className="text-lg font-bold">{product?.name}</h1>
-                <p className="text-sm text-gray-600 py-1 dark:text-slate-300">Size: medium, Color: blue,
-                    Material: Plastic</p>
-                <p className="text-sm text-gray-600 dark:text-slate-300">Seller: Artel Market</p>
+            <div className="col-span-12 md:col-span-8  pt-5">
+                <h1 className="text-lg font-bold truncate hover:text-clip">{product?.name}</h1>
+                <p className="text-sm text-gray-600 py-1 dark:text-slate-300">
+                    {product?.sizes?.length > 0 &&<span className="font-bold">Sizes: </span>}
+                    {
+                        product?.sizes?.length > 0 && product?.sizes?.map((size) => (<span>{size}, </span>))
+                    }
+
+                    { product?.sizes?.length > 0 && <span className="font-bold">Colors: </span>}
+                    {
+                        product?.sizes?.length > 0 && product?.colors?.map((color) => (<span>{color}, </span>))
+                    }
+                    {product?.material && <span className="font-bold"> Material: {product?.material}</span>}
+                </p>
+                <p className="text-sm text-gray-600 dark:text-slate-300 ">Description: {product?.description?.slice(0,100)}</p>
 
                 <div className="flex gap-4 pt-2 justify-between md:justify-start ">
-                    <RemoveAddToCartButton productId={product?.id}/>
+
                     <button
-                        className="border-2 rounded text-blue-500 font-bold text-sm py-0.5 px-2"
+                        className="border-2 dark:border-slate-600 rounded text-blue-500 font-bold text-sm py-0.5 px-2"
                     >
-                        <Image src={SaveIcon} height={20} alt="remove icon"/>
+                        <FaSave size={25}/>
                     </button>
                 </div>
             </div>

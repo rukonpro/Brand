@@ -39,7 +39,7 @@ const Search = () => {
     }, [isOpen]);
     return (
         <div>
-            <div className="flex">
+            <div className="flex justify-end w-auto">
                 {/*<input*/}
                 {/*    type="text"*/}
                 {/*    onClick={toggleDrawer}*/}

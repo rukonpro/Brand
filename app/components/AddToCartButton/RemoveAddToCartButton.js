@@ -2,9 +2,7 @@
 import React, {useContext} from 'react';
 import {AppContext} from "@/app/context/BrandContext";
 import Cookies from "js-cookie";
-import Image from "next/image";
-import RemoveIcon from "@/public/images/delete-trash-svgrepo-com.svg";
-
+import { AiOutlineClose } from "react-icons/ai";
 const RemoveAddToCartButton = ({productId}) => {
 const {cart,setCart,products,setProducts}=useContext(AppContext)
 
@@ -21,10 +19,10 @@ const {cart,setCart,products,setProducts}=useContext(AppContext)
         <button
             onClick={()=>removeFromCart(productId)}
             type="button"
-                className="border-2 rounded text-red-500 font-bold text-sm py-0.5 px-2"
+                className=" rounded text-red-500 font-bold text-sm "
         >
 
-            <Image src={RemoveIcon} height={20} alt="remove icon"/>
+            <AiOutlineClose size={25}/>
         </button>
     );
 };

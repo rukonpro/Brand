@@ -86,7 +86,7 @@ const BannerSlider = ({ banners }) => {
                         priority={index === currentSlide} // Give priority to current image
                     />
                     <div className="absolute top-10 left-5 text-slate-700 font-bold w-60">
-                        <h1 className="text-xl p-0 backdrop-blur">
+                        <h1 className="text-xl p-0 backdrop-blur text-stone-100">
                             <span>{banner?.title}</span>
                         </h1>
 
