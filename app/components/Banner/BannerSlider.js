@@ -86,11 +86,12 @@ const BannerSlider = ({ banners }) => {
                         priority={index === currentSlide} // Give priority to current image
                     />
                     <div className="absolute top-10 left-5 text-slate-700 font-bold w-60">
-                        <h1 className="text-xl p-0 backdrop-blur text-stone-100">
-                            <span>{banner?.title}</span>
+                        <h1 className="text-xl p-0 backdrop-blur text-stone-100 inline px-2 rounded-full">
+                           {banner?.title}
                         </h1>
+                        <br/>
 
-                            <Link href={link} prefetch>
+                            <Link href={link} prefetch className="px-2">
                                 <button type="button" className="bg-white rounded-xl px-4 py-2 mt-5">
                                     Learn more
                                 </button>
