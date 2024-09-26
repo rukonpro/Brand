@@ -3,16 +3,23 @@ import React, { useState } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import BackButton from "@/app/components/BackButtons/BackButton";
-import {uploadImages} from "@/app/utils/imageUploader/imageUploader";
 import {createProduct} from "@/app/utils/product/fetch_products_api";
+import baseURL from "@/app/utils/baseURL";
+import {CldUploadWidget} from "next-cloudinary";
+import { RiImageAddFill } from "react-icons/ri";
+
+import Image from "next/image";
+import toast from "react-hot-toast";
 
 const CreateProductForm = ({ categories, brands }) => {
     const [colors, setColors] = useState([]);
     const [sizes, setSizes] = useState([]);
-    const [photos, setPhotos] = useState([]);
+    const [resources, setResources] = useState([]);
     const [tags, setTags] = useState([]);
     const [availability, setAvailability] = useState('IN_STOCK'); // Default availability
     const [status, setStatus] = useState('ACTIVE'); // Default status
+    const [isLoading,setIsLoading]=useState(false)
+    const photos=resources?.map(resource=>resource?.secure_url);
 
     const formik = useFormik({
         initialValues: {
@@ -50,20 +57,15 @@ const CreateProductForm = ({ categories, brands }) => {
             taxPercentage: Yup.number().min(0).nullable(), // Validate tax
             deliveryFee: Yup.number().min(0).nullable(), // Validate delivery fee
         }),
-        onSubmit:async (values) => {
-
-            //
+        onSubmit:async (values, { resetForm }) => {
+            setIsLoading(true)
             const data =await { ...values, colors, sizes, photos, tags };
 
-            const res = await uploadImages(photos);
-            const uploadedPhotos= res?.photos
-
-
-            if (res.photos) {
+            if (photos.length>0) {
                const data={
                    name: values?.name,
                    description: values?.name,
-                   photos: uploadedPhotos,
+                   photos: photos,
                    price: values?.price,
                    material: values?.material,
                    quantity: values?.quantity,
@@ -87,10 +89,39 @@ const CreateProductForm = ({ categories, brands }) => {
                    }
                }
 
-               const res=await createProduct(data)
+                try {
+
+                    const res = await createProduct(data);
+
+                    if (res?.status === 201) {
+                        // Product created successfully
+                        resetForm(); // Reset form fields
+                        setColors([]); // Reset colors
+                        setSizes([]); // Reset sizes
+                        setTags([]); // Reset tags
+                        setResources([]); // Reset photos/resources
+                        setAvailability('IN_STOCK'); // Reset availability
+                        setStatus('ACTIVE'); // Reset status
+
+                        toast.success("A product post is successfully!",{
+                            id:"addProduct"
+                        });
+                    }
+                } catch (error) {
+                    setIsLoading(false);
+                  toast.error("Server error ,Please try again later",{
+                      id:"addProduct"
+                  });
+                }finally {
+                    setIsLoading(false);
+                }
 
             } else {
 
+                setIsLoading(false);
+                toast.error("Select minimum a photo then please try again later",{
+                    id:"addProduct"
+                });
             }
         },
     });
@@ -132,12 +163,12 @@ const CreateProductForm = ({ categories, brands }) => {
     };
 
     // Photo upload handler
-    const handlePhotoUpload = (e) => setPhotos([...photos, ...e.target.files]);
+
 
     return (
         <div className="p-4 sm:p-6 lg:p-8">
 
-            <div className="max-w-4xl mx-auto p-6 bg-white shadow-md rounded-md">
+            <div className="max-w-4xl mx-auto p-6 bg-white dark:bg-slate-800 dark:text-slate-50 shadow-md rounded-md">
                 <div className="flex justify-between items-center mb-4">
                     <h1 className="text-xl sm:text-2xl font-semibold">Create a Product</h1>
                     <BackButton title="Back"/>
@@ -146,53 +177,55 @@ const CreateProductForm = ({ categories, brands }) => {
                     <div className="grid grid-cols-2 gap-6">
                         {/* Product Name */}
                         <div className="mb-4 md:col-span-1 col-span-2">
-                            <label className="block text-gray-700">Product Name</label>
+                            <label className="block text-gray-700 dark:text-slate-300">Product Name</label>
                             <input
                                 type="text"
                                 name="name"
                                 value={formik.values.name}
                                 onChange={formik.handleChange}
                                 placeholder="Name"
-                                className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-slate-700 dark:border-slate-600 dark:text-slate-300"
                             />
                             {formik.errors.name && <p className="text-red-500">{formik.errors.name}</p>}
                         </div>
 
                         {/* Price */}
                         <div className="mb-4 md:col-span-1 col-span-2">
-                            <label className="block text-gray-700">Price</label>
+                            <label className="block text-gray-700 dark:text-slate-300">Price</label>
                             <input
                                 type="number"
                                 name="price"
                                 value={formik.values.price}
+                                placeholder="Price"
                                 onChange={formik.handleChange}
-                                className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-slate-700 dark:border-slate-600 dark:text-slate-300"
                             />
                             {formik.errors.price && <p className="text-red-500">{formik.errors.price}</p>}
                         </div>
 
                         {/* Quantity */}
                         <div className="mb-4 md:col-span-1 col-span-2">
-                            <label className="block text-gray-700">Quantity</label>
+                            <label className="block text-gray-700 dark:text-slate-300">Quantity</label>
                             <input
                                 type="number"
                                 name="quantity"
                                 value={formik.values.quantity}
+                                placeholder="Qunatity"
                                 onChange={formik.handleChange}
-                                className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-slate-700 dark:border-slate-600 dark:text-slate-300"
                             />
                             {formik.errors.quantity && <p className="text-red-500">{formik.errors.quantity}</p>}
                         </div>
 
                         {/* Category */}
                         <div className="mb-4 md:col-span-1 col-span-2">
-                            <label className="block text-gray-700">Category</label>
+                            <label className="block text-gray-700 dark:text-slate-300">Category</label>
                             <div className="relative">
                                 <select
                                     name="categoryId"
                                     value={formik.values.categoryId}
                                     onChange={formik.handleChange}
-                                    className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                    className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-slate-700 dark:border-slate-600 dark:text-slate-300"
                                 >
                                     <option value="">Select a Category</option>
                                     {categories?.map((category) => (
@@ -207,12 +240,12 @@ const CreateProductForm = ({ categories, brands }) => {
 
                         {/* Brand */}
                         <div className="mb-4 md:col-span-1 col-span-2">
-                            <label className="block text-gray-700">Brand</label>
+                            <label className="block text-gray-700 dark:text-slate-300">Brand</label>
                             <select
                                 name="brandId"
                                 value={formik.values.brandId}
                                 onChange={formik.handleChange}
-                                className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-slate-700 dark:border-slate-600 dark:text-slate-300"
                             >
                                 <option value="">Select a Brand</option>
                                 {brands?.map((brand) => (
@@ -226,20 +259,20 @@ const CreateProductForm = ({ categories, brands }) => {
 
                         {/* Colors */}
                         <div className="mb-4 col-span-2">
-                            <label className="block text-gray-700">Colors</label>
+                            <label className="block text-gray-700 dark:text-slate-300">Colors</label>
                             {colors.map((color, index) => (
                                 <div key={index} className="flex items-center mb-2">
                                     <input
                                         type="text"
                                         value={color}
                                         onChange={(e) => handleColorChange(index, e.target.value)}
-                                        className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                        className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-slate-700 dark:border-slate-600 dark:text-slate-300"
                                         placeholder="Enter color"
                                     />
                                     <button
                                         type="button"
                                         onClick={() => removeColorField(index)}
-                                        className="ml-2 text-red-600"
+                                        className="ml-2 text-red-600 dark:bg-slate-700 dark:border-slate-600 dark:text-slate-300"
                                     >
                                         Remove
                                     </button>
@@ -248,7 +281,7 @@ const CreateProductForm = ({ categories, brands }) => {
                             <button
                                 type="button"
                                 onClick={addColorField}
-                                className="text-blue-600 mt-2"
+                                className="text-blue-600 mt-2 dark:bg-slate-700 dark:border-slate-600 dark:text-slate-300"
                             >
                                 + Add Color
                             </button>
@@ -256,20 +289,20 @@ const CreateProductForm = ({ categories, brands }) => {
 
                         {/* Sizes */}
                         <div className="mb-4 col-span-2">
-                            <label className="block text-gray-700">Sizes</label>
+                            <label className="block text-gray-700 dark:text-slate-300">Sizes</label>
                             {sizes.map((size, index) => (
                                 <div key={index} className="flex items-center mb-2">
                                     <input
                                         type="text"
                                         value={size}
                                         onChange={(e) => handleSizeChange(index, e.target.value)}
-                                        className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                        className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-slate-700 dark:border-slate-600 dark:text-slate-300"
                                         placeholder="Enter size"
                                     />
                                     <button
                                         type="button"
                                         onClick={() => removeSizeField(index)}
-                                        className="ml-2 text-red-600"
+                                        className="ml-2 text-red-600 dark:bg-slate-700 dark:border-slate-600 dark:text-slate-300"
                                     >
                                         Remove
                                     </button>
@@ -278,7 +311,7 @@ const CreateProductForm = ({ categories, brands }) => {
                             <button
                                 type="button"
                                 onClick={addSizeField}
-                                className="text-blue-600 mt-2"
+                                className="text-blue-600 mt-2 dark:bg-slate-700 dark:border-slate-600 dark:text-slate-300"
                             >
                                 + Add Size
                             </button>
@@ -286,20 +319,20 @@ const CreateProductForm = ({ categories, brands }) => {
 
                         {/* Tags */}
                         <div className="mb-4 col-span-2">
-                            <label className="block text-gray-700">Tags</label>
+                            <label className="block text-gray-700 dark:text-slate-300">Tags</label>
                             {tags.map((tag, index) => (
                                 <div key={index} className="flex items-center mb-2">
                                     <input
                                         type="text"
                                         value={tag}
                                         onChange={(e) => handleTagChange(index, e.target.value)}
-                                        className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                        className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-slate-700 dark:border-slate-600 dark:text-slate-300"
                                         placeholder="Enter tag"
                                     />
                                     <button
                                         type="button"
                                         onClick={() => removeTagField(index)}
-                                        className="ml-2 text-red-600"
+                                        className="ml-2 text-red-600 dark:bg-slate-700 dark:border-slate-600 dark:text-slate-300"
                                     >
                                         Remove
                                     </button>
@@ -308,7 +341,7 @@ const CreateProductForm = ({ categories, brands }) => {
                             <button
                                 type="button"
                                 onClick={addTagField}
-                                className="text-blue-600 mt-2"
+                                className="text-blue-600 mt-2 dark:bg-slate-700 dark:border-slate-600 dark:text-slate-300"
                             >
                                 + Add Tag
                             </button>
@@ -316,71 +349,74 @@ const CreateProductForm = ({ categories, brands }) => {
 
                         {/* Dimensions */}
                         <div className="mb-4 md:col-span-1 col-span-2">
-                            <label className="block text-gray-700">Length</label>
+                            <label className="block text-gray-700 dark:text-slate-300">Length</label>
                             <input
                                 type="number"
                                 name="length"
                                 value={formik.values.length}
                                 onChange={formik.handleChange}
-                                className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                placeholder="Length"
+                                className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-slate-700 dark:border-slate-600 dark:text-slate-300"
                             />
                         </div>
                         <div className="mb-4 md:col-span-1 col-span-2">
-                            <label className="block text-gray-700">Width</label>
+                            <label className="block text-gray-700 dark:text-slate-300">Width</label>
                             <input
                                 type="number"
                                 name="width"
                                 value={formik.values.width}
                                 onChange={formik.handleChange}
-                                className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                placeholder="Width"
+                                className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-slate-700 dark:border-slate-600 dark:text-slate-300"
                             />
                         </div>
                         <div className="mb-4 md:col-span-1 col-span-2">
-                            <label className="block text-gray-700">Height</label>
+                            <label className="block text-gray-700 dark:text-slate-300">Height</label>
                             <input
                                 type="number"
                                 name="height"
                                 value={formik.values.height}
                                 onChange={formik.handleChange}
-                                className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                placeholder="height"
+                                className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-slate-700 dark:border-slate-600 dark:text-slate-300"
                             />
                         </div>
 
                         {/* Material */}
                         <div className="mb-4 col-span-2">
-                            <label className="block text-gray-700">Material</label>
+                            <label className="block text-gray-700 dark:text-slate-300">Material</label>
                             <input
                                 type="text"
                                 name="material"
                                 value={formik.values.material}
                                 onChange={formik.handleChange}
-                                className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-slate-700 dark:border-slate-600 dark:text-slate-300"
                                 placeholder="Enter material"
                             />
                         </div>
 
                         {/* Warranty */}
                         <div className="mb-4 col-span-2">
-                            <label className="block text-gray-700">Warranty</label>
+                            <label className="block text-gray-700 dark:text-slate-300">Warranty</label>
                             <input
                                 type="text"
                                 name="warranty"
                                 value={formik.values.warranty}
                                 onChange={formik.handleChange}
-                                className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-slate-700 dark:border-slate-600 dark:text-slate-300"
                                 placeholder="Enter warranty"
                             />
                         </div>
 
                         {/* Protection */}
                         <div className="mb-4 col-span-2">
-                            <label className="block text-gray-700">Protection</label>
+                            <label className="block text-gray-700 dark:text-slate-300">Protection</label>
                             <input
                                 type="text"
                                 name="protection"
                                 value={formik.values.protection}
                                 onChange={formik.handleChange}
-                                className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-slate-700 dark:border-slate-600 dark:text-slate-300"
                                 placeholder="Enter protection"
                             />
                         </div>
@@ -388,36 +424,38 @@ const CreateProductForm = ({ categories, brands }) => {
 
                         {/* Tax Percentage */}
                         <div className="mb-4 col-span-2">
-                            <label className="block text-gray-700">Tax Percentage</label>
+                            <label className="block text-gray-700 dark:text-slate-300">Tax Percentage</label>
                             <input
                                 type="number"
                                 name="taxPercentage"
                                 value={formik.values.taxPercentage}
                                 onChange={formik.handleChange}
-                                className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                placeholder="Tax Percentage"
+                                className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-slate-700 dark:border-slate-600 dark:text-slate-300"
                             />
                         </div>
 
                         {/* Delivery Fee */}
                         <div className="mb-4 col-span-2">
-                            <label className="block text-gray-700">Delivery Fee</label>
+                            <label className="block text-gray-700 dark:text-slate-300">Delivery Fee</label>
                             <input
                                 type="number"
                                 name="deliveryFee"
                                 value={formik.values.deliveryFee}
                                 onChange={formik.handleChange}
-                                className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                placeholder="Delivery Fee"
+                                className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-slate-700 dark:border-slate-600 dark:text-slate-300"
                             />
                         </div>
 
                         {/* Availability */}
                         <div className="mb-4 col-span-2">
-                            <label className="block text-gray-700">Availability</label>
+                            <label className="block text-gray-700 dark:text-slate-300">Availability</label>
                             <select
                                 name="availability"
                                 value={availability}
                                 onChange={(e) => setAvailability(e.target.value)}
-                                className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                className="w-full px-4 py-2 border bg-white rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-slate-700 dark:border-slate-600 dark:text-slate-300"
                             >
                                 <option value="IN_STOCK">In Stock</option>
                                 <option value="OUT_OF_STOCK">Out of Stock</option>
@@ -426,12 +464,12 @@ const CreateProductForm = ({ categories, brands }) => {
 
                         {/* Status */}
                         <div className="mb-4 col-span-2">
-                            <label className="block text-gray-700">Status</label>
+                            <label className="block text-gray-700 dark:text-slate-300">Status</label>
                             <select
                                 name="status"
                                 value={status}
                                 onChange={(e) => setStatus(e.target.value)}
-                                className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                className="w-full px-4 py-2 border bg-white rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-slate-700 dark:border-slate-600 dark:text-slate-300"
                             >
                                 <option value="ACTIVE">Active</option>
                                 <option value="INACTIVE">Inactive</option>
@@ -441,22 +479,58 @@ const CreateProductForm = ({ categories, brands }) => {
 
                         {/* Photos */}
                         <div className="mb-4 col-span-2">
-                            <label className="block text-gray-700">Photos</label>
-                            <input
-                                type="file"
-                                multiple
-                                onChange={handlePhotoUpload}
-                                className="border rounded-md py-2 px-4"
-                            />
+                            <label className="block text-gray-700 pb-3 dark:text-slate-300">Photos</label>
+                            <div className="flex gap-3 flex-wrap">
+                                <CldUploadWidget
+                                    signatureEndpoint={`${baseURL}/api/uploader/uploader`}
+                                    onSuccess={(result, { widget }) => {
+                                        // Append new uploaded image info to the state array
+                                        setResources((prevResources) => [...prevResources, result?.info]);
+                                    }}
+                                    onQueuesEnd={(result, { widget }) => {
+                                        widget.close();
+                                    }}
+                                >
+                                    {({ open }) => {
+                                        function handleOnClick() {
+                                            open(); // Open the upload widget
+                                        }
+                                        return (
+                                            <button onClick={handleOnClick} className="px-5 flex items-center justify-center gap-2 rounded-full border-2 dark:bg-slate-700 dark:border-slate-600 dark:text-slate-300">
+                                                <RiImageAddFill />
+                                                Upload
+                                            </button>
+                                        );
+                                    }}
+                                </CldUploadWidget>
+                                <ul className="flex gap-3 flex-wrap">
+                                    {photos?.length>0&&
+                                        photos?.map((photo, index) => {
+                                            return (
+                                                <li key={index} className="image-preview border-2 rounded dark:border-slate-600 dark:bg-slate-700">
+                                                    <Image
+                                                        height={50}
+                                                        width={50}
+
+                                                        src={photo}
+                                                        alt={`Uploaded ${index + 1}`}
+                                                        className=" object-fill"
+                                                    />
+                                                </li>
+                                            )
+                                        })
+                                    }
+                                </ul>
+                            </div>
                         </div>
                         {/* Description */}
                         <div className="mb-4 col-span-2">
-                            <label className="block text-gray-700">Description</label>
+                            <label className="block text-gray-700 dark:text-slate-300">Description</label>
                             <textarea
                                 name="description"
                                 value={formik.values.description}
                                 onChange={formik.handleChange}
-                                className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-slate-700 dark:border-slate-600 dark:text-slate-300"
                                 placeholder="Enter product description"
                                 rows="4"
                             ></textarea>
@@ -465,9 +539,10 @@ const CreateProductForm = ({ categories, brands }) => {
                     </div>
                     <button
                         type="submit"
+                        disabled={isLoading}
                         className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none"
                     >
-                        Create Product
+                        {isLoading ? "Submitting..." : "Submit"}
                     </button>
                 </form>
             </div>

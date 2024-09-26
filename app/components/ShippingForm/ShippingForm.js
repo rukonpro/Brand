@@ -5,7 +5,6 @@ import { parsePhoneNumberFromString } from "libphonenumber-js";
 import create_sipping_address from "@/app/utils/shippingAdress/create_sipping_address_api";
 import toast from "react-hot-toast";
 import {useSession} from "next-auth/react";
-// Custom validation function for phone numbers
 const validatePhoneNumber = (value) => {
     const phoneNumber = parsePhoneNumberFromString(value, "BD"); // Default to Bangladesh or change to your preference
     if (!phoneNumber || !phoneNumber.isValid()) {

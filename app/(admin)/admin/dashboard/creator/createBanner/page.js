@@ -1,32 +1,18 @@
-// pages/index.js or wherever your form is located
 "use client";
 
 import React, { useState } from 'react';
 import BackButton from "@/app/components/BackButtons/BackButton";
-import { uploadImages } from "@/app/utils/imageUploader/imageUploader";
+import { CldUploadWidget } from 'next-cloudinary';
+import baseURL from "@/app/utils/baseURL";
 
 const CreateBanner = () => {
-    const [files, setFiles] = useState([]); // Initialize files as an array
-    const [message, setMessage] = useState('');
-    const [uploadedUrls, setUploadedUrls] = useState([]); // Store the URLs of uploaded images
+    // Change state to an array to store multiple images
+    const [resources, setResources] = useState([]);
 
-    const handleFileChange = (e) => {
-        setFiles(e.target.files); // Store multiple selected files
-    };
+const photos=resources?.map(resource=>resource.secure_url);
 
-    const handleUpload = async (e) => {
-        e.preventDefault(); // Prevent default form submission
 
-        const res = await uploadImages(files); // Pass array of files for upload
-
-        if (res.photos) {
-            setUploadedUrls(res.photos); // Save uploaded photo URLs
-            setMessage('Files uploaded successfully');
-        } else {
-            setMessage(res.message || 'Error during upload');
-        }
-    };
-
+console.log(photos);
     return (
         <div>
             <div className="flex justify-between items-center">
@@ -34,23 +20,45 @@ const CreateBanner = () => {
                 <BackButton title="Back" />
             </div>
 
-            <form onSubmit={handleUpload}>
-                <input type="file" onChange={handleFileChange} multiple required /> {/* Allow multiple files */}
-                <button type="submit">Upload</button>
-                {message && <p>{message}</p>}
-            </form>
+            {/* Cloudinary Upload Widget */}
+            <CldUploadWidget
+                signatureEndpoint={`${baseURL}/api/uploader/uploader`}
+                onSuccess={(result, { widget }) => {
+                    // Append new uploaded image info to the state array
+                    setResources((prevResources) => [...prevResources, result?.info]);
+                }}
+                onQueuesEnd={(result, { widget }) => {
+                    widget.close();
+                }}
+            >
+                {({ open }) => {
+                    function handleOnClick() {
+                        open(); // Open the upload widget
+                    }
+                    return (
+                        <button onClick={handleOnClick}>
+                            Upload Image(s)
+                        </button>
+                    );
+                }}
+            </CldUploadWidget>
 
             {/* Display uploaded images */}
-            <div className="mt-4">
-                {uploadedUrls.length > 0 && (
-                    <div>
-                        <h2>Uploaded Images:</h2>
-                        <div className="grid grid-cols-3 gap-4">
-                            {uploadedUrls.map((url, index) => (
-                                <img key={index} src={url} alt={`Uploaded file ${index + 1}`} className="w-full" />
-                            ))}
-                        </div>
+            <div className="uploaded-images mt-4">
+                {resources.length > 0 ? (
+                    <div className="grid grid-cols-3 gap-4">
+                        {resources.map((resource, index) => (
+                            <div key={index} className="image-preview">
+                                <img
+                                    src={resource.secure_url}
+                                    alt={`Uploaded ${index + 1}`}
+                                    className="w-full h-auto"
+                                />
+                            </div>
+                        ))}
                     </div>
+                ) : (
+                    <p>No images uploaded yet.</p>
                 )}
             </div>
         </div>

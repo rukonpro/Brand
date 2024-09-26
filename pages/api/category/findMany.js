@@ -6,11 +6,13 @@ const prisma = new PrismaClient();
 export default async function handler(req, res) {
     if (req.method === 'GET') {
         try {
-            const { name, parentId } = req.query;
+            const { name, parentId,children } = req.query;
 
             const filters = {};
-            if(!name){
-                filters.parentId = parentId||null;
+            if(!children){
+                if(!name){
+                    filters.parentId = parentId||null;
+                }
             }
 
             if (name) {
@@ -48,7 +50,7 @@ export default async function handler(req, res) {
 
             const categories = await prisma.category.findMany({
                 where: filters,
-                include:name?{}:include,
+                include:name||children?{}:include,
             });
 
             res.status(200).json(categories);
