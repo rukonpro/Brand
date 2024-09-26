@@ -32,8 +32,8 @@ const SavedForLaterCard = ({product,getHandler}) => {
 
 
                 {product?.colors?.length > 0 && <h2 className="text-gray-600 text-sm pt-2 dark:text-slate-300">
-                    {product?.colors?.map(color => (
-                        <span>{color}</span>
+                    {product?.colors?.map((color,index) => (
+                        <span key={index}>{color}</span>
                     ))}
                 </h2>}
             </Link>

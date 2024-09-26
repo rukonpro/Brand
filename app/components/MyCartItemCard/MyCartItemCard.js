@@ -25,12 +25,12 @@ const MyCartItemCard = ({product}) => {
                 <p className="text-sm text-gray-600 py-1 dark:text-slate-300">
                     {product?.sizes?.length > 0 &&<span className="font-bold">Sizes: </span>}
                     {
-                        product?.sizes?.length > 0 && product?.sizes?.map((size) => (<span>{size}, </span>))
+                        product?.sizes?.length > 0 && product?.sizes?.map((size,index) => (<span key={index}>{size}, </span>))
                     }
 
                     { product?.sizes?.length > 0 && <span className="font-bold">Colors: </span>}
                     {
-                        product?.sizes?.length > 0 && product?.colors?.map((color) => (<span>{color}, </span>))
+                        product?.sizes?.length > 0 && product?.colors?.map((color,index) => (<span key={index}>{color}, </span>))
                     }
                     {product?.material && <span className="font-bold"> Material: {product?.material}</span>}
                 </p>
