@@ -2,7 +2,9 @@
 import React, { useState } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import BackButton from "@/app/components/BackButtons/BackButton";
+import { RiDeleteBack2Fill } from "react-icons/ri";
+import { BsPlusCircleFill } from "react-icons/bs";
+
 import {createProduct} from "@/app/utils/product/fetch_products_api";
 import baseURL from "@/app/utils/baseURL";
 import {CldUploadWidget} from "next-cloudinary";
@@ -168,11 +170,8 @@ const CreateProductForm = ({ categories, brands }) => {
     return (
         <div className="p-4 sm:p-6 lg:p-8">
 
-            <div className="max-w-4xl mx-auto p-6 bg-white dark:bg-slate-800 dark:text-slate-50 shadow-md rounded-md">
-                <div className="flex justify-between items-center mb-4">
-                    <h1 className="text-xl sm:text-2xl font-semibold">Create a Product</h1>
-                    <BackButton title="Back"/>
-                </div>
+            <div className="max-w-4xl mx-auto ">
+
                 <form onSubmit={formik.handleSubmit}>
                     <div className="grid grid-cols-2 gap-6">
                         {/* Product Name */}
@@ -257,96 +256,98 @@ const CreateProductForm = ({ categories, brands }) => {
                             {formik.errors.brandId && <p className="text-red-500">{formik.errors.brandId}</p>}
                         </div>
 
-                        {/* Colors */}
-                        <div className="mb-4 col-span-2">
-                            <label className="block text-gray-700 dark:text-slate-300">Colors</label>
-                            {colors.map((color, index) => (
-                                <div key={index} className="flex items-center mb-2">
-                                    <input
-                                        type="text"
-                                        value={color}
-                                        onChange={(e) => handleColorChange(index, e.target.value)}
-                                        className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-slate-700 dark:border-slate-600 dark:text-slate-300"
-                                        placeholder="Enter color"
-                                    />
-                                    <button
-                                        type="button"
-                                        onClick={() => removeColorField(index)}
-                                        className="ml-2 text-red-600 dark:bg-slate-700 dark:border-slate-600 dark:text-slate-300"
-                                    >
-                                        Remove
-                                    </button>
-                                </div>
-                            ))}
-                            <button
-                                type="button"
-                                onClick={addColorField}
-                                className="text-blue-600 mt-2 dark:bg-slate-700 dark:border-slate-600 dark:text-slate-300"
-                            >
-                                + Add Color
-                            </button>
-                        </div>
+                      <div className=" col-span-2 grid md:grid-cols-3 gap-5">
+                          {/* Colors */}
+                          <div className="mb-4 ">
+                              <label className="block text-gray-700 dark:text-slate-300">Colors</label>
+                              {colors.map((color, index) => (
+                                  <div key={index} className="flex items-center mb-2">
+                                      <input
+                                          type="text"
+                                          value={color}
+                                          onChange={(e) => handleColorChange(index, e.target.value)}
+                                          className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-slate-700 dark:border-slate-600 dark:text-slate-300"
+                                          placeholder="Enter color"
+                                      />
+                                      <button
+                                          type="button"
+                                          onClick={() => removeColorField(index)}
+                                          className="text-red-600   p-2"
+                                      >
+                                          <RiDeleteBack2Fill className="size-5" />
+                                      </button>
+                                  </div>
+                              ))}
+                              <button
+                                  type="button"
+                                  onClick={addColorField}
+                                  className=" p-2"
+                              >
+                                  <BsPlusCircleFill className="size-5 text-slate-700 dark:text-blue-500"/>
+                              </button>
+                          </div>
 
-                        {/* Sizes */}
-                        <div className="mb-4 col-span-2">
-                            <label className="block text-gray-700 dark:text-slate-300">Sizes</label>
-                            {sizes.map((size, index) => (
-                                <div key={index} className="flex items-center mb-2">
-                                    <input
-                                        type="text"
-                                        value={size}
-                                        onChange={(e) => handleSizeChange(index, e.target.value)}
-                                        className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-slate-700 dark:border-slate-600 dark:text-slate-300"
-                                        placeholder="Enter size"
-                                    />
-                                    <button
-                                        type="button"
-                                        onClick={() => removeSizeField(index)}
-                                        className="ml-2 text-red-600 dark:bg-slate-700 dark:border-slate-600 dark:text-slate-300"
-                                    >
-                                        Remove
-                                    </button>
-                                </div>
-                            ))}
-                            <button
-                                type="button"
-                                onClick={addSizeField}
-                                className="text-blue-600 mt-2 dark:bg-slate-700 dark:border-slate-600 dark:text-slate-300"
-                            >
-                                + Add Size
-                            </button>
-                        </div>
+                          {/* Sizes */}
+                          <div className="mb-4 ">
+                              <label className="block text-gray-700 dark:text-slate-300">Sizes</label>
+                              {sizes.map((size, index) => (
+                                  <div key={index} className="flex items-center mb-2">
+                                      <input
+                                          type="text"
+                                          value={size}
+                                          onChange={(e) => handleSizeChange(index, e.target.value)}
+                                          className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-slate-700 dark:border-slate-600 dark:text-slate-300"
+                                          placeholder="Enter size"
+                                      />
+                                      <button
+                                          type="button"
+                                          onClick={() => removeSizeField(index)}
+                                          className="ml-2 text-red-600   p-2"
+                                      >
+                                          <RiDeleteBack2Fill className="size-5" />
+                                      </button>
+                                  </div>
+                              ))}
+                              <button
+                                  type="button"
+                                  onClick={addSizeField}
+                                  className=" p-2"
+                              >
+                                  <BsPlusCircleFill className="size-5 text-slate-700 dark:text-blue-500"/>
+                              </button>
+                          </div>
 
-                        {/* Tags */}
-                        <div className="mb-4 col-span-2">
-                            <label className="block text-gray-700 dark:text-slate-300">Tags</label>
-                            {tags.map((tag, index) => (
-                                <div key={index} className="flex items-center mb-2">
-                                    <input
-                                        type="text"
-                                        value={tag}
-                                        onChange={(e) => handleTagChange(index, e.target.value)}
-                                        className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-slate-700 dark:border-slate-600 dark:text-slate-300"
-                                        placeholder="Enter tag"
-                                    />
-                                    <button
-                                        type="button"
-                                        onClick={() => removeTagField(index)}
-                                        className="ml-2 text-red-600 dark:bg-slate-700 dark:border-slate-600 dark:text-slate-300"
-                                    >
-                                        Remove
-                                    </button>
-                                </div>
-                            ))}
-                            <button
-                                type="button"
-                                onClick={addTagField}
-                                className="text-blue-600 mt-2 dark:bg-slate-700 dark:border-slate-600 dark:text-slate-300"
-                            >
-                                + Add Tag
-                            </button>
-                        </div>
+                          {/* Tags */}
+                          <div className="mb-4 ">
+                              <label className="block text-gray-700 dark:text-slate-300">Tags</label>
+                              {tags.map((tag, index) => (
+                                  <div key={index} className="flex items-center mb-2">
+                                      <input
+                                          type="text"
+                                          value={tag}
+                                          onChange={(e) => handleTagChange(index, e.target.value)}
+                                          className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-slate-700 dark:border-slate-600 dark:text-slate-300"
+                                          placeholder="Enter tag"
+                                      />
+                                      <button
+                                          type="button"
+                                          onClick={() => removeTagField(index)}
+                                          className="ml-2 text-red-600   p-2"
+                                      >
+                                          <RiDeleteBack2Fill className="size-5" />
+                                      </button>
+                                  </div>
+                              ))}
+                              <button
+                                  type="button"
+                                  onClick={addTagField}
+                                  className=" p-2"
+                              >
+                                  <BsPlusCircleFill className="size-5 text-slate-700 dark:text-blue-500"/>
+                              </button>
+                          </div>
 
+                      </div>
                         {/* Dimensions */}
                         <div className="mb-4 md:col-span-1 col-span-2">
                             <label className="block text-gray-700 dark:text-slate-300">Length</label>

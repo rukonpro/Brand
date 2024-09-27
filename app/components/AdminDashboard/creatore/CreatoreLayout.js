@@ -16,6 +16,7 @@ const CreatorLayout = ({categories,brands}) => {
     const [openCreateBanner,setOpenCreateBanner] = useState(false);
     const [openCreateBrand,setOpenCreateBrand] = useState(false);
     const [open,setOpen]=useState(false);
+    const[title,setTitle]=useState("");
 
     const OPEN_MODAL_TYPE={
         CREATE_PRODUCT:"CREATE_PRODUCT",
@@ -36,6 +37,7 @@ const CreatorLayout = ({categories,brands}) => {
             setOpenCreateBanner(false);
             setOpenCreateBrand(false);
             handleOpenModal()
+            setTitle("Create a product")
         }
         if(type===OPEN_MODAL_TYPE.CREATE_CATEGORY){
             setOpenCreateProduct(false);
@@ -43,6 +45,7 @@ const CreatorLayout = ({categories,brands}) => {
             setOpenCreateBanner(false);
             setOpenCreateBrand(false);
             handleOpenModal()
+            setTitle("Create a category")
 
         }
         if(type===OPEN_MODAL_TYPE.CREATE_BANNER){
@@ -51,6 +54,7 @@ const CreatorLayout = ({categories,brands}) => {
             setOpenCreateBanner(true);
             setOpenCreateBrand(false);
             handleOpenModal()
+            setTitle("Create a banner")
 
         }
         if(type===OPEN_MODAL_TYPE.CREATE_BRAND){
@@ -59,6 +63,7 @@ const CreatorLayout = ({categories,brands}) => {
             setOpenCreateBanner(false);
             setOpenCreateBrand(true);
             handleOpenModal()
+            setTitle("Create a brand")
         }
     }
 
@@ -82,6 +87,7 @@ const CreatorLayout = ({categories,brands}) => {
 
                 <li
                     onClick={()=>handleToggleChildren(OPEN_MODAL_TYPE.CREATE_CATEGORY)}
+
                 >
                     <Suspense fallback={<SkeletonCreatorCard />}>
                         <CreatorCard
@@ -120,9 +126,10 @@ const CreatorLayout = ({categories,brands}) => {
                     isOpen={open}
                     setOpen={setOpen}
                     handleCloseModal={handleCloseModal}
+                    title={title}
                 >
                     {
-                        openCreateProduct&&<CreateProductForm categories={categories} brands={brands}/>
+                        openCreateProduct&&<CreateProductForm categories={categories} brands={brands} />
 
                     }
                     {

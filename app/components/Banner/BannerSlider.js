@@ -5,7 +5,7 @@ import Link from "next/link";
 
 const BannerSlider = ({ banners }) => {
     const [currentSlide, setCurrentSlide] = useState(0);
-    const [link, setLink] = useState(banners[0]?.link);
+    const [link, setLink] = useState(banners?.[0]?.link);
     const [isDragging, setIsDragging] = useState(false);
     const [startX, setStartX] = useState(0);
     const [moveX, setMoveX] = useState(0);
@@ -13,7 +13,7 @@ const BannerSlider = ({ banners }) => {
     const slideCount = banners?.length;
 
     useEffect(() => {
-        setLink(banners[currentSlide]?.link); // Set the current banner's link
+        setLink(banners?.[currentSlide]?.link); // Set the current banner's link
     }, [currentSlide]);
 
     // Auto-slide after every 3 seconds

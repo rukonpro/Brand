@@ -51,7 +51,7 @@ const Offers = ({offers}) => {
                             {
                                 offers?.map((offer) => {
                                     return (
-                                        <li key={offer?.id} className='p-2  bg-white cursor-pointer  dark:bg-slate-800'>
+                                        <li key={offer?.id} className='p-2  bg-white cursor-pointer  dark:bg-slate-800 relative'>
                                             <Link href={`/details/${offer?.product?.id}`}>
                                                 <OfferCard offer={offer}/>
                                             </Link>

@@ -4,7 +4,6 @@ import Offers from "@/app/components/offers/Offers";
 
 const OffersLayout = async () => {
     const offers = await getOffers();
-
     return (
         <>
             <Offers offers={offers?.data?.data} />
