@@ -6,6 +6,8 @@ import { BiSolidImageAdd } from "react-icons/bi";
 import axios from 'axios';
 import Image from "next/image";
 import CategoryManuAdmin from "@/app/components/AdminDashboard/creatore/CategoryMenuAdmin";
+import {createCategory} from "@/app/utils/Category/fetch_category_api";
+import toast from "react-hot-toast";
 const CreateCategoryForm = ({categoriesMenu}) => {
     const [imageUrl, setImageUrl] = useState('');
     const [categoryId,setCategoryId]=useState("");
@@ -21,8 +23,21 @@ const CreateCategoryForm = ({categoriesMenu}) => {
             photo: Yup.string().required('Photo URL is required'),
             parentId: Yup.string().trim()
         }),
-        onSubmit: (values, { setSubmitting }) => {
-            console.log(values)
+        onSubmit: async (values, { setSubmitting,resetForm }) => {
+          const res= await createCategory(values);
+
+          if(res?.status === 201) {
+              toast.success("Category create is successfully",{
+                  id:"category"
+              });
+              resetForm();
+              setCategoryId("");
+              setImageUrl("");
+          }else {
+              toast.error("Internal error , please try again",{
+                  id:"category"
+              })
+          }
             setSubmitting(true);
             setTimeout(() => setSubmitting(false), 2000);
         }
@@ -51,7 +66,7 @@ const CreateCategoryForm = ({categoriesMenu}) => {
 
     useEffect(() => {
         formik.setFieldValue("parentId",categoryId)
-    }, [categoryId,formik]);
+    }, [categoryId]);
 
     return (
         <div className="p-4  shadow-md rounded-md  grid sm:grid-cols-2 gap-5">

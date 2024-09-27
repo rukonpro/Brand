@@ -22,3 +22,13 @@ export const getCategoryById= async (id)=> {
         }
     }
 }
+
+export const createCategory= async (data)=> {
+    try {
+        return await axios.post(`${baseURL}/api/category/create`,data);
+    } catch (error) {
+        return {
+            error
+        }
+    }
+}

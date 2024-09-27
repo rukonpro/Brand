@@ -64,7 +64,7 @@ const CategoryManuAdmin = ({categories,setCategoryId,categoryId}) => {
     return (
         <nav >
             <h1 className="text-lg px-3 py-4  z-10 mb-1 font-bold text-blue-500 dark:text-slate-200 ">Categorise</h1>
-            <ul className="menu bg-base-200 rounded-box overflow-y-auto p-1 border-2 rounded-lg dark:border-slate-700 dark:text-stone-100">
+            <ul className="menu bg-base-200 rounded-box overflow-y-auto p-1 border-2 border-slate-50 rounded-lg dark:border-slate-700 dark:text-slate-200">
                 {categories?.map((category) => (
                     <NestedDropdown key={category?.id} category={category} setCategoryId={setCategoryId} categoryId={categoryId} />
                 ))}
