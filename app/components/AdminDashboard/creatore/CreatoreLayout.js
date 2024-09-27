@@ -9,8 +9,11 @@ import AdminDashboardModal from "@/app/components/Drawer/AdminDashboardModal";
 import Loading from "@/app/loading";
 import SkeletonCreatorCard from "@/app/components/Skeletons/SkeletonCreatorCard";
 import CreateProductForm from "@/app/components/AdminDashboard/creatore/CreateProductForm";
+import CreateCategoryForm from "@/app/components/AdminDashboard/creatore/CreateCategoryForm";
+import CreateBannerForm from "@/app/components/AdminDashboard/creatore/CreateBannerForm";
+import CreateBandForm from "@/app/components/AdminDashboard/creatore/CreateBrandForm";
 
-const CreatorLayout = ({categories,brands}) => {
+const CreatorLayout = ({categories,categoriesMenu,brands}) => {
     const [openCreateProduct,setOpenCreateProduct] = useState(false);
     const [openCreateCategory,setOpenCreateCategory] = useState(false);
     const [openCreateBanner,setOpenCreateBanner] = useState(false);
@@ -133,22 +136,13 @@ const CreatorLayout = ({categories,brands}) => {
 
                     }
                     {
-                        openCreateCategory&&
-                        <div>
-                            <h1>Create a category</h1>
-                        </div>
+                        openCreateCategory&&<CreateCategoryForm categoriesMenu={categoriesMenu}/>
                     }
                     {
-                        openCreateBrand&&
-                        <div>
-                            <h1>Create a brand</h1>
-                        </div>
+                        openCreateBrand&&<CreateBandForm/>
                     }
                     {
-                        openCreateBanner&&
-                        <div>
-                            <h1>Create a banner</h1>
-                        </div>
+                        openCreateBanner&&<CreateBannerForm/>
                     }
                 </AdminDashboardModal>
             </Suspense>

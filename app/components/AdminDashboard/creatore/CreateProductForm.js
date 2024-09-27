@@ -22,6 +22,7 @@ const CreateProductForm = ({ categories, brands }) => {
     const [status, setStatus] = useState('ACTIVE'); // Default status
     const [isLoading,setIsLoading]=useState(false)
     const photos=resources?.map(resource=>resource?.secure_url);
+    const [photosIsRequired, setPhotosIsRequired]=useState(false);
 
     const formik = useFormik({
         initialValues: {
@@ -104,6 +105,7 @@ const CreateProductForm = ({ categories, brands }) => {
                         setResources([]); // Reset photos/resources
                         setAvailability('IN_STOCK'); // Reset availability
                         setStatus('ACTIVE'); // Reset status
+                        setPhotosIsRequired(false)
 
                         toast.success("A product post is successfully!",{
                             id:"addProduct"
@@ -121,6 +123,7 @@ const CreateProductForm = ({ categories, brands }) => {
             } else {
 
                 setIsLoading(false);
+                setPhotosIsRequired(true)
                 toast.error("Select minimum a photo then please try again later",{
                     id:"addProduct"
                 });
@@ -256,8 +259,21 @@ const CreateProductForm = ({ categories, brands }) => {
                             {formik.errors.brandId && <p className="text-red-500">{formik.errors.brandId}</p>}
                         </div>
 
+                        {/* Material */}
+                        <div className="mb-4 md:col-span-1 col-span-2">
+                            <label className="block text-gray-700 dark:text-slate-300">Material</label>
+                            <input
+                                type="text"
+                                name="material"
+                                value={formik.values.material}
+                                onChange={formik.handleChange}
+                                className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-slate-700 dark:border-slate-600 dark:text-slate-300"
+                                placeholder="Enter material"
+                            />
+                        </div>
+
+                        {/* Colors */}
                       <div className=" col-span-2 grid md:grid-cols-3 gap-5">
-                          {/* Colors */}
                           <div className="mb-4 ">
                               <label className="block text-gray-700 dark:text-slate-300">Colors</label>
                               {colors.map((color, index) => (
@@ -349,52 +365,44 @@ const CreateProductForm = ({ categories, brands }) => {
 
                       </div>
                         {/* Dimensions */}
-                        <div className="mb-4 md:col-span-1 col-span-2">
-                            <label className="block text-gray-700 dark:text-slate-300">Length</label>
-                            <input
-                                type="number"
-                                name="length"
-                                value={formik.values.length}
-                                onChange={formik.handleChange}
-                                placeholder="Length"
-                                className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-slate-700 dark:border-slate-600 dark:text-slate-300"
-                            />
-                        </div>
-                        <div className="mb-4 md:col-span-1 col-span-2">
-                            <label className="block text-gray-700 dark:text-slate-300">Width</label>
-                            <input
-                                type="number"
-                                name="width"
-                                value={formik.values.width}
-                                onChange={formik.handleChange}
-                                placeholder="Width"
-                                className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-slate-700 dark:border-slate-600 dark:text-slate-300"
-                            />
-                        </div>
-                        <div className="mb-4 md:col-span-1 col-span-2">
-                            <label className="block text-gray-700 dark:text-slate-300">Height</label>
-                            <input
-                                type="number"
-                                name="height"
-                                value={formik.values.height}
-                                onChange={formik.handleChange}
-                                placeholder="height"
-                                className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-slate-700 dark:border-slate-600 dark:text-slate-300"
-                            />
+                        <div className="mb-4 col-span-2">
+                            <div className="grid grid-cols-6 gap-5">
+                                <div className="mb-4 md:col-span-2 col-span-6">
+                                    <label className="block text-gray-700 dark:text-slate-300">Length</label>
+                                    <input
+                                        type="number"
+                                        name="length"
+                                        value={formik.values.length}
+                                        onChange={formik.handleChange}
+                                        placeholder="Length"
+                                        className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-slate-700 dark:border-slate-600 dark:text-slate-300"
+                                    />
+                                </div>
+                                <div className="mb-4 md:col-span-2 col-span-6">
+                                    <label className="block text-gray-700 dark:text-slate-300">Width</label>
+                                    <input
+                                        type="number"
+                                        name="width"
+                                        value={formik.values.width}
+                                        onChange={formik.handleChange}
+                                        placeholder="Width"
+                                        className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-slate-700 dark:border-slate-600 dark:text-slate-300"
+                                    />
+                                </div>
+                                <div className="mb-4 md:col-span-2 col-span-6">
+                                    <label className="block text-gray-700 dark:text-slate-300">Height</label>
+                                    <input
+                                        type="number"
+                                        name="height"
+                                        value={formik.values.height}
+                                        onChange={formik.handleChange}
+                                        placeholder="height"
+                                        className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-slate-700 dark:border-slate-600 dark:text-slate-300"
+                                    />
+                                </div>
+                            </div>
                         </div>
 
-                        {/* Material */}
-                        <div className="mb-4 col-span-2">
-                            <label className="block text-gray-700 dark:text-slate-300">Material</label>
-                            <input
-                                type="text"
-                                name="material"
-                                value={formik.values.material}
-                                onChange={formik.handleChange}
-                                className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-slate-700 dark:border-slate-600 dark:text-slate-300"
-                                placeholder="Enter material"
-                            />
-                        </div>
 
                         {/* Warranty */}
                         <div className="mb-4 col-span-2">
@@ -483,7 +491,7 @@ const CreateProductForm = ({ categories, brands }) => {
                             <label className="block text-gray-700 pb-3 dark:text-slate-300">Photos</label>
                             <div className="flex gap-3 flex-wrap">
                                 <CldUploadWidget
-                                    signatureEndpoint={`${baseURL}/api/uploader/uploader`}
+                                    signatureEndpoint={`${baseURL}/api/signature/signature`}
                                     onSuccess={(result, { widget }) => {
                                         // Append new uploaded image info to the state array
                                         setResources((prevResources) => [...prevResources, result?.info]);
@@ -523,6 +531,7 @@ const CreateProductForm = ({ categories, brands }) => {
                                     }
                                 </ul>
                             </div>
+                            {photosIsRequired && <p className="text-red-500">Minimum a photo is required</p>}
                         </div>
                         {/* Description */}
                         <div className="mb-4 col-span-2">

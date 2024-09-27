@@ -4,10 +4,18 @@ import {getAllCategory} from "@/app/utils/Category/fetch_category_api";
 import {getBrands} from "@/app/utils/brand/fetch_brand_api";
 
 const Creator =async () => {
-    const [allCategory,brands]=await Promise.all([getAllCategory({children:true}),getBrands()])
+    const [
+        allCategory,
+        categoriesMenu,
+        brands
+    ]=await Promise.all([getAllCategory({children:true}),getAllCategory(),getBrands()]);
+
     return (
         <>
-            <CreatorLayout categories={allCategory?.data} brands={brands?.data}/>
+            <CreatorLayout
+                categories={allCategory?.data}
+                categoriesMenu={categoriesMenu?.data}
+                brands={brands?.data}/>
         </>
     );
 };

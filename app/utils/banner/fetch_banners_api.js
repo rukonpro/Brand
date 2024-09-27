@@ -10,3 +10,11 @@ export const getBanners= async (params)=> {
         console.log(error);
     }
 }
+
+export const createBanner= async (data)=> {
+    try {
+        return await axios.post(`${baseURL}/api/banner/create`,data);
+    } catch (error) {
+        console.log(error);
+    }
+}

@@ -1,3 +1,5 @@
+// pages/api/signature.js
+
 import { v2 as cloudinary } from "cloudinary";
 
 // Configure Cloudinary
@@ -21,15 +23,13 @@ export default async function handler(req, res) {
             // Send back the signature as a response
             res.status(200).json({ signature });
         } catch (error) {
-            // Handle errors
             res.status(500).json({
                 error: "Failed to generate signature",
                 details: error.message,
             });
         }
     } else {
-        // Handle any other HTTP method
         res.setHeader("Allow", ["POST"]);
         res.status(405).end(`Method ${req.method} Not Allowed`);
     }
-}
+};

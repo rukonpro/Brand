@@ -7,6 +7,14 @@ export const getBrands = async (params)=>{
             params:params
         });
     }catch(error){
-      return error.response.data;
+      return {error};
+    }
+};
+
+export const createBrand = async (data)=>{
+    try {
+        return await axios.post(`${baseURL}/api/brand/create`,data);
+    }catch(error){
+        return {error};
     }
 };

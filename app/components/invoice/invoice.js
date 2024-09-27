@@ -1,5 +1,6 @@
 import React from 'react';
 import Link from "next/link";
+import Image from "next/image";
 
 export default function Invoice({order}) {
 
@@ -80,7 +81,7 @@ export default function Invoice({order}) {
                                     return(
                                         <tr key={index} className="border-b">
                                             <td className="px-3 py-3 flex items-center">
-                                                <img src={product?.product?.photos?.[0]} alt={product?.name}
+                                                <Image src={product?.product?.photos?.[0]} width={40} height={40} alt={product?.name}
                                                      className="w-10 h-10 rounded mr-4 "/>
                                                 <div>
                                                     <Link href={`/details/${product?.product?.id}`} className="hover:!text-blue-500 dark:text-slate-200" >
