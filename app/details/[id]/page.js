@@ -7,7 +7,7 @@ import BackButton from "@/app/components/BackButtons/BackButton";
 import ImageChangeButton from '@/app/components/imageChangeButton/ImageChangeButton';
 import RelatedProducts from "@/app/components/RelatedProducts/RelatedProducts";
 import Loading from "@/app/loading";
-import {getDetailsProduct} from "@/app/utils/product/fetch_products_api";
+import {getDetailsProduct, getProducts} from "@/app/utils/product/fetch_products_api";
 import AddToCartButton from "@/app/components/AddToCartButton/AddToCartButton";
 import SaveForLaterButton from "@/app/components/SavedForLaterItems/SaveForLaterButton";
 
@@ -202,3 +202,19 @@ const Details = async ({ params }) => {
 
 
 export default Details;
+
+
+export async function getStaticPaths() {
+    const res = await getProducts({
+        limit:1000,
+    });
+
+
+    // Get the paths we want to pre-render based on posts
+    const paths = res?.data?.map((product) => ({
+        params: { id: product?.id }, // must be string type for dynamic routes
+    }));
+
+    // Fallback enables dynamic rendering for paths not generated during build
+    return { paths, fallback: false };
+}
