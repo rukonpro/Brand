@@ -9,7 +9,7 @@ export default async function handler(req, res) {
         const { firstName, lastName,email, password } = req.body;
 
         // Check if email or phone number already exists
-        const existingUser = await prisma.user.findFirst({
+        const existingUser = await prisma.user.findUnique({
             where: { email },
         });
 

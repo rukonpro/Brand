@@ -9,9 +9,6 @@ import Image from "next/image";
 
 const Offers = ({offers}) => {
 
-    const [showLeft,setShowLeft]=useState(false);
-    const [showRight,setShowRight]=useState(true);
-
     const scrollRef = useRef();
     const handleScrollButtonClick = (scroll) => {
 

@@ -6,14 +6,13 @@ import {useRouter} from "next/navigation";
 import toast from "react-hot-toast";
 import Image from "next/image";
 import LoadingIcon from "@/public/images/loading-2-svgrepo-com.svg";
-
-
+import {createUser} from "@/app/utils/user/createUser";
 
 
 const validationSchema = Yup.object().shape({
     firstName: Yup.string()
         .min(2,"minimum 2 characters")
-        .max(10,"Maximum 10 characters")
+        .max(20,"Maximum 20 characters")
         .required("First name is required"),
     lastName: Yup.string()
         .min(2,"minimum 2 characters")
@@ -34,19 +33,21 @@ const RegisterForm = () => {
     const router = useRouter();
     const [loading, setLoading] = React.useState(false);
 
-    const handleSignup=async ({firstName,lastName,email,password,rePassword})=>{
-        try {
+    const handleSignup=async ({firstName,lastName,email,password,resetForm})=>{
             setLoading(true);
-            // await userSignup({name:firstName+" "+lastName,email:email,password:password});
-            // await userLogin({email, password})
-            toast.success("Register successfully",{id:"register"})
-            toast.success("Login successfully",{id:"register"})
-            router.push("/profiles/myAccount");
-        } catch (error) {
-            toast.error(error?.response?.data?.error||error.mesaaage)
-        } finally{
-            setLoading(false);
-        }
+            const data={firstName,lastName,email,password};
+            const res= await createUser(data);
+          if(res?.status===201){
+              toast.success("Register successfully,Please login now!",{id:"register"});
+              router.push("/login")
+              setLoading(false);
+              resetForm()
+          }else {
+              toast.error(res?.error?.response?.error||"Internal server error!,Please try again",{
+                  id:"register",
+              });
+              setLoading(false)
+          }
     }
 
     const formik = useFormik({
@@ -59,8 +60,8 @@ const RegisterForm = () => {
             rePassword:""
         },
         validationSchema,
-        onSubmit:async ({firstName,lastName,email,password,rePassword}) => {
-            await handleSignup({firstName,lastName,email,password,rePassword})
+        onSubmit:async ({firstName,lastName,email,password,rePassword},{resetForm}) => {
+            await handleSignup({firstName,lastName,email,password,rePassword,resetForm})
         },
     });
 

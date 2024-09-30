@@ -6,11 +6,12 @@ import { BiSolidImageAdd } from "react-icons/bi";
 import axios from 'axios';
 import Image from "next/image";
 import CategoryManuAdmin from "@/app/components/AdminDashboard/creatore/CategoryMenuAdmin";
-import {createCategory} from "@/app/utils/Category/fetch_category_api";
+import {createCategory, deleteCategory} from "@/app/utils/Category/fetch_category_api";
 import toast from "react-hot-toast";
 const CreateCategoryForm = ({categoriesMenu}) => {
     const [imageUrl, setImageUrl] = useState('');
     const [categoryId,setCategoryId]=useState("");
+    const [deleteLoading,setDeleteLoading] = useState(false);
 
     const formik = useFormik({
         initialValues: {
@@ -68,8 +69,26 @@ const CreateCategoryForm = ({categoriesMenu}) => {
         formik.setFieldValue("parentId",categoryId)
     }, [categoryId]);
 
+
+
+    const handleDeleteCategory= async ()=>{
+        setDeleteLoading(true);
+        const res= await deleteCategory(categoryId);
+
+        if(res?.status === 200) {
+            toast.success(res?.data?.message,{
+                id:"category"
+            });
+            setDeleteLoading(false)
+        }else {
+            toast.error(res?.error?.response?.data?.error|| "Internal server error , please try again",{
+                id:"category"
+            });
+            setDeleteLoading(false)
+        }
+    }
     return (
-        <div className="p-4  shadow-md rounded-md  grid sm:grid-cols-2 gap-5">
+        <div className="p-4  grid sm:grid-cols-2 gap-5">
 
             <CategoryManuAdmin categories={categoriesMenu} setCategoryId={setCategoryId} categoryId={categoryId}/>
 
@@ -167,6 +186,20 @@ const CreateCategoryForm = ({categoriesMenu}) => {
                         disabled={formik.isSubmitting}
                     >
                         {formik.isSubmitting ? 'Submitting...' : 'Create Category'}
+                    </button>
+
+
+                    <button
+                        onClick={handleDeleteCategory}
+                        type="button"
+                        disabled={deleteLoading}
+                        className="w-full px-4 mt-3 py-2 bg-red-500 text-white font-bold rounded-md shadow-sm  hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 disabled:bg-red-300"
+                    >
+                        {
+                            deleteLoading?<span>
+                               Deleting...
+                            </span>:"Delete Category"
+                        }
                     </button>
                 </div>
             </form>

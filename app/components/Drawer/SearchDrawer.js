@@ -7,6 +7,7 @@ import Link from "next/link";
 import Loading from "@/app/loading";
 import Image from "next/image";
 import {FaSearch} from "react-icons/fa";
+import NotFoundImage from "@/public/images/not-found.png";
 
 const SearchDrawer = ({isOpen,toggleDrawer,handleSearchChange,search}) => {
 
@@ -61,8 +62,8 @@ const SearchDrawer = ({isOpen,toggleDrawer,handleSearchChange,search}) => {
                     className={` max-w-[700px] max-h-[600px] h-full border-2 border-slate-50 dark:border-slate-700  w-full  bg-white/50 dark:bg-gray-800/50 backdrop-blur-3xl shadow-xl overflow-auto transform transition ease-in-out duration-700 rounded-lg relative`}>
 
                     <div className=" pb-10 pt-5 px-5">
-                        <div className="flex items-center justify-between ">
-                            <h2 className="text-lg font-semibold">Search your products</h2>
+                        <div className="flex items-center justify-end ">
+
                             <button onClick={toggleDrawer}>
                                 <IoCloseSharp size={25} className="text-red-500"/>
                             </button>
@@ -83,7 +84,7 @@ const SearchDrawer = ({isOpen,toggleDrawer,handleSearchChange,search}) => {
                         <ul className=" border-t-2 border-slate-200 dark:border-slate-700 grid grid-cols-1 gap-3 py-2">
 
                             {
-                                isLoading ? <Loading/> : products?.length ? products?.map(product => {
+                                isLoading ? <Loading title="Searching..."/> : search && products?.length>0 ? products?.map(product => {
                                     return (
                                         <li key={product?.id} className="border-b border-gray-200 dark:border-slate-700 p-2 hover:bg-slate-100/50 dark:hover:bg-slate-700/50 rounded-lg overflow-hidden">
                                             <Link
@@ -109,10 +110,13 @@ const SearchDrawer = ({isOpen,toggleDrawer,handleSearchChange,search}) => {
                                             </Link>
                                         </li>
                                     )
-                                }) : <p>No products found</p>
+                                }) : <div>
+                                    {search && products?.length===0?<p>Not products found!</p>:<p>Please search your products.</p>}
+                                   <div className="flex justify-center items-center">
+                                       <Image src={NotFoundImage} height={300} width={300} alt="Not found"/>
+                                   </div>
+                                </div>
                             }
-
-
                         </ul>
                     </div>
 

@@ -32,3 +32,13 @@ export const createCategory= async (data)=> {
         }
     }
 }
+
+export const deleteCategory= async (id)=> {
+    try {
+        return await axios.delete(`${baseURL}/api/category/${id}/delete`);
+    } catch (error) {
+        return {
+            error
+        }
+    }
+}
