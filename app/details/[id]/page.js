@@ -1,7 +1,6 @@
 import React, { Suspense } from 'react';
 import Nav from "@/app/components/navbar/nav";
-import TickSign from "@/public/images/tickSign.png";
-import Image from "next/image";
+import { AiOutlineCheck } from "react-icons/ai";
 import SupplierCard from "@/app/components/SupplierCard/SupplierCard";
 import BackButton from "@/app/components/BackButtons/BackButton";
 import ImageChangeButton from '@/app/components/imageChangeButton/ImageChangeButton';
@@ -10,9 +9,9 @@ import Loading from "@/app/loading";
 import {getDetailsProduct, getProducts} from "@/app/utils/product/fetch_products_api";
 import AddToCartButton from "@/app/components/AddToCartButton/AddToCartButton";
 import SaveForLaterButton from "@/app/components/SavedForLaterItems/SaveForLaterButton";
-
-
-
+import Countdown from "@/app/components/Countdown/Countdown";
+import { MdBlockFlipped } from "react-icons/md";
+import { PiImageBrokenLight } from "react-icons/pi";
 
 
 const Details = async ({ params }) => {
@@ -20,8 +19,6 @@ const Details = async ({ params }) => {
 */
 
     const product = await getDetailsProduct({id: params.id});
-
-
 
     return (
         <div>
@@ -39,21 +36,34 @@ const Details = async ({ params }) => {
                 <Suspense fallback={<Loading/>}>
                     <div className="grid grid-cols-12 gap-4 border-2 p-3 py-10  md:bg-white md:rounded-lg dark:bg-slate-800 dark:border-slate-700">
                         <div className="col-span-12 md:col-span-4">
-                            <ImageChangeButton
+                            {product?.data?.photos?.length>0?<ImageChangeButton
                                 images={product?.data?.photos}
-                                name={product?.data?.name} />
+                                name={product?.data?.name}/>:
+
+                                <PiImageBrokenLight
+                                   className="w-full h-full"
+                                />
+                            }
                         </div>
 
                         <div className="col-span-12 md:col-span-8 lg:col-span-5">
                             <div className="flex justify-between items-center">
-                                <div className="flex  gap-1">
-                                    <Image src={TickSign} alt="TickSign"/>
+                                <div className="flex  gap-1 items-center">
+                                    {product?.data?.availability==="IN_STOCK"?
+                                        <AiOutlineCheck className="text-green-500 size-8"/>:
+                                        <MdBlockFlipped className="text-red-500 size-8"/>}
+
                                     <p className="text-sm">{product?.data?.availability}</p>
                                 </div>
-                                {product?.data?.offers?.[0]?.discountValue&&
-                                    <div>
-                                    <p className="font-bold text-2xl text-red-500 bg-green-100 px-2 rounded-full dark:bg-slate-700 dark:text-green-500">{product?.data?.offers?.[0]?.discountValue}% Discount</p>
-                                </div>
+                                {product?.data?.offers?.[0]?.isActive&&
+                                    <div className="border rounded p-3 dark:border-slate-700">
+
+                                            <p className="font-bold text-2xl text-red-500 bg-green-100 px-2 rounded-full dark:bg-slate-700 dark:text-green-500">{product?.data?.offers?.[0]?.discountValue}%
+                                                Discount</p>
+                                         <div className="flex justify-center">
+                                             <Countdown endDate={product?.data?.offers?.[0]?.endDate}/>
+                                         </div>
+                                    </div>
                                 }
                             </div>
                             <div className="pt-5">

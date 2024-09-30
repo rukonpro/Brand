@@ -1,3 +1,5 @@
+"use client"
+
 import { useEffect, useState } from "react";
 
 export default function Countdown({endDate }) {
@@ -39,9 +41,9 @@ const [running,setRunning] = useState(true);
     }, [endDate]);
 
     return (running?<span className="flex gap-1 mt-1 mr-1">
-        <span className="text-xs bg-green-50 text-green-700 font-bold p-1 rounded-full dark:bg-slate-700 dark:text-slate-200">{days<10?"0"+days:days}d </span>
-         <span className="text-xs bg-green-50 text-green-700 font-bold p-1 rounded-full dark:bg-slate-700 dark:text-slate-200">{hours<10?"0"+hours:hours}h </span>
-         <span className="text-xs bg-green-50 text-green-700 font-bold p-1 rounded-full dark:bg-slate-700 dark:text-slate-200">{minutes<10?"0"+minutes:minutes}m </span>
-         <span className="text-xs bg-green-50 text-green-700 font-bold p-1 rounded-full dark:bg-slate-700 dark:text-slate-200">{seconds<10?"0"+seconds:seconds}s </span>
+        <span className="text-xs bg-green-50 text-green-700 font-bold p-1 rounded-full  ">{days<10?"0"+days:days}d </span>
+         <span className="text-xs bg-green-50 text-green-700 font-bold p-1 rounded-full">{hours<10?"0"+hours:hours}h </span>
+         <span className="text-xs bg-green-50 text-green-700 font-bold p-1 rounded-full ">{minutes<10?"0"+minutes:minutes}m </span>
+         <span className="text-xs bg-green-50 text-green-700 font-bold p-1 rounded-full ">{seconds<10?"0"+seconds:seconds}s </span>
     </span>:<span className="text-xs bg-red-100 text-red-500  rounded-l-full p-1">Off</span>);
 }

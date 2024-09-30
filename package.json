@@ -8,10 +8,12 @@
     "start": "next start",
     "lint": "next lint",
     "generate": "graphql-codegen --config codegen.yml",
-    "postinstall": "prisma generate"
+    "postinstall": "prisma generate",
+    "update-offer-status": "node scripts/updateOfferStatus.js",
+    "update-banner-status": "node scripts/updateBannerStatus.js"
   },
   "dependencies": {
-    "@prisma/client": "^5.19.1",
+    "@prisma/client": "^5.20.0",
     "@vercel/analytics": "^1.2.2",
     "ai": "^3.3.37",
     "axios": "^1.6.8",
