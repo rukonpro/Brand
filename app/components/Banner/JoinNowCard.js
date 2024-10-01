@@ -18,8 +18,10 @@ const JoinNowCard = () => {
 
             {
                 status==="loading"?<JoinNowCardSkeleton/>:<>
-                    {!user?.email && <div className='grid grid-cols-3 gap-2 items-center'>
-                        <div className="col-span-1">
+                    {!user?.email &&
+
+                        <div className='grid grid-cols-3 gap-2 items-center justify-center'>
+                        <div className="col-span-1 flex justify-end items-center">
                             <Image className="rounded-full h-[44px] w-[44px] object-contain bg-white dark:bg-slate-400 p-1"
                                    src={Avater} alt='Avater' />
                         </div>

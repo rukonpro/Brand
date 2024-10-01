@@ -5,6 +5,7 @@ import BannerSlider from "@/app/components/Banner/BannerSlider";
 import CategoryManu from "@/app/components/navbar/CategoryManu";
 import {getBanners} from "@/app/utils/banner/fetch_banners_api";
 import {SkeletonCategories, SkeletonNotifications, SkeletonSlider} from "@/app/components/Skeletons/SkeletonCategories";
+import Link from "next/link";
 
 
 
@@ -50,6 +51,9 @@ const Banner =async () => {
                 </div>
             </div>
 
+            <div className="max-w-[1200px] mx-auto pt-4 md:hidden block px-3">
+                <Link href="/allCategory">All Categories</Link> |  <Link href="/">Hot offers</Link> |  <Link href="/">Gift Boxes</Link>
+            </div>
 
         </div>
     );
