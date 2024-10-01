@@ -22,7 +22,7 @@ export const authOptions = {
                 });
 
                 if (!user) {
-                    throw new Error('You are not registered,Please first register');
+                    throw new Error('You are not registered,please register!');
                 }
 
                 // Compare the provided password with the stored hashed password
