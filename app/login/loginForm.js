@@ -107,7 +107,7 @@ const LoginForm = () => {
             />
             {formik.touched.password && formik.errors.password &&
                 <div className="text-red-500 text-xs">{formik.errors.password}*</div>}
-            {error &&  <div className="text-red-500 text-xs">{error}*</div>}
+            {error &&  <div className="text-red-500 text-sm">{error}*</div>}
             <br/>
             <button type="submit"
                     className="px-3 py-2 rounded-lg w-full my-1 bg-blue-500 text-white  mt-4"
