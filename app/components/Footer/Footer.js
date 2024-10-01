@@ -16,8 +16,8 @@ const Footer = () => {
     const FooterData = {
         logo: Logo,
         description: "Best information about the company gies here but now lorem ipsum",
-        socile: [FacebookIcon, instagramIcon, linkedinIcon, twitterIcon, youtubeIcon],
-        footerCetagory: [
+        social: [FacebookIcon, instagramIcon, linkedinIcon, twitterIcon, youtubeIcon],
+        footerCategory: [
             {
                 title: "About",
                 links: [
@@ -98,22 +98,22 @@ const Footer = () => {
                 links: [
                     {
                         title: "Login",
-                        path: "/"
+                        path: "/login"
 
                     },
                     {
                         title: "Register",
-                        path: "/"
+                        path: "/register"
 
                     },
                     {
                         title: "Settings",
-                        path: "/"
+                        path: "/settings"
 
                     },
                     {
                         title: "My Orders",
-                        path: "/"
+                        path: "/myOrders"
 
                     },
                 ]
@@ -125,14 +125,14 @@ const Footer = () => {
                         href: "/",
                         icon: appleStoreIcon,
                         title: "Apple Store",
-                        link: "/sdfsdf"
+                        link: "/"
 
                     },
                     {
                         href: "/",
                         icon: googleStoreIcon,
-                        title: "Google Stor",
-                        link: "/sdfsd"
+                        title: "Google Store",
+                        link: "/"
 
                     },
 
@@ -151,7 +151,7 @@ const Footer = () => {
 
                         <ul className='flex gap-3 pt-5'>
                             {
-                                FooterData?.socile.map((data, index) => {
+                                FooterData?.social.map((data, index) => {
                                     return (
                                         <li key={index}>
                                             <a href='/' >
@@ -166,14 +166,14 @@ const Footer = () => {
 
                     <ul className="md:col-span-9 col-span-12 grid sm:grid-cols-5 grid-cols-3 ">
                         {
-                            FooterData?.footerCetagory?.map((cetagory,index) => {
+                            FooterData?.footerCategory?.map((category, index) => {
                                 return (
                                     <li key={index}>
-                                        <h1 className='font-bold sm:pt-0 pt-10'>{cetagory?.title}</h1>
+                                        <h1 className='font-bold sm:pt-0 pt-10'>{category?.title}</h1>
 
                                         <ul className='pt-5 '>
                                             {
-                                                cetagory?.links?.map((link, index) => {
+                                                category?.links?.map((link, index) => {
                                                     return (
                                                         <li key={index} className='mt-2 text-gray-500 dark:text-slate-300'>
                                                             {

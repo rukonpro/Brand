@@ -5,14 +5,14 @@ import GoogleAndFacebookLogin from "@/app/login/GoogleAndFacebookLogin";
 
 const Register = () => {
     return (
-        <div>
-            <div className="registerbg flex-1 inset-0 ">
+
+            <div className="flex-1 inset-0 ">
                 <div className='max-w-[1200px] mx-auto py-5 lg:py-36 px-3'>
                     <div className="grid grid-cols-12 gap-4">
                         <div className="md:col-span-5 col-span-12">
-                            <h1 className="text-2xl font-bold text-white py-5">Welcome to Brand!</h1>
+                            <h1 className="text-2xl font-bold dark:text-slate-100 text-slate-700 py-5">Welcome to Brand!</h1>
 
-                            <p className="text-lg text-white/70">Registering with Brand allows you to enjoy a seamless
+                            <p className="text-lg dark:text-slate-100 text-slate-600">Registering with Brand allows you to enjoy a seamless
                                 shopping experience, exclusive offers, and personalized recommendations. Signing up is
                                 quick and easy!.</p>
                         </div>
@@ -36,7 +36,7 @@ const Register = () => {
                     </div>
                 </div>
             </div>
-        </div>
+
     );
 };
 
