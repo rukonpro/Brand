@@ -1,15 +1,13 @@
 import React from 'react';
-import Logo from "@/public/images/logo-colored.png";
-import Image from "next/image";
-const Loader = () => {
+const Loader = ({title}) => {
     return (
-        <div className="h-screen w-screen flex items-center justify-center bg-slate-100 dark:bg-slate-900">
+        <div className="py-4">
             {/* Central Loader Container */}
-            <div className="flex flex-col items-center space-y-8">
+            <div className="flex gap-5 items-center justify-center">
                 {/* Logo Placeholder or Brand Name */}
                 <div className="flex items-center space-x-2">
                     <div className=" animate-pulse">
-                        <Image src={Logo} alt="Brand logo"/>
+                       <h1>{title||"Loading..."}</h1>
                     </div>
 
                 </div>
@@ -20,9 +18,6 @@ const Loader = () => {
                     <div className="w-3 h-3 bg-blue-500 rounded-full animate-bounce duration-300 delay-500"></div>
                     <div className="w-3 h-3 bg-blue-500 rounded-full animate-bounce duration-700 delay-1000"></div>
                 </div>
-
-                {/* Loader Message */}
-                <p className="text-slate-500 dark:text-slate-400">Loading the best deals for you...</p>
             </div>
         </div>
     );

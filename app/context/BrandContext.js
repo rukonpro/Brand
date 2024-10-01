@@ -2,7 +2,7 @@
 import {createContext, useState} from 'react';
 
 // Create the context
-export const AppContext = createContext(undefined);
+export const AppContext = createContext(null);
 
 // Create a provider component
 export const AppProvider = ({ children }) => {

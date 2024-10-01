@@ -6,7 +6,7 @@ import RelatedProductCard from "@/app/components/RelatedProductCard/RelatedProdu
 import AddToCartButton from "@/app/components/AddToCartButton/AddToCartButton";
 import {getCategoryById} from "@/app/utils/Category/fetch_category_api";
 import Image from "next/image";
-import Loading from "@/app/loading";
+import Loader from "@/app/Loader";
 
 const Source = async ({params}) => {
 
@@ -37,7 +37,7 @@ const Source = async ({params}) => {
                 </div>
 
 
-                <Suspense fallback={<Loading/>}>
+                <Suspense fallback={<Loader/>}>
                     {
                         !products?.data?.length ? (
                                 <h1 className="text-red-500 text-center text-2xl font-bold">Product not found</h1>

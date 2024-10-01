@@ -5,9 +5,10 @@ import OurExtraServices from "./components/OurExtraServices/OurExtraServices";
 import SuppliersByRegion from "./components/SuppliersByRegion/SuppliersByRegion";
 import Nav from "@/app/components/navbar/nav";
 import {Suspense} from "react";
-import Loading from "@/app/loading";
+import Loader from "@/app/Loader";
 import OffersLayout from "@/app/components/offers/OffersLayout";
 import {SkeletonHeader} from "@/app/components/Skeletons/SkeletonCategories";
+import {SkeletonRecommendedItemsSection} from "@/app/components/Skeletons/SkeletonRecommendedItemCard";
 
 
 export default  function Home() {
@@ -18,13 +19,13 @@ export default  function Home() {
                 <Banner />
             </Suspense>
 
-            {/*<Suspense fallback={<Loading/>}>*/}
+            {/*<Suspense fallback={<Loader/>}>*/}
                 <OffersLayout />
             {/*</Suspense>*/}
-            <Suspense fallback={<Loading/>}>
+            <Suspense fallback={<SkeletonRecommendedItemsSection/>}>
                 <RecommendedItems />
             </Suspense>
-            {/*<Suspense fallback={<Loading/>}>*/}
+            {/*<Suspense fallback={<Loader/>}>*/}
             {/*    <SourcesProductsLayout />*/}
             {/*</Suspense>*/}
             <Requests />

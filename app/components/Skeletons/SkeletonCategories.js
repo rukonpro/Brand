@@ -47,7 +47,7 @@ export const SkeletonNotifications = () => {
 
 export const SkeletonHeader = () => {
     return (
-        <div className="flex gap-4 p-4  min-h-96">
+        <div className="flex gap-4 py-4  min-h-96 max-w-[1200px] mx-auto">
             {/* Left Categories Section */}
             <div className="w-1/4">
                 <SkeletonCategories/>

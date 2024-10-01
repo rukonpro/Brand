@@ -6,7 +6,7 @@ import { AiFillProduct } from "react-icons/ai";
 import { TbBrandDebian } from "react-icons/tb";
 import { PiFlagBannerFill } from "react-icons/pi";
 import AdminDashboardModal from "@/app/components/Drawer/AdminDashboardModal";
-import Loading from "@/app/loading";
+import Loader from "@/app/Loader";
 import SkeletonCreatorCard from "@/app/components/Skeletons/SkeletonCreatorCard";
 import CreateProductForm from "@/app/components/AdminDashboard/creatore/CreateProductForm";
 import CreateCategoryForm from "@/app/components/AdminDashboard/creatore/CreateCategoryForm";
@@ -124,7 +124,7 @@ const CreatorLayout = ({categories,categoriesMenu,brands}) => {
                 </li>
             </ul>
 
-            <Suspense fallback={<Loading/>}>
+            <Suspense fallback={<Loader/>}>
                 <AdminDashboardModal
                     isOpen={open}
                     setOpen={setOpen}

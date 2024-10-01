@@ -4,7 +4,7 @@ import CheckoutCard from "@/app/components/CheckoutCard/CheckoutCard";
 import {AppContext} from "@/app/context/BrandContext";
 import {getProducts} from "@/app/utils/product/fetch_products_api";
 import ShippingForm from "@/app/components/ShippingForm/ShippingForm";
-import Loading from "@/app/loading";
+import Loader from "@/app/Loader";
 import findManyShippingAdressApi from "@/app/utils/shippingAdress/findManyShippingAdressApi";
 import toast from "react-hot-toast";
 import ShippingCard from "@/app/components/checkout/ShippingCard";
@@ -88,26 +88,33 @@ const CheckoutLayout = () => {
     },[handleGetProducts]);
 
 
+
+
+
+
+
+    const getShippingAddresses=async ()=>{
+        const params={
+            page:currentPage,
+            limit:1,
+
+        }
+        const res=await findManyShippingAdressApi(params);
+
+        if (res?.status===200){
+            setShippingAddresses(res?.data);
+        }
+        if(res?.data?.error){
+            toast.error(res?.data?.error,{id: 'shipping'});
+        }
+
+    }
+
     useEffect(()=>{
 
         if (userStatus!=="loading"){
             setShippingLoading(true)
-            const getShippingAddresses=async ()=>{
-                const params={
-                    page:currentPage,
-                    limit:1,
 
-                }
-                const res=await findManyShippingAdressApi(params);
-
-                if (res?.status===200){
-                    setShippingAddresses(res?.data);
-                }
-                if(res?.data?.error){
-                    toast.error(res?.data?.error,{id: 'shipping'});
-                }
-
-            }
 
             getShippingAddresses()
             setShippingLoading(false)
@@ -150,9 +157,9 @@ const CheckoutLayout = () => {
     return (
         <div>
 
-            {sippingLoading||userStatus === 'loading'?<Loading/>:
+            {sippingLoading||userStatus === 'loading'?<Loader/>:
 
-                newAddress?<ShippingForm setNewAddress={setNewAddress}/>:
+                newAddress?<ShippingForm setNewAddress={setNewAddress} getShippingAddresses={getShippingAddresses}/>:
                ( shippingAddresses?.addresses?.length>0 ?
                     <ShippingCard
                         setNewAddress={setNewAddress}
@@ -162,7 +169,7 @@ const CheckoutLayout = () => {
                     />:
                    !sippingLoading&&
                    !shippingAddresses?.addresses?.length>0 &&
-                   user?.id&&<ShippingForm user={user} />)
+                   user?.id&&<ShippingForm user={user} getShippingAddresses={getShippingAddresses}/>)
             }
             {
                 user?.id &&

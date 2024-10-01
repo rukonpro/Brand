@@ -1,6 +1,6 @@
 import React, {Suspense} from 'react';
 import SourcesProducts from '../SourceProducts/SourcesProducts';
-import Loading from "@/app/loading";
+import Loader from "@/app/Loader";
 import {getAllCategory} from "@/app/utils/Category/fetch_category_api";
 
 
@@ -11,7 +11,7 @@ const SourcesProductsLayout = async () => {
             {
                 allCategory?.data?.map((category) => {
                     return (
-                        <Suspense fallback={<Loading/>}  key={category?.id}>
+                        <Suspense fallback={<Loader/>} key={category?.id}>
                             <SourcesProducts
                                 category={category}
                             />

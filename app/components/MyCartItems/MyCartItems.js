@@ -4,7 +4,7 @@ import React, {useCallback, useContext, useEffect, useState} from 'react';
 import MyCartItemCard from "@/app/components/MyCartItemCard/MyCartItemCard";
 import {AppContext} from "@/app/context/BrandContext";
 import {getProducts} from "@/app/utils/product/fetch_products_api";
-import Loading from "@/app/loading";
+import Loader from "@/app/Loader";
 import RemoveAllAddToCartButton from "@/app/components/AddToCartButton/RemoveAllAddToCartButton";
 
 
@@ -16,7 +16,7 @@ const MyCartItems =  ({loading,products}) => {
         <div className="col-span-12 md:col-span-12 lg:col-span-8 overflow-hidden sm:rounded-lg md:rounded-r-lg md:bg-white dark:bg-slate-800">
             {loading?
                 <div className="flex items-center justify-center w-full h-full">
-                    <Loading/>
+                    <Loader/>
                 </div>
                 :
 

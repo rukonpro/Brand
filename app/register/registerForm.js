@@ -134,8 +134,8 @@ const RegisterForm = () => {
                     src={LoadingIcon}
                     height={20}
                     width={20}
-                    alt="Loading icon"
-                    className="animate-spin"/> Loading...
+                    alt="Loader icon"
+                    className="animate-spin"/> Loader...
             </div> : "Sign up"}
             </button>
         </form>

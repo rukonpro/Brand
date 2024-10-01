@@ -31,7 +31,7 @@ const validationSchema = Yup.object({
 });
 
 
-const ShippingForm = ({setNewAddress}) => {
+const ShippingForm = ({setNewAddress,getShippingAddresses}) => {
 const [loading, setLoading] = React.useState(false);
 const {data:userData}=useSession();
 const {user}=userData;
@@ -59,13 +59,15 @@ const {user}=userData;
                });
 
            }
-            if (res?.data?.id){
+            if (res?.status===201){
                 toast.success("Sipping address add is successfully",{
                     id:"shipping"
                 });
-                setNewAddress(false)
+                getShippingAddresses()
+                setNewAddress(false);
+                setLoading(false)
             }
-            setLoading(false)
+
         },
     });
 

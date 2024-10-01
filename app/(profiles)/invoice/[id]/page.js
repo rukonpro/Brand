@@ -3,7 +3,7 @@ import Invoice from "@/app/(profiles)/invoice/[id]/Invoice";
 import {getSingleOrder} from "@/app/utils/order/fetch_order_api";
 import {getServerSession} from "next-auth/next";
 import {authOptions} from "@/app/api/auth/[...nextauth]/route";
-import Loading from "@/app/loading";
+import Loader from "@/app/Loader";
 
 const InvoicePage =async ({params:orderIdParams}) => {
     const session = await getServerSession(authOptions);
@@ -18,7 +18,7 @@ const InvoicePage =async ({params:orderIdParams}) => {
     const getOrder =await getSingleOrder(params);
     return (
         <div>
-            <Suspense fallback={<Loading/>}>
+            <Suspense fallback={<Loader/>}>
                 <Invoice order={getOrder?.data}/>
             </Suspense>
         </div>

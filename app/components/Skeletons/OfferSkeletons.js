@@ -24,3 +24,21 @@ export const SkeletonOfferCard = () => {
         </div>
     );
 };
+
+export const DealsSkeleton = () => {
+    return (
+        <div className="relative overflow-hidden grid grid-cols-1 bg-slate-300/50 animate-pulse">
+
+            {/* Skeleton for the header */}
+            <div className="absolute p-5">
+                <div className="h-8 w-40 bg-slate-400 rounded-full"></div> {/* Placeholder for the heading */}
+            </div>
+
+            {/* Skeleton for the image */}
+            <div className="h-[256px] bg-slate-400">
+                {/* Placeholder for the image, height kept same */}
+                <div className="w-full h-full bg-slate-400"></div>
+            </div>
+        </div>
+    );
+};

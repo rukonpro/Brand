@@ -111,7 +111,7 @@ const LoginForm = () => {
             <button type="submit"
                     className="px-3 py-2 rounded-lg w-full my-1 bg-blue-500 text-white  mt-4"
             >{loading ? <div className="flex items-center justify-center">
-                <Image src={LoadingIcon} height={20} width={20} alt="Loading icon" className="animate-spin"/> Loading...
+                <Image src={LoadingIcon} height={20} width={20} alt="Loader icon" className="animate-spin"/> Loader...
             </div> : "Sign In"}
             </button>
 

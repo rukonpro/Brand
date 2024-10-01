@@ -4,7 +4,7 @@ import React, {useEffect, useState,useCallback} from 'react';
 import {getProducts} from "@/app/utils/product/fetch_products_api";
 import { IoCloseSharp } from "react-icons/io5";
 import Link from "next/link";
-import Loading from "@/app/loading";
+import Loader from "@/app/Loader";
 import Image from "next/image";
 import {FaSearch} from "react-icons/fa";
 import NotFoundImage from "@/public/images/not-found.png";
@@ -84,7 +84,7 @@ const SearchDrawer = ({isOpen,toggleDrawer,handleSearchChange,search}) => {
                         <ul className=" border-t-2 border-slate-200 dark:border-slate-700 grid grid-cols-1 gap-3 py-2">
 
                             {
-                                isLoading ? <Loading title="Searching..."/> : search && products?.length>0 ? products?.map(product => {
+                                isLoading ? <Loader title="Searching..."/> : search && products?.length>0 ? products?.map(product => {
                                     return (
                                         <li key={product?.id} className="border-b border-gray-200 dark:border-slate-700 p-2 hover:bg-slate-100/50 dark:hover:bg-slate-700/50 rounded-lg overflow-hidden">
                                             <Link

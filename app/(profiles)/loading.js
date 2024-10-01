@@ -1,10 +1,10 @@
 import React from 'react';
-import Loading from "@/app/loading";
+import Loader from "@/app/Loader";
 
 const profileLoading = () => {
     return (
         <div className="flex justify-center items-center">
-            <Loading/>
+            <Loader/>
         </div>
     );
 };

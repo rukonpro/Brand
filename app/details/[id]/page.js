@@ -5,7 +5,7 @@ import SupplierCard from "@/app/components/SupplierCard/SupplierCard";
 import BackButton from "@/app/components/BackButtons/BackButton";
 import ImageChangeButton from '@/app/components/imageChangeButton/ImageChangeButton';
 import RelatedProducts from "@/app/components/RelatedProducts/RelatedProducts";
-import Loading from "@/app/loading";
+import Loader from "@/app/Loader";
 import {getDetailsProduct, getProducts} from "@/app/utils/product/fetch_products_api";
 import AddToCartButton from "@/app/components/AddToCartButton/AddToCartButton";
 import SaveForLaterButton from "@/app/components/SavedForLaterItems/SaveForLaterButton";
@@ -33,7 +33,7 @@ const Details = async ({ params }) => {
                         <BackButton title="Back" />
                     </div>
                 </div>
-                <Suspense fallback={<Loading/>}>
+                <Suspense fallback={<Loader/>}>
                     <div className="grid grid-cols-12 gap-4 border-2 p-3 py-10  md:bg-white md:rounded-lg dark:bg-slate-800 dark:border-slate-700">
                         <div className="col-span-12 md:col-span-4">
                             {product?.data?.photos?.length>0?<ImageChangeButton
@@ -199,7 +199,7 @@ const Details = async ({ params }) => {
 
                 {
                     product?.data?.categoryId&&
-                    <Suspense fallback={<Loading/>}>
+                    <Suspense fallback={<Loader/>}>
                         <RelatedProducts categoryId={product?.data?.categoryId} />
                     </Suspense>
                 }

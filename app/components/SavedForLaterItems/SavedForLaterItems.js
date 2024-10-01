@@ -3,7 +3,7 @@ import React, {useCallback, useEffect, useState} from 'react';
 import SavedForLaterCard from "@/app/components/SavedForLaterCard/SavedForLaterCard";
 import getSavedProductsFromCookies from "@/app/components/SavedForLaterItems/getSavedProductsFromCookies";
 import {getProducts} from "@/app/utils/product/fetch_products_api";
-import Loading from "@/app/loading";
+import Loader from "@/app/Loader";
 
 
 const SavedForLaterItems = () => {
@@ -43,7 +43,7 @@ const [loading,setLoading] = useState(false);
         handleGetProducts()
     },[handleGetProducts]);
 
-    return loading?<Loading/>: (
+    return loading?<Loader/>: (
         <div className="lg:bg-white md:p-3 mt-10 md:rounded-r-lg dark:bg-slate-800">
             <h1 className="text-xl font-bold text-gray-600 pb-5 px-3 md:px-0 dark:text-slate-200">Saved for later</h1>
             <div>

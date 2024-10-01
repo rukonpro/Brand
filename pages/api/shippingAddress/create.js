@@ -21,7 +21,7 @@ export default async function handler(req, res) {
                 userId
             } = req.body;
 
-
+           const postalCodeString=postalCode.toString()
 
             // Create a new ShippingAddress
             const newAddress = await prisma.shippingAddress.create({
@@ -32,7 +32,7 @@ export default async function handler(req, res) {
                     houseNumber,
                     street,
                     city,
-                    postalCode,
+                    postalCode:postalCodeString,
                     state,
                     country,
                     isDefault:false,
