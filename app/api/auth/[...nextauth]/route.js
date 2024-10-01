@@ -22,7 +22,7 @@ export const authOptions = {
                 });
 
                 if (!user) {
-                    throw new Error('No user found with this email');
+                    throw new Error('You are not registered,Please first register');
                 }
 
                 // Compare the provided password with the stored hashed password
