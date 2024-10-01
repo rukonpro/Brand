@@ -6,20 +6,26 @@ const prisma = new PrismaClient();
 export default async function handler(req, res) {
     if (req.method === 'GET') {
         try {
-            const { name } = req.query;
+            const { parentId } = req.query;
 
             const filters = {};
+            if(!parentId){
+                filters.parentId = null;
+            }
+            if (parentId){
+                filters.parentId = parentId;
+            }
 
-            if (name) {
-                filters.name = {
-                    contains: name, // Use 'contains' for partial matching, case-sensitive
-                    mode: 'insensitive', // Case-insensitive matching
-                };
+            const include={
+                           include:{
+                               children:true
+                           }
             }
 
 
             const categories = await prisma.category.findMany({
                 where: filters,
+                include: { children: true  },
             });
 
             res.status(200).json(categories);

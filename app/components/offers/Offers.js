@@ -1,11 +1,12 @@
 "use client"
-import React, {useRef, useState} from 'react';
+import React, {Suspense, useRef, useState} from 'react';
 import OfferCard from './OfferCard';
 import OfferTiming from './OfferTiming';
 import Link from "next/link";
 
 import backIcon from "@/public/images/left-back-icon.png";
 import Image from "next/image";
+import {SkeletonOfferCard} from "@/app/components/Skeletons/OfferSkeletons";
 
 const Offers = ({offers}) => {
 
@@ -29,7 +30,9 @@ const Offers = ({offers}) => {
             <div className='max-w-[1200px] mx-auto mt-5 '>
                 <div className='grid grid-cols-12 gap-[2px]  sm:rounded-lg  bg-gray-200 dark:bg-slate-700 border-2 border-gray-200 dark:border-slate-700 overflow-hidden'>
                     <div className="md:col-span-3 col-span-12  bg-white overflow-hidden  ">
-                        <OfferTiming />
+                       <Suspense fallback={null}>
+                           <OfferTiming />
+                       </Suspense>
                     </div>
                     <div className="md:col-span-9 col-span-12 relative">
                         {<button onClick={() => handleScrollButtonClick("left")}
@@ -50,7 +53,9 @@ const Offers = ({offers}) => {
                                     return (
                                         <li key={offer?.id} className='p-2  bg-white cursor-pointer  dark:bg-slate-800 relative'>
                                             <Link href={`/details/${offer?.product?.id}`}>
-                                                <OfferCard offer={offer}/>
+                                                <Suspense fallback={<SkeletonOfferCard/>}>
+                                                    <OfferCard offer={offer}/>
+                                                 </Suspense>
                                             </Link>
                                         </li>
                                     )

@@ -7,16 +7,20 @@ import Nav from "@/app/components/navbar/nav";
 import {Suspense} from "react";
 import Loading from "@/app/loading";
 import OffersLayout from "@/app/components/offers/OffersLayout";
+import {SkeletonHeader} from "@/app/components/Skeletons/SkeletonCategories";
 
 
 export default  function Home() {
     return (
         <>
             <Nav />
-            <Banner />
-            <Suspense fallback={<Loading/>}>
-                <OffersLayout />
+            <Suspense fallback={<SkeletonHeader/>}>
+                <Banner />
             </Suspense>
+
+            {/*<Suspense fallback={<Loading/>}>*/}
+                <OffersLayout />
+            {/*</Suspense>*/}
             <Suspense fallback={<Loading/>}>
                 <RecommendedItems />
             </Suspense>
