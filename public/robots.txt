@@ -1,0 +1,9 @@
+# *
+User-agent: *
+Allow: /
+
+# Host
+Host: https://brand-rukon.vercel.app
+
+# Sitemaps
+Sitemap: https://brand-rukon.vercel.app/sitemap.xml

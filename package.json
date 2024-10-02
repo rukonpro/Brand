@@ -10,7 +10,8 @@
     "generate": "graphql-codegen --config codegen.yml",
     "postinstall": "prisma generate",
     "update-offer-status": "node scripts/updateOfferStatus.js",
-    "update-banner-status": "node scripts/updateBannerStatus.js"
+    "update-banner-status": "node scripts/updateBannerStatus.js",
+    "postbuild": "next-sitemap"
   },
   "dependencies": {
     "@prisma/client": "^5.20.0",
@@ -31,6 +32,7 @@
     "next": "^14.2.11",
     "next-auth": "^4.24.7",
     "next-cloudinary": "^6.13.0",
+    "next-sitemap": "^4.2.3",
     "node-cron": "^3.0.3",
     "node-fetch": "^3.3.2",
     "react": "^18",
