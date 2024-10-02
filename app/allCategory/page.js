@@ -7,8 +7,7 @@ import {getProducts} from "@/app/utils/product/fetch_products_api";
 import RecommendedItemsCard from "@/app/components/RecommendedItems/RecommendedItemsCard";
 import BackButton from "@/app/components/BackButtons/BackButton";
 import notfoundImage from "@/public/images/not-found.png"
-
-export const dynamic = 'force-static'
+ const dynamic = 'force-static'
 
 
 const AllCategory = async ({searchParams}) => {
