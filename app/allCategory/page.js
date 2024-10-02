@@ -11,7 +11,7 @@ const AllCategory = async ({searchParams}) => {
 
  const {parentId,name} = searchParams;
 
-const [categories,products]= await Promise.all([getAllCategory({parentId}),parentId&&getProducts({categoryId:parentId})])
+const [categories,products]= await Promise.all([getAllCategory({parentId}),parentId&&getProducts({categoryId:parentId})]);
 
 
     return (
@@ -19,7 +19,7 @@ const [categories,products]= await Promise.all([getAllCategory({parentId}),paren
             <div className="flex justify-between items-center p-3 pb-6">
                 <h1 className="text-3xl font-bold  ">
 
-                    {name || "All Categories"}
+                    {name || "All categories"}
                 </h1>
                 <BackButton title="Back"/>
             </div>

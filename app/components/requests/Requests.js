@@ -1,13 +1,14 @@
 import React from 'react';
 import RequestsForm from './RequestsForm';
 import Image from "next/image";
+import bgImage from "@/public/images/image102.png"
 const Requests = () => {
     return (
         <div className="px-3">
             <div className='grid grid-cols-12 gap-y-10  max-w-[1200px] rounded-lg overflow-hidden mx-auto md:p-10 p-3  mt-5  relative  bg-gradient-to-r from-emerald-600  dark:from-fuchsia-950  '
             >
                 <Image
-                    src="/images/image102.png"
+                    src={bgImage}
                     alt="Background"
                     layout="fill"
                     objectFit="cover"

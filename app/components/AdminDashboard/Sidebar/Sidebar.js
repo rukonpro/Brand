@@ -1,7 +1,8 @@
 "use client"
 import { useState } from 'react';
 import Link from 'next/link';
-import { FaHome, FaBox, FaShoppingCart, FaUsers, FaChartLine, } from 'react-icons/fa';
+import { FaHome, FaBox, FaShoppingCart, FaUsers, FaChartLine } from 'react-icons/fa';
+import { MdCategory } from "react-icons/md";
 import { SiSpringCreators } from "react-icons/si";
 const Sidebar = () => {
     const [isOpen, setIsOpen] = useState(true);
@@ -30,6 +31,13 @@ const Sidebar = () => {
                         <Link href="/admin/dashboard/creator" className="flex items-center">
                             <SiSpringCreators className="text-xl mr-3"/>
                             <span className={`${isOpen ? 'block' : 'hidden'}`}>Creators</span>
+
+                        </Link>
+                    </li>
+                    <li className="hover:bg-gray-700 p-3">
+                        <Link href="/admin/dashboard/categories" className="flex items-center">
+                            <MdCategory className="text-xl mr-3"/>
+                            <span className={`${isOpen ? 'block' : 'hidden'}`}>Categories</span>
 
                         </Link>
                     </li>

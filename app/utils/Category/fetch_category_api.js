@@ -42,3 +42,13 @@ export const deleteCategory= async (id)=> {
         }
     }
 }
+
+export const updateCategory= async (id,data)=> {
+    try {
+        return await axios.patch(`${baseURL}/api/category/${id}/update`,data);
+    } catch (error) {
+        return {
+            error
+        }
+    }
+}
