@@ -12,30 +12,62 @@ import SaveForLaterButton from "@/app/components/SavedForLaterItems/SaveForLater
 import Countdown from "@/app/components/Countdown/Countdown";
 import { MdBlockFlipped } from "react-icons/md";
 import { PiImageBrokenLight } from "react-icons/pi";
+import baseURL from "@/app/utils/baseURL";
 
 
+export async function generateMetadata({ params }, parent) {
+    // Extract product ID from route params
+    const id = params.id;
 
-export async function generateMetadata({ params }) {
-    const { id } = params;
-    const product = await getDetailsProduct(id); // Fetch product details using productId
+    // Fetch product data from API (replace URL with your API endpoint)
+    const product = await getDetailsProduct({id}) || {};
 
+    // Access previous metadata from the parent, if needed (optional)
+    const previousImages = (await parent)?.openGraph?.images || [];
+    const productPhotos = Array.isArray(product?.data?.photos) ? product?.data?.photos : [];
+    // Return dynamic metadata
     return {
-        title: `${product?.data?.name} - Brand`,
-        description: `Buy ${product?.data?.name} at Brand. ${product?.data?.description}. Available now for $${product?.data?.price}. Enjoy secure payments and fast delivery.`,
-        keywords: "product details, product specifications, online shopping, Brand, reviews, pricing, availability",
+        title: `${product?.data?.name} - Brand`, // Dynamic title based on product name
+        description: `Buy ${product?.data?.name} at Brand. ${product?.data?.description}.`, // Dynamic description
         openGraph: {
-            title: "Product Details - Brand",
-            description: "View detailed information about this product on Brand. Check specifications, customer reviews, pricing, and availability. Make an informed purchasing decision and enjoy a seamless shopping experience!",
-            url: "https://brand-rukon.vercel.app/details/{id}", // Adjust the URL dynamically with product ID
-            type: "product",
+            title: `${product?.data?.name} - Brand`,
+            description: `Buy ${product?.data?.name} at Brand. ${product?.data?.description}.`,
+            images: [...productPhotos, ...previousImages], // Using product photos and any previous images
+            url: `${baseURL}/details/${product?.data?.id}`,
         },
         twitter: {
-            card: "summary_large_image",
-            title: "Product Details - Brand",
-            description: "View detailed information about this product on Brand. Check specifications, customer reviews, pricing, and availability. Make an informed purchasing decision and enjoy a seamless shopping experience!",
+            card: 'summary_large_image',
+            title: `${product?.data?.name} - Brand`,
+            description: `Buy ${product?.data?.name} at Brand. ${product?.data?.description}.`,
+            image: product?.data?.photos[0], // First image for Twitter card
         },
+        link: [{ rel: 'icon', href: '/favicon.ico' }],
+        robots: 'index, follow',
+        script: [
+            {
+                type: 'application/ld+json',
+                innerHTML: JSON.stringify({
+                    '@context': 'https://schema.org',
+                    '@type': 'Product',
+                    name: product?.data?.name,
+                    description: product?.data?.description,
+                    image: product?.data?.photos,
+                    brand: product?.data?.brand?.name,
+                    offers: {
+                        '@type': 'Offer',
+                        price: product?.data?.offers?.[0]?.price,
+                        priceCurrency: 'USD',
+                        availability: 'https://schema.org/InStock',
+                    },
+                }),
+            },
+        ],
+        // Add any other metadata as needed
     };
 }
+
+
+
 
 const Details = async ({ params }) => {
     /*//https://www.figma.com/file/OO4BPb5dJMEaRxPvBPx2uC/Figma-ecommerce-UI-Kit-(web-%26-mobile)-(Community)?node-id=238%3A4835&mode=dev
@@ -44,7 +76,7 @@ const Details = async ({ params }) => {
     const product = await getDetailsProduct({id: params.id});
 
     return (
-        <div>
+        <>
             <Nav />
 
             <div className="max-w-[1200px] mx-auto md:px-3  pb-5">
@@ -229,7 +261,7 @@ const Details = async ({ params }) => {
 
 
             </div>
-        </div>
+        </>
     );
 };
 
