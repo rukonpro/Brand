@@ -135,8 +135,8 @@ const Slider = () => {
 
                     </li>
                 ))}
-                {isFetching&& [1,2,3,4,5].map(() =>
-                    <li>
+                {isFetching&& [1,2,3,4,5].map((_,i) =>
+                    <li key={i}>
                     <SkeletonOfferCard/>
                 </li>)}
             </ul>
