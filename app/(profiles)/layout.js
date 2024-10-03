@@ -1,11 +1,15 @@
 import React from 'react';
 import Sidebar from "@/app/components/sidebar/sidebar";
+import Navbar from "@/app/components/navbar/navbar";
 
 
 const MainLayout = ({children}) => {
 
     return (
         <div>
+            <div className="sticky top-0 z-[20]">
+                <Navbar/>
+            </div>
             <div className="max-w-[1200px] mx-auto">
 
                 <div className=" grid grid-cols-12 relative">

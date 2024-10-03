@@ -1,15 +1,15 @@
 "use client"
-import { useState } from 'react';
+
 import Link from 'next/link';
 import { FaHome, FaBox, FaShoppingCart, FaUsers, FaChartLine } from 'react-icons/fa';
 import { MdCategory } from "react-icons/md";
 import { SiSpringCreators } from "react-icons/si";
-const Sidebar = () => {
-    const [isOpen, setIsOpen] = useState(true);
+const Sidebar = ({setIsOpen,isOpen}) => {
+
     const toggleSidebar = () => setIsOpen(!isOpen);
 
     return (
-        <div className={`bg-gray-800 dark:bg-slate-800 text-white h-screen transition-all ${isOpen ? 'w-64' : 'w-16'} duration-300`}>
+        <div className={`bg-gray-800 dark:bg-slate-800 text-white h-screen transition-all fixed  left-0 top-0 bottom-0 z-50   ${isOpen ? 'w-72' : 'w-16'} duration-300`}>
             <div className="flex items-center justify-between p-4">
                 <h1 className={`${isOpen ? 'block' : 'hidden'} text-xl font-bold`}>Admin</h1>
                 <button
@@ -42,7 +42,7 @@ const Sidebar = () => {
                         </Link>
                     </li>
                     <li className="hover:bg-gray-700 p-3">
-                        <Link href="/" className="flex items-center">
+                        <Link href="/admin/dashboard/products" className="flex items-center">
                             <FaBox className="text-xl mr-3"/>
                             <span className={`${isOpen ? 'block' : 'hidden'}`}>Products</span>
 

@@ -10,7 +10,7 @@ const OfferCard = ({offer}) => {
                 </div>
 
             <div className='flex justify-center '>
-                <Image src={offer?.product?.photos?.[0]} alt={offer?.product?.name} width={100} height={100} className="h-36 w-full object-fill" />
+                <Image src={offer?.product?.photos?.[0]}  alt={offer?.product?.name} width={100} height={100} className="h-36 w-full object-fill" />
             </div>
 
             <div className='flex justify-center'>

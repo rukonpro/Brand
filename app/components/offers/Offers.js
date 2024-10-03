@@ -7,6 +7,7 @@ import Link from "next/link";
 import backIcon from "@/public/images/left-back-icon.png";
 import Image from "next/image";
 import {DealsSkeleton, SkeletonOfferCard} from "@/app/components/Skeletons/OfferSkeletons";
+import Slider from "@/app/components/offers/Slider";
 
 const Offers = ({offers}) => {
 
@@ -35,34 +36,35 @@ const Offers = ({offers}) => {
                        </Suspense>
                     </div>
                     <div className="md:col-span-9 col-span-12 relative">
-                        {<button onClick={() => handleScrollButtonClick("left")}
-                                 className="absolute left-0 top-1/2 bg-gray-600/70 rounded-r-full hover:bg-gray-600 px-2 py-1 md:block hidden">
-                            <Image src={backIcon} alt="backIcon"/>
-                        </button>}
-                        {<button onClick={() => handleScrollButtonClick("right")}
-                                 className="absolute right-0 top-1/2 bg-gray-600/70 rounded-r-full hover:bg-gray-600 rotate-180 px-2 py-1 md:block hidden">
-                            <Image src={backIcon} alt="backIcon"/>
-                        </button>}
-                        <ul
-                            ref={scrollRef}
-                            className='  flex gap-0.5  w-full scroll-smooth overflow-x-auto overscroll-x-none overflow-visible   touch-pan-x wrapper '
-                            /*     onFocus={handleScrollButtonClick}*/
-                        >
-                            {
-                                offers?.map((offer) => {
-                                    return (
-                                        <li key={offer?.id} className='p-2  bg-white cursor-pointer  dark:bg-slate-800 relative'>
-                                            <Link href={`/details/${offer?.product?.id}`}>
-                                                <Suspense fallback={<SkeletonOfferCard/>}>
-                                                    <OfferCard offer={offer}/>
-                                                 </Suspense>
-                                            </Link>
-                                        </li>
-                                    )
-                                })
-                            }
+                        <Slider/>
+                        {/*{<button onClick={() => handleScrollButtonClick("left")}*/}
+                        {/*         className="absolute left-0 top-1/2 bg-gray-600/70 rounded-r-full hover:bg-gray-600 px-2 py-1 md:block hidden">*/}
+                        {/*    <Image src={backIcon} alt="backIcon"/>*/}
+                        {/*</button>}*/}
+                        {/*{<button onClick={() => handleScrollButtonClick("right")}*/}
+                        {/*         className="absolute right-0 top-1/2 bg-gray-600/70 rounded-r-full hover:bg-gray-600 rotate-180 px-2 py-1 md:block hidden">*/}
+                        {/*    <Image src={backIcon} alt="backIcon"/>*/}
+                        {/*</button>}*/}
+                        {/*<ul*/}
+                        {/*    ref={scrollRef}*/}
+                        {/*    className='  flex gap-0.5  w-full scroll-smooth overflow-x-auto overscroll-x-none overflow-visible   touch-pan-x wrapper '*/}
+                        {/*    */}
+                        {/*>*/}
+                        {/*    {*/}
+                        {/*        offers?.map((offer) => {*/}
+                        {/*            return (*/}
+                        {/*                <li key={offer?.id} className='p-2  bg-white cursor-pointer  dark:bg-slate-800 relative'>*/}
+                        {/*                    <Link href={`/details/${offer?.product?.id}`}>*/}
+                        {/*                        <Suspense fallback={<SkeletonOfferCard/>}>*/}
+                        {/*                            <OfferCard offer={offer}/>*/}
+                        {/*                         </Suspense>*/}
+                        {/*                    </Link>*/}
+                        {/*                </li>*/}
+                        {/*            )*/}
+                        {/*        })*/}
+                        {/*    }*/}
 
-                        </ul>
+                        {/*</ul>*/}
                     </div>
                 </div>
             </div>

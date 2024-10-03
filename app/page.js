@@ -8,6 +8,8 @@ import {Suspense} from "react";
 import OffersLayout from "@/app/components/offers/OffersLayout";
 import {SkeletonHeader} from "@/app/components/Skeletons/SkeletonCategories";
 import {SkeletonRecommendedItemsSection} from "@/app/components/Skeletons/SkeletonRecommendedItemCard";
+import Navbar from "@/app/components/navbar/navbar";
+
 
 export const metadata = {
     title: "Brand - Your Ultimate Online Shopping Destination",
@@ -30,24 +32,28 @@ export const metadata = {
 export default  function Home() {
     return (
         <>
-            <Nav />
+            <div className="sticky top-0 z-[20]">
+                <Navbar/>
+            </div>
+            <Nav/>
             <Suspense fallback={<SkeletonHeader/>}>
-                <Banner />
+                <Banner/>
             </Suspense>
 
             {/*<Suspense fallback={<Loader/>}>*/}
-                <OffersLayout />
+            <OffersLayout/>
+
             {/*</Suspense>*/}
             <Suspense fallback={<SkeletonRecommendedItemsSection/>}>
-                <RecommendedItems />
+                <RecommendedItems/>
             </Suspense>
             {/*<Suspense fallback={<Loader/>}>*/}
             {/*    <SourcesProductsLayout />*/}
             {/*</Suspense>*/}
-            <Requests />
+            <Requests/>
 
-            <OurExtraServices />
-            <SuppliersByRegion />
+            <OurExtraServices/>
+            <SuppliersByRegion/>
         </>
     );
 }

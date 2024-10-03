@@ -7,6 +7,7 @@ import AddToCartButton from "@/app/components/AddToCartButton/AddToCartButton";
 import {getCategoryById} from "@/app/utils/Category/fetch_category_api";
 import Image from "next/image";
 import Loader from "@/app/Loader";
+import Navbar from "@/app/components/navbar/navbar";
 
 
 export async function generateMetadata({ params }) {
@@ -48,50 +49,56 @@ const Source = async ({params}) => {
 
     // console.log(products)
     return (
-        <div className='py-5 sm:px-3'>
-            <div className='max-w-[1200px] mx-auto'>
-
-
-                <div className="flex justify-between items-center w-full md:px-0 px-3">
-                    <h1 className="text-2xl  font-bold   text-blue-500/80 ">
-                        <span className="rounded  backdrop-blur">{categoryById?.data?.name}</span>
-                    </h1>
-                    <div>
-                        <BackButton title="Back"/>
-                    </div>
-                </div>
-
-
-                <Suspense fallback={<Loader/>}>
-                    {
-                        !products?.data?.length ? (
-                                <h1 className="text-red-500 text-center text-2xl font-bold">Product not found</h1>
-                            ) :
-                            <ul className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 gap-0.5 md:gap-4 pt-10">
-                                {
-                                    products?.data?.map((product, index) => {
-                                        return (
-                                            <li key={index}
-                                                className='bg-white dark:bg-slate-800 dark:border-slate-700 md:border-2 border-blue-200 md:rounded-lg p-3 flex-1 flex flex-col justify-between'>
-                                                <Link href={`/details/${product?.id}`}>
-
-                                                    {/************************Related products Card ***********************/}
-
-                                                    <RelatedProductCard product={product}/>
-
-                                                </Link>
-
-                                                <AddToCartButton product={product}/>
-                                            </li>
-                                        )
-                                    })
-                                }
-                            </ul>
-                    }
-
-                </Suspense>
+        <>
+            <div className="sticky top-0 z-[20]">
+                <Navbar/>
             </div>
-        </div>
+            <div className='py-5 sm:px-3'>
+                <div className='max-w-[1200px] mx-auto'>
+
+
+                    <div className="flex justify-between items-center w-full md:px-0 px-3">
+                        <h1 className="text-2xl  font-bold   text-blue-500/80 ">
+                            <span className="rounded  backdrop-blur">{categoryById?.data?.name}</span>
+                        </h1>
+                        <div>
+                            <BackButton title="Back"/>
+                        </div>
+                    </div>
+
+
+                    <Suspense fallback={<Loader/>}>
+                        {
+                            !products?.data?.length ? (
+                                    <h1 className="text-red-500 text-center text-2xl font-bold">Product not found</h1>
+                                ) :
+                                <ul className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 gap-0.5 md:gap-4 pt-10">
+                                    {
+                                        products?.data?.map((product, index) => {
+                                            return (
+                                                <li key={index}
+                                                    className='bg-white dark:bg-slate-800 dark:border-slate-700 md:border-2 border-blue-200 md:rounded-lg p-3 flex-1 flex flex-col justify-between'>
+                                                    <Link href={`/details/${product?.id}`}>
+
+                                                        {/************************Related products Card ***********************/}
+
+                                                        <RelatedProductCard product={product}/>
+
+                                                    </Link>
+
+                                                    <AddToCartButton product={product}/>
+                                                </li>
+                                            )
+                                        })
+                                    }
+                                </ul>
+                        }
+
+                    </Suspense>
+                </div>
+            </div>
+        </>
+
     );
 };
 

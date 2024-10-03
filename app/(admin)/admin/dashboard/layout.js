@@ -1,16 +1,18 @@
-import React from 'react';
-import Topbar from "@/app/components/AdminDashboard/Topbar/Topbar";
+"use client"
+import React, {useState} from 'react';
 import Sidebar from "@/app/components/AdminDashboard/Sidebar/Sidebar";
+import Navbar from "@/app/components/navbar/navbar";
 
 const DashboardLayout = ({children}) => {
+    const [isOpen, setIsOpen] = useState(true);
     return (
-        <div className="flex max-w-screen overflow-x-hidden ">
-            <Sidebar/>
-            <div className="flex-1 flex flex-col relative ">
-                {/*<Topbar/>*/}
-                <div className="p-3">
-                    {children}
+        <div className={`overflow-x-hidden  transition-all duration-300 relative ${isOpen ? 'ml-72' : 'ml-16'}`}>
+                <Sidebar isOpen={isOpen} setIsOpen={setIsOpen}/>
+            <div className="relative">
+                <div className="sticky top-0 z-[20]">
+                    <Navbar/>
                 </div>
+                {children}
             </div>
         </div>
     );

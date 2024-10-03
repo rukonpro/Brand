@@ -13,6 +13,7 @@ import Countdown from "@/app/components/Countdown/Countdown";
 import { MdBlockFlipped } from "react-icons/md";
 import { PiImageBrokenLight } from "react-icons/pi";
 import baseURL from "@/app/utils/baseURL";
+import Navbar from "@/app/components/navbar/navbar";
 
 
 export async function generateMetadata({ params }, parent) {
@@ -77,7 +78,10 @@ const Details = async ({ params }) => {
 
     return (
         <>
-            <Nav />
+            <div className="sticky top-0 z-[20]">
+                <Navbar/>
+            </div>
+            <Nav/>
 
             <div className="max-w-[1200px] mx-auto md:px-3  pb-5">
 
@@ -85,18 +89,19 @@ const Details = async ({ params }) => {
                     <h1 className="text-2xl  font-bold text-gray-600 py-5 dark:text-slate-50">Details</h1>
 
                     <div>
-                        <BackButton title="Back" />
+                        <BackButton title="Back"/>
                     </div>
                 </div>
                 <Suspense fallback={<Loader/>}>
-                    <div className="grid grid-cols-12 gap-4 border-2 p-3 py-10  md:bg-white md:rounded-lg dark:bg-slate-800 dark:border-slate-700">
+                    <div
+                        className="grid grid-cols-12 gap-4 border-2 p-3 py-10  md:bg-white md:rounded-lg dark:bg-slate-800 dark:border-slate-700">
                         <div className="col-span-12 md:col-span-4">
-                            {product?.data?.photos?.length>0?<ImageChangeButton
-                                images={product?.data?.photos}
-                                name={product?.data?.name}/>:
+                            {product?.data?.photos?.length > 0 ? <ImageChangeButton
+                                    images={product?.data?.photos}
+                                    name={product?.data?.name}/> :
 
                                 <PiImageBrokenLight
-                                   className="w-full h-full"
+                                    className="w-full h-full"
                                 />
                             }
                         </div>
@@ -104,20 +109,20 @@ const Details = async ({ params }) => {
                         <div className="col-span-12 md:col-span-8 lg:col-span-5">
                             <div className="flex justify-between items-center">
                                 <div className="flex  gap-1 items-center">
-                                    {product?.data?.availability==="IN_STOCK"?
-                                        <AiOutlineCheck className="text-green-500 size-8"/>:
+                                    {product?.data?.availability === "IN_STOCK" ?
+                                        <AiOutlineCheck className="text-green-500 size-8"/> :
                                         <MdBlockFlipped className="text-red-500 size-8"/>}
 
                                     <p className="text-sm">{product?.data?.availability}</p>
                                 </div>
-                                {product?.data?.offers?.[0]?.isActive&&
+                                {product?.data?.offers?.[0]?.isActive &&
                                     <div className="border rounded p-3 dark:border-slate-700">
 
-                                            <p className="font-bold text-2xl text-red-500 bg-green-100 px-2 rounded-full dark:bg-slate-700 dark:text-green-500">{product?.data?.offers?.[0]?.discountValue}%
-                                                Discount</p>
-                                         <div className="flex justify-center">
-                                             <Countdown endDate={product?.data?.offers?.[0]?.endDate}/>
-                                         </div>
+                                        <p className="font-bold text-2xl text-red-500 bg-green-100 px-2 rounded-full dark:bg-slate-700 dark:text-green-500">{product?.data?.offers?.[0]?.discountValue}%
+                                            Discount</p>
+                                        <div className="flex justify-center">
+                                            <Countdown endDate={product?.data?.offers?.[0]?.endDate}/>
+                                        </div>
                                     </div>
                                 }
                             </div>
@@ -140,56 +145,58 @@ const Details = async ({ params }) => {
                                 {/*</div>*/}
 
                                 <div className="pt-5">
-                                    {product?.data?.price && <div className="grid grid-cols-12 border-b-2 border-b-gray-700/50 pb-1">
-                                        <p className="col-span-4">Price:</p>
-                                        <p className="col-span-8">${product?.data?.price}</p>
-                                    </div>
+                                    {product?.data?.price &&
+                                        <div className="grid grid-cols-12 border-b-2 border-b-gray-700/50 pb-1">
+                                            <p className="col-span-4">Price:</p>
+                                            <p className="col-span-8">${product?.data?.price}</p>
+                                        </div>
                                     }
 
                                     <div className="border-b-2 border-b-gray-700/50 pb-3">
-                                        {product?.data?.colors?.length?
+                                        {product?.data?.colors?.length ?
                                             <div className="grid grid-cols-12 pt-3 ">
-                                            <p className="col-span-4">color:</p>
-                                            <p className="col-span-8">{
-                                                product?.data?.colors?.map((color,index) => {
-                                                    return (
-                                                        <span
-                                                            key={index}
-                                                            className="mx-1 bg-blue-400 py-0.5 px-1 text-white rounded">{color}</span>
-                                                    )
-                                                })
-                                            }</p>
-                                        </div>:null}
+                                                <p className="col-span-4">color:</p>
+                                                <p className="col-span-8">{
+                                                    product?.data?.colors?.map((color, index) => {
+                                                        return (
+                                                            <span
+                                                                key={index}
+                                                                className="mx-1 bg-blue-400 py-0.5 px-1 text-white rounded">{color}</span>
+                                                        )
+                                                    })
+                                                }</p>
+                                            </div> : null}
 
-                                        {product?.data?.sizes?.length?
+                                        {product?.data?.sizes?.length ?
                                             <div className="grid grid-cols-12 pt-3 ">
-                                            <p className="col-span-4">Sizes:</p>
-                                            <p className="col-span-8">{
-                                                product?.data?.sizes?.map((size,index) => {
-                                                    return (
-                                                        <span
-                                                            key={index}
-                                                            className="mx-1 bg-blue-400 py-0.5 px-1 text-white rounded">{size}</span>
-                                                    )
-                                                })
-                                            }</p>
-                                        </div>:null}
+                                                <p className="col-span-4">Sizes:</p>
+                                                <p className="col-span-8">{
+                                                    product?.data?.sizes?.map((size, index) => {
+                                                        return (
+                                                            <span
+                                                                key={index}
+                                                                className="mx-1 bg-blue-400 py-0.5 px-1 text-white rounded">{size}</span>
+                                                        )
+                                                    })
+                                                }</p>
+                                            </div> : null}
 
 
                                         {product?.data?.dimension &&
-                                            <div className="grid grid-cols-12 pt-1 bg-orange-100/50 px-3 my-2 dark:bg-slate-700">
-                                            <p className="col-span-4">Dimension:</p>
-                                            <div className="col-span-8">
-                                                <p>Height: {product?.data?.dimension?.height} m</p>
-                                                <p>Weight: {product?.data?.dimension?.width} m</p>
-                                                <p>Length: {product?.data?.dimension?.length} m</p>
-                                            </div>
-                                        </div>}
+                                            <div
+                                                className="grid grid-cols-12 pt-1 bg-orange-100/50 px-3 my-2 dark:bg-slate-700">
+                                                <p className="col-span-4">Dimension:</p>
+                                                <div className="col-span-8">
+                                                    <p>Height: {product?.data?.dimension?.height} m</p>
+                                                    <p>Weight: {product?.data?.dimension?.width} m</p>
+                                                    <p>Length: {product?.data?.dimension?.length} m</p>
+                                                </div>
+                                            </div>}
                                         {product?.data?.brand?.name &&
                                             <div className="grid grid-cols-12 pt-1 ">
-                                            <p className="col-span-4">Brand:</p>
-                                            <p className="col-span-8">{product?.data?.brand?.name}</p>
-                                        </div>}
+                                                <p className="col-span-4">Brand:</p>
+                                                <p className="col-span-8">{product?.data?.brand?.name}</p>
+                                            </div>}
 
                                         {product?.data?.material && <div className="grid grid-cols-12 pt-1 ">
                                             <p className="col-span-4">Material:</p>
@@ -206,9 +213,9 @@ const Details = async ({ params }) => {
                                     <div className="b-1">
                                         {product?.data?.description &&
                                             <div className="grid grid-cols-12 pt-1">
-                                            <p className="col-span-4">Description:</p>
-                                            <p className="col-span-8">{product?.data?.description}</p>
-                                        </div>
+                                                <p className="col-span-4">Description:</p>
+                                                <p className="col-span-8">{product?.data?.description}</p>
+                                            </div>
                                         }
                                         {
                                             product?.data?.offers?.[0]?.description &&
@@ -233,10 +240,11 @@ const Details = async ({ params }) => {
 
                             </div>
                         </div>
-                        <div className="col-span-12  lg:col-span-3 grid sm:grid-cols-2 lg:grid-cols-none gap-4 lg:gap-0">
+                        <div
+                            className="col-span-12  lg:col-span-3 grid sm:grid-cols-2 lg:grid-cols-none gap-4 lg:gap-0">
 
                             {/************************Supplier Card ***********************/}
-                            <SupplierCard />
+                            <SupplierCard/>
 
                             <div className="pt-8">
 
@@ -244,7 +252,7 @@ const Details = async ({ params }) => {
                                 <SaveForLaterButton product={product?.data}/>
 
                                 {/************************Add to cart button ***********************/}
-                                <AddToCartButton product={product?.data} />
+                                <AddToCartButton product={product?.data}/>
                             </div>
                         </div>
                     </div>
@@ -253,9 +261,9 @@ const Details = async ({ params }) => {
                 {/************************Related products ***********************/}
 
                 {
-                    product?.data?.categoryId&&
+                    product?.data?.categoryId &&
                     <Suspense fallback={<Loader/>}>
-                        <RelatedProducts categoryId={product?.data?.categoryId} />
+                        <RelatedProducts categoryId={product?.data?.categoryId}/>
                     </Suspense>
                 }
 

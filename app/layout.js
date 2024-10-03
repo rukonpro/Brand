@@ -15,9 +15,7 @@ export default function RootLayout({ children}) {
       <main className="relative">
           <ClientSessionProvider>
           <AppProvider>
-          <div className="sticky top-0 z-[20]">
-            <Navbar />
-          </div>
+
           {children}
           <Footer />
           <Toaster />
