@@ -8,6 +8,31 @@ import {getCategoryById} from "@/app/utils/Category/fetch_category_api";
 import Image from "next/image";
 import Loader from "@/app/Loader";
 
+
+export async function generateMetadata({ params }) {
+    const { id } = params;
+    const category = await getCategoryById(id); // Fetch category details
+    const products = await getProducts({ categoryId: id, limit: 1000, page: 1 }); // Fetch products under this category
+
+    return {
+        title: `${category?.data?.name} Products - Brand`,
+        description: `Explore top products in the ${category?.data?.name} category at Brand. Browse through ${products?.data?.length} selected items with unbeatable prices and fast delivery.`,
+        keywords: "source, product categories, Brand, online shopping, product sourcing",
+        openGraph: {
+            title: "Source - Brand",
+            description: "Explore our diverse range of categories and products on Brand. Discover the perfect items that match your style and preferences.",
+            url: "https://brand-rukon.vercel.app/source/[id]", // Use dynamic category ID if applicable
+            type: "website",
+        },
+        twitter: {
+            card: "summary",
+            title: "Source - Brand",
+            description: "Explore our diverse range of categories and products on Brand. Discover the perfect items that match your style and preferences.",
+        },
+    };
+}
+
+
 const Source = async ({params}) => {
 
 

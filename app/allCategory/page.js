@@ -7,7 +7,25 @@ import {getProducts} from "@/app/utils/product/fetch_products_api";
 import RecommendedItemsCard from "@/app/components/RecommendedItems/RecommendedItemsCard";
 import BackButton from "@/app/components/BackButtons/BackButton";
 import notfoundImage from "@/public/images/not-found.png"
- const dynamic = 'force-static'
+
+
+export const metadata = {
+    title: "All Categories - Brand",
+    description: "Explore all product categories at Brand. Discover a wide range of items from fashion, electronics, home essentials, and more. Shop now and find exactly what you're looking for!",
+    keywords: "all categories, product categories, online shopping, fashion, electronics, home essentials, Brand",
+    openGraph: {
+        title: "All Categories - Brand",
+        description: "Explore all product categories at Brand. Discover a wide range of items from fashion, electronics, home essentials, and more. Shop now and find exactly what you're looking for!",
+        url: "https://brand-rukon.vercel.app/categories", // Adjust the URL if necessary
+        type: "website",
+    },
+    twitter: {
+        card: "summary",
+        title: "All Categories - Brand",
+        description: "Explore all product categories at Brand. Discover a wide range of items from fashion, electronics, home essentials, and more. Shop now and find exactly what you're looking for!",
+    },
+};
+
 
 
 const AllCategory = async ({searchParams}) => {

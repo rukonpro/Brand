@@ -5,6 +5,26 @@ import Image from "next/image";
 import Link from "next/link";
 import LoginForm from "@/app/login/loginForm";
 import GoogleAndFacebookLogin from "@/app/login/GoogleAndFacebookLogin";
+
+
+export const metadata = {
+    title: "Login - Brand",
+    description: "Access your Brand account to enjoy personalized shopping. Log in to manage your orders, view saved items, and update your account information.",
+    keywords: "login, user login, Brand, account access, online shopping",
+    openGraph: {
+        title: "Login - Brand",
+        description: "Access your Brand account to enjoy personalized shopping. Log in to manage your orders, view saved items, and update your account information.",
+        url: "https://brand-rukon.vercel.app/login", // Adjust the URL if necessary
+        type: "website",
+    },
+    twitter: {
+        card: "summary",
+        title: "Login - Brand",
+        description: "Access your Brand account to enjoy personalized shopping. Log in to manage your orders, view saved items, and update your account information.",
+    },
+};
+
+
 const Login = () => {
 
     return (

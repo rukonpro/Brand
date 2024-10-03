@@ -3,6 +3,25 @@ import Link from "next/link";
 import RegisterForm from "@/app/register/registerForm";
 import GoogleAndFacebookLogin from "@/app/login/GoogleAndFacebookLogin";
 
+
+export const metadata = {
+    title: "Register - Brand",
+    description: "Create an account on Brand to enjoy personalized shopping experiences. Sign up now to access exclusive deals, track your orders, and save your favorite products.",
+    keywords: "register, sign up, create account, Brand, online shopping, exclusive deals",
+    openGraph: {
+        title: "Register - Brand",
+        description: "Create an account on Brand to enjoy personalized shopping experiences. Sign up now to access exclusive deals, track your orders, and save your favorite products.",
+        url: "https://brand-rukon.vercel.app/register", // Adjust the URL if necessary
+        type: "website",
+    },
+    twitter: {
+        card: "summary",
+        title: "Register - Brand",
+        description: "Create an account on Brand to enjoy personalized shopping experiences. Sign up now to access exclusive deals, track your orders, and save your favorite products.",
+    },
+};
+
+
 const Register = () => {
     return (
 

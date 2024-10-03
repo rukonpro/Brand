@@ -14,6 +14,29 @@ import { MdBlockFlipped } from "react-icons/md";
 import { PiImageBrokenLight } from "react-icons/pi";
 
 
+
+export async function generateMetadata({ params }) {
+    const { id } = params;
+    const product = await getDetailsProduct(id); // Fetch product details using productId
+
+    return {
+        title: `${product?.data?.name} - Brand`,
+        description: `Buy ${product?.data?.name} at Brand. ${product?.data?.description}. Available now for $${product?.data?.price}. Enjoy secure payments and fast delivery.`,
+        keywords: "product details, product specifications, online shopping, Brand, reviews, pricing, availability",
+        openGraph: {
+            title: "Product Details - Brand",
+            description: "View detailed information about this product on Brand. Check specifications, customer reviews, pricing, and availability. Make an informed purchasing decision and enjoy a seamless shopping experience!",
+            url: "https://brand-rukon.vercel.app/details/{id}", // Adjust the URL dynamically with product ID
+            type: "product",
+        },
+        twitter: {
+            card: "summary_large_image",
+            title: "Product Details - Brand",
+            description: "View detailed information about this product on Brand. Check specifications, customer reviews, pricing, and availability. Make an informed purchasing decision and enjoy a seamless shopping experience!",
+        },
+    };
+}
+
 const Details = async ({ params }) => {
     /*//https://www.figma.com/file/OO4BPb5dJMEaRxPvBPx2uC/Figma-ecommerce-UI-Kit-(web-%26-mobile)-(Community)?node-id=238%3A4835&mode=dev
 */

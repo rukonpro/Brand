@@ -1,5 +1,23 @@
 import React from "react";
 
+export const metadata = {
+    title: "Admin Dashboard - Brand",
+    description: "Manage your online store efficiently with the Brand Admin Dashboard. Access analytics, manage products, orders, and users all in one place for seamless store operations.",
+    keywords: "admin dashboard, Brand, store management, product management, order management, analytics",
+    openGraph: {
+        title: "Admin Dashboard - Brand",
+        description: "Manage your online store efficiently with the Brand Admin Dashboard. Access analytics, manage products, orders, and users all in one place for seamless store operations.",
+        url: "https://brand-rukon.vercel.app/admin/dashboard", // Adjust the URL if necessary
+        type: "website",
+    },
+    twitter: {
+        card: "summary",
+        title: "Admin Dashboard - Brand",
+        description: "Manage your online store efficiently with the Brand Admin Dashboard. Access analytics, manage products, orders, and users all in one place for seamless store operations.",
+    },
+};
+
+
 const AdminDashboard = () => {
     return (
         <>

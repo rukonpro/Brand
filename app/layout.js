@@ -8,13 +8,6 @@ import {AppProvider} from "@/app/context/BrandContext";
 import ClientSessionProvider from "@/app/context/ClientSessionProvider";
 const inter = Inter({ subsets: ["latin"] });
 
-export const metadata = {
-  title: "Brand - Your Ultimate Online Shopping Destination",
-  description: "Discover a wide range of high-quality products at Brand. From fashion to electronics, enjoy seamless shopping with fast delivery, secure payments, and unbeatable prices. Shop the latest trends and essentials now!",
-};
-
-
-
 export default function RootLayout({ children}) {
   return (
     <html lang="en">

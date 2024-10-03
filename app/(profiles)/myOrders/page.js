@@ -5,6 +5,13 @@ import {authOptions} from "@/app/api/auth/[...nextauth]/route";
 import { getServerSession } from "next-auth/next";
 import Link from "next/link";
 import Image from "next/image";
+
+
+export const metadata = {
+    title: "My Orders - Brand",
+    description: "View your order history on Brand. Track your past purchases, check order statuses, and manage your returns or exchanges easily.",
+};
+
 const MyOrders =async () => {
     const session = await getServerSession(authOptions)
     const {user}=session;
