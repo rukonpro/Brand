@@ -1,14 +1,48 @@
 module.exports = {
     images: {
-        domains: ['rukonpro.imgbb.com', 'i.ibb.co', "i.ibb.co.com","adminapi.applegadgetsbd.com", "chenabazar.com","i.imghippo.com","www.imghippo.com","res.cloudinary.com"],
-        // remotePatterns: [
-        //     {
-        //         protocol: 'https',
-        //         hostname: 'i.ibb.co',
-        //         port: '',
-        //         pathname: '/**',
-        //     },
-        // ],
+        remotePatterns: [
+            {
+                protocol: 'https',
+                hostname: 'rukonpro.imgbb.com',
+                port: '',
+                pathname: '/**',
+            },
+            {
+                protocol: 'https',
+                hostname: 'i.ibb.co',
+                port: '',
+                pathname: '/**',
+            },
+            {
+                protocol: 'https',
+                hostname: 'adminapi.applegadgetsbd.com',
+                port: '',
+                pathname: '/**',
+            },
+            {
+                protocol: 'https',
+                hostname: 'chenabazar.com',
+                port: '',
+                pathname: '/**',
+            },
+            {
+                protocol: 'https',
+                hostname: 'i.imghippo.com',
+                port: '',
+                pathname: '/**',
+            },
+            {
+                protocol: 'https',
+                hostname: 'www.imghippo.com',
+                port: '',
+                pathname: '/**',
+            },
+            {
+                protocol: 'https',
+                hostname: 'res.cloudinary.com',
+                port: '',
+                pathname: '/**',
+            }
+        ],
     },
-    // outputFileTracing: false,
-}
+};

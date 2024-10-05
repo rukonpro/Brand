@@ -1,11 +1,23 @@
+"use client"
 import React from 'react';
 import Link from "next/link";
 import Image from "next/image";
 import NotFoundImage from "@/public/images/not-found.png";
+import UpdateProductOpenModalButton from "@/app/components/AdminDashboard/Products/UpdateProductOpenModalButton";
+import useSWR from "swr";
+import {fetcher} from "@/app/utils/fetcher/fetcher";
 
-const ProductsTable = ({ products }) => {
+const ProductsTable = ({brands,categories }) => {
+
+    const {
+        data:products,
+        error:errorProducts,
+        isLoading:isLoadingProducts,
+        mutate
+    } = useSWR('/api/product/findMany', fetcher);
+
     return (
-        <div >
+        <div>
             {products?.length > 0 ? (
                 <div >
                     <table className=" table-auto divide-y divide-gray-200  ">
@@ -59,12 +71,21 @@ const ProductsTable = ({ products }) => {
                                 <td className="px-4 py-2 text-xs sm:text-sm text-gray-700 text-center">{product?.deliveryFee || "N/A"}</td>
                                 <td className="px-4 py-2 text-xs sm:text-sm text-gray-700 text-center">{product?.brand?.name || "N/A"}</td>
                                 <td className="px-4 py-2 text-xs sm:text-sm text-gray-700 text-center">{product?.category?.name || "N/A"}</td>
-                                <td className="px-4 py-2 text-xs sm:text-sm text-gray-700 text-center">{product?.dimension ? `${product?.dimension?.height}x${product?.dimension?.width}x${product?.dimension?.length}` : "N/A"}</td>
+                                <td className="px-4 py-2 text-xs sm:text-sm text-gray-700 text-center">{
+                                    product?.dimension ?
+                                        `${product?.dimension?.height&&product?.dimension?.length + "X"}
+                                        ${product?.dimension?.width&&product?.dimension?.width+"X"}
+                                        ${product?.dimension?.length&&product?.dimension?.length}` : "N/A"}</td>
                                 <td className="px-4 py-2 text-xs sm:text-sm text-gray-700 text-center">{product?.category?.offers?.[0]?.isActive ? "Active" : "Inactive" || "N/A"}</td>
                                 <td className="px-4 py-2 space-x-2 text-center">
-                                    <button className="text-blue-600 hover:text-blue-900">
-                                        <span role="img" aria-label="edit">✏️</span>
-                                    </button>
+                                    <UpdateProductOpenModalButton
+                                        productId={product?.id}
+                                        product={product}
+                                        brands={brands}
+                                        mutate={mutate}
+                                        categories={categories}
+
+                                    />
                                     <button className="text-red-600 hover:text-red-900">
                                         <span role="img" aria-label="delete">🗑️</span>
                                     </button>

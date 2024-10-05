@@ -5,9 +5,10 @@ import BackButton from "@/app/components/BackButtons/BackButton";
 import RelatedProductCard from "@/app/components/RelatedProductCard/RelatedProductCard";
 import AddToCartButton from "@/app/components/AddToCartButton/AddToCartButton";
 import {getCategoryById} from "@/app/utils/Category/fetch_category_api";
-import Image from "next/image";
 import Loader from "@/app/Loader";
 import Navbar from "@/app/components/navbar/navbar";
+import Image from "next/image";
+import NotFoundImage from "@/public/images/not-found.png";
 
 
 export async function generateMetadata({ params }) {
@@ -70,7 +71,15 @@ const Source = async ({params}) => {
                     <Suspense fallback={<Loader/>}>
                         {
                             !products?.data?.length ? (
-                                    <h1 className="text-red-500 text-center text-2xl font-bold">Product not found</h1>
+                                    <div className="flex justify-center items-center">
+                                        <div className="max-w-sm">
+                                            <h1 className="text-red-500  text-lg pt-6">No products were found in this
+                                                category, you can see in other categories.<Link href="/" className="text-blue-500 underline">Go to home</Link></h1>
+                                            <Image src={NotFoundImage} placeholder="blur" alt="not found image"/>
+                                        </div>
+
+                                    </div>
+
                                 ) :
                                 <ul className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 gap-0.5 md:gap-4 pt-10">
                                     {

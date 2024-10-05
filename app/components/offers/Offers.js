@@ -1,29 +1,29 @@
 "use client"
-import React, {Suspense, useRef, useState} from 'react';
-import OfferCard from './OfferCard';
+import React, {Suspense} from 'react';
+// import OfferCard from './OfferCard';
 import OfferTiming from './OfferTiming';
-import Link from "next/link";
+// import Link from "next/link";
 
-import backIcon from "@/public/images/left-back-icon.png";
-import Image from "next/image";
+// import backIcon from "@/public/images/left-back-icon.png";
+// import Image from "next/image";
 import {DealsSkeleton, SkeletonOfferCard} from "@/app/components/Skeletons/OfferSkeletons";
 import Slider from "@/app/components/offers/Slider";
 
 const Offers = ({offers}) => {
 
-    const scrollRef = useRef();
-    const handleScrollButtonClick = (scroll) => {
-
-        if(scrollRef.current){
-            if ( scroll!=="left") {
-                scrollRef.current.scrollLeft += 150;
-            }
-            else {
-                scrollRef.current.scrollLeft -= 150;
-            }
-        }
-
-    };
+    // const scrollRef = useRef();
+    // const handleScrollButtonClick = (scroll) => {
+    //
+    //     if(scrollRef.current){
+    //         if ( scroll!=="left") {
+    //             scrollRef.current.scrollLeft += 150;
+    //         }
+    //         else {
+    //             scrollRef.current.scrollLeft -= 150;
+    //         }
+    //     }
+    //
+    // };
 
 
     return (

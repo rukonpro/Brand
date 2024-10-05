@@ -88,7 +88,7 @@ const AdminDashboardModal = ({ isOpen, handleCloseModal, children, title }) => {
 
                     {/* Modal Body */}
                     <div
-                        className={`pt-16 h-full border-2 border-slate-50 dark:border-slate-700 bg-slate-200/50 dark:bg-gray-800/50 backdrop-blur-3xl shadow-xl overflow-hidden overflow-y-auto transform transition-all ease-in-out duration-700 rounded-lg relative`}
+                        className={`py-20 h-full border-2 border-slate-50 dark:border-slate-700 bg-slate-200/50 dark:bg-gray-800/50 backdrop-blur-3xl shadow-xl overflow-hidden overflow-y-auto transform transition-all ease-in-out duration-700 rounded-lg relative`}
                     >
                         {children}
                     </div>

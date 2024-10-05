@@ -9,6 +9,7 @@ import OffersLayout from "@/app/components/offers/OffersLayout";
 import {SkeletonHeader} from "@/app/components/Skeletons/SkeletonCategories";
 import {SkeletonRecommendedItemsSection} from "@/app/components/Skeletons/SkeletonRecommendedItemCard";
 import Navbar from "@/app/components/navbar/navbar";
+import Footer from "@/app/components/Footer/Footer";
 
 
 export const metadata = {
@@ -54,6 +55,7 @@ export default  function Home() {
 
             <OurExtraServices/>
             <SuppliersByRegion/>
+            <Footer />
         </>
     );
 }

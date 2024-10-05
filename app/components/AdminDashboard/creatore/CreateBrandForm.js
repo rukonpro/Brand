@@ -85,8 +85,8 @@ const BandFormWithCloudinarySignature = () => {
                     <CldUploadWidget
                         uploadPreset={process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET}
                         signatureEndpoint="/api/signature/signature"
-                        onUpload={(results,widget) => {
-                            console.log(results)
+                        onUpload={(result,widget) => {
+                            console.log(result)
                             if (result && result.event === 'success') {
                                 handleUploadSuccess(result);
                             }

@@ -10,8 +10,8 @@ const Requests = () => {
                 <Image
                     src={bgImage}
                     alt="Background"
-                    layout="fill"
-                    objectFit="cover"
+                    fill
+                    style={{ objectFit: 'cover' }}
                     quality={100}
                     className="-z-10"
                 />

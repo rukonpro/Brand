@@ -36,3 +36,10 @@ export const createProduct= async (data)=>{
 
 
 
+export const updateProduct= async ({productId,updateData})=>{
+    try {
+        return await axios.patch(`${baseURL}/api/product/${productId}/update`, updateData);
+    }catch (error) {
+        return {error}
+    }
+}

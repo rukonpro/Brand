@@ -1,22 +1,16 @@
-// components/Layout/Topbar.js
-import { FaBell, FaSearch, FaUserCircle } from 'react-icons/fa';
-
+import React from "react";
+import SideBarToggleButton from "@/app/components/AdminDashboard/Sidebar/SidebarToggleButton";
+import { IoReorderThree } from "react-icons/io5";
 const Topbar = () => {
     return (
-        <div className="bg-white dark:bg-slate-800 shadow flex items-center justify-between p-4 sticky top-0">
-            <div className="relative w-full max-w-xs">
-                <input
-                    type="text"
-                    className="bg-gray-200 dark:bg-slate-700 w-full px-4 py-2 rounded-full focus:outline-none"
-                    placeholder="Search..."
-                />
-                <FaSearch className="absolute top-3 right-3 text-gray-400" />
+        <header className="bg-white shadow-md flex items-center justify-between p-4 sticky top-0 z-50">
+            <SideBarToggleButton Icon={<IoReorderThree size={25}/>}/>
+            <div className="font-bold text-xl">Admin Dashboard</div>
+            <div className="flex items-center space-x-4">
+                <button className="text-gray-500">🔔</button>
+                <button className="text-gray-500">⚙️</button>
             </div>
-            <div className="flex items-center space-x-6">
-                <FaBell className="text-xl text-gray-600 dark:text-slate-300 cursor-pointer" />
-                <FaUserCircle className="text-2xl text-gray-600 dark:text-slate-300 cursor-pointer" />
-            </div>
-        </div>
+        </header>
     );
 };
 

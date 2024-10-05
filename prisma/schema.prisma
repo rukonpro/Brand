@@ -33,13 +33,17 @@ model Review {
   createdAt  DateTime @default(now())
 }
 
-model Dimension {
-  id      String  @id @default(auto()) @map("_id") @db.ObjectId
-  length  Float?
-  width   Float?
-  height  Float?
-  Product Product? @relation
-}
+// model Dimension {
+//   id         String   @id @default(auto()) @map("_id") @db.ObjectId
+//   length     Float
+//   width      Float
+//   height     Float
+//   productId  String?  @unique @db.ObjectId // Make productId unique to create a one-to-one relationship
+//   product    Product? @relation(fields: [productId], references: [id], onDelete: NoAction, onUpdate: NoAction) // Define relation with referential actions
+//
+//   createdAt  DateTime  @default(now())
+//   updatedAt  DateTime  @updatedAt
+// }
 
 model Product {
   id              String        @id @default(auto()) @map("_id") @db.ObjectId
@@ -61,8 +65,7 @@ model Product {
   brandId         String?       @db.ObjectId
   category        Category?     @relation(fields: [categoryId], references: [id])
   categoryId      String?       @db.ObjectId
-  dimension       Dimension?    @relation(fields: [dimensionId], references: [id])
-  dimensionId     String?       @db.ObjectId @unique
+  dimension       Json?
   offers          Offer[]    @relation("ProductOffers")
   orderItem       OrderItem[]
   // New fields

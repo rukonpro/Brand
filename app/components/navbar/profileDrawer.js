@@ -38,7 +38,6 @@ const ProfileDrawer = () => {
                            height={25}
                            width={25}
                            alt='avater'
-                           placeholder="blur"
                            blurDataURL={user?.profilePhoto||null}
                            className="rounded-full" />
                 </div>

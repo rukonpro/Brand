@@ -36,7 +36,6 @@ export default async function handler(req, res) {
                 include: {
                     brand: true,
                     category: true,
-                    dimension: true,
                     offers:true
                 },
             });

@@ -17,7 +17,7 @@ export default function RootLayout({ children}) {
           <AppProvider>
 
           {children}
-          <Footer />
+
           <Toaster />
           <Analytics />
           </AppProvider>
