@@ -15,7 +15,7 @@ import { PiImageBrokenLight } from "react-icons/pi";
 import baseURL from "@/app/utils/baseURL";
 import Navbar from "@/app/components/navbar/navbar";
 
-
+/*
 export async function generateMetadata({ params }, parent) {
     // Extract product ID from route params
     const id = params.id;
@@ -67,7 +67,7 @@ export async function generateMetadata({ params }, parent) {
     };
 }
 
-
+*/
 
 
 const Details = async ({ params }) => {
