@@ -15,7 +15,7 @@ import { PiImageBrokenLight } from "react-icons/pi";
 import baseURL from "@/app/utils/baseURL";
 import Navbar from "@/app/components/navbar/navbar";
 
-/*
+
 export async function generateMetadata({ params }, parent) {
     // Extract product ID from route params
     const id = params.id;
@@ -67,14 +67,14 @@ export async function generateMetadata({ params }, parent) {
     };
 }
 
-*/
+
 
 
 const Details = async ({ params }) => {
     /*//https://www.figma.com/file/OO4BPb5dJMEaRxPvBPx2uC/Figma-ecommerce-UI-Kit-(web-%26-mobile)-(Community)?node-id=238%3A4835&mode=dev
 */
 
-    const product = await getDetailsProduct({id: params.id});
+    const product = await getDetailsProduct(params?.id);
 
     return (
         <>
