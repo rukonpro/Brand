@@ -14,7 +14,7 @@ export const getProducts = async (params)=>{
 
 
 
-export const getDetailsProduct= async ({id})=>{
+export const getDetailsProduct= async (id)=>{
     try {
         return await axios.get(`${baseURL}/api/product/${id}/details`)
     }catch (error) {
