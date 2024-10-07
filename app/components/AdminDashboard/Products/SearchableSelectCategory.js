@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 
-const SearchableSelectCategory = ({ options, label, name, formik }) => {
+const SearchableSelectCategory = ({ options, label, name, formik,defaultName }) => {
     const [searchTerm, setSearchTerm] = useState('');
     const [isOpen, setIsOpen] = useState(false);
     const dropdownRef = useRef(null);
@@ -52,7 +52,8 @@ const SearchableSelectCategory = ({ options, label, name, formik }) => {
             {/* Searchable Input */}
             <input
                 type="text"
-                value={searchTerm}
+                value={searchTerm||defaultName}
+            
                 onChange={(e) => {
                     setSearchTerm(e.target.value);
                     setIsOpen(true);
@@ -74,7 +75,7 @@ const SearchableSelectCategory = ({ options, label, name, formik }) => {
                                 onClick={() => handleOptionSelect({categoryName:option?.name,categoryId:option?.id})}
                                 className="px-4 py-2 cursor-pointer hover:bg-gray-100 dark:hover:bg-slate-600 dark:text-slate-300 text-left"
                             >
-                                {option.name}
+                                {option?.name}
                             </div>
                         ))
                     )}

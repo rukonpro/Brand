@@ -23,17 +23,12 @@ export default async function handler(req, res) {
                     tags,
                     availability,
                     status,
+                    dimension,
+                    brandId,
+                    categoryId,
                     brand: brandId ? { connect: { id: brandId } } : undefined,
                     category: categoryId ? { connect: { id: categoryId } } : undefined,
-                    dimension: dimension
-                        ? {
-                            create: {
-                                length: dimension.length,
-                                width: dimension.width,
-                                height: dimension.height,
-                            },
-                        }
-                        : undefined,
+                    
                 },
             });
 

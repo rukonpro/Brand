@@ -1,7 +1,7 @@
 "use client"
 import React, {useEffect, useRef, useState} from 'react';
 
-const SearchableSelect = ({ options, label, name, formik }) => {
+const SearchableSelect = ({ options, label, name, formik ,defaultName}) => {
     const [searchTerm, setSearchTerm] = useState('');
     const [isOpen, setIsOpen] = useState(false);
     const dropdownRef = useRef(null);
@@ -40,7 +40,7 @@ const SearchableSelect = ({ options, label, name, formik }) => {
             {/* Searchable Input */}
             <input
                 type="text"
-                value={searchTerm}
+                value={searchTerm||defaultName}
                 onChange={(e) => {
                     setSearchTerm(e.target.value);
                     setIsOpen(true);

@@ -13,8 +13,8 @@ import NotFoundImage from "@/public/images/not-found.png";
 
 export async function generateMetadata({ params }) {
     const { id } = params;
-    const category = await getCategoryById(id); // Fetch category details
-    const products = await getProducts({ categoryId: id, limit: 1000, page: 1 }); // Fetch products under this category
+
+    const [category,products]=await Promise.all([getCategoryById(id),getProducts({ categoryId: id, limit: 1000, page: 1 })]);
 
     return {
         title: `${category?.data?.name} Products - Brand`,
@@ -38,15 +38,11 @@ export async function generateMetadata({ params }) {
 const Source = async ({params}) => {
 
 
-    const categoryById=await getCategoryById(params?.id);
+    const { id } = params;
+    console.log(id)
+  
 
-    const products = await getProducts(
-        {
-            categoryId: params?.id,
-            limit: 10,
-            page: 1
-        }
-    );
+    const [ category,products]=await Promise.all([getCategoryById(id),getProducts({ categoryId: id, limit: 10, page: 1 })]);
 
     // console.log(products)
     return (
@@ -60,7 +56,7 @@ const Source = async ({params}) => {
 
                     <div className="flex justify-between items-center w-full md:px-0 px-3">
                         <h1 className="text-2xl  font-bold   text-blue-500/80 ">
-                            <span className="rounded  backdrop-blur">{categoryById?.data?.name}</span>
+                            <span className="rounded  backdrop-blur">{category?.data?.name}</span>
                         </h1>
                         <div>
                             <BackButton title="Back"/>

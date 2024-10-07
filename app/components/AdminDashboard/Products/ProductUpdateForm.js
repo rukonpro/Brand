@@ -26,12 +26,12 @@ const [imageUrls, setImageUrls] = useState(initialData.photos||[]);
             colors: initialData.colors || [],
             sizes: initialData.sizes || [],
             dimension: initialData?.dimension || null,
-            tags: initialData.tags || [],
+            tags: initialData?.tags || [],
             discountPercentage: initialData.discountPercentage ||null,
-            taxPercentage: initialData.taxPercentage ||null,
-            deliveryFee: initialData.deliveryFee||null,
-            brandId: initialData.brandId || "",
-            categoryId: initialData?.id || "",
+            taxPercentage: initialData?.taxPercentage ||null,
+            deliveryFee: initialData?.deliveryFee||null,
+            brandId: initialData?.brandId || "",
+            categoryId: initialData?.categoryId || "",
             photos: imageUrls,
         },
             validationSchema: Yup.object({
@@ -139,7 +139,8 @@ const [imageUrls, setImageUrls] = useState(initialData.photos||[]);
 
                         // যদি কোন একটি ফিল্ড পূর্ণ থাকে তাহলে সব ফিল্ড পূরণ হতে হবে
                         return !isAnyFieldFilled || (length !== null && width !== null && height !== null);
-                    }),
+                    })
+                    ,
 
                 brandId: Yup.string()
                     .optional(),
@@ -543,6 +544,7 @@ const [imageUrls, setImageUrls] = useState(initialData.photos||[]);
                         <SearchableSelect
                             label="Brand"
                             name="brandId"
+                            defaultName={initialData?.brand?.name}
                             options={brands}
                             formik={formik}
                         />
@@ -556,6 +558,7 @@ const [imageUrls, setImageUrls] = useState(initialData.photos||[]);
                         <SearchableSelectCategory
                             label="Category"
                             name="categoryId"
+                            defaultName={initialData?.category?.name}
                             options={categories}
                             formik={formik}
                         />
