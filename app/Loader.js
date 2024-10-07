@@ -3,7 +3,7 @@ const Loader = ({title}) => {
     return (
         <div className="py-4">
             {/* Central Loader Container */}
-            <div className="flex gap-5 items-center justify-center">
+            <div className="flex gap-5 items-center">
                 {/* Logo Placeholder or Brand Name */}
                 <div className="flex items-center space-x-2">
                     <div className=" animate-pulse">

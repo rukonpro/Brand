@@ -43,7 +43,7 @@ const [imageUrls, setImageUrls] = useState(initialData.photos||[]);
                 description: Yup.string()
                     .required('Description is required')
                     .min(10, 'Description must be at least 10 characters')
-                    .max(500, 'Description cannot exceed 500 characters'),
+                    .max(5000, 'Description cannot exceed 500 characters'),
 
                 price: Yup.number()
                     .required('Price is required')
@@ -83,7 +83,7 @@ const [imageUrls, setImageUrls] = useState(initialData.photos||[]);
                     .nullable() // This allows `null` as a valid value
                     .transform((value, originalValue) => {
                         // This ensures empty strings are treated as `null`
-                        return originalValue === "" ? undefined : value;
+                        return originalValue === "" ? null : value;
                     })
                     .min(0, 'Discount percentage cannot be negative')
                     .max(100, 'Discount percentage cannot exceed 100')
@@ -428,14 +428,14 @@ const [imageUrls, setImageUrls] = useState(initialData.photos||[]);
                             <input
                                 type="number"
                                 name="dimension.height"
-                                value={formik.values.dimension.height || ''} // Handle undefined or empty values
+                                value={formik.values.dimension?.height || ""} // Handle undefined or empty values
                                 onChange={formik.handleChange}
                                 onBlur={formik.handleBlur}
                                 placeholder="Height"
                                 className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-slate-700 dark:border-slate-600 dark:text-slate-300"
                             />
                             {formik.errors.dimension?.height && (
-                                <div className="text-red-600">{formik.errors.dimension.height}</div>
+                                <div className="text-red-600">{formik.errors.dimension?.height}</div>
                             )}
                         </div>
 
@@ -445,14 +445,14 @@ const [imageUrls, setImageUrls] = useState(initialData.photos||[]);
                             <input
                                 type="number"
                                 name="dimension.width"
-                                value={formik.values.dimension.width || ''} // Handle undefined or empty values
+                                value={formik.values.dimension?.width || ''} // Handle undefined or empty values
                                 onChange={formik.handleChange}
                                 onBlur={formik.handleBlur}
                                 placeholder="Width"
                                 className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-slate-700 dark:border-slate-600 dark:text-slate-300"
                             />
                             {formik.errors.dimension?.width && (
-                                <div className="text-red-600">{formik.errors.dimension.width}</div>
+                                <div className="text-red-600">{formik.errors.dimension?.width}</div>
                             )}
                         </div>
                         <div className="mb-4 md:col-span-2 col-span-6">
@@ -460,14 +460,14 @@ const [imageUrls, setImageUrls] = useState(initialData.photos||[]);
                             <input
                                 type="number"
                                 name="dimension.length"
-                                value={formik.values.dimension.length || ''} // Handle undefined or empty values
+                                value={formik.values.dimension?.length || ''} // Handle undefined or empty values
                                 onChange={formik.handleChange}
                                 onBlur={formik.handleBlur}
                                 placeholder="Length"
                                 className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-slate-700 dark:border-slate-600 dark:text-slate-300"
                             />
                             {formik.errors.dimension?.length && (
-                                <div className="text-red-600">{formik.errors.dimension.length}</div>
+                                <div className="text-red-600">{formik.errors.dimension?.length}</div>
                             )}
                         </div>
 

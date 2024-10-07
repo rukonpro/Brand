@@ -10,7 +10,6 @@ const NestedDropdown = ({ category,setCategory,categoryId,handleSetCategoryId })
             {
                 category?.children?.length === 0 || !category?.children ?(
 
-
                             <button
                                 type="button"
                                 onClick={() => {
@@ -93,7 +92,14 @@ const CategoryManuAdmin = ({categories,setCategory,categoryId,handleSetCategoryI
     return (
         <nav>
             <h1 className=" px-3   z-10 mb-1  text-blue-500 dark:text-slate-200 ">Categorise</h1>
-            <ul className="menu bg-base-200 rounded-box p-1 border-2 border-slate-50 rounded-lg dark:border-slate-700 dark:text-slate-200 max-h-72 overflow-y-auto">
+            <ul className="menu bg-base-200 rounded-box p-1 border-2 border-slate-50 rounded-lg dark:border-slate-700 dark:text-slate-200 h-full overflow-y-auto">
+                <li className="relative group  w-full">
+                    <button
+                    type="button"
+                    onClick={()=>setCategory({})}
+                      className={`${!categoryId? "dark:bg-slate-600 bg-blue-600 text-slate-200" : ""} my-0.5 py-2 px-4 flex justify-between items-center w-full text-left hover:bg-blue-500 hover:text-white hover:dark:bg-slate-700 rounded-lg`}
+                    >All Category</button>
+                </li>
                 {categories?.map((category) => (
                     <NestedDropdown
                         key={category?.id}

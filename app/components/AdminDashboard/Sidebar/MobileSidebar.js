@@ -7,7 +7,7 @@ const MobileSidebar = () => {
         <div className="md:hidden">
             <aside
                 id="mobileSidebar"
-                className="bg-gray-800 text-white w-64 h-full fixed top-0 left-0 hidden z-40"
+                className="bg-gray-800 text-white w-64 h-full fixed top-0 left-0 hidden z-50 "
             >
                <div className="flex justify-between items-center p-4">
                    <div className=" text-center font-bold p-2">Admin Dashboard</div>

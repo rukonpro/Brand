@@ -3,7 +3,7 @@ import SideBarToggleButton from "@/app/components/AdminDashboard/Sidebar/Sidebar
 import { IoReorderThree } from "react-icons/io5";
 const Topbar = () => {
     return (
-        <header className="bg-white shadow-md flex items-center justify-between p-4 sticky top-0 z-50">
+        <header className="bg-white shadow-md flex items-center justify-between p-4 sticky top-0 z-40">
             <SideBarToggleButton Icon={<IoReorderThree size={25}/>}/>
             <div className="font-bold text-xl">Admin Dashboard</div>
             <div className="flex items-center space-x-4">

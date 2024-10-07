@@ -2,7 +2,7 @@
 import React, {useState} from 'react';
 import {BsThreeDotsVertical} from "react-icons/bs";
 import { MdEdit ,MdDelete,MdCreateNewFolder} from "react-icons/md";
-const CategoriesDropdown = () => {
+const CategoriesDropdown = ({children}) => {
     const [dropdownOpen, setDropdownOpen] = useState(false);
     const toggleDropdown = () => {
         setDropdownOpen(!dropdownOpen);
@@ -19,33 +19,8 @@ const CategoriesDropdown = () => {
 
             {/* Dropdown Menu */}
             {dropdownOpen && (
-                <div className="absolute mt-8 bg-white dark:bg-slate-700 rounded shadow-lg w-48 right-0 z-50">
-                    <button
-                        onClick={() => {
-                            setDropdownOpen(false);
-                        }}
-                        className="flex gap-3 items-center p-2 hover:bg-gray-100 dark:hover:bg-slate-700 w-full"
-                    >
-                    <MdEdit/>  update
-                    </button>
-                    <button
-                        onClick={() => {
-                            setDropdownOpen(false);
-                        }}
-                        className="flex gap-3 items-center p-2 hover:bg-gray-100 dark:hover:bg-slate-700 w-full"
-                    >
-                        {/* Light Mode Icon (Sun) */}
-
-                        <MdDelete /> Delete
-                    </button>
-                    <button
-                        onClick={() => {
-                            setDropdownOpen(false);
-                        }}
-                        className="flex gap-3 items-center p-2 hover:bg-gray-100 dark:hover:bg-slate-700 w-full"
-                    >
-                     <MdCreateNewFolder/>  Create
-                    </button>
+                <div className="absolute mt-8 bg-white dark:bg-slate-700 rounded shadow-lg w-48 right-0 z-10">
+                   {children}
                 </div>
             )}
         </div>
@@ -53,3 +28,32 @@ const CategoriesDropdown = () => {
 };
 
 export default CategoriesDropdown;
+
+
+
+//  <button
+//                         onClick={() => {
+//                             setDropdownOpen(false);
+//                         }}
+//                         className="flex gap-3 items-center p-2 hover:bg-gray-100 dark:hover:bg-slate-700 w-full"
+//                     >
+//                     <MdEdit/>  update
+//                     </button>
+//                     <button
+//                         onClick={() => {
+//                             setDropdownOpen(false);
+//                         }}
+//                         className="flex gap-3 items-center p-2 hover:bg-gray-100 dark:hover:bg-slate-700 w-full"
+//                     >
+//                         {/* Light Mode Icon (Sun) */}
+
+//                         <MdDelete /> Delete
+//                     </button>
+//                     <button
+//                         onClick={() => {
+//                             setDropdownOpen(false);
+//                         }}
+//                         className="flex gap-3 items-center p-2 hover:bg-gray-100 dark:hover:bg-slate-700 w-full"
+//                     >
+//                      <MdCreateNewFolder/>  Create
+//                     </button>

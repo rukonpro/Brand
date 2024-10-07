@@ -37,12 +37,16 @@ const LayoutDashboardLayout = ({children}) => {
           <MobileSidebar/>
 
             {/* Main Content */}
-            <div className="flex-1 grid grid-rows-[auto_1fr] relative">
+            <div className="flex-1 grid grid-rows-[auto_1fr] relative overflow-auto">
                 {/* Topbar */}
                 <Topbar/>
 
                 {/* Main Content Area */}
-                <main className="p-3 bg-gray-100 overflow-auto">{children}</main>
+                <main className="p-3 bg-gray-100 ">
+                    
+                    {children}
+                    
+                    </main>
             </div>
         </div>
     );

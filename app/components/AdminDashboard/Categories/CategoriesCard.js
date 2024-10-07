@@ -23,8 +23,7 @@ const CategoriesCard = ({category}) => {
                         <Image src={Photo} alt="search photo" width={300} height={300}/>
                 }
                 <div className="p-4">
-                    <h2 className="text-lg text-slate-700 dark:text-slate-200 font-semibold mb-2">{category?.name}</h2>
-                    <p className="text-slate-600 dark:text-slate-300">{category?.description}</p>
+                    <h2 className="text-lg text-slate-700 dark:text-slate-200 font-semibold mb-2 truncate hover:text-clip">{category?.name}</h2>
                 </div>
         </div>
     );
