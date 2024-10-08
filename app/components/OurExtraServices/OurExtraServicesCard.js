@@ -13,7 +13,7 @@ const OurExtraServicesCard = ({ data }) => {
             </div>
 
             <div className='relative'>
-                <Image src={data?.cover} width={204} height={112} alt={data?.title+"photo"} className='w-full h-28 backdrop-invert-0 bg-black/80 ' />
+                <Image src={data?.cover} width={204} height={112} layout="responsive" alt={data?.title+"photo"} className='w-full h-28 backdrop-invert-0 bg-black/80 ' />
                 <div className='p-5'>
                     <p>{data?.title}</p>
                 </div>
