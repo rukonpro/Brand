@@ -114,7 +114,7 @@ const DarkAndLightModeController = () => {
                         className="flex gap-3 items-center p-2 hover:bg-gray-100 dark:hover:bg-slate-700 w-full"
                     >
                         {/* Dark Mode Icon (Moon) */}
-                        <Image src={DarkModeIcon} height={25} width={25} alt="theme"/>
+                        <Image src={DarkModeIcon} height={25} width={25} alt="Dark mode icon"/>
                         Dark Mode
                     </button>
                     <button
@@ -125,7 +125,7 @@ const DarkAndLightModeController = () => {
                         className="flex gap-3 items-center p-2 hover:bg-gray-100 dark:hover:bg-slate-700 w-full"
                     >
                         {/* Light Mode Icon (Sun) */}
-                        <Image src={LightModeIcon} height={25} width={25} alt="theme"/>
+                        <Image src={LightModeIcon} height={25} width={25} alt="Light mode icon"/>
                         Light Mode
                     </button>
                     <button
@@ -136,7 +136,7 @@ const DarkAndLightModeController = () => {
                         className="flex gap-3 items-center p-2 hover:bg-gray-100 dark:hover:bg-slate-700 w-full"
                     >
                         {/* System Mode Icon (Monitor) */}
-                        <Image src={SystemModeIcon} height={25} width={25} alt="theme"/>
+                        <Image src={SystemModeIcon} height={25} width={25} alt="System mode icon"/>
                         System Default
                     </button>
                 </div>
