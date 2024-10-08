@@ -18,7 +18,7 @@ const CategoryDrawer = ({categories}) => {
     };
     return (
         <div>
-            <button type="button" id="categoryModalToggleHomePage"
+            <button type="button"  aria-label="Open Category Modal"
                     onClick={handleToggleDrawer}
             >
                   <FiAlignCenter size={25}/>
