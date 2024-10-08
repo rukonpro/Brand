@@ -98,7 +98,7 @@ const DarkAndLightModeController = () => {
                 onClick={toggleDropdown}
             >
               <div className="flex items-center justify-center">
-                  <Image src={theme==="dark"?DarkModeIcon:theme==="light"?LightModeIcon:SystemModeIcon} height={25} width={25} alt="theme"/>
+                  <Image src={theme==="dark"?DarkModeIcon:theme==="light"?LightModeIcon:SystemModeIcon} height={25} width={25} alt="system icon"/>
               </div>
                 <p className="text-sm text-center  sm:block hidden">Theme</p>
             </button>
