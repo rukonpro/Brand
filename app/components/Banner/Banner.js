@@ -38,11 +38,11 @@ const Banner =async () => {
 
                         <Suspense fallback={<SkeletonNotifications/>}>
                                <JoinNowCard/>
-                            <div className=" p-3 rounded-lg bg-[#F38332] text-white w-full h-full">
+                            <div className=" p-3 rounded-lg bg-[#360a65f8] text-white w-full h-full">
                                 <h1 className="text-lg">Get US $10 off with a new supplier</h1>
                             </div>
 
-                            <div className="p-3 rounded-lg bg-[#55BDC3] text-white w-full h-full">
+                            <div className="p-3 rounded-lg bg-[#92504d] text-white w-full h-full">
                                 <h1 className="text-lg">Send quotes with supplier preferences</h1>
                             </div>
                         </Suspense>

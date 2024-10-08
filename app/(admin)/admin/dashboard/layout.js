@@ -26,9 +26,9 @@ import Topbar from "@/app/components/AdminDashboard/Topbar/Topbar";
 
 const LayoutDashboardLayout = ({children}) => {
     return (
-        <div className="grid grid-cols-1 md:grid-cols-[250px_1fr] min-h-screen transition-all duration-700 relative">
+        <div className="grid grid-cols-12 relative">
             {/* Sidebar */}
-           <div className="sticky top-0 bottom-0">
+           <div className=" bg-gray-800 text-white hidden md:block  sticky top-0 h-screen md:col-span-2 ">
                <DaskTopSidebar/>
            </div>
 
@@ -36,18 +36,14 @@ const LayoutDashboardLayout = ({children}) => {
 
           <MobileSidebar/>
 
-            {/* Main Content */}
-            <div className="flex-1 grid grid-rows-[auto_1fr] relative overflow-auto">
-                {/* Topbar */}
-                <Topbar/>
 
                 {/* Main Content Area */}
-                <main className="p-3 bg-gray-100 ">
+                <main className="  bg-gray-100 md:col-span-10 col-span-12">
                     
                     {children}
                     
-                    </main>
-            </div>
+                </main>
+         
         </div>
     );
 };

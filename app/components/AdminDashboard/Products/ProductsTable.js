@@ -19,10 +19,10 @@ const ProductsTable = ({ brands, categories }) => {
 
 
     return isLoadingProducts?(<Loader title="Products Loading..."/>):(
-        <div>
+        <div className="overflow-auto">
             {products?.length > 0 ? (
-                <div >
-                    <table className=" table-auto divide-y divide-gray-200  ">
+               
+                    <table className=" table-auto divide-y divide-gray-200  overflow-x-auto ">
                         <thead className="bg-blue-500 text-white">
                             <tr>
                                 <th className="px-4 py-2 text-left text-xs sm:text-sm font-semibold">ID</th>
@@ -103,7 +103,7 @@ const ProductsTable = ({ brands, categories }) => {
                             ))}
                         </tbody>
                     </table>
-                </div>
+             
             ) : (
                 <div>
                     <p>You have no products, please <Link href="/" className="text-blue-500 underline">add products</Link>!</p>

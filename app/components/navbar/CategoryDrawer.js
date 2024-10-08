@@ -4,6 +4,8 @@ import Drawer from "@/app/components/Drawer/Drawer";
 import Image from "next/image";
 import MenuIcon from "@/public/images/menu.png";
 import CategoryManu from "@/app/components/navbar/CategoryManu";
+import { FiAlignCenter } from 'react-icons/fi';
+import { FaXmark } from 'react-icons/fa6';
 
 const CategoryDrawer = ({categories}) => {
     const [isDrawerOpen, setIsDrawerOpen] = useState(false);
@@ -19,7 +21,7 @@ const CategoryDrawer = ({categories}) => {
             <button type="button"
                     onClick={handleToggleDrawer}
             >
-                <Image src={MenuIcon} height={25} width={50} alt="MenuIcon"/>
+                  <FiAlignCenter size={25}/>
             </button>
             <Drawer
                 destination="left"
@@ -28,7 +30,9 @@ const CategoryDrawer = ({categories}) => {
             >
 
                 <div className="w-full">
-                    <CategoryManu categories={categories} />
+                    <CategoryManu categories={categories}
+                     closeButton={  <button onClick={handleClose}><FaXmark size={25}/></button>}
+                    />
                 </div>
             </Drawer>
         </div>

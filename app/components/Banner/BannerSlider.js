@@ -92,7 +92,7 @@ const BannerSlider = ({ banners }) => {
                         <br/>
 
                             <Link href={link} prefetch className="px-2">
-                                <button type="button" className="bg-white rounded-xl px-4 py-2 mt-5">
+                                <button type="button" className="bg-white rounded-xl text-sm px-2 py-1 mt-5">
                                     Learn more
                                 </button>
                             </Link>

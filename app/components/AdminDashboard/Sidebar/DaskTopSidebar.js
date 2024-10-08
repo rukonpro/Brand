@@ -3,7 +3,7 @@ import SideBarMenu from "@/app/components/AdminDashboard/Sidebar/SideBarMenu";
 
 const DaskTopSidebar = () => {
     return (
-        <aside className="bg-gray-800 text-white hidden md:block  sticky top-0 h-screen">
+        <aside className=" w-full h-full">
             <div className="p-6  font-bold ">Admin Dashboard</div>
             <SideBarMenu/>
 

@@ -7,10 +7,10 @@ const SearchableSelectCategory = ({ options, label, name, formik,defaultName }) 
 
     // Recursive function to flatten options
     const flattenOptions = (opts) => {
-        return opts.reduce((acc, option) => {
+        return opts?.reduce((acc, option) => {
             // If the option has children, recursively flatten them
-            if (option.children && option.children.length > 0) {
-                return [...acc, ...flattenOptions(option.children)]; // Flatten children
+            if (option.children && option?.children?.length > 0) {
+                return [...acc, ...flattenOptions(option?.children)]; // Flatten children
             }
             return [...acc, option]; // Add the option itself if no children
         }, []);
@@ -20,8 +20,8 @@ const SearchableSelectCategory = ({ options, label, name, formik,defaultName }) 
     const combinedOptions = flattenOptions(options);
 
     // Filter options based on search term
-    const filteredOptions = combinedOptions.filter((option) =>
-        option.name.toLowerCase().includes(searchTerm.toLowerCase())
+    const filteredOptions = combinedOptions?.filter((option) =>
+        option?.name?.toLowerCase()?.includes(searchTerm?.toLowerCase())
     );
 
     const handleOptionSelect = ({categoryName,categoryId}) => {
@@ -71,7 +71,7 @@ const SearchableSelectCategory = ({ options, label, name, formik,defaultName }) 
                     ) : (
                         filteredOptions.map((option) => (
                             <div
-                                key={option.id}
+                                key={option?.id}
                                 onClick={() => handleOptionSelect({categoryName:option?.name,categoryId:option?.id})}
                                 className="px-4 py-2 cursor-pointer hover:bg-gray-100 dark:hover:bg-slate-600 dark:text-slate-300 text-left"
                             >

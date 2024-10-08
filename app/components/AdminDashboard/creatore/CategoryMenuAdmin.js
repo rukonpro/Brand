@@ -46,9 +46,9 @@ const NestedDropdown = ({ category, setCategory, categoryId, handleSetCategoryId
 
                             <CategoryDropdownButton
                                 handleOpenModal={handleOpenModal}
-                                setCategoryId={setCategoryId} 
+                                setCategoryId={setCategoryId}
                                 category={category}
-                                />
+                            />
                             <button
                                 onClick={() => {
                                     setIsOpen(!isOpen);
@@ -58,7 +58,7 @@ const NestedDropdown = ({ category, setCategory, categoryId, handleSetCategoryId
                                     if (setCategoryId) {
                                         setCategoryId(category?.id)
                                     }
-    
+
                                     if (handleSetCategoryId) {
                                         handleSetCategoryId(category?.id)
                                     }
@@ -111,18 +111,23 @@ const NestedDropdown = ({ category, setCategory, categoryId, handleSetCategoryId
     );
 };
 
-const CategoryManuAdmin = ({ categories, setCategory, categoryId, handleSetCategoryId, handleOpenModal, setCategoryId }) => {
+const CategoryManuAdmin = ({ closeButton, categories, setCategory, categoryId, handleSetCategoryId, handleOpenModal, setCategoryId }) => {
 
     return (
-        <nav>
-            <h1 className=" px-3   z-10 mb-1  text-blue-500 dark:text-slate-200 ">Categorise</h1>
-            <ul className="menu bg-base-200 rounded-box p-1 border-2 border-slate-50 rounded-lg dark:border-slate-700 dark:text-slate-200 h-full overflow-y-auto">
+        <nav className="overflow-hidden w-full border-2 border-l-0 border-slate-50 bg-slate-50 rounded-lg dark:border-slate-700 h-full">
+            <div className='flex justify-between items-center'>
+                <h1 className=" px-3  text-lg py-2 mb-1  text-blue-500 dark:text-slate-200 ">Categorise</h1>
+
+                {closeButton}
+            </div>
+            <ul className="menu bg-base-200 rounded-box p-1  dark:text-slate-200 h-full overflow-y-auto">
                 <li className="relative group  w-full">
                     <button
                         type="button"
                         onClick={() => setCategory({})}
                         className={`${!categoryId ? "dark:bg-slate-600 bg-blue-600 text-slate-200" : ""} my-0.5 py-2 px-4 flex justify-between items-center w-full text-left hover:bg-blue-500 hover:text-white hover:dark:bg-slate-700 rounded-lg`}
                     >All Category</button>
+
                 </li>
                 {categories?.map((category) => (
                     <NestedDropdown

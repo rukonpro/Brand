@@ -14,10 +14,12 @@ const RequestsForm = () => {
             <div className='grid grid-cols-3 gap-3 pt-2'>
                 <input type="number" placeholder='Quntity' className='col-span-2 h-[40px] px-2 border-2 rounded-lg border-white placeholder:text-black bg-gray-100/50 dark:bg-slate-700/50 dark:text-slate-100 dark:placeholder:text-slate-200 dark:border-blue-500 focus:outline-0' />
 
-                <select className='col-span-1 h-[40px] px-2  border-2 border-white rounded-lg   bg-gray-100/50 dark:bg-slate-700/50 dark:text-slate-100 dark:placeholder:text-slate-200 dark:border-blue-500 focus:outline-0'>
-                    <option value="Pcs" className=" bg-gray-100/50">Pcs</option>
-                    <option value="Pcs" className=" bg-gray-100/50">Pcs</option>
-                    <option value="Pcs" className=" bg-gray-100/50">Pcs</option>
+                <select 
+                
+                className='col-span-1 h-[40px] px-2  border-2 border-white rounded-lg   bg-gray-100/50 dark:bg-slate-700/50 dark:text-slate-100 dark:placeholder:text-slate-200 dark:border-blue-500 focus:outline-0'>
+                    <option value="1-Pcs" className=" bg-gray-100/50">1-Pcs</option>
+                    <option value="2-Pcs" className=" bg-gray-100/50">2-Pcs</option>
+                    <option value="2-Pcs" className=" bg-gray-100/50">1-Pcs</option>
                 </select>
 
             </div>

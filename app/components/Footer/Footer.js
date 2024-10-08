@@ -151,11 +151,11 @@ const Footer = () => {
 
                         <ul className='flex gap-3 pt-5'>
                             {
-                                FooterData?.social.map((data, index) => {
+                                FooterData?.social?.map((data, index) => {
                                     return (
                                         <li key={index}>
                                             <a href='/' >
-                                                <Image src={data} alt={data?.title} />
+                                                <Image src={data} alt={data} />
                                             </a>
                                         </li>
                                     )
@@ -178,10 +178,10 @@ const Footer = () => {
                                                         <li key={index} className='mt-2 text-gray-500 dark:text-slate-300'>
                                                             {
                                                                 link?.path ?
-                                                                    <Link href={link?.path}>{link?.title}</Link> :
+                                                                    <Link href={link?.path}>{link?.title+index}</Link> :
 
                                                                     <a href={link?.link} >
-                                                                        <Image src={link.icon} alt={link?.title}/>
+                                                                        <Image src={link.icon} alt={link?.title+index}/>
                                                                     </a>
                                                             }
                                                         </li>

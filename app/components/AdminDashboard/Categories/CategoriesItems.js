@@ -14,7 +14,10 @@ import { createCategory, deleteCategory, updateCategory } from '@/app/utils/Cate
 import toast from 'react-hot-toast';
 import DeleteCategory from './CategoryDelete';
 import CategoryUpdateForm from './CategoryUpdateForm';
-
+import Drawer from '../../Drawer/Drawer';
+import { FiAlignRight } from "react-icons/fi";
+import Topbar from '../Topbar/Topbar';
+import { FaXmark } from 'react-icons/fa6';
 
 const CategoriesItems = () => {
 
@@ -22,6 +25,7 @@ const CategoriesItems = () => {
     const [modalTitle, setModalTitle] = useState("");
     const [categoryId, setCategoryId] = useState("");
     const [category, setCategory] = useState({});
+    const [isDrawerOpen, setDropdownOpen] = useState(false);
 
     const {
         data: categories,
@@ -30,6 +34,12 @@ const CategoriesItems = () => {
         mutate
     } = useSWR('/api/category/findMany', fetcher);
 
+    const handleToggleDrawer = () => {
+        setDropdownOpen(!isDrawerOpen);
+    };
+    const handleClose = () => {
+        setDropdownOpen(false);
+    };
 
 
     const handleCloseModal = () => {
@@ -64,10 +74,10 @@ const CategoriesItems = () => {
     const handleUpdateCategory = async ({ values }) => {
 
         const res = await updateCategory(categoryId, values);
-        if(res?.status===200){
+        if (res?.status === 200) {
             toast.success("Update Category sucessfully!");
             mutate();
-        }else{
+        } else {
             toast.error("Update category faild,please try again!");
         }
 
@@ -91,8 +101,25 @@ const CategoriesItems = () => {
 
     return isLoadingCategories ? (<Loader title="Category Loading..." />) : (
         <div >
-            <div className="grid grid-cols-1 sm:grid-cols-[250px_1fr] min-h-screen transition-all duration-700 relative">
-                <div className="hidden sm:block">
+           
+            <div className="block sm:hidden">
+                <Drawer isDrawerOpen={isDrawerOpen} handleClose={handleClose} destination="left">
+                    <Suspense fallback={<Loader />} >
+
+                        <CategoryManuAdmin
+                            categories={categories}
+                            setCategory={setCategory}
+                            categoryId={categoryId}
+                            setCategoryId={setCategoryId}
+                            handleOpenModal={handleOpenModal}
+                            closeButton={  <button onClick={handleClose}><FaXmark size={25}/></button>}
+                        />
+
+                    </Suspense>
+                </Drawer>
+            </div>
+            <div className=" relative">
+                <div className="hidden sm:block fixed  bottom-0 top-0 w-60">
 
                     <Suspense fallback={<Loader />}>
                         <CategoryManuAdmin
@@ -101,6 +128,7 @@ const CategoriesItems = () => {
                             categoryId={categoryId}
                             setCategoryId={setCategoryId}
                             handleOpenModal={handleOpenModal}
+                            
                         />
                     </Suspense>
                 </div>
@@ -108,12 +136,24 @@ const CategoriesItems = () => {
 
 
 
-                <div className="flex-1  grid-rows-[auto_1fr]">
+                <div className="sm:ml-60">
+                <Topbar />
                     <div className="flex justify-between items-center p-3 pb-6">
-                        <h1 className="text-lg font-bold  ">
 
-                            {category?.name || "All categories"}
-                        </h1>
+                        <div className="  flex gap-1 ">
+                            <button type="button"
+                                className='block sm:hidden'
+                                onClick={handleToggleDrawer}
+                            >
+                                <FiAlignRight size={25} />
+                            </button>
+
+                            <h1 className="text-lg font-bold  ">
+
+                                {category?.name || "All categories"}
+                            </h1>
+                        </div>
+
                         <BackButton title="Back" />
                     </div>
 
@@ -214,3 +254,4 @@ const CategoriesItems = () => {
 };
 
 export default CategoriesItems;
+
