@@ -2,7 +2,7 @@ import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import Logo from "@/public/images/logo-colored.png";
-import FacebookIcon from "@/public/images/FacebookIcon.png";
+import facebookIcon from "@/public/images/FacebookIcon.png";
 import instagramIcon from "@/public/images/instagramIcon.png";
 import linkedinIcon from "@/public/images/linkedinIcon.png";
 import twitterIcon from "@/public/images/twitterIcon.png";
@@ -15,8 +15,34 @@ const Footer = () => {
 
     const FooterData = {
         logo: Logo,
-        description: "Best information about the company gies here but now lorem ipsum",
-        social: [FacebookIcon, instagramIcon, linkedinIcon, twitterIcon, youtubeIcon],
+        description: "Brand - Your one-stop destination for quality products and seamless online shopping.",
+        social: [
+            {
+              icon: facebookIcon,
+              title: 'Facebook',
+              link: 'https://www.facebook.com',
+            },
+            {
+              icon: instagramIcon,
+              title: 'Instagram',
+              link: 'https://www.instagram.com',
+            },
+            {
+              icon: linkedinIcon ,
+              title: 'LinkedIn',
+              link: 'https://www.linkedin.com',
+            },
+            {
+              icon: twitterIcon,
+              title: 'Twitter',
+              link: 'https://www.twitter.com',
+            },
+            {
+              icon: youtubeIcon,
+              title: 'YouTube',
+              link: 'https://www.youtube.com',
+            },
+          ],
         footerCategory: [
             {
                 title: "About",
@@ -154,8 +180,8 @@ const Footer = () => {
                                 FooterData?.social?.map((data, index) => {
                                     return (
                                         <li key={index}>
-                                            <a href='/' >
-                                                <Image src={data} alt={data} />
+                                            <a href={data?.link} >
+                                                <Image src={data?.icon} alt={data?.title} />
                                             </a>
                                         </li>
                                     )
