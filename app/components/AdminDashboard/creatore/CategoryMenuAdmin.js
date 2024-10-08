@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
+import CategoryDropdownButton from '../Categories/CategoryDropdownButton';
 
-const NestedDropdown = ({ category,setCategory,categoryId,handleSetCategoryId }) => {
+const NestedDropdown = ({ category, setCategory, categoryId, handleSetCategoryId, handleOpenModal, setCategoryId }) => {
 
     const [isOpen, setIsOpen] = useState(false);
 
@@ -8,39 +9,59 @@ const NestedDropdown = ({ category,setCategory,categoryId,handleSetCategoryId })
         <li className="relative group  w-full">
 
             {
-                category?.children?.length === 0 || !category?.children ?(
+                category?.children?.length === 0 || !category?.children ? (
 
-                            <button
-                                type="button"
-                                onClick={() => {
-                                    if(setCategory){
-                                        setCategory(category)
-                                    }
+                    <div className="flex justify-between">
+                        <button
+                            type="button"
+                            onClick={() => {
+                                if (setCategory) {
+                                    setCategory(category)
+                                }
+                                if (setCategoryId) {
+                                    setCategoryId(category?.id)
+                                }
+
+                                if (handleSetCategoryId) {
+                                    handleSetCategoryId(category?.id)
+                                }
+
+                            }}
+                            className={`${category?.id === categoryId ? "dark:bg-slate-600 bg-blue-600 text-slate-200" : ""} my-0.5 py-2 px-4 flex justify-between items-center w-full text-left hover:bg-blue-500 hover:text-white hover:dark:bg-slate-700 rounded-lg`}>
+                            {category?.name}
+                        </button>
+
+                        <CategoryDropdownButton
+                            category={category}
+                            setCategoryId={setCategoryId}
+                            handleOpenModal={handleOpenModal}
+                        />
+                    </div>
 
 
-                                    if (handleSetCategoryId){
-                                        handleSetCategoryId(category?.id)
-                                    }
-
-                                }}
-                                className={`${category?.id  === categoryId? "dark:bg-slate-600 bg-blue-600 text-slate-200" : ""} my-0.5 py-2 px-4 flex justify-between items-center w-full text-left hover:bg-blue-500 hover:text-white hover:dark:bg-slate-700 rounded-lg`}>
-                                {category?.name}
-                            </button>
-
-
-                    ) :
+                ) :
                     (
 
+                        <div>
+
+                            <CategoryDropdownButton
+                                handleOpenModal={handleOpenModal}
+                                setCategoryId={setCategoryId} 
+                                category={category}
+                                />
                             <button
                                 onClick={() => {
                                     setIsOpen(!isOpen);
-                                    if(setCategory){
-                                        setCategory(category);
+                                    if (setCategory) {
+                                        setCategory(category)
                                     }
-
-                                    // if (handleSetCategoryId){
-                                    //     handleSetCategoryId(categoryId)
-                                    // }
+                                    if (setCategoryId) {
+                                        setCategoryId(category?.id)
+                                    }
+    
+                                    if (handleSetCategoryId) {
+                                        handleSetCategoryId(category?.id)
+                                    }
                                 }}
                                 type="button"
                                 className={`${category?.id === categoryId ? "dark:bg-slate-600 bg-blue-600 text-slate-200" : ""} my-0.5 py-2 px-4 flex justify-between items-center w-full text-left hover:bg-blue-500 hover:text-white hover:dark:bg-slate-700 rounded-lg`}
@@ -50,7 +71,7 @@ const NestedDropdown = ({ category,setCategory,categoryId,handleSetCategoryId })
 
                                 {category?.children?.length > 0 && (
                                     <svg
-                                        className={`w-4 h-4 transition-transform ${isOpen ? 'rotate-180' : ''}`}
+                                        className={`w-4 h-4 relative right-5 transition-transform ${isOpen ? 'rotate-180' : ''}`}
                                         fill="none"
                                         stroke="currentColor"
                                         viewBox="0 0 24 24"
@@ -65,6 +86,7 @@ const NestedDropdown = ({ category,setCategory,categoryId,handleSetCategoryId })
                                     </svg>
                                 )}
                             </button>
+                        </div>
 
                     )
             }
@@ -79,7 +101,9 @@ const NestedDropdown = ({ category,setCategory,categoryId,handleSetCategoryId })
                             setCategory={setCategory}
                             categoryId={categoryId}
                             handleSetCategoryId={handleSetCategoryId}
-                             />
+                            handleOpenModal={handleOpenModal}
+                            setCategoryId={setCategoryId}
+                        />
                     ))}
                 </ul>
             )}
@@ -87,7 +111,7 @@ const NestedDropdown = ({ category,setCategory,categoryId,handleSetCategoryId })
     );
 };
 
-const CategoryManuAdmin = ({categories,setCategory,categoryId,handleSetCategoryId}) => {
+const CategoryManuAdmin = ({ categories, setCategory, categoryId, handleSetCategoryId, handleOpenModal, setCategoryId }) => {
 
     return (
         <nav>
@@ -95,9 +119,9 @@ const CategoryManuAdmin = ({categories,setCategory,categoryId,handleSetCategoryI
             <ul className="menu bg-base-200 rounded-box p-1 border-2 border-slate-50 rounded-lg dark:border-slate-700 dark:text-slate-200 h-full overflow-y-auto">
                 <li className="relative group  w-full">
                     <button
-                    type="button"
-                    onClick={()=>setCategory({})}
-                      className={`${!categoryId? "dark:bg-slate-600 bg-blue-600 text-slate-200" : ""} my-0.5 py-2 px-4 flex justify-between items-center w-full text-left hover:bg-blue-500 hover:text-white hover:dark:bg-slate-700 rounded-lg`}
+                        type="button"
+                        onClick={() => setCategory({})}
+                        className={`${!categoryId ? "dark:bg-slate-600 bg-blue-600 text-slate-200" : ""} my-0.5 py-2 px-4 flex justify-between items-center w-full text-left hover:bg-blue-500 hover:text-white hover:dark:bg-slate-700 rounded-lg`}
                     >All Category</button>
                 </li>
                 {categories?.map((category) => (
@@ -107,7 +131,9 @@ const CategoryManuAdmin = ({categories,setCategory,categoryId,handleSetCategoryI
                         setCategory={setCategory}
                         categoryId={categoryId}
                         handleSetCategoryId={handleSetCategoryId}
-                        />
+                        handleOpenModal={handleOpenModal}
+                        setCategoryId={setCategoryId}
+                    />
                 ))}
             </ul>
         </nav>

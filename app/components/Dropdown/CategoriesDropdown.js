@@ -1,15 +1,34 @@
 "use client"
-import React, {useState} from 'react';
+import React, {useState,useRef,useEffect} from 'react';
 import {BsThreeDotsVertical} from "react-icons/bs";
-import { MdEdit ,MdDelete,MdCreateNewFolder} from "react-icons/md";
 const CategoriesDropdown = ({children}) => {
+    const dropdownRef = useRef(null);
     const [dropdownOpen, setDropdownOpen] = useState(false);
     const toggleDropdown = () => {
         setDropdownOpen(!dropdownOpen);
     };
 
+
+
+    // Handle click outside to close the dropdown
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+                setDropdownOpen(false);
+            }
+        };
+
+        document.addEventListener('mousedown', handleClickOutside);
+
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+    }, [dropdownRef]);
+
+
+
     return (
-        <div className="relative">
+        <div className="relative" ref={dropdownRef}>
             {/* Dropdown Button */}
             <button
                 onClick={toggleDropdown}
@@ -19,7 +38,7 @@ const CategoriesDropdown = ({children}) => {
 
             {/* Dropdown Menu */}
             {dropdownOpen && (
-                <div className="absolute mt-8 bg-white dark:bg-slate-700 rounded shadow-lg w-48 right-0 z-10">
+                <div className="absolute mt-8 bg-white dark:bg-slate-700 rounded shadow-lg w-36 right-0 z-10">
                    {children}
                 </div>
             )}

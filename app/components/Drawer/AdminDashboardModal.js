@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { IoCloseSharp } from "react-icons/io5";
 
-const AdminDashboardModal = ({ isOpen, handleCloseModal, children, title }) => {
+const AdminDashboardModal = ({ isOpen, handleCloseModal, children, title}) => {
     const [isDragging, setIsDragging] = useState(false);
     const [position, setPosition] = useState({ x: 0, y: 0 });
     const [startPosition, setStartPosition] = useState({ x: 0, y: 0 });
