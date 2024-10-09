@@ -14,7 +14,7 @@ const Messenger = () => {
       <div className="fixed top-0 w-full">
         <Navbar />
       </div>
-      <div className="flex flex-col md:flex-row h-screen bg-gray-100">
+      <div className="flex flex-col md:flex-row h-screen ">
         {/* Sidebar */}
         <div className="md:w-1/4 w-full bg-white shadow-lg p-4 pt-20 md:block hidden">
           <h1 className="text-2xl font-bold mb-6">Chat ONN</h1>
@@ -45,7 +45,7 @@ const Messenger = () => {
           {/* Chat Header */}
           <div className="flex items-center justify-between border-b p-4">
             <h2 className="font-semibold">Kirti Yadav</h2>
-            <span className="text-gray-500">Last seen 3 hours ago</span>
+            <span className="text-gray-500 dark:text-slate-50">Last seen 3 hours ago</span>
           </div>
 
           {/* Chat Messages */}
