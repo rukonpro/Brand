@@ -10,7 +10,6 @@ const SubscribeOnOurNewsletter = () => {
                         <h1 className='text-2xl text-center font-bold'>Subscribe on our newsletter</h1>
                         <p className='text-base text-center text-gray-700 dark:text-slate-300'>Get daily news on upcoming offers from many suppliers all over the world</p>
 
-
                         <div className='pt-4 grid grid-cols-6  gap-3 '>
                             <div className="relative col-span-4">
                                 <input
