@@ -51,17 +51,17 @@ const Messenger = () => {
           {/* Chat Messages */}
           <div className="flex-grow p-4 overflow-y-auto space-y-4">
             <div className="flex justify-start">
-              <div className="bg-blue-100 p-3 rounded-lg max-w-xs">
+              <div className="bg-blue-100 dark:bg-blue-500 p-3 rounded-lg max-w-xs">
                 Hey Listen
               </div>
             </div>
             <div className="flex justify-end">
-              <div className="bg-green-100 p-3 rounded-lg max-w-xs">
+              <div className="bg-green-100 dark:bg-green-500 p-3 rounded-lg max-w-xs">
                 Sounds perfect!
               </div>
             </div>
             <div className="flex justify-start">
-              <div className="bg-blue-100 p-3 rounded-lg max-w-xs">
+              <div className="bg-blue-100 dark:bg-blue-500 p-3 rounded-lg max-w-xs">
                 I really like your idea, but I still think we can do more in this.
               </div>
             </div>
@@ -71,7 +71,7 @@ const Messenger = () => {
           <div className="p-4 border-t flex items-center">
             <input
               type="text"
-              className="flex-grow border rounded-lg p-2 mr-2"
+              className="flex-grow border rounded-lg p-2 mr-2 bg-slate-50 dark:bg-slate-800"
               placeholder="Type a message..."
             />
             <button className="bg-blue-500 text-white p-2 rounded-lg">
