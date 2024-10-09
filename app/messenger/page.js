@@ -20,7 +20,7 @@ const Messenger = () => {
           <h1 className="text-2xl font-bold mb-6">Chat ONN</h1>
           <input
             type="text"
-            className="border rounded-lg p-2 w-full mb-4"
+            className="border bg-slate-50 dark:bg-slate-800 rounded-lg p-2 w-full mb-4"
             placeholder="Search"
           />
           <h2 className="font-semibold">Chats</h2>
