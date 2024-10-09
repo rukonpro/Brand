@@ -16,7 +16,7 @@ const Messenger = () => {
       </div>
       <div className="flex flex-col md:flex-row h-screen ">
         {/* Sidebar */}
-        <div className="md:w-1/4 w-full bg-white dark:bg-slate-800 shadow-lg p-4 pt-20 md:block hidden">
+        <div className="md:w-1/4 w-full bg-white dark:bg-slate-900 shadow-lg p-4 pt-20 md:block hidden">
           <h1 className="text-2xl font-bold mb-6">Chat ONN</h1>
           <input
             type="text"
@@ -41,7 +41,7 @@ const Messenger = () => {
         </div>
 
         {/* Chat Area */}
-        <div className="md:w-1/2 w-full h-full  shadow-lg flex flex-col md:pt-20 pt-28">
+        <div className="md:w-1/2 w-full h-full dark:bg-slate-950 shadow-lg flex flex-col md:pt-20 pt-28">
           {/* Chat Header */}
           <div className="flex items-center justify-between border-b p-4">
             <h2 className="font-semibold">Kirti Yadav</h2>
@@ -81,7 +81,7 @@ const Messenger = () => {
         </div>
 
         {/* Notifications & Suggestions */}
-        <div className="md:w-1/4 w-full  bg-white dark:bg-slate-800 shadow-lg p-4 pt-20 md:block hidden">
+        <div className="md:w-1/4 w-full  bg-white dark:bg-slate-900 shadow-lg p-4 pt-20 md:block hidden">
           <h2 className="font-semibold mb-4">Notifications</h2>
           <ul className="space-y-2">
             <li className="flex items-center p-2 border-b hover:bg-gray-200">
