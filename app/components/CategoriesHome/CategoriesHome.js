@@ -28,11 +28,11 @@ const CategoriesHome = async () => {
     <div className="max-w-[1200px] mx-auto">
       <h1 className="text-lg pt-5 pb-3 md:px-0 px-5">Categories</h1>
 
-      <ul className="flex gap-0.5 max-w-screen-lg overflow-hidden overflow-x-auto scrollbar-hide md:max-w-[1200px] md:grid md:grid-cols-6 lg:grid-cols-8 pb-12" role="list">
+      <ul className="flex gap-0.5 max-w-screen-lg overflow-hidden overflow-x-auto scrollbar-hide md:max-w-[1200px] md:grid md:grid-cols-6 lg:grid-cols-8" role="list">
         {
           combinedOptions?.map(category => {
             return (
-              <li key={category?.id} role="listitem" className="bg-white p-3 w-36 md:w-full hover:transform-cpu duration-500  overflow-hidden transition-transform transform hover:scale-105 hover:shadow-xl hover:shadow-blue-100 hover:z-10">
+              <li key={category?.id} role="listitem" className="bg-white p-3 w-36 md:w-full">
                 <Link href={`/source/${category?.id}` }  passHref>
                   <div className="flex justify-center items-centerjustify-center">
                     <div className="h-20 w-20 ">
