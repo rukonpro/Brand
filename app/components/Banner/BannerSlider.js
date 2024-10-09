@@ -91,7 +91,7 @@ const BannerSlider = ({ banners }) => {
                         </h1>
                         <br/>
 
-                            <Link href={link}>
+                            <Link href={link} aria-label={banner?.title}>
                                 <button type="button" className="bg-white rounded-xl px-3 py-2 mt-5">
                                     Learn more
                                 </button>
