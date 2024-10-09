@@ -1,9 +1,9 @@
 import React  from 'react';
 import Image from 'next/image'
 import Logo from "@/public/images/logo-colored.png";
-import Love from "@/public/images/love.png";
-import Chat from "@/public/images/chat.png";
-import Cart from "@/public/images/cart.png";
+import { RxHeartFilled } from "react-icons/rx";
+import { BsChatLeftDotsFill } from "react-icons/bs";
+import { BsFillCartPlusFill } from "react-icons/bs";
 import Search from "@/app/components/Search/Search";
 import Link from "next/link";
 import ProfileDrawer from "@/app/components/navbar/profileDrawer";
@@ -17,15 +17,15 @@ const Navbar = async () => {
     const category=await getAllCategory();
     return (
         <nav className='bg-white dark:bg-slate-800 dark:text-stone-100 px-3 py-3 w-full '>
-            <div className="grid grid-cols-12 max-w-[1200px] mx-auto py-8 items-center gap-4">
-                <div className="h-[46px] w-[150px] md:col-span-2 col-span-5 ">
-                  <div className="grid grid-cols-4 items-center">
-                     <div className="col-span-1 md:hidden block">
+            <div className="grid grid-cols-12 max-w-[1200px] mx-auto  items-center gap-4">
+                <div className="md:col-span-2 col-span-5 flex items-center ">
+                  <div className="grid grid-cols-4 items-center ">
+                     <div className="col-span-1 md:hidden block items-center ">
                         <CategoryDrawer categories={category?.data} />
                      </div>
                     <div className="md:col-span-4 col-span-3">
                        <Link href="/">
-                           <Image src={Logo} alt="Logo"/>
+                           <Image src={Logo} width={100} height="auto" alt="Logo"/>
                        </Link>
                     </div>
                   </div>
@@ -40,7 +40,7 @@ const Navbar = async () => {
                         <Link href="/messenger">
                             <div className="flex justify-center">
                                 <div className="flex justify-center">
-                                    <Image src={Chat} height={25} width={25} alt='Chat icon'/>
+                                    <BsChatLeftDotsFill size={25} className="text-gray-400" />
                                 </div>
                             </div>
                             <p className="text-sm text-center  sm:block hidden">Massage</p>
@@ -49,7 +49,7 @@ const Navbar = async () => {
                     <div>
                         <Link href="/myOrders">
                             <div className="flex justify-center">
-                                <Image src={Love} height={25} width={25} alt='Love icon'/>
+                                <RxHeartFilled size={25} className="text-gray-400"/>
                             </div>
                             <p className="text-sm text-center sm:block hidden">Orders</p>
                         </Link>
@@ -60,7 +60,7 @@ const Navbar = async () => {
                         <Link href="/myCart">
                             <div className="flex justify-center relative">
 
-                                <Image src={Cart} height={25} width={25} alt='card icon'/>
+                                <BsFillCartPlusFill size={25} className="text-gray-400"/>
 
 
       <NavCart/>
@@ -75,7 +75,7 @@ const Navbar = async () => {
                 </div>
 
             </div>
-            <div className=" md:hidden block ">
+            <div className=" md:hidden block pt-3">
                 <Search/>
             </div>
 

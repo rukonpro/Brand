@@ -14,7 +14,7 @@ const BannerSlider = ({ banners }) => {
 
     useEffect(() => {
         setLink(banners?.[currentSlide]?.link); // Set the current banner's link
-    }, [currentSlide]);
+    }, [currentSlide,banners]);
 
     // Auto-slide after every 3 seconds
     useEffect(() => {
@@ -82,7 +82,7 @@ const BannerSlider = ({ banners }) => {
                         src={banner?.image}
                         alt={banner?.title}
                         fill
-                        className="object-cover"
+                        sizes='100%'
                         priority={index === currentSlide} // Give priority to current image
                     />
                     <div className="absolute top-10 left-5 text-slate-700 font-bold w-60">

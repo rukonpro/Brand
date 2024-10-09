@@ -1,4 +1,5 @@
 module.exports = {
+    
     images: {
         remotePatterns: [
             {
@@ -45,4 +46,8 @@ module.exports = {
             }
         ],
     },
+
+    plugins: [
+        require('tailwind-scrollbar-hide')
+    ],
 };

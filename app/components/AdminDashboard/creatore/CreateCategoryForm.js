@@ -115,7 +115,7 @@ const CreateCategoryForm = () => {
             setImageUrl(category?.photo);
         }
 
-    }, [category,update]);
+    }, [category, update]);
 
 
 

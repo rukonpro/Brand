@@ -16,7 +16,7 @@ const RequestsForm = () => {
 
 <div className="col-span-1">
 
-<label for="pcsOptions">Choose a option:</label>
+<label htmlFor="pcsOptions "  className="sr-only">Option:</label>
                 <select 
                 id="pcsOptions"
                 className=" h-[40px] px-2  border-2 border-white rounded-lg   bg-gray-100/50 dark:bg-slate-700/50 dark:text-slate-100 dark:placeholder:text-slate-200 dark:border-blue-500 focus:outline-0">

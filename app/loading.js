@@ -9,7 +9,7 @@ const Loader = () => {
                 {/* Logo Placeholder or Brand Name */}
                 <div className="flex items-center space-x-2">
                     <div className=" animate-pulse">
-                        <Image src={Logo} alt="Brand logo"/>
+                        <Image src={Logo} width={100} height="auto" alt="Brand logo"/>
                     </div>
 
                 </div>

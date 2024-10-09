@@ -1,9 +1,9 @@
 "use client"
-import {useState, useRef, useEffect, Suspense} from 'react';
+import { useState, useRef, useEffect, Suspense } from 'react';
 import Link from "next/link";
 import OfferCard from "@/app/components/offers/OfferCard";
-import {SkeletonOfferCard} from "@/app/components/Skeletons/OfferSkeletons";
-import {getOffers} from "@/app/utils/offer/fetch_offer_api";
+import { SkeletonOfferCard } from "@/app/components/Skeletons/OfferSkeletons";
+import { getOffers } from "@/app/utils/offer/fetch_offer_api";
 
 const Slider = () => {
     const sliderRef = useRef(null);
@@ -19,11 +19,14 @@ const Slider = () => {
         try {
             // Simulate an API call to fetch data (replace this with your actual fetch)
             const response = await getOffers({
-                page:pageNum,
+                page: pageNum,
             });
             const data = await response?.data;
             // Append new items to the existing items
-            setItems((prevItems) => [...prevItems, ...data?.data]);
+            if (data) {
+                setItems((prevItems) => [...prevItems, ...data?.data]);
+            }
+
 
             // Check if all items have been loaded
             if ((pageNum * 10) >= totalItemsInDB) {
@@ -117,7 +120,7 @@ const Slider = () => {
                 onMouseUp={handleMouseUp}
                 onMouseMove={handleMouseMove}
                 onScroll={handleScroll} // Listen to scroll event
-                style={{ userSelect: "none",  }}
+                style={{ userSelect: "none", }}
             >
                 {/* Render fetched items as slides */}
                 {items?.map((item, index) => (
@@ -126,19 +129,19 @@ const Slider = () => {
                         draggable={false}
                         className=" h-64 w-44  snap-center flex-shrink-0 p-2  bg-white  dark:bg-slate-800 relative "
                     >
-                        <Suspense fallback={<SkeletonOfferCard/>}>
+                        <Suspense fallback={<SkeletonOfferCard />}>
                             <Link href={`/details/${item?.product?.id}`} draggable={false}>
-                                <OfferCard offer={item}/>
+                                <OfferCard offer={item} />
                             </Link>
                         </Suspense>
 
 
                     </li>
                 ))}
-                {isFetching&& [1,2,3,4,5].map((_,i) =>
+                {isFetching && [1, 2, 3, 4, 5].map((_, i) =>
                     <li key={i}>
-                    <SkeletonOfferCard/>
-                </li>)}
+                        <SkeletonOfferCard />
+                    </li>)}
             </ul>
         </div>
     );

@@ -14,7 +14,7 @@ import CloseIcon from "@/public/images/close-svgrepo-com.svg";
 import LogoutButton from "@/app/components/navbar/LogoutButton";
 import {useSession} from "next-auth/react";
 import SkeletonProfileSidebarBanner from "@/app/components/Skeletons/SkeletonProfileSidebarBanner";
-
+import { FaUserCircle } from "react-icons/fa";
 
 
 
@@ -34,12 +34,15 @@ const ProfileDrawer = () => {
         <Fragment>
             <button type="button" onClick={handleToggleDrawer}>
                 <div className="flex justify-center">
-                    <Image src={user?.profilePhoto||Avater}
+                  {user?.profilePhoto?  <Image src={user?.profilePhoto}
                            height={25}
                            width={25}
                            alt='avater'
-                           blurDataURL={user?.profilePhoto||null}
+                           blurDataURL={user?.profilePhoto}
                            className="rounded-full" />
+                :
+               < FaUserCircle size={25} className="text-gray-400" />
+                }
                 </div>
                 <p className="text-sm text-center sm:block hidden">Profile</p>
             </button>

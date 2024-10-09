@@ -4,12 +4,14 @@ import RecommendedItems from "./components/RecommendedItems/RecommendedItems";
 import OurExtraServices from "./components/OurExtraServices/OurExtraServices";
 import SuppliersByRegion from "./components/SuppliersByRegion/SuppliersByRegion";
 import Nav from "@/app/components/navbar/nav";
-import {Suspense} from "react";
+import { Suspense } from "react";
 import OffersLayout from "@/app/components/offers/OffersLayout";
-import {SkeletonHeader} from "@/app/components/Skeletons/SkeletonCategories";
-import {SkeletonRecommendedItemsSection} from "@/app/components/Skeletons/SkeletonRecommendedItemCard";
+import { SkeletonHeader } from "@/app/components/Skeletons/SkeletonCategories";
+import { SkeletonRecommendedItemsSection } from "@/app/components/Skeletons/SkeletonRecommendedItemCard";
 import Navbar from "@/app/components/navbar/navbar";
 import Footer from "@/app/components/Footer/Footer";
+import CategoriesHome from "./components/CategoriesHome/CategoriesHome";
+import Loader from "./Loader";
 
 
 export const metadata = {
@@ -30,31 +32,34 @@ export const metadata = {
 };
 
 
-export default  function Home() {
+export default function Home() {
     return (
         <>
             <div className="sticky top-0 z-[20]">
-                <Navbar/>
+                <Navbar />
             </div>
-            <Nav/>
-            <Suspense fallback={<SkeletonHeader/>}>
-                <Banner/>
+            <Nav />
+            <Suspense fallback={<SkeletonHeader />}>
+                <Banner />
             </Suspense>
 
             {/*<Suspense fallback={<Loader/>}>*/}
-            <OffersLayout/>
+            <OffersLayout />
 
+            <Suspense fallback={<Loader/>}>
+                <CategoriesHome />
+            </Suspense>
             {/*</Suspense>*/}
-            <Suspense fallback={<SkeletonRecommendedItemsSection/>}>
-                <RecommendedItems/>
+            <Suspense fallback={<SkeletonRecommendedItemsSection />}>
+                <RecommendedItems />
             </Suspense>
             {/*<Suspense fallback={<Loader/>}>*/}
             {/*    <SourcesProductsLayout />*/}
             {/*</Suspense>*/}
-            <Requests/>
+            <Requests />
 
-            <OurExtraServices/>
-            <SuppliersByRegion/>
+            <OurExtraServices />
+            <SuppliersByRegion />
             <Footer />
         </>
     );

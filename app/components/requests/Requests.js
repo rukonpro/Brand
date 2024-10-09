@@ -1,18 +1,19 @@
 import React from 'react';
 import RequestsForm from './RequestsForm';
 import Image from "next/image";
-import bgImage from "@/public/images/image102.png"
+import bgImage from "@/public/images/Brand-rukon-scaled.webp"
 const Requests = () => {
     return (
         <div className="px-3">
-            <div className='grid grid-cols-12 gap-y-10  max-w-[1200px] rounded-lg overflow-hidden mx-auto md:p-10 p-3  mt-5  relative  bg-gradient-to-r from-emerald-600  dark:from-fuchsia-950  '
+            <div className='grid grid-cols-12 gap-y-10  max-w-[1200px] rounded-lg overflow-hidden mx-auto md:p-10 p-3  mt-5  relative  bg-gradient-to-r from-fuchsia-950  '
             >
                 <Image
                     src={bgImage}
                     alt="Background"
                     fill
                     style={{ objectFit: 'cover' }}
-                    quality={100}
+                    quality={20}
+                    placeholder='blur'
                     className="-z-10"
                 />
                 <div className='md:col-span-8 col-span-12'>
