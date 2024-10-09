@@ -41,7 +41,7 @@ const Messenger = () => {
         </div>
 
         {/* Chat Area */}
-        <div className="md:w-1/2 w-full h-full bg-white shadow-lg flex flex-col md:pt-20 pt-28">
+        <div className="md:w-1/2 w-full h-full  shadow-lg flex flex-col md:pt-20 pt-28">
           {/* Chat Header */}
           <div className="flex items-center justify-between border-b p-4">
             <h2 className="font-semibold">Kirti Yadav</h2>
