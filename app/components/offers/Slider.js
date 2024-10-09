@@ -23,9 +23,9 @@ const Slider = () => {
             });
             const data = await response?.data;
             // Append new items to the existing items
-            if (data) {
+          
                 setItems((prevItems) => [...prevItems, ...data?.data]);
-            }
+           
 
 
             // Check if all items have been loaded
