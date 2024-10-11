@@ -44,7 +44,7 @@ const Slider = () => {
     // Initial load of 10 items
     useEffect(() => {
         fetchItems(page);
-    }, [page]);
+    }, [page,]);
 
     // Handling Mouse Drag Scroll
     const handleMouseDown = (e) => {

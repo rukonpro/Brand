@@ -6,31 +6,32 @@ datasource db {
   provider = "mongodb"
   url      = env("DATABASE_URL")
 }
+
 model Category {
-  id          String    @id @default(auto()) @map("_id") @db.ObjectId
+  id          String     @id @default(auto()) @map("_id") @db.ObjectId
   name        String
   photo       String
   description String?
-  parentId String?    @db.ObjectId
-  parent   Category?  @relation("CategoryToParent", fields: [parentId], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  children Category[] @relation("CategoryToParent")
-  Products Product[]
+  parentId    String?    @db.ObjectId
+  parent      Category?  @relation("CategoryToParent", fields: [parentId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  children    Category[] @relation("CategoryToParent")
+  Products    Product[]
 }
 
 model Brand {
-  id          String    @id @default(auto()) @map("_id") @db.ObjectId
-  name        String
-  logo        String
-  website     String?
+  id       String    @id @default(auto()) @map("_id") @db.ObjectId
+  name     String
+  logo     String
+  website  String?
   Products Product[]
 }
 
 model Review {
-  id         String   @id @default(auto()) @map("_id") @db.ObjectId
-  user       String
-  body       String
-  rating     Int
-  createdAt  DateTime @default(now())
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  user      String
+  body      String
+  rating    Int
+  createdAt DateTime @default(now())
 }
 
 // model Dimension {
@@ -46,37 +47,38 @@ model Review {
 // }
 
 model Product {
-  id              String        @id @default(auto()) @map("_id") @db.ObjectId
-  name            String
-  description     String
-  photos          String[]      // Array of photo URLs
-  price           Float
-  material        String?
-  quantity        Int
-  warranty        String?
-  protection      String?
-  colors          String[]      @default([])
-  sizes           String[]      @default([])
-  rating          Float         @default(0)
-  tags            String[]      @default([])
-  availability    Availability  @default(IN_STOCK)
-  status          Status        @default(ACTIVE)
-  brand           Brand?        @relation(fields: [brandId], references: [id])
-  brandId         String?       @db.ObjectId
-  category        Category?     @relation(fields: [categoryId], references: [id])
-  categoryId      String?       @db.ObjectId
-  dimension       Json?
-  offers          Offer[]    @relation("ProductOffers")
-  orderItem       OrderItem[]
+  id                 String       @id @default(auto()) @map("_id") @db.ObjectId
+  name               String
+  description        String
+  photos             String[] // Array of photo URLs
+  price              Float
+  material           String?
+  quantity           Int
+  warranty           String?
+  protection         String?
+  colors             String[]     @default([])
+  sizes              String[]     @default([])
+  rating             Float        @default(0)
+  tags               String[]     @default([])
+  availability       Availability @default(IN_STOCK)
+  status             Status       @default(ACTIVE)
+  brand              Brand?       @relation(fields: [brandId], references: [id])
+  brandId            String?      @db.ObjectId
+  category           Category?    @relation(fields: [categoryId], references: [id])
+  categoryId         String?      @db.ObjectId
+  dimension          Json?
+  offers             Offer[]      @relation("ProductOffers")
+  orderItem          OrderItem[]
   // New fields
-  discountPercentage Float?    @default(0)   // Discount percentage for the product
-  taxPercentage      Float?    @default(0)   // Tax percentage for the product
-  deliveryFee        Float?    @default(0)   // Delivery fee for the product
+  discountPercentage Float        @default(0) // Discount percentage for the product
+  taxPercentage      Float        @default(0) // Tax percentage for the product
+  deliveryFee        Float        @default(0) // Delivery fee for the product
 
-  createdAt       DateTime      @default(now())
-  updatedAt       DateTime      @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  CartItem CartItem[]
 }
-
 
 enum Availability {
   IN_STOCK
@@ -89,17 +91,16 @@ enum Status {
   DISCONTINUED
 }
 
-
 model Offer {
-  id              String     @id @default(auto()) @map("_id") @db.ObjectId
-  description     String?
-  discountType    DiscountType
-  discountValue   Float
-  startDate       DateTime
-  endDate         DateTime
-  isActive        Boolean    @default(true)
-  product         Product    @relation("ProductOffers", fields: [productId], references: [id])
-  productId       String     @db.ObjectId
+  id            String       @id @default(auto()) @map("_id") @db.ObjectId
+  description   String?
+  discountType  DiscountType
+  discountValue Float
+  startDate     DateTime
+  endDate       DateTime
+  isActive      Boolean      @default(true)
+  product       Product      @relation("ProductOffers", fields: [productId], references: [id])
+  productId     String       @db.ObjectId
 }
 
 enum DiscountType {
@@ -107,63 +108,59 @@ enum DiscountType {
   FLAT
 }
 
-
-
 model User {
-  id             String     @id @default(auto()) @map("_id") @db.ObjectId
-  firstName      String
-  lastName       String
-  gender         Gender?
-  dateOfBirth    DateTime?
-  phoneNumber    String?    @unique
-  email          String    @unique
-  country        String?
-  houseNumber    String?
-  street         String?
-  city           String?
-  postalCode     String?
-  state          String?
-  role           Role      @default(USER) // Default role
-  profilePhoto   String?   // Nullable field for profile photo URL
-  coverPhoto     String?   // Nullable field for cover photo URL
-  password       String?    // Add this line for password
-  createdAt      DateTime  @default(now())
-  updatedAt      DateTime  @updatedAt
+  id                String            @id @default(auto()) @map("_id") @db.ObjectId
+  firstName         String
+  lastName          String
+  gender            Gender?
+  dateOfBirth       DateTime?
+  phoneNumber       String?           @unique
+  email             String            @unique
+  country           String?
+  houseNumber       String?
+  street            String?
+  city              String?
+  postalCode        String?
+  state             String?
+  role              Role              @default(USER) // Default role
+  profilePhoto      String? // Nullable field for profile photo URL
+  coverPhoto        String? // Nullable field for cover photo URL
+  password          String? // Add this line for password
+  createdAt         DateTime          @default(now())
+  updatedAt         DateTime          @updatedAt
   shippingAddresses ShippingAddress[]
-  orders      Order[]
+  orders            Order[]
 }
 
 enum Gender {
-    MALE
+  MALE
   FEMALE
   OTHER
 }
+
 enum Role {
   ADMIN
   USER
   SUPPLIER
 }
 
-
-
 model Banner {
-  id          String     @id @default(auto()) @map("_id") @db.ObjectId
-  image       String   // ব্যানারের চিত্রের URL
-  title       String?  // ব্যানারে প্রদর্শিত টেক্সট
-  link        String?  // ব্যানারে কোনো লিঙ্ক দেওয়া থাকলে
-  status      Status @default(ACTIVE)
-  startDate   DateTime @default(now())// ব্যানার প্রদর্শনের শুরু তারিখ
-  endDate     DateTime // ব্যানার প্রদর্শনের শেষ তারিখ
-  createdAt    DateTime  @default(now())
-  updatedAt    DateTime  @updatedAt
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  image     String // ব্যানারের চিত্রের URL
+  title     String? // ব্যানারে প্রদর্শিত টেক্সট
+  link      String? // ব্যানারে কোনো লিঙ্ক দেওয়া থাকলে
+  status    Status   @default(ACTIVE)
+  startDate DateTime @default(now()) // ব্যানার প্রদর্শনের শুরু তারিখ
+  endDate   DateTime // ব্যানার প্রদর্শনের শেষ তারিখ
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
-
 model ShippingAddress {
-  id          String     @id @default(auto()) @map("_id") @db.ObjectId
-  user        User       @relation(fields: [userId], references: [id])
-  userId      String     @db.ObjectId
-  firstName    String
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  user        User     @relation(fields: [userId], references: [id])
+  userId      String   @db.ObjectId
+  firstName   String
   lastName    String
   phoneNumber String
   houseNumber String
@@ -172,49 +169,44 @@ model ShippingAddress {
   postalCode  String
   state       String
   country     String
-  isDefault   Boolean?    @default(false) // Whether this is the default address
-  createdAt   DateTime   @default(now())
-  updatedAt   DateTime   @updatedAt
+  isDefault   Boolean? @default(false) // Whether this is the default address
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
   orders      Order[]
 }
 
-
-
 model Order {
-  id                     String       @id @default(auto()) @map("_id") @db.ObjectId
-  userId                 String       @db.ObjectId
-  user                   User         @relation(fields: [userId], references: [id])
-  status                 String       @default("PENDING")
-  paymentStatus          String       @default("PENDING")
-  createdAt              DateTime     @default(now())
-  updatedAt              DateTime     @updatedAt
-  totalTax               Float        // Total tax for the entire order
-  totalPriceWithDiscount Float        // Total price with discount for the entire order
-  totalPrice             Float        // Total price without discount for the entire order
-  items                  OrderItem[]  // Order items
-  totalDeliveryFee       Float        @default(0)
-  shippingAddressId      String?       @db.ObjectId
+  id                     String           @id @default(auto()) @map("_id") @db.ObjectId
+  userId                 String           @db.ObjectId
+  user                   User             @relation(fields: [userId], references: [id])
+  status                 String           @default("PENDING")
+  paymentStatus          String           @default("PENDING")
+  createdAt              DateTime         @default(now())
+  updatedAt              DateTime         @updatedAt
+  totalTax               Float            @default(0) // Total tax for the entire order
+  totalPriceWithDiscount Float            @default(0) // Total price with discount for the entire order
+  totalPrice             Float            @default(0) // Total price without discount for the entire order
+  totalDeliveryFee       Float            @default(0)
+  items                  OrderItem[] // Order items
+  shippingAddressId      String?          @db.ObjectId
   shippingAddress        ShippingAddress? @relation(fields: [shippingAddressId], references: [id])
 }
 
-
-
 model OrderItem {
   id                     String  @id @default(auto()) @map("_id") @db.ObjectId
-  quantity               Int     // Quantity of the product
-  price                  Float   // Price of the product
-  totalPrice             Float   // Total price without discount
-  discountPercentage     Float?  // Discount percentage for the item
-  totalPriceWithDiscount Float   // Price after discount
-  taxPercentage          Float?  // Tax percentage for the item
-  totalTax               Float   // Total tax amount
+  quantity               Int // Quantity of the product
+  price                  Float   @default(0) // Price of the product
+  totalPrice             Float   @default(0) // Total price without discount
+  discountPercentage     Float?  @default(0) // Discount percentage for the item
+  totalPriceWithDiscount Float   @default(0) // Price after discount
+  taxPercentage          Float?  @default(0) // Tax percentage for the item
+  totalTax               Float   @default(0) // Total tax amount
   deliveryFee            Float   @default(0)
   order                  Order   @relation(fields: [orderId], references: [id])
   orderId                String  @db.ObjectId
   product                Product @relation(fields: [productId], references: [id])
-  productId              String  @db.ObjectId// The product in the order
+  productId              String  @db.ObjectId // The product in the order
 }
-
 
 enum PaymentStatus {
   PENDING
@@ -227,4 +219,39 @@ enum OrderStatus {
   SHIPPED
   DELIVERED
   CANCELED
+}
+
+model Cart {
+  id        String     @id @default(auto()) @map("_id") @db.ObjectId
+  userId    String     @db.ObjectId
+  items     CartItem[]
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+}
+
+model CartItem {
+  id                     String   @id @default(auto()) @map("_id") @db.ObjectId
+  cartId                 String   @db.ObjectId
+  productId              String   @db.ObjectId
+  totalQuantity          Int?
+  details                Detail[] // details এখন একটি অ্যারে, যা Detail মডেলের একটি অ্যারে হবে
+  totalPrice             Float
+  discountPercentage     Float?   @default(0)
+  totalPriceWithDiscount Float?   @default(0)
+  taxPercentage          Float?
+  totalTax               Float?   @default(0)
+  deliveryFee            Float?   @default(0)
+
+  cart    Cart    @relation(fields: [cartId], references: [id])
+  product Product @relation(fields: [productId], references: [id])
+}
+
+// নতুন Detail মডেল
+model Detail {
+  id         String   @id @default(auto()) @map("_id") @db.ObjectId
+  size       String?
+  color      String?
+  quantity   Int      @default(1)
+  cartItem   CartItem @relation(fields: [cartItemId], references: [id])
+  cartItemId String   @db.ObjectId
 }
