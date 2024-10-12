@@ -22,7 +22,7 @@ const DarkAndLightModeController = () => {
                 document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0f172a'); // Dark mode theme color
             } else {
                 document.documentElement.classList.remove('dark');
-                document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff'); // Light mode theme color
+                document.querySelector('meta[name="theme-color"]').setAttribute('content', '#dbeafe'); // Light mode theme color
             }
         } else {
             // No saved theme, check system preference
@@ -50,7 +50,7 @@ const DarkAndLightModeController = () => {
                 if (theme === 'dark') {
                     document.documentElement.classList.add('dark');
                     localStorage.setItem('theme', 'dark'); // Save user-selected theme
-                    document.querySelector('meta[name="theme-color"]').setAttribute('content', '#000000'); // Dark mode theme color
+                    document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0f172a'); // Dark mode theme color
                 } else if (theme === 'light') {
                     document.documentElement.classList.remove('dark');
                     localStorage.setItem('theme', 'light'); // Save user-selected theme
@@ -61,7 +61,7 @@ const DarkAndLightModeController = () => {
                     const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
                     if (systemPrefersDark) {
                         document.documentElement.classList.add('dark');
-                        document.querySelector('meta[name="theme-color"]').setAttribute('content', '#000000'); // System dark mode theme color
+                        document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0f172a'); // System dark mode theme color
                     } else {
                         document.documentElement.classList.remove('dark');
                         document.querySelector('meta[name="theme-color"]').setAttribute('content', '#dbeafe'); // System light mode theme color
