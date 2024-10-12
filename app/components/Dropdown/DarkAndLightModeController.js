@@ -1,34 +1,14 @@
-"use client"
-import React, {useState,useEffect} from 'react';
+"use client";
+
+import React, { useState, useEffect } from 'react';
 import DarkModeIcon from "@/public/images/dark-mode.png";
 import LightModeIcon from "@/public/images/light-mode.png";
 import SystemModeIcon from "@/public/images/system-mode.png";
 import Image from "next/image";
 
-
-//
-// const setLocalStorageItem = async (key, value) => {
-//     return new Promise((resolve) => {
-//         localStorage.setItem(key, value);
-//         resolve(true);
-//     });
-// };
-//
-// // Async localStorage getter
-// const getLocalStorageItem = async (key) => {
-//     return new Promise((resolve) => {
-//         const value = localStorage.getItem(key);
-//         resolve(value);
-//     });
-// };
-
-
 const DarkAndLightModeController = () => {
     const [dropdownOpen, setDropdownOpen] = useState(false);
-
-
     const [theme, setTheme] = useState(null); // Start with null to determine theme from system or storage
-
 
     // Async function to initialize theme
     const initializeTheme = async () => {
@@ -39,8 +19,10 @@ const DarkAndLightModeController = () => {
             setTheme(savedTheme);
             if (savedTheme === 'dark') {
                 document.documentElement.classList.add('dark');
+                document.querySelector('meta[name="theme-color"]').setAttribute('content', '#000000'); // Dark mode theme color
             } else {
                 document.documentElement.classList.remove('dark');
+                document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff'); // Light mode theme color
             }
         } else {
             // No saved theme, check system preference
@@ -48,12 +30,13 @@ const DarkAndLightModeController = () => {
             if (systemPrefersDark) {
                 setTheme('dark');
                 document.documentElement.classList.add('dark');
+                document.querySelector('meta[name="theme-color"]').setAttribute('content', '#000000'); // System dark mode theme color
             } else {
                 setTheme('light');
                 document.documentElement.classList.remove('dark');
+                document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff'); // System light mode theme color
             }
         }
-
     };
 
     useEffect(() => {
@@ -64,24 +47,26 @@ const DarkAndLightModeController = () => {
     useEffect(() => {
         if (theme !== null) {
             const applyTheme = async () => {
-
                 if (theme === 'dark') {
                     document.documentElement.classList.add('dark');
                     localStorage.setItem('theme', 'dark'); // Save user-selected theme
+                    document.querySelector('meta[name="theme-color"]').setAttribute('content', '#000000'); // Dark mode theme color
                 } else if (theme === 'light') {
                     document.documentElement.classList.remove('dark');
                     localStorage.setItem('theme', 'light'); // Save user-selected theme
+                    document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff'); // Light mode theme color
                 } else if (theme === 'system') {
                     // If system theme is selected, remove saved theme and apply system preference
                     localStorage.removeItem('theme');
                     const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
                     if (systemPrefersDark) {
                         document.documentElement.classList.add('dark');
+                        document.querySelector('meta[name="theme-color"]').setAttribute('content', '#000000'); // System dark mode theme color
                     } else {
                         document.documentElement.classList.remove('dark');
+                        document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff'); // System light mode theme color
                     }
                 }
-
             };
 
             applyTheme(); // Apply theme asynchronously
@@ -91,16 +76,20 @@ const DarkAndLightModeController = () => {
     const toggleDropdown = () => {
         setDropdownOpen(!dropdownOpen);
     };
+
     return (
         <div className="relative">
             {/* Dropdown Button */}
-            <button
-                onClick={toggleDropdown}
-            >
-              <div className="flex items-center justify-center">
-                  <Image src={theme==="dark"?DarkModeIcon:theme==="light"?LightModeIcon:SystemModeIcon} height={25} width={25} alt="system icon"/>
-              </div>
-                <p className="text-sm text-center  sm:block hidden">Theme</p>
+            <button onClick={toggleDropdown}>
+                <div className="flex items-center justify-center">
+                    <Image
+                        src={theme === "dark" ? DarkModeIcon : theme === "light" ? LightModeIcon : SystemModeIcon}
+                        height={25}
+                        width={25}
+                        alt="system icon"
+                    />
+                </div>
+                <p className="text-sm text-center sm:block hidden">Theme</p>
             </button>
 
             {/* Dropdown Menu */}
@@ -113,8 +102,7 @@ const DarkAndLightModeController = () => {
                         }}
                         className="flex gap-3 items-center p-2 hover:bg-gray-100 dark:hover:bg-slate-700 w-full"
                     >
-                        {/* Dark Mode Icon (Moon) */}
-                        <Image src={DarkModeIcon} height={25} width={25} alt="Dark mode icon"/>
+                        <Image src={DarkModeIcon} height={25} width={25} alt="Dark mode icon" />
                         Dark Mode
                     </button>
                     <button
@@ -124,8 +112,7 @@ const DarkAndLightModeController = () => {
                         }}
                         className="flex gap-3 items-center p-2 hover:bg-gray-100 dark:hover:bg-slate-700 w-full"
                     >
-                        {/* Light Mode Icon (Sun) */}
-                        <Image src={LightModeIcon} height={25} width={25} alt="Light mode icon"/>
+                        <Image src={LightModeIcon} height={25} width={25} alt="Light mode icon" />
                         Light Mode
                     </button>
                     <button
@@ -135,8 +122,7 @@ const DarkAndLightModeController = () => {
                         }}
                         className="flex gap-3 items-center p-2 hover:bg-gray-100 dark:hover:bg-slate-700 w-full"
                     >
-                        {/* System Mode Icon (Monitor) */}
-                        <Image src={SystemModeIcon} height={25} width={25} alt="System mode icon"/>
+                        <Image src={SystemModeIcon} height={25} width={25} alt="System mode icon" />
                         System Default
                     </button>
                 </div>
