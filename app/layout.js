@@ -13,7 +13,7 @@ export default function RootLayout({ children}) {
     <html lang="en">
    <head>
         {/* Set the address bar theme color */}
-        <meta name="theme-color" content="#ff6600" />
+        <meta name="theme-color" content="#dbeafe" />
       </head>
       <body className={`${inter.className} bg-gray-100 dark:bg-slate-900 dark:text-slate-50`}>
       <main className="relative">
