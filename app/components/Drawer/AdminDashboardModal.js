@@ -53,7 +53,7 @@ const AdminDashboardModal = ({ isOpen, handleCloseModal, children, title}) => {
     };
 
     return (
-        <div>
+      
             <div
                 className={`fixed flex justify-center items-center h-full w-full inset-0 z-50 overflow-hidden transition-transform duration-700 ease-in-out ${isOpen ? 'translate-x-0 translate-y-0 opacity-100' : '-translate-x-full -translate-y-full opacity-0'}`}
                 style={{ pointerEvents: isOpen ? 'auto' : 'none' }}
@@ -100,7 +100,7 @@ const AdminDashboardModal = ({ isOpen, handleCloseModal, children, title}) => {
                     ></div>
                 </div>
             </div>
-        </div>
+     
     );
 };
 

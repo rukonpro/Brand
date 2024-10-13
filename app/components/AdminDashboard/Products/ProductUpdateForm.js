@@ -2,7 +2,7 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { CldUploadWidget } from 'next-cloudinary';
 import Image from 'next/image';
-import React, {useEffect, useState} from "react";
+import React, {useState} from "react";
 import { IoCloseSharp } from "react-icons/io5";
 import SearchableSelect from "@/app/components/AdminDashboard/Products/SearchableSelect";
 import SearchableSelectCategory from "@/app/components/AdminDashboard/Products/SearchableSelectCategory";
@@ -580,19 +580,3 @@ const [imageUrls, setImageUrls] = useState(initialData.photos||[]);
 
 export default ProductUpdateForm;
 
-
-
-// const brands=[
-//     {
-//         id:"1",
-//         name:"BD",
-//         logo:"sd",
-//
-//     },
-//     {
-//         id:"2",
-//         name:"iphone",
-//         logo:"sd",
-//
-//     }
-// ]

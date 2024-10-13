@@ -5,24 +5,26 @@ import * as Yup from 'yup';
 import { RiDeleteBack2Fill } from "react-icons/ri";
 import { BsPlusCircleFill } from "react-icons/bs";
 
-import {createProduct} from "@/app/utils/product/fetch_products_api";
+import { createProduct } from "@/app/utils/product/fetch_products_api";
 import baseURL from "@/app/utils/baseURL";
-import {CldUploadWidget} from "next-cloudinary";
+import { CldUploadWidget } from "next-cloudinary";
 import { RiImageAddFill } from "react-icons/ri";
 
 import Image from "next/image";
 import toast from "react-hot-toast";
+import SearchableSelectCategory from '../Products/SearchableSelectCategory';
+import SearchableSelect from '../Products/SearchableSelect';
 
-const CreateProductForm = ({ categories, brands }) => {
+const CreateProductForm = ({ categories, brands, mutate }) => {
     const [colors, setColors] = useState([]);
     const [sizes, setSizes] = useState([]);
     const [resources, setResources] = useState([]);
     const [tags, setTags] = useState([]);
     const [availability, setAvailability] = useState('IN_STOCK'); // Default availability
     const [status, setStatus] = useState('ACTIVE'); // Default status
-    const [isLoading,setIsLoading]=useState(false)
-    const photos=resources?.map(resource=>resource?.secure_url);
-    const [photosIsRequired, setPhotosIsRequired]=useState(false);
+    const [isLoading, setIsLoading] = useState(false)
+    const photos = resources?.map(resource => resource?.secure_url);
+    const [photosIsRequired, setPhotosIsRequired] = useState(false);
 
     const formik = useFormik({
         initialValues: {
@@ -60,37 +62,37 @@ const CreateProductForm = ({ categories, brands }) => {
             taxPercentage: Yup.number().min(0).nullable(), // Validate tax
             deliveryFee: Yup.number().min(0).nullable(), // Validate delivery fee
         }),
-        onSubmit:async (values, { resetForm }) => {
+        onSubmit: async (values, { resetForm }) => {
             setIsLoading(true)
-            const data =await { ...values, colors, sizes, photos, tags };
+            const data = { ...values, colors, sizes, photos, tags };
 
-            if (photos.length>0) {
-               const data={
-                   name: values?.name,
-                   description: values?.name,
-                   photos: photos,
-                   price: values?.price,
-                   material: values?.material,
-                   quantity: values?.quantity,
-                   colors: colors,
-                   sizes: sizes,
-                   rating: values?.rating,
-                   tags: tags,
-                   availability: values?.availability,
-                   status: values?.status,
-                   brandId: values?.brandId,
-                   categoryId: values?.categoryId,
-               }
+            if (photos.length > 0) {
+                const data = {
+                    name: values?.name,
+                    description: values?.name,
+                    photos: photos,
+                    price: values?.price,
+                    material: values?.material,
+                    quantity: values?.quantity,
+                    colors: colors,
+                    sizes: sizes,
+                    rating: values?.rating,
+                    tags: tags,
+                    availability: values?.availability,
+                    status: values?.status,
+                    brandId: values?.brandId,
+                    categoryId: values?.categoryId,
+                }
 
-               if(!values?.length||!values?.width||!values?.height){
-                   data.dimension=undefined
-               }else {
-                   data.description={
-                       length: values?.length,
-                       width: values?.width,
-                       height: values?.height,
-                   }
-               }
+                if (!values?.length || !values?.width || !values?.height) {
+                    data.dimension = undefined
+                } else {
+                    data.description = {
+                        length: values?.length,
+                        width: values?.width,
+                        height: values?.height,
+                    }
+                }
 
                 try {
 
@@ -105,18 +107,18 @@ const CreateProductForm = ({ categories, brands }) => {
                         setResources([]); // Reset photos/resources
                         setAvailability('IN_STOCK'); // Reset availability
                         setStatus('ACTIVE'); // Reset status
-                        setPhotosIsRequired(false)
-
-                        toast.success("A product post is successfully!",{
-                            id:"addProduct"
+                        setPhotosIsRequired(false);
+                        mutate();
+                        toast.success("A product post is successfully!", {
+                            id: "addProduct"
                         });
                     }
                 } catch (error) {
                     setIsLoading(false);
-                  toast.error("Server error ,Please try again later",{
-                      id:"addProduct"
-                  });
-                }finally {
+                    toast.error("Server error ,Please try again later", {
+                        id: "addProduct"
+                    });
+                } finally {
                     setIsLoading(false);
                 }
 
@@ -124,8 +126,8 @@ const CreateProductForm = ({ categories, brands }) => {
 
                 setIsLoading(false);
                 setPhotosIsRequired(true)
-                toast.error("Select minimum a photo then please try again later",{
-                    id:"addProduct"
+                toast.error("Select minimum a photo then please try again later", {
+                    id: "addProduct"
                 });
             }
         },
@@ -221,42 +223,24 @@ const CreateProductForm = ({ categories, brands }) => {
 
                         {/* Category */}
                         <div className="mb-4 md:col-span-1 col-span-2">
-                            <label className="block text-gray-700 dark:text-slate-300">Category</label>
                             <div className="relative">
-                                <select
+                                <SearchableSelectCategory
+                                    label="Category"
                                     name="categoryId"
-                                    value={formik.values.categoryId}
-                                    onChange={formik.handleChange}
-                                    className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-slate-700 dark:border-slate-600 dark:text-slate-300"
-                                >
-                                    <option value="">Select a Category</option>
-                                    {categories?.map((category) => (
-                                        <option key={category.id} value={category.id}>
-                                            {category.name}
-                                        </option>
-                                    ))}
-                                </select>
-                                {formik.errors.categoryId && <p className="text-red-500">{formik.errors.categoryId}</p>}
+                                    options={categories}
+                                    formik={formik}
+                                />
                             </div>
                         </div>
 
                         {/* Brand */}
                         <div className="mb-4 md:col-span-1 col-span-2">
-                            <label className="block text-gray-700 dark:text-slate-300">Brand</label>
-                            <select
+                            <SearchableSelect
+                                label="Brand"
                                 name="brandId"
-                                value={formik.values.brandId}
-                                onChange={formik.handleChange}
-                                className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-slate-700 dark:border-slate-600 dark:text-slate-300"
-                            >
-                                <option value="">Select a Brand</option>
-                                {brands?.map((brand) => (
-                                    <option key={brand.id} value={brand.id}>
-                                        {brand.name}
-                                    </option>
-                                ))}
-                            </select>
-                            {formik.errors.brandId && <p className="text-red-500">{formik.errors.brandId}</p>}
+                                options={brands}
+                                formik={formik}
+                            />
                         </div>
 
                         {/* Material */}
@@ -273,97 +257,97 @@ const CreateProductForm = ({ categories, brands }) => {
                         </div>
 
                         {/* Colors */}
-                      <div className=" col-span-2 grid md:grid-cols-3 gap-5">
-                          <div className="mb-4 ">
-                              <label className="block text-gray-700 dark:text-slate-300">Colors</label>
-                              {colors.map((color, index) => (
-                                  <div key={index} className="flex items-center mb-2">
-                                      <input
-                                          type="text"
-                                          value={color}
-                                          onChange={(e) => handleColorChange(index, e.target.value)}
-                                          className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-slate-700 dark:border-slate-600 dark:text-slate-300"
-                                          placeholder="Enter color"
-                                      />
-                                      <button
-                                          type="button"
-                                          onClick={() => removeColorField(index)}
-                                          className="text-red-600   p-2"
-                                      >
-                                          <RiDeleteBack2Fill className="size-5" />
-                                      </button>
-                                  </div>
-                              ))}
-                              <button
-                                  type="button"
-                                  onClick={addColorField}
-                                  className=" p-2"
-                              >
-                                  <BsPlusCircleFill className="size-5 text-slate-700 dark:text-blue-500"/>
-                              </button>
-                          </div>
+                        <div className=" col-span-2 grid md:grid-cols-3 gap-5">
+                            <div className="mb-4 ">
+                                <label className="block text-gray-700 dark:text-slate-300">Colors</label>
+                                {colors.map((color, index) => (
+                                    <div key={index} className="flex items-center mb-2">
+                                        <input
+                                            type="text"
+                                            value={color}
+                                            onChange={(e) => handleColorChange(index, e.target.value)}
+                                            className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-slate-700 dark:border-slate-600 dark:text-slate-300"
+                                            placeholder="Enter color"
+                                        />
+                                        <button
+                                            type="button"
+                                            onClick={() => removeColorField(index)}
+                                            className="text-red-600   p-2"
+                                        >
+                                            <RiDeleteBack2Fill className="size-5" />
+                                        </button>
+                                    </div>
+                                ))}
+                                <button
+                                    type="button"
+                                    onClick={addColorField}
+                                    className=" p-2"
+                                >
+                                    <BsPlusCircleFill className="size-5 text-slate-700 dark:text-blue-500" />
+                                </button>
+                            </div>
 
-                          {/* Sizes */}
-                          <div className="mb-4 ">
-                              <label className="block text-gray-700 dark:text-slate-300">Sizes</label>
-                              {sizes.map((size, index) => (
-                                  <div key={index} className="flex items-center mb-2">
-                                      <input
-                                          type="text"
-                                          value={size}
-                                          onChange={(e) => handleSizeChange(index, e.target.value)}
-                                          className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-slate-700 dark:border-slate-600 dark:text-slate-300"
-                                          placeholder="Enter size"
-                                      />
-                                      <button
-                                          type="button"
-                                          onClick={() => removeSizeField(index)}
-                                          className="ml-2 text-red-600   p-2"
-                                      >
-                                          <RiDeleteBack2Fill className="size-5" />
-                                      </button>
-                                  </div>
-                              ))}
-                              <button
-                                  type="button"
-                                  onClick={addSizeField}
-                                  className=" p-2"
-                              >
-                                  <BsPlusCircleFill className="size-5 text-slate-700 dark:text-blue-500"/>
-                              </button>
-                          </div>
+                            {/* Sizes */}
+                            <div className="mb-4 ">
+                                <label className="block text-gray-700 dark:text-slate-300">Sizes</label>
+                                {sizes.map((size, index) => (
+                                    <div key={index} className="flex items-center mb-2">
+                                        <input
+                                            type="text"
+                                            value={size}
+                                            onChange={(e) => handleSizeChange(index, e.target.value)}
+                                            className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-slate-700 dark:border-slate-600 dark:text-slate-300"
+                                            placeholder="Enter size"
+                                        />
+                                        <button
+                                            type="button"
+                                            onClick={() => removeSizeField(index)}
+                                            className="ml-2 text-red-600   p-2"
+                                        >
+                                            <RiDeleteBack2Fill className="size-5" />
+                                        </button>
+                                    </div>
+                                ))}
+                                <button
+                                    type="button"
+                                    onClick={addSizeField}
+                                    className=" p-2"
+                                >
+                                    <BsPlusCircleFill className="size-5 text-slate-700 dark:text-blue-500" />
+                                </button>
+                            </div>
 
-                          {/* Tags */}
-                          <div className="mb-4 ">
-                              <label className="block text-gray-700 dark:text-slate-300">Tags</label>
-                              {tags.map((tag, index) => (
-                                  <div key={index} className="flex items-center mb-2">
-                                      <input
-                                          type="text"
-                                          value={tag}
-                                          onChange={(e) => handleTagChange(index, e.target.value)}
-                                          className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-slate-700 dark:border-slate-600 dark:text-slate-300"
-                                          placeholder="Enter tag"
-                                      />
-                                      <button
-                                          type="button"
-                                          onClick={() => removeTagField(index)}
-                                          className="ml-2 text-red-600   p-2"
-                                      >
-                                          <RiDeleteBack2Fill className="size-5" />
-                                      </button>
-                                  </div>
-                              ))}
-                              <button
-                                  type="button"
-                                  onClick={addTagField}
-                                  className=" p-2"
-                              >
-                                  <BsPlusCircleFill className="size-5 text-slate-700 dark:text-blue-500"/>
-                              </button>
-                          </div>
+                            {/* Tags */}
+                            <div className="mb-4 ">
+                                <label className="block text-gray-700 dark:text-slate-300">Tags</label>
+                                {tags.map((tag, index) => (
+                                    <div key={index} className="flex items-center mb-2">
+                                        <input
+                                            type="text"
+                                            value={tag}
+                                            onChange={(e) => handleTagChange(index, e.target.value)}
+                                            className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-slate-700 dark:border-slate-600 dark:text-slate-300"
+                                            placeholder="Enter tag"
+                                        />
+                                        <button
+                                            type="button"
+                                            onClick={() => removeTagField(index)}
+                                            className="ml-2 text-red-600   p-2"
+                                        >
+                                            <RiDeleteBack2Fill className="size-5" />
+                                        </button>
+                                    </div>
+                                ))}
+                                <button
+                                    type="button"
+                                    onClick={addTagField}
+                                    className=" p-2"
+                                >
+                                    <BsPlusCircleFill className="size-5 text-slate-700 dark:text-blue-500" />
+                                </button>
+                            </div>
 
-                      </div>
+                        </div>
                         {/* Dimensions */}
                         <div className="mb-4 col-span-2">
                             <div className="grid grid-cols-6 gap-5">
@@ -513,7 +497,7 @@ const CreateProductForm = ({ categories, brands }) => {
                                     }}
                                 </CldUploadWidget>
                                 <ul className="flex gap-3 flex-wrap">
-                                    {photos?.length>0&&
+                                    {photos?.length > 0 &&
                                         photos?.map((photo, index) => {
                                             return (
                                                 <li key={index} className="image-preview border-2 rounded dark:border-slate-600 dark:bg-slate-700">

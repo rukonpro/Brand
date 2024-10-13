@@ -9,26 +9,26 @@ const ImageChangeButton = ({ images, name }) => {
         <div>
             <div className="p-3 bg-white border-2 rounded flex justify-center dark:bg-slate-700 dark:border-slate-700">
 
-                   <Image
-                       src={changeImage}
-                       width={400}
-                       height={400}
-                       blurDataURL={changeImage}
-                       placeholder="blur"
-                       loading='lazy'
-                       alt={name}
-                       className="h-80 w-auto object-contain"
-                        />
+                <Image
+                    src={changeImage}
+                    width={400}
+                    height={400}
+                    blurDataURL={changeImage}
+                    placeholder="blur"
+                    loading='lazy'
+                    alt={name}
+                    className="h-80 w-auto object-contain"
+                />
 
             </div>
-            <ol className="pt-3 flex gap-2 justify-center">
-                {images?.slice(0,5)?.map((image, index) => {
+            <ol className="pt-3 flex gap-2 justify-center max-w-[600px] overflow-x-auto overflow-hidden ">
+                {images?.map((image, index) => {
                     return (
                         <li key={index}>
                             <button onMouseOver={() => setChnageImage(image)}
-                                    onClick={() => setChnageImage(image)}
+                                onClick={() => setChnageImage(image)}
 
-                                    className="w-[56px] h-[56px] border-2 rounded p-1 dark:border-slate-700">
+                                className="w-[56px] h-[56px] border-2 rounded p-1 dark:border-slate-700">
                                 <Image
                                     src={image}
                                     height={50}

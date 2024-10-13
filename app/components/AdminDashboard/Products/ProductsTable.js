@@ -7,6 +7,7 @@ import UpdateProductOpenModalButton from "@/app/components/AdminDashboard/Produc
 import useSWR from "swr";
 import { fetcher } from "@/app/utils/fetcher/fetcher";
 import Loader from '@/app/Loader';
+import AddProductButton from './AddProductButton';
 
 const ProductsTable = ({ brands, categories }) => {
 
@@ -18,10 +19,18 @@ const ProductsTable = ({ brands, categories }) => {
     } = useSWR('/api/product/findMany', fetcher);
 
 
-    return isLoadingProducts?(<Loader title="Products Loading..."/>):(
-        <div className="overflow-auto">
-            {products?.length > 0 ? (
-               
+    return isLoadingProducts ? (<Loader title="Products Loading..." />) : (
+        <div className='p-3'>
+            <div className='flex justify-between items-center pb-1'>
+                <h1 className='text-lg '>Products</h1>
+                <AddProductButton
+                    mutate={mutate}
+                    categories={categories}
+                    brands={brands} />
+            </div>
+            <div className="overflow-auto">
+                {products?.length > 0 ? (
+
                     <table className=" table-auto divide-y divide-gray-200  overflow-x-auto ">
                         <thead className="bg-blue-500 text-white">
                             <tr>
@@ -103,19 +112,20 @@ const ProductsTable = ({ brands, categories }) => {
                             ))}
                         </tbody>
                     </table>
-             
-            ) : (
-                <div>
-                    <p>You have no products, please <Link href="/" className="text-blue-500 underline">add products</Link>!</p>
 
-                    {errorProducts && <div className="text-red-500">
-                        {errorProducts?.message}
-                    </div>}
-                    <div className="flex justify-center">
-                        <Image src={NotFoundImage} alt="Not found" />
+                ) : (
+                    <div>
+                        <p>You have no products, please <AddProductButton /></p>
+
+                        {errorProducts && <div className="text-red-500">
+                            {errorProducts?.message}
+                        </div>}
+                        <div className="flex justify-center">
+                            <Image src={NotFoundImage} alt="Not found" />
+                        </div>
                     </div>
-                </div>
-            )}
+                )}
+            </div>
         </div>
     );
 };

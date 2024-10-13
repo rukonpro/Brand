@@ -21,7 +21,7 @@ const Slider = () => {
             const response = await getOffers({
                 page: pageNum,
             });
-            const data = await response?.data;
+            const data = await response?.data||[];
             // Append new items to the existing items
           
                 setItems((prevItems) => [...prevItems, ...data?.data]);
