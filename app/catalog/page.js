@@ -1,6 +1,8 @@
 import Catalogs from './Catalogs';
 import React from "react";
-import {getProducts} from "@/app/utils/product/fetch_products_api";
+import { getProducts } from "@/app/utils/product/fetch_products_api";
+import { getBrands } from '../utils/brand/fetch_brand_api';
+import { getAllCategory } from '../utils/Category/fetch_category_api';
 
 export const metadata = {
     title: "Catalog - Brand",
@@ -20,17 +22,19 @@ export const metadata = {
 };
 
 
-const Catalog = async () => {
+const Catalog = async ({ searchParams }) => {
 
-   const params={
-       page: 1,
-       pageSize: 10,
-   }
-  const products = await getProducts(params);
+    const { categoryId, categoryName } = searchParams;
+    const params = {
+        page: 1,
+        pageSize: 10,
+        categoryId
+    }
 
+    const [products, categories, brands] = await Promise.all([getProducts(params), getAllCategory(), getBrands()]);
 
     return (
-        <Catalogs products={products?.data}/>
+        <Catalogs products={products?.data} categories={categories?.data} brands={brands?.data} />
     );
 };
 

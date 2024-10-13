@@ -1,7 +1,7 @@
 import { useState } from 'react';
 
 export default function RangeSlider() {
-    const [value, setValue] = useState([20, 80]);
+    const [value, setValue] = useState([20, 100]);
 
     // Handle the minimum slider change
     const handleMinChange = (e) => {
@@ -16,7 +16,7 @@ export default function RangeSlider() {
     };
 
     return (
-        <div className=" py-8 border-t">
+        <div className="p-4 py-8 border-t">
             {/* Slider Track */}
             <div className="relative h-2 bg-gray-300 rounded-full">
                 {/* Selected Range */}

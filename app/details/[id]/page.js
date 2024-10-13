@@ -95,7 +95,7 @@ const Details = async ({ params }) => {
                 </div>
                 <Suspense fallback={<Loader />}>
                     <div
-                        className="grid grid-cols-12 gap-4 border-2 p-3 py-10  md:bg-white md:rounded-lg dark:bg-slate-800 dark:border-slate-700">
+                        className="grid grid-cols-12 gap-4 md:border-2 p-3 py-10  md:bg-white md:rounded-lg dark:bg-slate-800 dark:border-slate-700">
                         <div className="col-span-12 md:col-span-4">
                             {product?.data?.photos?.length > 0 ? <ImageChangeButton
                                 images={product?.data?.photos}

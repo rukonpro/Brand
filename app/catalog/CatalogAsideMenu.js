@@ -1,4 +1,3 @@
-"use client"
 import React, { useState } from 'react';
 import Link from "next/link";
 import PriceRangeFilter from "@/app/catalog/PriceRange";
@@ -59,7 +58,7 @@ const NestedDropdown = ({ category }) => {
     );
 };
 
-const CatalogAsideManu = ({categories}) => {
+const CatalogAsideManu = ({categories,brands}) => {
     const [isOpenBrand, setIsOpenBrand] = useState(false);
     const [isOpenCategory, setIsOpenCategory] = useState(false);
     const toggleOpenCategory = () => {
@@ -69,9 +68,7 @@ const CatalogAsideManu = ({categories}) => {
         setIsOpenBrand(!isOpenBrand);
     };
     return (
-        <nav className="relative">
-
-
+        <nav className="relative w-full">
            <div className=" p-4 ">
                <div className="flex justify-between items-center cursor-pointer" onClick={toggleOpenCategory}>
                    <h2 className="text-lg font-semibold">Categories</h2>
@@ -132,13 +129,13 @@ const CatalogAsideManu = ({categories}) => {
                 {/* Brand checkboxes that are conditionally rendered based on `isOpen` */}
                 {isOpenBrand && (
                     <div className="mt-4 space-y-2">
-                        {['Samsung', 'Apple', 'Huawei', 'Pocco', 'Lenovo'].map((brand) => (
-                            <label key={brand} className="flex items-center space-x-2 cursor-pointer">
+                        {brands?.map((brand) => (
+                            <label key={brand?.id} className="flex items-center space-x-2 cursor-pointer">
                                 <input
                                     type="checkbox"
                                     className="form-checkbox h-4 w-4 text-blue-600 border-gray-300 rounded"
                                 />
-                                <span>{brand}</span>
+                                <span>{brand?.name}</span>
                             </label>
                         ))}
                     </div>

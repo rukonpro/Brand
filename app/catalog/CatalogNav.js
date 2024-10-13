@@ -2,29 +2,26 @@ import Image from 'next/image';
 import React from 'react';
 import GridViewIcon from "@/public/images/gridview.png";
 import LineViewIcon from "@/public/images/listview.png";
-
-const CatalogNav = ({setGitView,itemsCount}) => {
+import { GrCatalog } from "react-icons/gr";
+const CatalogNav = ({ setGitView, itemsCount, handleToggleDrawer }) => {
     return (
-        <nav className=" grid grid-cols-2 items-center gap-3 rounded-md w-full flex-row bg-white  p-3 sticky top-0">
+        <nav className="flex justify-between items-center gap-3 rounded-md w-full flex-row bg-white  p-3 sticky top-0">
+
+            <button
+                type='button'
+                onClick={handleToggleDrawer}
+                className='md:hidden block'
+            >
+                <GrCatalog size={25}/>
+            </button>
             <span className="inline-block  text-sm text-gray-700">
                 {itemsCount} items {/*in Mobile accessory*/}
             </span>
 
-            <div className="grid grid-cols-4 items-center">
-                <div className="col-span-3 flex justify-end">
-                    <label htmlFor="item1"
-                        className="text-sm text-gray-700"
-                        role="menuitem" tabIndex="-1">
-                        <input
-                            type="checkbox"
-                            id="item1"
-                            className="mr-2"
-                        />
-                        Verified only
-                    </label>
-                </div>
+            <div >
 
-                <div className="col-span-1">
+
+                <div >
                     <button type="button"
                         onClick={() => setGitView(true)}
                         className="mx-2"
