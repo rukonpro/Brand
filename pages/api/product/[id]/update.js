@@ -6,8 +6,7 @@ const prisma = new PrismaClient();
 
 export default async function handler(req, res) {
     const { id } = req.query;
-console.log(id)
-  
+ 
 
     if (req.method === 'PATCH') {
         const {
@@ -74,11 +73,11 @@ console.log(id)
             });
             return res.status(200).json(updatedProduct);
         } catch (error) {
-            console.log(error)
+          
             if (error.code === 'P2023') {
                 return res.status(400).json({ error: 'Malformed ObjectID: Please check your IDs.' });
             }
-          console.log(error)
+    
             return res.status(500).json({ error: 'Failed to update product' });
         }
     } else {

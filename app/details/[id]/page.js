@@ -76,6 +76,7 @@ const Details = async ({ params }) => {
     const id = params?.id;
 
     const product = await getDetailsProduct({ id });
+    
 
     return (
         <>

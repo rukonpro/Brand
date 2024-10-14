@@ -1,7 +1,7 @@
 "use client"
-import React, {useEffect, useRef, useState} from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
-const SearchableSelect = ({ options, label, name, formik ,defaultName}) => {
+const SearchableSelect = ({ options, label, name, formik, defaultName }) => {
     const [searchTerm, setSearchTerm] = useState('');
     const [isOpen, setIsOpen] = useState(false);
     const dropdownRef = useRef(null);
@@ -11,7 +11,8 @@ const SearchableSelect = ({ options, label, name, formik ,defaultName}) => {
         option?.name?.toLowerCase()?.includes(searchTerm.toLowerCase())
     );
 
-    const handleOptionSelect = ({brandId,name}) => {
+    const handleOptionSelect = ({ brandId, brandName }) => {
+        console.log(name)
         setSearchTerm(name);
         formik.setFieldValue(name, brandId);
         setIsOpen(false);
@@ -40,7 +41,7 @@ const SearchableSelect = ({ options, label, name, formik ,defaultName}) => {
             {/* Searchable Input */}
             <input
                 type="text"
-                value={searchTerm||defaultName}
+                value={searchTerm || defaultName}
                 onChange={(e) => {
                     setSearchTerm(e.target.value);
                     setIsOpen(true);
@@ -59,7 +60,7 @@ const SearchableSelect = ({ options, label, name, formik ,defaultName}) => {
                         filteredOptions?.map((option) => (
                             <li
                                 key={option?.id}
-                                onClick={() => handleOptionSelect({brandId:option?.id,name:option?.name})}
+                                onClick={() => handleOptionSelect({ brandId: option?.id, name: option?.name })}
                                 className="px-4 py-2 cursor-pointer hover:bg-gray-100 dark:hover:bg-slate-600 dark:text-slate-300 text-left"
                             >
                                 {option?.name}

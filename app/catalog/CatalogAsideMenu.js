@@ -11,13 +11,13 @@ const NestedDropdown = ({ category }) => {
         <li className="relative group  w-full">
 
             {
-                category?.children?.length === 0 || !category?.children ?(
-                        <Link href={`/source/${category?.id}`}>
-                            <button  className="py-2 px-4 flex justify-between items-center w-full text-left  rounded-lg">
-                                {category?.name}
-                            </button>
-                        </Link>
-                    ):
+                category?.children?.length === 0 || !category?.children ? (
+                    <Link href={`/catalog?categoryName=${category?.name}`}>
+                        <button className="py-2 px-4 flex justify-between items-center w-full text-left  rounded-lg">
+                            {category?.name}
+                        </button>
+                    </Link>
+                ) :
                     (
                         <button
                             onClick={() => setIsOpen(!isOpen)}
@@ -50,7 +50,7 @@ const NestedDropdown = ({ category }) => {
             {isOpen && category?.children?.length > 0 && (
                 <ul className="ml-4 pl-4 border-l ">
                     {category?.children?.map((child) => (
-                        <NestedDropdown key={child?.id} category={child}/>
+                        <NestedDropdown key={child?.id} category={child} />
                     ))}
                 </ul>
             )}
@@ -58,7 +58,7 @@ const NestedDropdown = ({ category }) => {
     );
 };
 
-const CatalogAsideManu = ({categories,brands}) => {
+const CatalogAsideManu = ({ categories, brands }) => {
     const [isOpenBrand, setIsOpenBrand] = useState(false);
     const [isOpenCategory, setIsOpenCategory] = useState(false);
     const toggleOpenCategory = () => {
@@ -69,37 +69,36 @@ const CatalogAsideManu = ({categories,brands}) => {
     };
     return (
         <nav className="relative w-full">
-           <div className=" p-4 ">
-               <div className="flex justify-between items-center cursor-pointer" onClick={toggleOpenCategory}>
-                   <h2 className="text-lg font-semibold">Categories</h2>
-                   <button>
-                       <svg
-                           xmlns="http://www.w3.org/2000/svg"
-                           className={`h-5 w-5 transform transition-transform ${
-                               isOpenCategory ? 'rotate-180' : 'rotate-0'
-                           }`}
-                           fill="none"
-                           viewBox="0 0 24 24"
-                           stroke="currentColor"
-                       >
-                           <path
-                               strokeLinecap="round"
-                               strokeLinejoin="round"
-                               strokeWidth="2"
-                               d="M5 15l7-7 7 7"
-                           />
-                       </svg>
-                   </button>
-               </div>
+            <div className=" p-4 ">
+                <div className="flex justify-between items-center cursor-pointer" onClick={toggleOpenCategory}>
+                    <h2 className="text-lg font-semibold">Categories</h2>
+                    <button>
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            className={`h-5 w-5 transform transition-transform ${isOpenCategory ? 'rotate-180' : 'rotate-0'
+                                }`}
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                        >
+                            <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth="2"
+                                d="M5 15l7-7 7 7"
+                            />
+                        </svg>
+                    </button>
+                </div>
 
-               {isOpenCategory && (
-                   <ul className="menu bg-base-200 rounded-box overflow-y-auto px-1">
-                       {categories?.map((category) => (
-                           <NestedDropdown key={category?.id} category={category}/>
-                       ))}
-                   </ul>
-               )}
-           </div>
+                {isOpenCategory && (
+                    <ul className="menu bg-base-200 rounded-box overflow-y-auto px-1">
+                        {categories?.map((category) => (
+                            <NestedDropdown key={category?.id} category={category} />
+                        ))}
+                    </ul>
+                )}
+            </div>
 
 
             <div className=" p-4 border-t">
@@ -109,9 +108,8 @@ const CatalogAsideManu = ({categories,brands}) => {
                     <button>
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
-                            className={`h-5 w-5 transform transition-transform ${
-                                isOpenBrand ? 'rotate-180' : 'rotate-0'
-                            }`}
+                            className={`h-5 w-5 transform transition-transform ${isOpenBrand ? 'rotate-180' : 'rotate-0'
+                                }`}
                             fill="none"
                             viewBox="0 0 24 24"
                             stroke="currentColor"
@@ -147,7 +145,7 @@ const CatalogAsideManu = ({categories,brands}) => {
 
 
 
-            <PriceRangeFilter/>
+            <PriceRangeFilter />
         </nav>
     );
 };

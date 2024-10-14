@@ -24,11 +24,11 @@ export const metadata = {
 
 const Catalog = async ({ searchParams }) => {
 
-    const { categoryId, categoryName } = searchParams;
+    const { categoryName } = searchParams;
     const params = {
         page: 1,
         pageSize: 10,
-        categoryId
+        categoryName
     }
 
     const [products, categories, brands] = await Promise.all([getProducts(params), getAllCategory(), getBrands()]);

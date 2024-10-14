@@ -2,9 +2,6 @@
 import React, { useState } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import { RiDeleteBack2Fill } from "react-icons/ri";
-import { BsPlusCircleFill } from "react-icons/bs";
-
 import { createProduct } from "@/app/utils/product/fetch_products_api";
 import baseURL from "@/app/utils/baseURL";
 import { CldUploadWidget } from "next-cloudinary";
@@ -16,15 +13,11 @@ import SearchableSelectCategory from '../Products/SearchableSelectCategory';
 import SearchableSelect from '../Products/SearchableSelect';
 
 const CreateProductForm = ({ categories, brands, mutate }) => {
-    const [colors, setColors] = useState([]);
-    const [sizes, setSizes] = useState([]);
+
     const [resources, setResources] = useState([]);
-    const [tags, setTags] = useState([]);
-    const [availability, setAvailability] = useState('IN_STOCK'); // Default availability
-    const [status, setStatus] = useState('ACTIVE'); // Default status
     const [isLoading, setIsLoading] = useState(false)
     const photos = resources?.map(resource => resource?.secure_url);
-    const [photosIsRequired, setPhotosIsRequired] = useState(false);
+
 
     const formik = useFormik({
         initialValues: {
@@ -36,15 +29,17 @@ const CreateProductForm = ({ categories, brands, mutate }) => {
             brandId: '',
             taxPercentage: 0, // Default value
             deliveryFee: 0, // Default value
-            length: '',
-            width: '',
-            height: '',
+            dimension: {},
             material: '', // Add material
             warranty: '', // Add warranty
             protection: '', // Add protection
-            tags: [], // Dynamic tags array
             availability: 'IN_STOCK', // Add availability
             status: 'ACTIVE', // Add status
+            tags: [], // Dynamic tags array
+            colors: [],
+            sizes: [],
+            photos:[]
+
         },
         validationSchema: Yup.object({
             name: Yup.string().required('Product name is required'),
@@ -53,121 +48,91 @@ const CreateProductForm = ({ categories, brands, mutate }) => {
             quantity: Yup.number().required('Product quantity is Required'),
             categoryId: Yup.string().nullable(),
             brandId: Yup.string().nullable(),
-            length: Yup.number().nullable(),
-            width: Yup.number().nullable(),
-            height: Yup.number().nullable(),
+
             material: Yup.string().nullable(), // Validate material
             warranty: Yup.string().nullable(), // Validate warranty
             protection: Yup.string().nullable(), // Validate protection
             taxPercentage: Yup.number().min(0).nullable(), // Validate tax
             deliveryFee: Yup.number().min(0).nullable(), // Validate delivery fee
+            colors: Yup.array()
+                .of(Yup.string().max(30, 'Color name too long'))
+                .optional().nullable(),
+
+            sizes: Yup.array()
+                .of(Yup.string().max(10, 'Size name too long'))
+                .optional().nullable(),
+
+            tags: Yup.array()
+                .of(Yup.string().max(20, 'Tag too long'))
+                .optional().nullable(),
+            photos: Yup.array()
+                .of(Yup.string().url('Each photo must be a valid URL'))
+                .min(1, 'At least one photo is required'),
+
+            dimension: Yup.object({
+                length: Yup.number()
+                    .nullable()
+                    .transform((value, originalValue) => (originalValue === '' ? null : value))
+                    .typeError('Length must be a valid number')
+                    .min(0, 'Length must be greater than or equal to 0')
+                    .notRequired()
+                    .nullable(),
+
+                width: Yup.number()
+                    .nullable()
+                    .transform((value, originalValue) => (originalValue === '' ? null : value))
+                    .typeError('Width must be a valid number')
+                    .min(0, 'Width must be greater than or equal to 0')
+                    .notRequired()
+                    .nullable(),
+
+                height: Yup.number()
+                    .nullable()
+                    .transform((value, originalValue) => (originalValue === '' ? null : value))
+                    .typeError('Height must be a valid number')
+                    .min(0, 'Height must be greater than or equal to 0')
+                    .notRequired()
+                    .nullable(),
+            })
+                .test('all-or-none', 'All dimensions must be provided if one is specified', (value) => {
+                    const { length, width, height } = value || undefined;
+                    const isAnyFieldFilled = length !== null || width !== null || height !== null;
+
+                    // যদি কোন একটি ফিল্ড পূর্ণ থাকে তাহলে সব ফিল্ড পূরণ হতে হবে
+                    return !isAnyFieldFilled || (length !== null && width !== null && height !== null);
+                })
+                .nullable()
         }),
         onSubmit: async (values, { resetForm }) => {
             setIsLoading(true)
-            const data = { ...values, colors, sizes, photos, tags };
 
-            if (photos.length > 0) {
-                const data = {
-                    name: values?.name,
-                    description: values?.name,
-                    photos: photos,
-                    price: values?.price,
-                    material: values?.material,
-                    quantity: values?.quantity,
-                    colors: colors,
-                    sizes: sizes,
-                    rating: values?.rating,
-                    tags: tags,
-                    availability: values?.availability,
-                    status: values?.status,
-                    brandId: values?.brandId,
-                    categoryId: values?.categoryId,
-                }
+            try {
 
-                if (!values?.length || !values?.width || !values?.height) {
-                    data.dimension = undefined
-                } else {
-                    data.description = {
-                        length: values?.length,
-                        width: values?.width,
-                        height: values?.height,
-                    }
-                }
+                const res = await createProduct(values);
 
-                try {
-
-                    const res = await createProduct(data);
-
-                    if (res?.status === 201) {
-                        // Product created successfully
-                        resetForm(); // Reset form fields
-                        setColors([]); // Reset colors
-                        setSizes([]); // Reset sizes
-                        setTags([]); // Reset tags
-                        setResources([]); // Reset photos/resources
-                        setAvailability('IN_STOCK'); // Reset availability
-                        setStatus('ACTIVE'); // Reset status
-                        setPhotosIsRequired(false);
-                        mutate();
-                        toast.success("A product post is successfully!", {
-                            id: "addProduct"
-                        });
-                    }
-                } catch (error) {
-                    setIsLoading(false);
-                    toast.error("Server error ,Please try again later", {
+                if (res?.status === 201) {
+                    // Product created successfully
+                    resetForm(); // Reset form fields
+                    setResources([]); // Reset photos/resources
+                    mutate();
+                    toast.success("A product post is successfully!", {
                         id: "addProduct"
                     });
-                } finally {
-                    setIsLoading(false);
                 }
-
-            } else {
-
+            } catch (error) {
                 setIsLoading(false);
-                setPhotosIsRequired(true)
-                toast.error("Select minimum a photo then please try again later", {
+                toast.error("Server error ,Please try again later", {
                     id: "addProduct"
                 });
+            } finally {
+                setIsLoading(false);
             }
+
+
         },
     });
 
 
-
-
-    // Add and remove functions for colors
-    const addColorField = () => setColors([...colors, '']);
-    const removeColorField = (index) => {
-        setColors(colors.filter((_, i) => i !== index));
-    };
-    const handleColorChange = (index, value) => {
-        const updatedColors = [...colors];
-        updatedColors[index] = value;
-        setColors(updatedColors);
-    };
-
-    // Add and remove functions for sizes
-    const addSizeField = () => setSizes([...sizes, '']);
-    const removeSizeField = (index) => {
-        setSizes(sizes.filter((_, i) => i !== index));
-    };
-    const handleSizeChange = (index, value) => {
-        const updatedSizes = [...sizes];
-        updatedSizes[index] = value;
-        setSizes(updatedSizes);
-    };
-
-    // Add and remove functions for tags
-    const addTagField = () => setTags([...tags, '']);
-    const removeTagField = (index) => {
-        setTags(tags.filter((_, i) => i !== index));
-    };
-    const handleTagChange = (index, value) => {
-        const updatedTags = [...tags];
-        updatedTags[index] = value;
-        setTags(updatedTags);
-    };
 
     // Photo upload handler
 
@@ -187,10 +152,11 @@ const CreateProductForm = ({ categories, brands, mutate }) => {
                                 name="name"
                                 value={formik.values.name}
                                 onChange={formik.handleChange}
+                                onBlur={formik.handleBlur}
                                 placeholder="Name"
                                 className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-slate-700 dark:border-slate-600 dark:text-slate-300"
                             />
-                            {formik.errors.name && <p className="text-red-500">{formik.errors.name}</p>}
+                            {formik.touched.name && formik.errors.name && <p className="text-red-500">{formik.errors.name}</p>}
                         </div>
 
                         {/* Price */}
@@ -202,9 +168,10 @@ const CreateProductForm = ({ categories, brands, mutate }) => {
                                 value={formik.values.price}
                                 placeholder="Price"
                                 onChange={formik.handleChange}
+                                onBlur={formik.handleBlur}
                                 className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-slate-700 dark:border-slate-600 dark:text-slate-300"
                             />
-                            {formik.errors.price && <p className="text-red-500">{formik.errors.price}</p>}
+                            {formik.touched.price && formik.errors.price && <p className="text-red-500">{formik.errors.price}</p>}
                         </div>
 
                         {/* Quantity */}
@@ -216,9 +183,10 @@ const CreateProductForm = ({ categories, brands, mutate }) => {
                                 value={formik.values.quantity}
                                 placeholder="Qunatity"
                                 onChange={formik.handleChange}
+                                onBlur={formik.handleBlur}
                                 className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-slate-700 dark:border-slate-600 dark:text-slate-300"
                             />
-                            {formik.errors.quantity && <p className="text-red-500">{formik.errors.quantity}</p>}
+                            {formik.touched.quantity && formik.errors.quantity && <p className="text-red-500">{formik.errors.quantity}</p>}
                         </div>
 
                         {/* Category */}
@@ -256,136 +224,115 @@ const CreateProductForm = ({ categories, brands, mutate }) => {
                             />
                         </div>
 
-                        {/* Colors */}
-                        <div className=" col-span-2 grid md:grid-cols-3 gap-5">
-                            <div className="mb-4 ">
-                                <label className="block text-gray-700 dark:text-slate-300">Colors</label>
-                                {colors.map((color, index) => (
-                                    <div key={index} className="flex items-center mb-2">
-                                        <input
-                                            type="text"
-                                            value={color}
-                                            onChange={(e) => handleColorChange(index, e.target.value)}
-                                            className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-slate-700 dark:border-slate-600 dark:text-slate-300"
-                                            placeholder="Enter color"
-                                        />
-                                        <button
-                                            type="button"
-                                            onClick={() => removeColorField(index)}
-                                            className="text-red-600   p-2"
-                                        >
-                                            <RiDeleteBack2Fill className="size-5" />
-                                        </button>
-                                    </div>
-                                ))}
-                                <button
-                                    type="button"
-                                    onClick={addColorField}
-                                    className=" p-2"
-                                >
-                                    <BsPlusCircleFill className="size-5 text-slate-700 dark:text-blue-500" />
-                                </button>
-                            </div>
+                        {/* Colors Field */}
+                        <div className="mb-4">
+                            <label htmlFor="colors" className="block text-sm font-medium text-slate-700 dark:text-slate-300 text-left">Colors (comma-separated)</label>
+                            <input
+                                type="text"
+                                id="colors"
+                                name="colors"
+                                placeholder="Enter colors"
+                                className="mt-1 block w-full px-3 py-2 border dark:bg-slate-700 dark:text-slate-200 rounded-md shadow-sm"
+                                onChange={(e) => formik.setFieldValue('colors', e.target.value.split(','))}
+                                onBlur={formik.handleBlur}
+                                value={formik.values.colors.join(',')}
+                            />
+                            {formik.touched.colors && formik.errors.colors && (
+                                <p className="text-red-500 text-sm">{formik.errors.colors}</p>
+                            )}
+                        </div>
 
-                            {/* Sizes */}
-                            <div className="mb-4 ">
-                                <label className="block text-gray-700 dark:text-slate-300">Sizes</label>
-                                {sizes.map((size, index) => (
-                                    <div key={index} className="flex items-center mb-2">
-                                        <input
-                                            type="text"
-                                            value={size}
-                                            onChange={(e) => handleSizeChange(index, e.target.value)}
-                                            className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-slate-700 dark:border-slate-600 dark:text-slate-300"
-                                            placeholder="Enter size"
-                                        />
-                                        <button
-                                            type="button"
-                                            onClick={() => removeSizeField(index)}
-                                            className="ml-2 text-red-600   p-2"
-                                        >
-                                            <RiDeleteBack2Fill className="size-5" />
-                                        </button>
-                                    </div>
-                                ))}
-                                <button
-                                    type="button"
-                                    onClick={addSizeField}
-                                    className=" p-2"
-                                >
-                                    <BsPlusCircleFill className="size-5 text-slate-700 dark:text-blue-500" />
-                                </button>
-                            </div>
+                        {/* Sizes Field */}
+                        <div className="mb-4">
+                            <label htmlFor="sizes" className="block text-sm font-medium text-slate-700 dark:text-slate-300 text-left">Sizes (comma-separated)</label>
+                            <input
+                                type="text"
+                                id="sizes"
+                                name="sizes"
+                                placeholder="Enter sizes"
+                                className="mt-1 block w-full px-3 py-2 border dark:bg-slate-700 dark:text-slate-200 rounded-md shadow-sm"
+                                onChange={(e) => formik.setFieldValue('sizes', e.target.value.split(','))}
+                                onBlur={formik.handleBlur}
+                                value={formik.values.sizes.join(',')}
+                            />
+                            {formik.touched.sizes && formik.errors.sizes && (
+                                <p className="text-red-500 text-sm">{formik.errors.sizes}</p>
+                            )}
+                        </div>
 
-                            {/* Tags */}
-                            <div className="mb-4 ">
-                                <label className="block text-gray-700 dark:text-slate-300">Tags</label>
-                                {tags.map((tag, index) => (
-                                    <div key={index} className="flex items-center mb-2">
-                                        <input
-                                            type="text"
-                                            value={tag}
-                                            onChange={(e) => handleTagChange(index, e.target.value)}
-                                            className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-slate-700 dark:border-slate-600 dark:text-slate-300"
-                                            placeholder="Enter tag"
-                                        />
-                                        <button
-                                            type="button"
-                                            onClick={() => removeTagField(index)}
-                                            className="ml-2 text-red-600   p-2"
-                                        >
-                                            <RiDeleteBack2Fill className="size-5" />
-                                        </button>
-                                    </div>
-                                ))}
-                                <button
-                                    type="button"
-                                    onClick={addTagField}
-                                    className=" p-2"
-                                >
-                                    <BsPlusCircleFill className="size-5 text-slate-700 dark:text-blue-500" />
-                                </button>
-                            </div>
-
+                        {/* Tags Field */}
+                        <div className="mb-4">
+                            <label htmlFor="tags" className="block text-sm font-medium text-slate-700 dark:text-slate-300 text-left">Tags (comma-separated)</label>
+                            <input
+                                type="text"
+                                id="tags"
+                                name="tags"
+                                placeholder="Enter tags"
+                                className="mt-1 block w-full px-3 py-2 border dark:bg-slate-700 dark:text-slate-200 rounded-md shadow-sm"
+                                onChange={(e) => formik.setFieldValue('tags', e.target.value.split(','))}
+                                onBlur={formik.handleBlur}
+                                value={formik.values.tags.join(',')}
+                            />
+                            {formik.touched.tags && formik.errors.tags && (
+                                <p className="text-red-500 text-sm">{formik.errors.tags}</p>
+                            )}
                         </div>
                         {/* Dimensions */}
                         <div className="mb-4 col-span-2">
-                            <div className="grid grid-cols-6 gap-5">
+                            <label className="block text-gray-700 dark:text-slate-300 text-left">Dimension</label>
+                            <div className="grid grid-cols-6 gap-5 border-2 p-1 rounded-xl">
                                 <div className="mb-4 md:col-span-2 col-span-6">
-                                    <label className="block text-gray-700 dark:text-slate-300">Length</label>
+                                    <label className="block text-gray-700 dark:text-slate-300 text-left">Height</label>
                                     <input
                                         type="number"
-                                        name="length"
-                                        value={formik.values.length}
+                                        name="dimension.height"
+                                        value={formik.values.dimension?.height || ""} // Handle undefined or empty values
                                         onChange={formik.handleChange}
-                                        placeholder="Length"
+                                        onBlur={formik.handleBlur}
+                                        placeholder="Height"
                                         className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-slate-700 dark:border-slate-600 dark:text-slate-300"
                                     />
+                                    {formik.errors.dimension?.height && (
+                                        <div className="text-red-600">{formik.errors.dimension?.height}</div>
+                                    )}
                                 </div>
+
+
                                 <div className="mb-4 md:col-span-2 col-span-6">
-                                    <label className="block text-gray-700 dark:text-slate-300">Width</label>
+                                    <label className="block text-gray-700 dark:text-slate-300 text-left">Width</label>
                                     <input
                                         type="number"
-                                        name="width"
-                                        value={formik.values.width}
+                                        name="dimension.width"
+                                        value={formik.values.dimension?.width || ''} // Handle undefined or empty values
                                         onChange={formik.handleChange}
+                                        onBlur={formik.handleBlur}
                                         placeholder="Width"
                                         className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-slate-700 dark:border-slate-600 dark:text-slate-300"
                                     />
+                                    {formik.errors.dimension?.width && (
+                                        <div className="text-red-600">{formik.errors.dimension?.width}</div>
+                                    )}
                                 </div>
                                 <div className="mb-4 md:col-span-2 col-span-6">
-                                    <label className="block text-gray-700 dark:text-slate-300">Height</label>
+                                    <label className="block text-gray-700 dark:text-slate-300 text-left">Length</label>
                                     <input
                                         type="number"
-                                        name="height"
-                                        value={formik.values.height}
+                                        name="dimension.length"
+                                        value={formik.values.dimension?.length || ''} // Handle undefined or empty values
                                         onChange={formik.handleChange}
-                                        placeholder="height"
+                                        onBlur={formik.handleBlur}
+                                        placeholder="Length"
                                         className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-slate-700 dark:border-slate-600 dark:text-slate-300"
                                     />
+                                    {formik.errors.dimension?.length && (
+                                        <div className="text-red-600">{formik.errors.dimension?.length}</div>
+                                    )}
                                 </div>
+
+
                             </div>
                         </div>
+
 
 
                         {/* Warranty */}
@@ -396,6 +343,7 @@ const CreateProductForm = ({ categories, brands, mutate }) => {
                                 name="warranty"
                                 value={formik.values.warranty}
                                 onChange={formik.handleChange}
+                                onBlur={formik.handleBlur}
                                 className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-slate-700 dark:border-slate-600 dark:text-slate-300"
                                 placeholder="Enter warranty"
                             />
@@ -409,6 +357,7 @@ const CreateProductForm = ({ categories, brands, mutate }) => {
                                 name="protection"
                                 value={formik.values.protection}
                                 onChange={formik.handleChange}
+                                onBlur={formik.handleBlur}
                                 className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-slate-700 dark:border-slate-600 dark:text-slate-300"
                                 placeholder="Enter protection"
                             />
@@ -423,6 +372,7 @@ const CreateProductForm = ({ categories, brands, mutate }) => {
                                 name="taxPercentage"
                                 value={formik.values.taxPercentage}
                                 onChange={formik.handleChange}
+                                onBlur={formik.handleBlur}
                                 placeholder="Tax Percentage"
                                 className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-slate-700 dark:border-slate-600 dark:text-slate-300"
                             />
@@ -436,6 +386,7 @@ const CreateProductForm = ({ categories, brands, mutate }) => {
                                 name="deliveryFee"
                                 value={formik.values.deliveryFee}
                                 onChange={formik.handleChange}
+                                onBlur={formik.handleBlur}
                                 placeholder="Delivery Fee"
                                 className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-slate-700 dark:border-slate-600 dark:text-slate-300"
                             />
@@ -446,8 +397,9 @@ const CreateProductForm = ({ categories, brands, mutate }) => {
                             <label className="block text-gray-700 dark:text-slate-300">Availability</label>
                             <select
                                 name="availability"
-                                value={availability}
-                                onChange={(e) => setAvailability(e.target.value)}
+                                value={formik.values.availability}
+                                onChange={formik.handleChange}
+                                onBlur={formik.handleBlur}
                                 className="w-full px-4 py-2 border bg-white rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-slate-700 dark:border-slate-600 dark:text-slate-300"
                             >
                                 <option value="IN_STOCK">In Stock</option>
@@ -460,8 +412,9 @@ const CreateProductForm = ({ categories, brands, mutate }) => {
                             <label className="block text-gray-700 dark:text-slate-300">Status</label>
                             <select
                                 name="status"
-                                value={status}
-                                onChange={(e) => setStatus(e.target.value)}
+                                value={formik.values.status}
+                                onChange={formik.handleChange}
+                                onBlur={formik.handleBlur}
                                 className="w-full px-4 py-2 border bg-white rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-slate-700 dark:border-slate-600 dark:text-slate-300"
                             >
                                 <option value="ACTIVE">Active</option>
@@ -501,21 +454,23 @@ const CreateProductForm = ({ categories, brands, mutate }) => {
                                         photos?.map((photo, index) => {
                                             return (
                                                 <li key={index} className="image-preview border-2 rounded dark:border-slate-600 dark:bg-slate-700">
-                                                    <Image
+                                                    {photo && <Image
                                                         height={50}
                                                         width={50}
 
                                                         src={photo}
                                                         alt={`Uploaded ${index + 1}`}
                                                         className=" object-fill"
-                                                    />
+                                                    />}
                                                 </li>
                                             )
                                         })
                                     }
                                 </ul>
                             </div>
-                            {photosIsRequired && <p className="text-red-500">Minimum a photo is required</p>}
+                            {formik.touched.photos && formik.errors.photos && (
+                                <p className="text-red-500 text-sm text-left">{formik.errors.photos}</p>
+                            )}
                         </div>
                         {/* Description */}
                         <div className="mb-4 col-span-2">
@@ -528,7 +483,7 @@ const CreateProductForm = ({ categories, brands, mutate }) => {
                                 placeholder="Enter product description"
                                 rows="4"
                             ></textarea>
-                            {formik.errors.description && <p className="text-red-500">{formik.errors.description}</p>}
+                            {formik.touched?.description && formik.errors.description && <p className="text-red-500">{formik.errors.description}</p>}
                         </div>
                     </div>
                     <button

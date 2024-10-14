@@ -24,8 +24,8 @@ export default async function handler(req, res) {
                     availability,
                     status,
                     dimension,
-                    brandId,
-                    categoryId,
+                    // brandId,
+                    // categoryId,
                     brand: brandId ? { connect: { id: brandId } } : undefined,
                     category: categoryId ? { connect: { id: categoryId } } : undefined,
                     

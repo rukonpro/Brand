@@ -2,14 +2,14 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { CldUploadWidget } from 'next-cloudinary';
 import Image from 'next/image';
-import React, {useState} from "react";
+import React, { useState } from "react";
 import { IoCloseSharp } from "react-icons/io5";
 import SearchableSelect from "@/app/components/AdminDashboard/Products/SearchableSelect";
 import SearchableSelectCategory from "@/app/components/AdminDashboard/Products/SearchableSelectCategory";
-import {updateProduct} from "@/app/utils/product/fetch_products_api";
+import { updateProduct } from "@/app/utils/product/fetch_products_api";
 import toast from "react-hot-toast";
-const ProductUpdateForm = ({ initialData,categories,brands,mutate }) => {
-const [imageUrls, setImageUrls] = useState(initialData.photos||[]);
+const ProductUpdateForm = ({ initialData, categories, brands, mutate }) => {
+    const [imageUrls, setImageUrls] = useState(initialData.photos || []);
 
 
 
@@ -18,152 +18,168 @@ const [imageUrls, setImageUrls] = useState(initialData.photos||[]);
         initialValues: {
             name: initialData.name || "",
             description: initialData.description || "",
-            price: initialData.price||null,
+            price: initialData.price || null,
             material: initialData.material || "",
-            quantity: initialData.quantity|| null,
+            quantity: initialData.quantity || null,
             warranty: initialData.warranty || "",
             protection: initialData.protection || "",
             colors: initialData.colors || [],
             sizes: initialData.sizes || [],
-            dimension: initialData?.dimension || null,
             tags: initialData?.tags || [],
-            discountPercentage: initialData.discountPercentage ||null,
-            taxPercentage: initialData?.taxPercentage ||null,
-            deliveryFee: initialData?.deliveryFee||null,
+            dimension: initialData?.dimension || null,
+            discountPercentage: initialData.discountPercentage || null,
+            taxPercentage: initialData?.taxPercentage || null,
+            deliveryFee: initialData?.deliveryFee || null,
             brandId: initialData?.brandId || "",
             categoryId: initialData?.categoryId || "",
             photos: imageUrls,
         },
-            validationSchema: Yup.object({
-                name: Yup.string()
-                    .required('Name is required')
-                    .min(2, 'Name must be at least 2 characters')
-                    .max(200, 'Name cannot exceed 100 characters'),
+        validationSchema: Yup.object({
+            name: Yup.string()
+                .required('Name is required')
+                .min(2, 'Name must be at least 2 characters')
+                .max(200, 'Name cannot exceed 100 characters'),
 
-                description: Yup.string()
-                    .required('Description is required')
-                    .min(10, 'Description must be at least 10 characters')
-                    .max(5000, 'Description cannot exceed 500 characters'),
+            description: Yup.string()
+                .required('Description is required')
+                .min(10, 'Description must be at least 10 characters')
+                .max(5000, 'Description cannot exceed 500 characters'),
 
-                price: Yup.number()
-                    .required('Price is required')
-                    .min(0, 'Price cannot be negative')
-                    .typeError('Price must be a valid number'),
+            price: Yup.number()
+                .required('Price is required')
+                .min(0, 'Price cannot be negative')
+                .typeError('Price must be a valid number'),
 
-                material: Yup.string()
-                    .max(50, 'Material cannot exceed 50 characters'),
+            material: Yup.string()
+                .max(50, 'Material cannot exceed 50 characters')
+                .nullable(),
 
-                quantity: Yup.number()
-                    .required('Quantity is required')
-                    .min(0, 'Quantity cannot be negative')
-                    .integer('Quantity must be an integer')
-                    .typeError('Quantity must be a valid number'),
+            quantity: Yup.number()
+                .required('Quantity is required')
+                .min(0, 'Quantity cannot be negative')
+                .integer('Quantity must be an integer')
+                .typeError('Quantity must be a valid number'),
 
-                warranty: Yup.string()
-                    .max(100, 'Warranty cannot exceed 100 characters')
-                    .optional(),
+            warranty: Yup.string()
+                .max(100, 'Warranty cannot exceed 100 characters')
+                .optional()
+                .nullable(),
 
-                protection: Yup.string()
-                    .max(100, 'Protection cannot exceed 100 characters')
-                    .optional(),
+            protection: Yup.string()
+                .max(100, 'Protection cannot exceed 100 characters')
+                .optional()
+                .nullable(),
 
-                colors: Yup.array()
-                    .of(Yup.string().max(30, 'Color name too long'))
-                    .optional(),
+            colors: Yup.array()
+                .of(Yup.string().max(30, 'Color name too long'))
+                .optional()
+                .nullable(),
 
-                sizes: Yup.array()
-                    .of(Yup.string().max(10, 'Size name too long'))
-                    .optional(),
+            sizes: Yup.array()
+                .of(Yup.string().max(10, 'Size name too long'))
+                .optional()
+                .nullable(),
 
-                tags: Yup.array()
-                    .of(Yup.string().max(20, 'Tag too long'))
-                    .optional(),
+            tags: Yup.array()
+                .of(Yup.string().max(20, 'Tag too long'))
+                .optional()
+                .nullable(),
 
-                discountPercentage: Yup.number()
-                    .nullable() // This allows `null` as a valid value
-                    .transform((value, originalValue) => {
-                        // This ensures empty strings are treated as `null`
-                        return originalValue === "" ? null : value;
-                    })
-                    .min(0, 'Discount percentage cannot be negative')
-                    .max(100, 'Discount percentage cannot exceed 100')
-                    .typeError('Discount percentage must be a valid number')
-                    .optional(),
-
-                taxPercentage: Yup.number()
-                    .nullable() // This allows `null` as a valid value
-                    .transform((value, originalValue) => {
-                        // This ensures empty strings are treated as `null`
-                        return originalValue === "" ? null : value;
-                    })
-                    .min(0, 'Tax percentage cannot be negative')
-                    .max(100, 'Tax percentage cannot exceed 100')
-                    .typeError('Tax percentage must be a valid number')
-                    .optional(),
-                deliveryFee: Yup.number()
-                    .nullable() // This allows `null` as a valid value
-                    .transform((value, originalValue) => {
-                        // This ensures empty strings are treated as `null`
-                        return originalValue === null ? null : value;
-                    })
-                    .min(0, 'Tax delivery fee cannot be negative')
-                    .typeError('Delivery fee must be a valid number')
-                    .optional(),
-
-
-                dimension: Yup.object({
-                    length: Yup.number()
-                        .nullable()
-                        .transform((value, originalValue) => (originalValue === '' ? null : value))
-                        .typeError('Length must be a valid number')
-                        .min(0, 'Length must be greater than or equal to 0')
-                        .notRequired(),
-
-                    width: Yup.number()
-                        .nullable()
-                        .transform((value, originalValue) => (originalValue === '' ? null : value))
-                        .typeError('Width must be a valid number')
-                        .min(0, 'Width must be greater than or equal to 0')
-                        .notRequired(),
-
-                    height: Yup.number()
-                        .nullable()
-                        .transform((value, originalValue) => (originalValue === '' ? null : value))
-                        .typeError('Height must be a valid number')
-                        .min(0, 'Height must be greater than or equal to 0')
-                        .notRequired(),
+            discountPercentage: Yup.number()
+                .nullable() // This allows `null` as a valid value
+                .transform((value, originalValue) => {
+                    // This ensures empty strings are treated as `null`
+                    return originalValue === "" ? null : value;
                 })
-                    .test('all-or-none', 'All dimensions must be provided if one is specified', (value) => {
-                        const { length, width, height } = value || undefined;
-                        const isAnyFieldFilled = length !== null || width !== null || height !== null;
+                .min(0, 'Discount percentage cannot be negative')
+                .max(100, 'Discount percentage cannot exceed 100')
+                .typeError('Discount percentage must be a valid number')
+                .optional()
+                .nullable(),
 
-                        // যদি কোন একটি ফিল্ড পূর্ণ থাকে তাহলে সব ফিল্ড পূরণ হতে হবে
-                        return !isAnyFieldFilled || (length !== null && width !== null && height !== null);
-                    })
-                    ,
+            taxPercentage: Yup.number()
+                .nullable() // This allows `null` as a valid value
+                .transform((value, originalValue) => {
+                    // This ensures empty strings are treated as `null`
+                    return originalValue === "" ? null : value;
+                })
+                .min(0, 'Tax percentage cannot be negative')
+                .max(100, 'Tax percentage cannot exceed 100')
+                .typeError('Tax percentage must be a valid number')
+                .optional()
+                .nullable(),
+            deliveryFee: Yup.number()
+                .nullable() // This allows `null` as a valid value
+                .transform((value, originalValue) => {
+                    // This ensures empty strings are treated as `null`
+                    return originalValue === null ? null : value;
+                })
+                .min(0, 'Tax delivery fee cannot be negative')
+                .typeError('Delivery fee must be a valid number')
+                .optional()
+                .nullable(),
 
-                brandId: Yup.string()
-                    .optional(),
 
-                categoryId: Yup.string().optional(),
+            dimension: Yup.object({
+                length: Yup.number()
+                    .nullable()
+                    .transform((value, originalValue) => (originalValue === '' ? null : value))
+                    .typeError('Length must be a valid number')
+                    .min(0, 'Length must be greater than or equal to 0')
+                    .notRequired()
+                    .nullable(),
 
-                photos: Yup.array()
-                    .of(Yup.string().url('Each photo must be a valid URL'))
-                    .min(1, 'At least one photo is required')
+                width: Yup.number()
+                    .nullable()
+                    .transform((value, originalValue) => (originalValue === '' ? null : value))
+                    .typeError('Width must be a valid number')
+                    .min(0, 'Width must be greater than or equal to 0')
+                    .notRequired()
+                    .nullable(),
 
-            }),
+                height: Yup.number()
+                    .nullable()
+                    .transform((value, originalValue) => (originalValue === '' ? null : value))
+                    .typeError('Height must be a valid number')
+                    .min(0, 'Height must be greater than or equal to 0')
+                    .notRequired()
+                    .nullable(),
+            })
+                .test('all-or-none', 'All dimensions must be provided if one is specified', (value) => {
+                    const { length, width, height } = value || undefined;
+                    const isAnyFieldFilled = length !== null || width !== null || height !== null;
+
+                    // যদি কোন একটি ফিল্ড পূর্ণ থাকে তাহলে সব ফিল্ড পূরণ হতে হবে
+                    return !isAnyFieldFilled || (length !== null && width !== null && height !== null);
+                })
+                .nullable()
+            ,
+
+            brandId: Yup.string()
+                .optional()
+                .nullable(),
+
+            categoryId: Yup.string()
+                .optional()
+                .nullable(),
+
+            photos: Yup.array()
+                .of(Yup.string().url('Each photo must be a valid URL'))
+                .min(1, 'At least one photo is required')
+
+        }),
         onSubmit: async (values, { setSubmitting }) => {
 
-            const res=await updateProduct({productId:initialData?.id,updateData:values});
+            const res = await updateProduct({ productId: initialData?.id, updateData: values });
 
-            if (res?.status===200){
+            if (res?.status === 200) {
                 mutate();
-                toast.success("Product update is successfully",{
-                    id:"product"
+                toast.success("Product update is successfully", {
+                    id: "product"
                 })
-            }else {
-                toast.error("Internal error , please try again",{
-                    id:"product"
+            } else {
+                toast.error("Internal error , please try again", {
+                    id: "product"
                 })
             }
 
@@ -378,27 +394,27 @@ const [imageUrls, setImageUrls] = useState(initialData.photos||[]);
 
                 {/* Photos Upload Section */}
                 <div className="mb-4">
-                  <div className="flex justify-start">
-                      <CldUploadWidget
-                          uploadPreset={process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET}
-                          signatureEndpoint="/api/signature/signature"
-                          onUpload={(result,widget) => {
-                              if (result && result.event === 'success') {
-                                  handleUploadSuccess(result);
-                              }
-                          }}
-                      >
-                          {({ open }) => (
-                              <button
-                                  type="button"
-                                  onClick={() => handleUpload(open)}
-                                  className="text-white bg-blue-500 hover:bg-blue-700 rounded px-4 py-2 "
-                              >
-                                  Upload Image
-                              </button>
-                          )}
-                      </CldUploadWidget>
-                  </div>
+                    <div className="flex justify-start">
+                        <CldUploadWidget
+                            uploadPreset={process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET}
+                            signatureEndpoint="/api/signature/signature"
+                            onUpload={(result, widget) => {
+                                if (result && result.event === 'success') {
+                                    handleUploadSuccess(result);
+                                }
+                            }}
+                        >
+                            {({ open }) => (
+                                <button
+                                    type="button"
+                                    onClick={() => handleUpload(open)}
+                                    className="text-white bg-blue-500 hover:bg-blue-700 rounded px-4 py-2 "
+                                >
+                                    Upload Image
+                                </button>
+                            )}
+                        </CldUploadWidget>
+                    </div>
                     {formik.touched.photos && formik.errors.photos && (
                         <p className="text-red-500 text-sm text-left">{formik.errors.photos}</p>
                     )}
@@ -406,13 +422,13 @@ const [imageUrls, setImageUrls] = useState(initialData.photos||[]);
                         <ul className="mt-4 grid grid-cols-5 gap-3">
                             {imageUrls.map((url, index) => (
                                 <li key={index} className="relative bg-white flex justify-center items-center">
-                                    <Image src={url} alt={`Product Image ${index + 1}`} width={100} height={100}/>
+                                    <Image src={url} alt={`Product Image ${index + 1}`} width={100} height={100} />
                                     <button
                                         type="button"
                                         className="absolute top-0 right-0 w-5 h-5 rounded-full p-1"
                                         onClick={() => handleRemoveImage(index)}
                                     >
-                                       <IoCloseSharp/>
+                                        <IoCloseSharp />
                                     </button>
                                 </li>
                             ))}
@@ -480,7 +496,7 @@ const [imageUrls, setImageUrls] = useState(initialData.photos||[]);
                 {/* Discount Percentage Field */}
                 <div className="mb-4">
                     <label htmlFor="discountPercentage"
-                           className="block text-sm font-medium text-slate-700 dark:text-slate-300 text-left">Discount
+                        className="block text-sm font-medium text-slate-700 dark:text-slate-300 text-left">Discount
                         Percentage</label>
                     <input
                         type="number"
@@ -500,7 +516,7 @@ const [imageUrls, setImageUrls] = useState(initialData.photos||[]);
                 {/* Tax Percentage Field */}
                 <div className="mb-4">
                     <label htmlFor="taxPercentage"
-                           className="block text-sm font-medium text-slate-700 dark:text-slate-300 text-left">Tax
+                        className="block text-sm font-medium text-slate-700 dark:text-slate-300 text-left">Tax
                         Percentage</label>
                     <input
                         type="number"
@@ -520,7 +536,7 @@ const [imageUrls, setImageUrls] = useState(initialData.photos||[]);
                 {/* Delivery Fee Field */}
                 <div className="mb-4">
                     <label htmlFor="deliveryFee"
-                           className="block text-sm font-medium text-slate-700 dark:text-slate-300 text-left">Delivery
+                        className="block text-sm font-medium text-slate-700 dark:text-slate-300 text-left">Delivery
                         Fee</label>
                     <input
                         type="number"
@@ -570,8 +586,8 @@ const [imageUrls, setImageUrls] = useState(initialData.photos||[]);
 
                 {/* Submit Button */}
                 <button type="submit"
-                        className="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                    {formik.isSubmitting?"Updating...":" Update Product"}
+                    className="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                    {formik.isSubmitting ? "Updating..." : " Update Product"}
                 </button>
             </form>
         </div>

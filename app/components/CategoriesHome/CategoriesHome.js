@@ -33,7 +33,7 @@ const CategoriesHome = async () => {
           combinedOptions?.map(category => {
             return (
               <li key={category?.id} role="listitem" className="bg-white dark:bg-slate-800 p-3 w-36 md:w-full">
-                <Link href={`/catalog?categoryId=${category?.id}&categoryName=${category?.name}` }  passHref>
+                <Link href={`/catalog?categoryName=${category?.name}`} passHref>
                   <div className="flex justify-center items-centerjustify-center">
                     <div className="h-20 w-20 ">
                       <Image src={category?.photo} width={200} height={200} alt={category?.name} className="h-full w-full object-fill " />

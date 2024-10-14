@@ -12,6 +12,7 @@ import Navbar from "@/app/components/navbar/navbar";
 import Footer from "@/app/components/Footer/Footer";
 import CategoriesHome from "./components/CategoriesHome/CategoriesHome";
 import Loader from "./Loader";
+// import Brands from "./components/Brands/Brands";
 
 
 export const metadata = {
@@ -46,9 +47,12 @@ export default function Home() {
             {/*<Suspense fallback={<Loader/>}>*/}
             <OffersLayout />
 
-            <Suspense fallback={<Loader/>}>
+            <Suspense fallback={<Loader />}>
                 <CategoriesHome />
-            </Suspense>
+            </Suspense >
+            {/* <Suspense fallback={<Loader />}>
+                <Brands />
+            </Suspense> */}
             {/*</Suspense>*/}
             <Suspense fallback={<SkeletonRecommendedItemsSection />}>
                 <RecommendedItems />
