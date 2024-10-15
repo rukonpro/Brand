@@ -7,6 +7,14 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model Review {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  user      String
+  body      String
+  rating    Int
+  createdAt DateTime @default(now())
+}
+
 model Category {
   id          String     @id @default(auto()) @map("_id") @db.ObjectId
   name        String
@@ -26,58 +34,64 @@ model Brand {
   Products Product[]
 }
 
-model Review {
-  id        String   @id @default(auto()) @map("_id") @db.ObjectId
-  user      String
-  body      String
-  rating    Int
-  createdAt DateTime @default(now())
-}
-
-// model Dimension {
-//   id         String   @id @default(auto()) @map("_id") @db.ObjectId
-//   length     Float
-//   width      Float
-//   height     Float
-//   productId  String?  @unique @db.ObjectId // Make productId unique to create a one-to-one relationship
-//   product    Product? @relation(fields: [productId], references: [id], onDelete: NoAction, onUpdate: NoAction) // Define relation with referential actions
-//
-//   createdAt  DateTime  @default(now())
-//   updatedAt  DateTime  @updatedAt
-// }
-
 model Product {
-  id                 String       @id @default(auto()) @map("_id") @db.ObjectId
-  name               String
-  description        String
-  photos             String[] // Array of photo URLs
-  price              Float
-  material           String?
-  quantity           Int
-  warranty           String?
-  protection         String?
-  colors             String[]     @default([])
-  sizes              String[]     @default([])
-  rating             Float        @default(0)
-  tags               String[]     @default([])
-  availability       Availability @default(IN_STOCK)
-  status             Status       @default(ACTIVE)
-  brand              Brand?       @relation(fields: [brandId], references: [id])
-  brandId            String?      @db.ObjectId
-  category           Category?    @relation(fields: [categoryId], references: [id])
-  categoryId         String?      @db.ObjectId
-  dimension          Json?
-  offers             Offer[]      @relation("ProductOffers")
-  orderItem          OrderItem[]
+  id            String       @id @default(auto()) @map("_id") @db.ObjectId
+  name          String
+  description   String
+  coverPhoto    String // String of photo URLs
+  basePrice     Float // প্রোডাক্টের বেস প্রাইস
+  totalStock    Int // প্রোডাক্টের মোট স্টক (যদি ভ্যারিয়েন্ট অনুযায়ী না থাকে)
+  warranty      String?
+  protection    String?
+  specifications Json?
+  rating        Float        @default(0)
+  tags          String[]     @default([])
+  availability  Availability @default(IN_STOCK)
+  status        Status       @default(ACTIVE)
+  brand         Brand?       @relation(fields: [brandId], references: [id])
+  brandId       String?      @db.ObjectId
+  category      Category?    @relation(fields: [categoryId], references: [id])
+  categoryId    String?      @db.ObjectId
+  offers        Offer[]      @relation("ProductOffers")
+  orderItem     OrderItem[]
   // New fields
-  discountPercentage Float        @default(0) // Discount percentage for the product
-  taxPercentage      Float        @default(0) // Tax percentage for the product
-  deliveryFee        Float        @default(0) // Delivery fee for the product
+  taxPercentage Float        @default(0) // Tax percentage for the product
+  deliveryFee   Float        @default(0) // Delivery fee for the product
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
   CartItem CartItem[]
+  variant  Variant[]
+}
+
+model Variant {
+  id        String  @id @default(auto()) @map("_id") @db.ObjectId
+  product   Product @relation(fields: [productId], references: [id])
+  productId String  @db.ObjectId
+
+  // Variant-specific attributes
+  color    String? // রঙ (যেমন: Red, Blue, Black)
+  size     String? // সাইজ (যেমন: S, M, L, XL)
+  material String? // উপাদান (যেমন: Cotton, Leather)
+  storage  String? // 4/128BG or 8/264
+
+  // প্রাইস, স্টক ও ছবি
+  price  Float // ভ্যারিয়েন্ট অনুযায়ী প্রাইস
+  stock  Int // ভ্যারিয়েন্ট অনুযায়ী স্টকের পরিমাণ
+  images String[] @default([]) // ভ্যারিয়েন্ট অনুযায়ী ছবি (ঐচ্ছিক)
+
+  // অন্যান্য
+  sku        String? // স্টক কিপিং ইউনিট (SKU)
+  weight     Float? // ভ্যারিয়েন্টের ওজন
+  dimensions String? // মাপ (যেমন: "12x8x6 inches")
+  barcode    String? // ইউনিক বারকোড বা UPC
+
+  // মূল্যায়ন এবং অন্যান্য ফিচার
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  Offer     Offer[]  @relation("VariantOffers")
 }
 
 enum Availability {
@@ -101,6 +115,8 @@ model Offer {
   isActive      Boolean      @default(true)
   product       Product      @relation("ProductOffers", fields: [productId], references: [id])
   productId     String       @db.ObjectId
+  variant       Variant      @relation("VariantOffers", fields: [variantId], references: [id])
+  variantId     String       @db.ObjectId
 }
 
 enum DiscountType {
