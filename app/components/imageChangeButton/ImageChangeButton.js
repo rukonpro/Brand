@@ -24,15 +24,15 @@ const ImageChangeButton = ({ product }) => {
             <ol className="pt-3 flex gap-2 justify-center max-w-[600px] overflow-x-auto overflow-hidden ">
 
 
-                {product?.variant?.length > 0 ? product?.variant?.map((variant) => {
+                {product?.variants?.length > 0 ? product?.variants?.map((variant) => {
                     return (
                         <li key={variant?.id}>
-                            <button onMouseOver={() => setChnageImage(variant?.images?.[0])}
-                                onClick={() => setChnageImage(variant?.images?.[0])}
+                            <button onMouseOver={() => setChnageImage(variant?.image)}
+                                onClick={() => setChnageImage(variant?.image)}
 
                                 className="w-[56px] h-[56px] border-2 rounded p-1 dark:border-slate-700">
                                 <Image
-                                    src={variant?.images?.[0]}
+                                    src={variant?.image}
                                     height={50}
                                     width={50}
                                     loading="lazy"

@@ -54,24 +54,28 @@ export default async function handler(req, res) {
                     taxPercentage,
                     deliveryFee,
                     specifications,
-                    variant: {
+                    variants: {
                         create: variants.map(variant => ({
-                            color: variant.color,
-                            size: variant.size,
-                            storage: variant.storage,
-                            material: variant.material,
-                            price: variant.price,
-                            stock: variant.stock,
-                            sku: generateSKU(name, variant.color, variant.size),  // Auto-generate SKU
-                            barcode: generateBarcode(),                           // Auto-generate Barcode
-                            weight: variant.weight,
-                            dimensions: variant.dimensions,
-                            images: variant.images,
-                        }))
-                    }
+                            attributes: variant.attributes,
+                            image: variant?.image,
+                            options: {
+                                create: variant.options.map(option => ({
+                                    attributes: option.attributes,
+                                    price: option.price,
+                                    stock: option.stock,
+                                })),
+
+                            },
+
+                        })),
+                    },
                 },
                 include: {
-                    variant: true,
+                    variants: {
+                        include: {
+                            options: true
+                        }
+                    },
                     brand: true,
                     category: true
                 }

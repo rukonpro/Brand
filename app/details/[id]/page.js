@@ -17,6 +17,9 @@ import Navbar from "@/app/components/navbar/navbar";
 import Image from 'next/image';
 import Specifications from '@/app/components/Specifications/Specifications';
 import Footer from '@/app/components/Footer/Footer';
+import AddtoCart from './AddtoCart';
+import ProductDetails from './TestDetails';
+import ProductForm from './DynamicForm';
 
 
 
@@ -83,6 +86,36 @@ const Details = async ({ params }) => {
 
 
 
+    const variants = product?.data?.variants;
+    // Dynamic collectors for attributes
+    const attributeMap = {};
+
+    // Collect unique attributes dynamically
+    variants?.forEach((variant) => {
+        // Loop through variant attributes
+        Object.keys(variant.attributes).forEach((key) => {
+            if (!attributeMap[key]) {
+                attributeMap[key] = new Set(); // Create a new set for unique values
+            }
+            attributeMap[key].add(variant.attributes[key]);
+        });
+
+        // Loop through options and their attributes
+        variant?.options.forEach((option) => {
+            Object.keys(option.attributes).forEach((key) => {
+                if (!attributeMap[key]) {
+                    attributeMap[key] = new Set();
+                }
+                attributeMap[key].add(option.attributes[key]);
+            });
+        });
+    });
+
+    // Convert Sets to Arrays for rendering buttons
+    const attributeArrayMap = {};
+    Object.keys(attributeMap).forEach((key) => {
+        attributeArrayMap[key] = Array.from(attributeMap[key]);
+    });
 
     return (
         <>
@@ -110,7 +143,7 @@ const Details = async ({ params }) => {
                             <div className='absolute right-3 top-3'>
                                 <SaveForLaterButton product={product?.data} />
                             </div>
-                            {product?.data?.variant?.length > 0 ?
+                            {product?.data?.variants?.length > 0 ?
                                 (<ImageChangeButton
 
                                     product={product?.data}
@@ -205,61 +238,9 @@ const Details = async ({ params }) => {
                                 <div className='border-t border-slate-50 dark:border-slate-700 mt-6' />
 
 
-                                {
-                                    product?.data?.variant?.length > 0 &&
 
-                                    <ul className='grid grid-cols-5 gap-3 pt-5'>
-                                        {
-                                            product?.data?.variant?.map((variant) => {
-                                                return (
-                                                    <li key={variant?.id} className=' cursor-pointer border-2 border-blue-500 rounded-lg '>
-                                                        <div className='p-2'>
-                                                            <Image src={variant?.images?.[0]} height={100} width={100} alt={variant?.color}
-                                                                className='w-full object-contain'
-                                                            />
-                                                        </div>
+                                <ProductDetails />
 
-                                                        <div className='pb-2'>
-                                                            {variant?.price && <div className='grid grid-cols-2 hover:bg-slate-700 px-2'>
-                                                                <p className='col-span-1 text-sm'>Price</p>
-                                                                <p className='col-span-1 text-sm'>: ${variant?.price}</p>
-                                                            </div>}
-                                                            {variant?.color && <div className='grid grid-cols-2 hover:bg-slate-700 px-2'>
-                                                                <p className='col-span-1 text-sm'>Color</p>
-                                                                <p className='col-span-1 text-sm'>: {variant?.color}</p>
-                                                            </div>}
-                                                            {variant?.size && <div className='grid grid-cols-2 hover:bg-slate-700 px-2'>
-                                                                <p className='col-span-1 text-sm'>Size</p>
-                                                                <p className='col-span-1 text-sm'>: {variant?.size}</p>
-                                                            </div>}
-                                                            {variant?.storage && <div className='grid grid-cols-2 hover:bg-slate-700 px-2'>
-                                                                <p className='col-span-1 text-sm'>Storage</p>
-                                                                <p className='col-span-1 text-sm'>: {variant?.storage}</p>
-                                                            </div>}
-                                                            {variant?.weight && <div className='grid grid-cols-2 hover:bg-slate-700 px-2'>
-                                                                <p className='col-span-1 text-sm'>Weight</p>
-                                                                <p className='col-span-1 text-sm'>: {variant?.weight}</p>
-                                                            </div>}
-                                                            {variant?.dimensions && <div className='grid grid-cols-2 hover:bg-slate-700 px-2'>
-                                                                <p className='col-span-2 text-xs'>{variant?.dimensions}</p>
-                                                            </div>}
-                                                            {<div className='grid grid-cols-2 hover:bg-slate-700 px-2'>
-                                                                <p className='col-span-1 text-sm'>Stock</p>
-                                                                <p className='col-span-1 text-sm'>: {variant?.stock || "Out of stock"}</p>
-                                                            </div>}
-                                                        </div>
-                                                    </li>
-                                                )
-                                            })
-                                        }
-                                    </ul>
-                                }
-
-                                {product?.data && <div className="flex justify-end max-w-72">
-
-                                    <AddToCartButton product={product?.data} />
-
-                                </div>}
 
                             </div>
                         </div>

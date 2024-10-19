@@ -35,63 +35,41 @@ model Brand {
 }
 
 model Product {
-  id            String       @id @default(auto()) @map("_id") @db.ObjectId
-  name          String
-  description   String
-  coverPhoto    String // String of photo URLs
-  basePrice     Float // প্রোডাক্টের বেস প্রাইস
-  totalStock    Int // প্রোডাক্টের মোট স্টক (যদি ভ্যারিয়েন্ট অনুযায়ী না থাকে)
-  warranty      String?
-  protection    String?
+  id             String      @id @default(auto()) @map("_id") @db.ObjectId
+  name           String
+  description    String
+  basePrice      Float
+  images         String[]
+  warranty       String?
+  protection     String?
   specifications Json?
-  rating        Float        @default(0)
-  tags          String[]     @default([])
-  availability  Availability @default(IN_STOCK)
-  status        Status       @default(ACTIVE)
-  brand         Brand?       @relation(fields: [brandId], references: [id])
-  brandId       String?      @db.ObjectId
-  category      Category?    @relation(fields: [categoryId], references: [id])
-  categoryId    String?      @db.ObjectId
-  offers        Offer[]      @relation("ProductOffers")
-  orderItem     OrderItem[]
-  // New fields
-  taxPercentage Float        @default(0) // Tax percentage for the product
-  deliveryFee   Float        @default(0) // Delivery fee for the product
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  CartItem CartItem[]
-  variant  Variant[]
+  tags           String[]    @default([])
+  status         Status      @default(ACTIVE)
+  brand          Brand?      @relation(fields: [brandId], references: [id])
+  brandId        String?     @db.ObjectId
+  category       Category    @relation(fields: [categoryId], references: [id])
+  categoryId     String      @db.ObjectId
+  offers         Offer[]     @relation("ProductOffers")
+  orderItem      OrderItem[]
+  createdAt      DateTime    @default(now())
+  updatedAt      DateTime    @updatedAt
+  CartItem       CartItem[]
+  variants       Variant[]   @relation("ProductVariants") // Define the relation
 }
 
 model Variant {
-  id        String  @id @default(auto()) @map("_id") @db.ObjectId
-  product   Product @relation(fields: [productId], references: [id])
-  productId String  @db.ObjectId
-
-  // Variant-specific attributes
-  color    String? // রঙ (যেমন: Red, Blue, Black)
-  size     String? // সাইজ (যেমন: S, M, L, XL)
-  material String? // উপাদান (যেমন: Cotton, Leather)
-  storage  String? // 4/128BG or 8/264
-
-  // প্রাইস, স্টক ও ছবি
-  price  Float // ভ্যারিয়েন্ট অনুযায়ী প্রাইস
-  stock  Int // ভ্যারিয়েন্ট অনুযায়ী স্টকের পরিমাণ
-  images String[] @default([]) // ভ্যারিয়েন্ট অনুযায়ী ছবি (ঐচ্ছিক)
-
-  // অন্যান্য
-  sku        String? // স্টক কিপিং ইউনিট (SKU)
-  weight     Float? // ভ্যারিয়েন্টের ওজন
-  dimensions String? // মাপ (যেমন: "12x8x6 inches")
-  barcode    String? // ইউনিক বারকোড বা UPC
-
-  // মূল্যায়ন এবং অন্যান্য ফিচার
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  Offer     Offer[]  @relation("VariantOffers")
+  id           String       @id @default(auto()) @map("_id") @db.ObjectId
+  productId    String       @db.ObjectId // Reference to the Product
+  attributes   Json // JSON object for attributes (color, size, etc.)
+  price        Float
+  stock        Int
+  sku          String       @unique
+  varcode      String       @unique
+  availability Availability @default(IN_STOCK)
+  images       String[] // Array of variant image URLs
+  product      Product?     @relation("ProductVariants", fields: [productId], references: [id])
+  Offer        Offer?       @relation(fields: [offerId], references: [id])
+  offerId      String?      @db.ObjectId
 }
 
 enum Availability {
@@ -115,8 +93,8 @@ model Offer {
   isActive      Boolean      @default(true)
   product       Product      @relation("ProductOffers", fields: [productId], references: [id])
   productId     String       @db.ObjectId
-  variant       Variant      @relation("VariantOffers", fields: [variantId], references: [id])
-  variantId     String       @db.ObjectId
+  Variant       Variant[]
+  variantId     String?      @db.ObjectId
 }
 
 enum DiscountType {
