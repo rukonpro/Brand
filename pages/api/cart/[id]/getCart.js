@@ -1,17 +1,15 @@
 import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
-const cache = new Map(); // ক্যাশ অবজেক্ট
+
 
 export default async function handler(req, res) {
   if (req.method === 'GET') {
     try {
-      const userId = req.query.userId; // URL থেকে userId নিন
-      const cacheKey = `cart:${userId}`; // ক্যাশ কি তৈরি করুন
+      const userId = req.query.id; // URL থেকে userId নিন
 
-      // ক্যাশে চেক করুন
-      if (cache.has(cacheKey)) {
-        return res.status(200).json(cache.get(cacheKey)); // ক্যাশ থেকে তথ্য ফেরত দিন
+      if(!userId){
+        return res.status(200).json({ message: 'You are unauthorized' });
       }
 
       // ইউজারের জন্য কার্ট আইটেমগুলো পান
@@ -27,8 +25,8 @@ export default async function handler(req, res) {
       let totalDiscount = 0;
       let subTotalPrice = 0;
       let totalTax = 0;
-      const taxPercent = 5; // ট্যাক্স %
-      const discountPercent = 10; // ডিসকাউন্ট %
+      const taxPercent = 1; // ট্যাক্স %
+      let discountPercent = 0; // ডিসকাউন্ট %
 
       // কার্ট আইটেমের ডেটা প্রক্রিয়াকরণ
       const itemsWithVariants = await Promise.all(
@@ -36,6 +34,8 @@ export default async function handler(req, res) {
           // মূল দাম হিসাব করুন
           originalPrice += item.price * item.quantity;
 
+
+          discountPercent = item.discountPercent || 10;
           // ডিসকাউন্টের পর দাম
           const discountAmount = (item.price * discountPercent) / 100;
           const discountedPrice = item.price - discountAmount;
@@ -71,6 +71,7 @@ export default async function handler(req, res) {
         cartSummary: {
           totalItems: cartItems.length,
           originalPrice,
+          discountPercent,
           totalDiscount,
           subTotalPrice,
           taxPercent,
@@ -80,12 +81,8 @@ export default async function handler(req, res) {
         cartItems: itemsWithVariants.filter(item => item.variant), // কেবলমাত্র যোগ করা ভেরিয়েন্টসহ
       };
 
-      // ক্যাশে সেভ করুন
-      cache.set(cacheKey, response);
-
       return res.status(200).json(response);
     } catch (error) {
-      console.error(error);
       return res.status(500).json({ error: 'Something went wrong while fetching the cart' });
     }
   } else {

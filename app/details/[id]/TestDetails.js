@@ -1,13 +1,17 @@
 "use client"
+import { addtoCartApi } from '@/app/utils/cart/fetch_cart_api';
 import { useState } from 'react';
 import toast from 'react-hot-toast';
 import { GrAdd, GrFormSubtract } from "react-icons/gr";
-
+import { useSession } from "next-auth/react";
 
 export default function ProductDetails({ product }) {
 
   const [selectedAttributes, setSelectedAttributes] = useState({});
   const [quantity, setQuantity] = useState(1);
+
+  const { data: userData } = useSession();
+  const user = userData?.user;
 
   // Handle attribute selection
   const handleAttributeChange = (attributeName, value) => {
@@ -47,7 +51,7 @@ export default function ProductDetails({ product }) {
 
 
   // Add to Cart Logic
-  const addToCart = () => {
+  const addToCart = async () => {
 
     if (matchingVariant) {
       // Check for unselected attributes specific to the selected variant
@@ -66,6 +70,7 @@ export default function ProductDetails({ product }) {
       }
 
       const cartItem = {
+        userId: user?.id,
         productId: product?.id,
         variantId: matchingVariant?.id,
         productName: product?.name,
@@ -75,14 +80,21 @@ export default function ProductDetails({ product }) {
       };
       // Add the cart item (store it in context, state, or localStorage)
 
-      toast.success(`Added to cart successfully! ${product?.name}`, {
-        id: "addToCart",
-        position: "bottom-center"
+      const res = await addtoCartApi(cartItem);
 
-      })
+      if (res?.status === 200) {
+        toast.success(`${res?.data?.message} ${res?.data?.item?.productName}`, {
+          id: "addToCart",
+          position: "bottom-center"
 
-
-      console.log('Added to cart:', cartItem);
+        })
+      }
+      else if (res?.status === 500) {
+        toast.error(`${res?.data?.error}`, {
+          id: "addToCart",
+          position: "bottom-center"
+        });
+      }
     } else {
 
       toast.error('No matching variant found', {

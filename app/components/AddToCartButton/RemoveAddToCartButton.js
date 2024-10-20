@@ -1,28 +1,68 @@
 "use client"
-import React, {useContext} from 'react';
-import {AppContext} from "@/app/context/BrandContext";
-import Cookies from "js-cookie";
-import { AiOutlineClose } from "react-icons/ai";
-const RemoveAddToCartButton = ({productId}) => {
-const {cart,setCart,products,setProducts}=useContext(AppContext)
+import { deleteSingleCartItemApi } from '@/app/utils/cart/fetch_cart_api';
+import { useSession } from 'next-auth/react';
+import React, { useState } from 'react';
+import toast from 'react-hot-toast';
 
-    // Function to completely remove the item from the cart
-    const removeFromCart = (productId) => {
-        const updatedCart = cart.filter((item) => item.productId !== productId);
-        const updateProducts=products?.filter((item) => item.id !== productId);
-        setCart(updatedCart);
-        setProducts(updateProducts);
-        Cookies.set('cart', JSON.stringify(updatedCart), { expires: 7, sameSite: 'Lax' });
-    };
+import { AiOutlineClose } from "react-icons/ai";
+const RemoveAddToCartButton = ({ itemId, mutate }) => {
+    const [loading, setLoading] = useState(false);
+    const { data: userData } = useSession();
+    const user = userData?.user;
+
+
+    const params = {
+        userId: user?.id,
+        itemId: itemId
+    }
+
+    const handleItemRemoveToCart = async () => {
+        setLoading(true);
+        const res = await deleteSingleCartItemApi(params);
+        if (res?.status === 200) {
+            mutate();
+            toast.success(res?.data?.message, {
+                id: "cart",
+                position: "bottom-center"
+            })
+        } else if (res?.status === 500) {
+            toast.error(res?.data?.message, {
+                id: "cart",
+                position: "bottom-center"
+            })
+        }
+
+        else if (res?.status === 404) {
+            toast.error(res?.data?.message, {
+                id: "cart",
+                position: "bottom-center"
+            })
+        }
+
+        else if (res?.status === 405) {
+            toast.error(res?.data?.message, {
+                id: "cart",
+                position: "bottom-center"
+            })
+        }
+        else if (res?.status === 403) {
+            toast.error(res?.data?.message, {
+                id: "cart",
+                position: "bottom-center"
+            })
+        }
+        setLoading(false);
+    }
 
     return (
         <button
-            onClick={()=>removeFromCart(productId)}
+            onClick={handleItemRemoveToCart}
             type="button"
-                className=" rounded text-red-500 font-bold text-sm "
+            disabled={loading}
+            className={`rounded text-red-500 font-bold text-sm ${loading ? "opacity-20" : ""}`}
         >
 
-            <AiOutlineClose size={25}/>
+            <AiOutlineClose size={25} />
         </button>
     );
 };

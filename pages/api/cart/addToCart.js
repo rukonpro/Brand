@@ -41,7 +41,7 @@ export default async function handler(req, res) {
         return res.status(201).json({ message: 'Item added to cart successfully', item: newItem });
       }
     } catch (error) {
-      console.error(error);
+
       return res.status(500).json({ error: 'Something went wrong while adding to the cart' });
     }
   } else {
