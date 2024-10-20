@@ -19,8 +19,7 @@ export const getCartApi = async (userId) => {
 };
 
 export const deleteSingleCartItemApi = async (params) => {
-    console.log(params)
-
+  
     try {
         return await axios.delete(`${baseURL}/api/cart/geleteSingleItem`, {
             params: params

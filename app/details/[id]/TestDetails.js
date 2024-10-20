@@ -9,6 +9,7 @@ export default function ProductDetails({ product }) {
 
   const [selectedAttributes, setSelectedAttributes] = useState({});
   const [quantity, setQuantity] = useState(1);
+  const [loading, setLoading] = useState(false);
 
   const { data: userData } = useSession();
   const user = userData?.user;
@@ -79,9 +80,9 @@ export default function ProductDetails({ product }) {
         selectedAttributes,
       };
       // Add the cart item (store it in context, state, or localStorage)
-
+      setLoading(true);
       const res = await addtoCartApi(cartItem);
-
+      setLoading(false);
       if (res?.status === 200) {
         toast.success(`${res?.data?.message} ${res?.data?.item?.productName}`, {
           id: "addToCart",
@@ -89,6 +90,22 @@ export default function ProductDetails({ product }) {
 
         })
       }
+      if (res?.status === 201) {
+        toast.success(`${res?.data?.message} ${res?.data?.item?.productName}`, {
+          id: "addToCart",
+          position: "bottom-center"
+
+        })
+      }
+
+      if (res?.status === 405) {
+        toast.success(`${res?.data?.message}`, {
+          id: "addToCart",
+          position: "bottom-center"
+
+        })
+      }
+
       else if (res?.status === 500) {
         toast.error(`${res?.data?.error}`, {
           id: "addToCart",
@@ -190,7 +207,8 @@ export default function ProductDetails({ product }) {
           <div className="mt-8">
             <button
               onClick={addToCart}
-              className="px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 font-bold"
+              disabled={loading}
+              className={`px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 font-bold ${loading ? "opacity-20" : ""}`}
             >
               Add to Cart
             </button>
