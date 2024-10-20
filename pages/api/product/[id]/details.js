@@ -17,11 +17,7 @@ export default async function handler(req, res) {
                     brand: true,
                     category: true,
                     offers: true,
-                    variants: {
-                        include: {
-                            options: true
-                        }
-                    }
+                    variants: true
                 },
             });
             if (!product) {

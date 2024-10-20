@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import Image from 'next/image';
 const ImageChangeButton = ({ product }) => {
 
-    const [changeImage, setChnageImage] = useState(product?.coverPhoto)
+    const [changeImage, setChnageImage] = useState(product?.images?.[0])
 
     return (
         <div>
@@ -24,15 +24,15 @@ const ImageChangeButton = ({ product }) => {
             <ol className="pt-3 flex gap-2 justify-center max-w-[600px] overflow-x-auto overflow-hidden ">
 
 
-                {product?.variants?.length > 0 ? product?.variants?.map((variant) => {
+                {product?.images?.length > 0 && product?.images?.map((image, index) => {
                     return (
-                        <li key={variant?.id}>
-                            <button onMouseOver={() => setChnageImage(variant?.image)}
-                                onClick={() => setChnageImage(variant?.image)}
+                        <li key={index}>
+                            <button onMouseOver={() => setChnageImage(image)}
+                                onClick={() => setChnageImage(image)}
 
                                 className="w-[56px] h-[56px] border-2 rounded p-1 dark:border-slate-700">
                                 <Image
-                                    src={variant?.image}
+                                    src={image}
                                     height={50}
                                     width={50}
                                     loading="lazy"
@@ -43,24 +43,7 @@ const ImageChangeButton = ({ product }) => {
                             </button>
                         </li>
                     )
-                }) :
-
-                    <li key={product?.id}>
-                        <button onMouseOver={() => setChnageImage(product.coverPhoto)}
-                            onClick={() => setChnageImage(product.coverPhoto)}
-
-                            className="w-[56px] h-[56px] border-2 rounded p-1 dark:border-slate-700">
-                            <Image
-                                src={product.coverPhoto}
-                                height={50}
-                                width={50}
-                                loading="lazy"
-                                alt={product?.name}
-                                blurDataURL={product.coverPhoto}
-                                placeholder={"blur"}
-                                className='h-full w-full object-contain' />
-                        </button>
-                    </li>
+                })
                 }
             </ol>
         </div>

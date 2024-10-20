@@ -5,11 +5,11 @@ const RecommendedItemsCard = ({ product }) => {
     return (
         <div className='md:p-5 p-2 sm:border-2 sm:rounded-lg bg-white dark:bg-slate-800 dark:border-slate-700'>
             <div className='flex justify-center'>
-                {product?.coverPhoto?.[0] && <Image
-                    src={product?.coverPhoto}
+                {product?.images?.[0] && <Image
+                    src={product?.images?.[0]}
                     height={300}
                     width={300}
-                    blurDataURL={product?.coverPhoto}
+                    blurDataURL={product?.images?.[0]}
                     loading='lazy'
                     placeholder='blur'
                     className=" w-auto h-28 object-fill"

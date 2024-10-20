@@ -1,25 +1,18 @@
 import React, { Suspense } from 'react';
 import Nav from "@/app/components/navbar/nav";
-import { AiOutlineCheck } from "react-icons/ai";
-// import SupplierCard from "@/app/components/SupplierCard/SupplierCard";
 import BackButton from "@/app/components/BackButtons/BackButton";
 import ImageChangeButton from '@/app/components/imageChangeButton/ImageChangeButton';
 import RelatedProducts from "@/app/components/RelatedProducts/RelatedProducts";
 import Loader from "@/app/Loader";
 import { getDetailsProduct, getProducts } from "@/app/utils/product/fetch_products_api";
-import AddToCartButton from "@/app/components/AddToCartButton/AddToCartButton";
 import SaveForLaterButton from "@/app/components/SavedForLaterItems/SaveForLaterButton";
 import Countdown from "@/app/components/Countdown/Countdown";
-import { MdBlockFlipped } from "react-icons/md";
 import { PiImageBrokenLight } from "react-icons/pi";
-// import baseURL from "@/app/utils/baseURL";
 import Navbar from "@/app/components/navbar/navbar";
-import Image from 'next/image';
 import Specifications from '@/app/components/Specifications/Specifications';
 import Footer from '@/app/components/Footer/Footer';
-import AddtoCart from './AddtoCart';
 import ProductDetails from './TestDetails';
-import ProductForm from './DynamicForm';
+
 
 
 
@@ -85,38 +78,6 @@ const Details = async ({ params }) => {
     const product = await getDetailsProduct({ id });
 
 
-
-    const variants = product?.data?.variants;
-    // Dynamic collectors for attributes
-    const attributeMap = {};
-
-    // Collect unique attributes dynamically
-    variants?.forEach((variant) => {
-        // Loop through variant attributes
-        Object.keys(variant.attributes).forEach((key) => {
-            if (!attributeMap[key]) {
-                attributeMap[key] = new Set(); // Create a new set for unique values
-            }
-            attributeMap[key].add(variant.attributes[key]);
-        });
-
-        // Loop through options and their attributes
-        variant?.options.forEach((option) => {
-            Object.keys(option.attributes).forEach((key) => {
-                if (!attributeMap[key]) {
-                    attributeMap[key] = new Set();
-                }
-                attributeMap[key].add(option.attributes[key]);
-            });
-        });
-    });
-
-    // Convert Sets to Arrays for rendering buttons
-    const attributeArrayMap = {};
-    Object.keys(attributeMap).forEach((key) => {
-        attributeArrayMap[key] = Array.from(attributeMap[key]);
-    });
-
     return (
         <>
             <div className="sticky top-0 z-[20]">
@@ -143,7 +104,8 @@ const Details = async ({ params }) => {
                             <div className='absolute right-3 top-3'>
                                 <SaveForLaterButton product={product?.data} />
                             </div>
-                            {product?.data?.variants?.length > 0 ?
+
+                            {product?.data ?
                                 (<ImageChangeButton
 
                                     product={product?.data}
@@ -161,13 +123,6 @@ const Details = async ({ params }) => {
 
                         <div className="col-span-12 md:col-span-8 ">
                             <div className="flex justify-between items-center">
-                                <div className="flex  gap-1 items-center">
-                                    {product?.data?.availability === "IN_STOCK" ?
-                                        <AiOutlineCheck className="text-green-500 size-8" /> :
-                                        <MdBlockFlipped className="text-red-500 size-8" />}
-
-                                    <p className="text-sm">{product?.data?.availability}({product?.data?.totalStock || "00"})</p>
-                                </div>
                                 {product?.data?.offers?.[0]?.isActive &&
                                     <div className="border rounded p-3 dark:border-slate-700">
 
@@ -181,7 +136,7 @@ const Details = async ({ params }) => {
                             </div>
                             <div className="pt-5">
                                 <h1 className="text-2xl font-bold">{product?.data?.name}</h1>
-                                <p> Rating: {product?.data?.rating}</p>
+                                {product?.data?.rating && <p> Rating: {product?.data?.rating}</p>}
 
                                 {product?.data?.brand?.name &&
                                     <div className="grid grid-cols-12 pt-1 ">
@@ -200,18 +155,18 @@ const Details = async ({ params }) => {
                                         </div>
                                     }
 
-                                    <div className="grid grid-cols-12 pb-1 pt-6">
-                                        <p className="col-span-4">Tax percentage:</p>
+                                    <div className="grid grid-cols-12 pb-1">
+                                        <p className="col-span-4">Tax:</p>
                                         <p className="col-span-8">{product?.data?.taxPercentage > 0 ? product?.data?.taxPercentage + "%" : "Free"}</p>
                                     </div>
 
 
-                                    {product?.data?.deliveryFee &&
+                                  
                                         <div className="grid grid-cols-12  pb-1">
                                             <p className="col-span-4">Delivery fee:</p>
                                             <p className="col-span-8">{product?.data?.deliveryFee > 0 ? "$" + product?.data?.deliveryFee : "Free"}</p>
                                         </div>
-                                    }
+                                  
 
 
                                     {product?.data?.design && <div className="grid grid-cols-12 pt-1">
@@ -239,7 +194,7 @@ const Details = async ({ params }) => {
 
 
 
-                                <ProductDetails />
+                                <ProductDetails product={product?.data} />
 
 
                             </div>

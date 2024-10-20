@@ -11,7 +11,7 @@ model Review {
   id        String   @id @default(auto()) @map("_id") @db.ObjectId
   user      String
   body      String
-  rating    Int
+  rating    Int      @default(0)
   createdAt DateTime @default(now())
 }
 
@@ -53,8 +53,10 @@ model Product {
   orderItem      OrderItem[]
   createdAt      DateTime    @default(now())
   updatedAt      DateTime    @updatedAt
-  CartItem       CartItem[]
-  variants       Variant[]   @relation("ProductVariants") // Define the relation
+
+  variants Variant[] @relation("ProductVariants") // Define the relation
+
+  CartItem CartItem[]
 }
 
 model Variant {
@@ -70,6 +72,7 @@ model Variant {
   product      Product?     @relation("ProductVariants", fields: [productId], references: [id])
   Offer        Offer?       @relation(fields: [offerId], references: [id])
   offerId      String?      @db.ObjectId
+  CartItem     CartItem[]
 }
 
 enum Availability {
@@ -108,7 +111,7 @@ model User {
   lastName          String
   gender            Gender?
   dateOfBirth       DateTime?
-  phoneNumber       String?           @unique
+  phoneNumber       String?
   email             String            @unique
   country           String?
   houseNumber       String?
@@ -124,6 +127,7 @@ model User {
   updatedAt         DateTime          @updatedAt
   shippingAddresses ShippingAddress[]
   orders            Order[]
+  CartItem          CartItem[]
 }
 
 enum Gender {
@@ -215,37 +219,18 @@ enum OrderStatus {
   CANCELED
 }
 
-model Cart {
-  id        String     @id @default(auto()) @map("_id") @db.ObjectId
-  userId    String     @db.ObjectId
-  items     CartItem[]
-  createdAt DateTime   @default(now())
-  updatedAt DateTime   @updatedAt
-}
-
 model CartItem {
-  id                     String   @id @default(auto()) @map("_id") @db.ObjectId
-  cartId                 String   @db.ObjectId
-  productId              String   @db.ObjectId
-  totalQuantity          Int?
-  details                Detail[] // details এখন একটি অ্যারে, যা Detail মডেলের একটি অ্যারে হবে
-  totalPrice             Float
-  discountPercentage     Float?   @default(0)
-  totalPriceWithDiscount Float?   @default(0)
-  taxPercentage          Float?
-  totalTax               Float?   @default(0)
-  deliveryFee            Float?   @default(0)
-
-  cart    Cart    @relation(fields: [cartId], references: [id])
-  product Product @relation(fields: [productId], references: [id])
-}
-
-// নতুন Detail মডেল
-model Detail {
-  id         String   @id @default(auto()) @map("_id") @db.ObjectId
-  size       String?
-  color      String?
-  quantity   Int      @default(1)
-  cartItem   CartItem @relation(fields: [cartItemId], references: [id])
-  cartItemId String   @db.ObjectId
+  id                 String   @id @default(auto()) @map("_id") @db.ObjectId
+  productId          String   @db.ObjectId // Reference to Product
+  variantId          String   @db.ObjectId // Reference to Variant (if applicable)
+  productName        String
+  price              Float // Price at the time of adding to cart
+  quantity           Int
+  selectedAttributes Json // Store attributes like color, size, etc.
+  userId             String   @db.ObjectId // The user who owns the cart
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+  user               User     @relation(fields: [userId], references: [id]) // Relation to User
+  variant            Variant  @relation(fields: [variantId], references: [id]) // Relation to Variant (optional)
+  product            Product  @relation(fields: [productId], references: [id])
 }

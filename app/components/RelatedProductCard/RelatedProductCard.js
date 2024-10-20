@@ -7,12 +7,12 @@ const RelatedProductCard = ({ product }) => {
         <div>
             <div className="flex justify-center items-center">
                 <Image
-                    src={product?.coverPhoto}
+                    src={product?.images?.[0]}
                     alt={product?.name}
                     width={112}
                     height={112}
                     loading='lazy'
-                    blurDataURL={product?.coverPhoto}
+                    blurDataURL={product?.images?.[0]}
                     className="object-contain h-28 w-auto "
                 />
             </div>

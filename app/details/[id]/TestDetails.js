@@ -1,9 +1,11 @@
 "use client"
-import Image from 'next/image';
 import { useState } from 'react';
+import toast from 'react-hot-toast';
+import { GrAdd, GrFormSubtract } from "react-icons/gr";
 
-export default function ProductDetails() {
-  const product = products[2];
+
+export default function ProductDetails({ product }) {
+
   const [selectedAttributes, setSelectedAttributes] = useState({});
   const [quantity, setQuantity] = useState(1);
 
@@ -23,72 +25,105 @@ export default function ProductDetails() {
     }
   };
 
+
+
   // Function to get matching variants based on selected attributes
   const getMatchingVariants = (attributeName, selectedValue) => {
     const currentSelectedAttributes = { ...selectedAttributes, [attributeName]: selectedValue };
 
-    return product.variants.filter(variant =>
+    return product?.variants?.filter(variant =>
       Object.keys(currentSelectedAttributes).every(attr =>
-        variant.attributes[attr] === currentSelectedAttributes[attr]
+        variant?.attributes[attr] === currentSelectedAttributes[attr]
       )
     );
   };
 
-  // Add to Cart Logic
- // Add to Cart Logic
-const addToCart = () => {
   // Find the currently selected variant based on selected attributes
-  const matchingVariant = product.variants.find(variant => {
+  const matchingVariant = product?.variants?.find(variant => {
     return Object.keys(selectedAttributes).every(attr => {
       return variant.attributes[attr] === selectedAttributes[attr];
     });
   });
 
-  if (matchingVariant) {
-    // Check for unselected attributes specific to the selected variant
-    const unselectedAttributes = Object.keys(matchingVariant.attributes).filter(attr => !selectedAttributes[attr]);
 
-    if (unselectedAttributes.length > 0) {
-      alert(`Please select the following attributes for the selected variant: ${unselectedAttributes.join(', ')}`);
-      console.log(`Missing attributes for variant ${matchingVariant.variantId}: ${unselectedAttributes.join(', ')}`);
-      return;
+  // Add to Cart Logic
+  const addToCart = () => {
+
+    if (matchingVariant) {
+      // Check for unselected attributes specific to the selected variant
+      const unselectedAttributes = Object.keys(matchingVariant.attributes).filter(attr => !selectedAttributes[attr]);
+
+      if (unselectedAttributes.length > 0) {
+        toast.error(`Please select the following attributes for the selected variant: ${unselectedAttributes.join(', ')}`, {
+          id: "addToCart",
+          position: "bottom-center"
+        });
+        toast.error(`Missing attributes for variant ${matchingVariant.variantId}: ${unselectedAttributes.join(', ')}`, {
+          id: "addToCart",
+          position: "bottom-center"
+        });
+        return;
+      }
+
+      const cartItem = {
+        productId: product?.id,
+        variantId: matchingVariant?.id,
+        productName: product?.name,
+        price: matchingVariant?.price,
+        quantity,
+        selectedAttributes,
+      };
+      // Add the cart item (store it in context, state, or localStorage)
+
+      toast.success(`Added to cart successfully! ${product?.name}`, {
+        id: "addToCart",
+        position: "bottom-center"
+
+      })
+
+
+      console.log('Added to cart:', cartItem);
+    } else {
+
+      toast.error('No matching variant found', {
+        id: "addToCart",
+        position: "bottom-center"
+      });
     }
+  };
 
-    const cartItem = {
-      productId: product.id,
-      variantId: matchingVariant.variantId,
-      name: product.name,
-      price: matchingVariant.price,
-      quantity,
-      selectedAttributes,
-    };
-    // Add the cart item (store it in context, state, or localStorage)
-    alert('Added to cart:', cartItem);
+  const handleChange = (e) => {
+    const value = Number(e.target.value);
+    if (value >= 1 || e.target.value === '') {
+      setQuantity(value);
+    }
+  };
 
-    console.log('Added to cart:', cartItem);
-  } else {
-    alert('No matching variant found');
-    console.log('No matching variant found');
-  }
-};
+  const increment = () => {
+    if (matchingVariant?.stock > quantity) {
+      setQuantity((prev) => prev + 1);
+    }
+  };
 
-
+  const decrement = () => {
+    setQuantity((prev) => (prev > 1 ? prev - 1 : 1)); // Ensure it doesn't go below 1
+  };
   return (
     <div>
       <div>
-     
+
         {/* Product Info */}
         <div>
-          <h1 className="text-2xl font-bold">{product.name}</h1>
+          {/* <h1 className="text-2xl font-bold">{product.name}</h1>
           <p className="text-gray-600 mt-4">{product.description}</p>
-          <p className="text-xl font-semibold mt-4">BDT {product.price}</p>
+          <p className="text-xl font-semibold mt-4">BDT {product.price}</p> */}
 
           {/* Dynamic Attribute Selection */}
-          {Object.keys(product.variants[0].attributes).map((attribute, index) => (
+          {product?.variants?.length > 0 && Object.keys(product?.variants[0]?.attributes)?.map((attribute, index) => (
             <div className="mt-6 grid grid-cols-12" key={index}>
-              <h2 className="text-lg font-semibold col-span-4">Select {attribute}:</h2>
-              <div className="flex space-x-2 mt-2 col-span-8">
-                {[...new Set(product.variants.map(variant => variant.attributes[attribute]))].map((option, idx) => {
+              <h2 className=" col-span-4">Select {attribute}:</h2>
+              <div className="flex space-x-2  col-span-8">
+                {[...new Set(product?.variants?.map(variant => variant?.attributes[attribute]))]?.map((option, idx) => {
                   const isSelected = selectedAttributes[attribute] === option;
                   const matchingVariants = getMatchingVariants(attribute, option);
 
@@ -98,9 +133,9 @@ const addToCart = () => {
                       onClick={() => handleAttributeChange(attribute, option)}
                       className={`px-4 py-2 border-2 rounded-md ${isSelected ? 'border-blue-500' : 'border-blue-200'
                         } 
-                        ${matchingVariants.length === 0 ? 'opacity-20 cursor-not-allowed' : ''}
+                        ${matchingVariants?.length === 0 ? 'opacity-20 cursor-not-allowed' : ''}
                         `}
-                      disabled={matchingVariants.length === 0}
+                      disabled={matchingVariants?.length === 0}
                     >
                       {option}
                     </button>
@@ -111,22 +146,39 @@ const addToCart = () => {
           ))}
 
           {/* Quantity Selection */}
-          <div className="mt-6">
-            <h2 className="text-lg font-semibold">Quantity:</h2>
-            <input
-              type="number"
-              min="1"
-              value={quantity}
-              onChange={e => setQuantity(e.target.value)}
-              className="w-16 px-2 py-1 border rounded-md"
-            />
+          <div className="mt-6 grid grid-cols-12">
+            <h2 className='col-span-4'>Quantity:</h2>
+            <div className="flex items-center space-x-2"> {/* Flex container for alignment */}
+              <button
+                onClick={decrement}
+                disabled={quantity <= 1}
+                className={`px-2 py-1 border-2 border-blue-200  rounded-md bg-transparent hover:border-blue-500 text-blue-500 font-bold ${quantity <= 1 ? "opacity-20" : ""}`}
+              >
+                <GrFormSubtract size={20} />
+              </button>
+              <input
+                type="number"
+                min={1}
+                value={quantity}
+                onChange={handleChange}
+                className="w-16 px-2 py-1 border-2 text-center text-blue-500 font-bold bg-inherit appearance-none border-blue-200 rounded-md  hover:border-blue-500"
+                style={{ appearance: 'none', MozAppearance: 'textfield' }}
+              />
+              <button
+                onClick={increment}
+                disabled={matchingVariant?.stock <= quantity}
+                className={`px-2 py-1 border-2 border-blue-200 rounded-md bg-transparent hover:border-blue-500 text-blue-500 font-bold ${matchingVariant?.stock <= quantity ? "opacity-20" : ""}`}
+              >
+                <GrAdd size={20} />
+              </button>
+            </div>
           </div>
 
           {/* Add to Cart Button */}
           <div className="mt-8">
             <button
               onClick={addToCart}
-              className="px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700"
+              className="px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 font-bold"
             >
               Add to Cart
             </button>
@@ -137,345 +189,3 @@ const addToCart = () => {
   );
 }
 
-const products = [
-  {
-    id: '1',
-    name: 'Stylish Shirt',
-    description: 'A stylish shirt made from premium materials, perfect for casual wear.',
-    price: 1200,
-    images: [
-      'https://adminapi.applegadgetsbd.com/storage/media/large/iPhone-15-Plus-(2)-7161.jpg',
-      'https://adminapi.applegadgetsbd.com/storage/media/large/iPhone-15-Plus-(2)-7161.jpg'
-    ],
-    variants: [
-      {
-        variantId: '1a',
-        attributes: { color: 'Red', size: 'S' },
-        price: 1200,
-        stock: 10,
-        images: [
-          'https://adminapi.applegadgetsbd.com/storage/media/large/iPhone-15-Plus-(2)-7161.jpg',
-          'https://adminapi.applegadgetsbd.com/storage/media/large/iPhone-15-Plus-(2)-7161.jpg'
-        ]
-      },
-      {
-        variantId: '1b',
-        attributes: { color: 'Red', size: 'M' },
-        price: 1200,
-        stock: 5,
-        images: [
-          'https://adminapi.applegadgetsbd.com/storage/media/large/iPhone-15-Plus-(2)-7161.jpg',
-          'https://adminapi.applegadgetsbd.com/storage/media/large/iPhone-15-Plus-(2)-7161.jpg'
-        ]
-      },
-      {
-        variantId: '1c',
-        attributes: { color: 'Blue', size: 'L' },
-        price: 1200,
-        stock: 8,
-        images: [
-          'https://adminapi.applegadgetsbd.com/storage/media/large/iPhone-15-Plus-(2)-7161.jpg',
-          'https://adminapi.applegadgetsbd.com/storage/media/large/iPhone-15-Plus-(2)-7161.jpg'
-        ]
-      },
-      {
-        variantId: '1d',
-        attributes: { color: 'Green', size: 'XL' },
-        price: 1200,
-        stock: 0,
-        images: [
-          'https://adminapi.applegadgetsbd.com/storage/media/large/iPhone-15-Plus-(2)-7161.jpg',
-          'https://adminapi.applegadgetsbd.com/storage/media/large/iPhone-15-Plus-(2)-7161.jpg'
-        ]
-      }
-    ]
-  },
-  {
-    id: '2',
-    name: 'Casual T-Shirt',
-    description: 'A comfortable and trendy t-shirt for daily use.',
-    price: 800,
-    images: [
-      'https://adminapi.applegadgetsbd.com/storage/media/large/iPhone-15-Plus-(2)-7161.jpg',
-      'https://adminapi.applegadgetsbd.com/storage/media/large/iPhone-15-Plus-(2)-7161.jpg'
-    ],
-    variants: [
-      {
-        variantId: '2a',
-        attributes: { color: 'Black', size: 'M' },
-        price: 800,
-        stock: 15,
-        images: [
-          'https://adminapi.applegadgetsbd.com/storage/media/large/iPhone-15-Plus-(2)-7161.jpg',
-          'https://adminapi.applegadgetsbd.com/storage/media/large/iPhone-15-Plus-(2)-7161.jpg'
-        ]
-      },
-      {
-        variantId: '2b',
-        attributes: { color: 'White', size: 'L' },
-        price: 800,
-        stock: 12,
-        images: [
-          'https://adminapi.applegadgetsbd.com/storage/media/large/iPhone-15-Plus-(2)-7161.jpg',
-          'https://adminapi.applegadgetsbd.com/storage/media/large/iPhone-15-Plus-(2)-7161.jpg'
-        ]
-      }
-    ]
-  },
-  {
-    id: '3',
-    name: 'Formal Pant',
-    description: 'Premium quality formal pant, perfect for office wear.',
-    price: 1500,
-    images: [
-      'https://adminapi.applegadgetsbd.com/storage/media/large/iPhone-15-Plus-(2)-7161.jpg',
-      'https://adminapi.applegadgetsbd.com/storage/media/large/iPhone-15-Plus-(2)-7161.jpg'
-    ],
-    variants: [
-      {
-        variantId: '3a',
-        attributes: { color: 'Grey', size: '32' },
-        price: 1500,
-        stock: 20,
-        images: [
-          'https://adminapi.applegadgetsbd.com/storage/media/large/iPhone-15-Plus-(2)-7161.jpg',
-          'https://adminapi.applegadgetsbd.com/storage/media/large/iPhone-15-Plus-(2)-7161.jpg'
-        ]
-      },
-      {
-        variantId: '3b',
-        attributes: { color: 'Black', size: '34' },
-        price: 1500,
-        stock: 10,
-        images: [
-          'https://adminapi.applegadgetsbd.com/storage/media/large/iPhone-15-Plus-(2)-7161.jpg',
-          'https://adminapi.applegadgetsbd.com/storage/media/large/iPhone-15-Plus-(2)-7161.jpg'
-        ]
-      }
-    ]
-  },
-  {
-    id: '4',
-    name: 'Running Shoes',
-    description: 'Comfortable running shoes for everyday use.',
-    price: 2500,
-    images: [
-      'https://adminapi.applegadgetsbd.com/storage/media/large/iPhone-15-Plus-(2)-7161.jpg',
-      'https://adminapi.applegadgetsbd.com/storage/media/large/iPhone-15-Plus-(2)-7161.jpg'
-    ],
-    variants: [
-      {
-        variantId: '4a',
-        attributes: { color: 'Blue', size: '8' },
-        price: 2500,
-        stock: 30,
-        images: [
-          'https://adminapi.applegadgetsbd.com/storage/media/large/iPhone-15-Plus-(2)-7161.jpg',
-          'https://adminapi.applegadgetsbd.com/storage/media/large/iPhone-15-Plus-(2)-7161.jpg'
-        ]
-      },
-      {
-        variantId: '4b',
-        attributes: { color: 'White', size: '9' },
-        price: 2500,
-        stock: 25,
-        images: [
-          'https://adminapi.applegadgetsbd.com/storage/media/large/iPhone-15-Plus-(2)-7161.jpg',
-          'https://adminapi.applegadgetsbd.com/storage/media/large/iPhone-15-Plus-(2)-7161.jpg'
-        ]
-      }
-    ]
-  },
-  {
-    id: '5',
-    name: 'Winter Jacket',
-    description: 'Stay warm and stylish with this premium winter jacket.',
-    price: 3500,
-    images: [
-      'https://adminapi.applegadgetsbd.com/storage/media/large/iPhone-15-Plus-(2)-7161.jpg',
-      'https://adminapi.applegadgetsbd.com/storage/media/large/iPhone-15-Plus-(2)-7161.jpg'
-    ],
-    variants: [
-      {
-        variantId: '5a',
-        attributes: { color: 'Black', size: 'M' },
-        price: 3500,
-        stock: 5,
-        images: [
-          'https://adminapi.applegadgetsbd.com/storage/media/large/iPhone-15-Plus-(2)-7161.jpg',
-          'https://adminapi.applegadgetsbd.com/storage/media/large/iPhone-15-Plus-(2)-7161.jpg'
-        ]
-      },
-      {
-        variantId: '5b',
-        attributes: { color: 'Grey', size: 'L' },
-        price: 3500,
-        stock: 10,
-        images: [
-          'https://adminapi.applegadgetsbd.com/storage/media/large/iPhone-15-Plus-(2)-7161.jpg',
-          'https://adminapi.applegadgetsbd.com/storage/media/large/iPhone-15-Plus-(2)-7161.jpg'
-        ]
-      }
-    ]
-  },
-  {
-    id: '6',
-    name: 'Sports Watch',
-    description: 'A modern sports watch with multiple fitness features.',
-    price: 5000,
-    images: [
-      'https://adminapi.applegadgetsbd.com/storage/media/large/iPhone-15-Plus-(2)-7161.jpg',
-      'https://adminapi.applegadgetsbd.com/storage/media/large/iPhone-15-Plus-(2)-7161.jpg'
-    ],
-    variants: [
-      {
-        variantId: '6a',
-        attributes: { color: 'Black', strap: 'Leather', size: "Lerge" },
-        price: 5000,
-        stock: 50,
-        images: [
-          'https://adminapi.applegadgetsbd.com/storage/media/large/iPhone-15-Plus-(2)-7161.jpg',
-          'https://adminapi.applegadgetsbd.com/storage/media/large/iPhone-15-Plus-(2)-7161.jpg'
-        ]
-      },
-      {
-        variantId: '6b',
-        attributes: { color: 'Silver', strap: 'Metal' },
-        price: 5000,
-        stock: 20,
-        images: [
-          'https://adminapi.applegadgetsbd.com/storage/media/large/iPhone-15-Plus-(2)-7161.jpg',
-          'https://adminapi.applegadgetsbd.com/storage/media/large/iPhone-15-Plus-(2)-7161.jpg'
-        ]
-      }
-    ]
-  },
-  {
-    id: '7',
-    name: 'Leather Wallet',
-    description: 'A classic leather wallet with multiple card slots.',
-    price: 1500,
-    images: [
-      'https://adminapi.applegadgetsbd.com/storage/media/large/iPhone-15-Plus-(2)-7161.jpg',
-      'https://adminapi.applegadgetsbd.com/storage/media/large/iPhone-15-Plus-(2)-7161.jpg'
-    ],
-    variants: [
-      {
-        variantId: '7a',
-        attributes: { color: 'Brown', material: 'Leather' },
-        price: 1500,
-        stock: 100,
-        images: [
-          'https://adminapi.applegadgetsbd.com/storage/media/large/iPhone-15-Plus-(2)-7161.jpg',
-          'https://adminapi.applegadgetsbd.com/storage/media/large/iPhone-15-Plus-(2)-7161.jpg'
-        ]
-      },
-      {
-        variantId: '7b',
-        attributes: { color: 'Black', material: 'Leather' },
-        price: 1500,
-        stock: 80,
-        images: [
-          'https://adminapi.applegadgetsbd.com/storage/media/large/iPhone-15-Plus-(2)-7161.jpg',
-          'https://adminapi.applegadgetsbd.com/storage/media/large/iPhone-15-Plus-(2)-7161.jpg'
-        ]
-      }
-    ]
-  },
-  {
-    id: '8',
-    name: 'Backpack',
-    description: 'Spacious and stylish backpack for school or travel.',
-    price: 2000,
-    images: [
-      'https://adminapi.applegadgetsbd.com/storage/media/large/iPhone-15-Plus-(2)-7161.jpg',
-      'https://adminapi.applegadgetsbd.com/storage/media/large/iPhone-15-Plus-(2)-7161.jpg'
-    ],
-    variants: [
-      {
-        variantId: '8a',
-        attributes: { color: 'Blue', size: 'Large' },
-        price: 2000,
-        stock: 15,
-        images: [
-          'https://adminapi.applegadgetsbd.com/storage/media/large/iPhone-15-Plus-(2)-7161.jpg',
-          'https://adminapi.applegadgetsbd.com/storage/media/large/iPhone-15-Plus-(2)-7161.jpg'
-        ]
-      },
-      {
-        variantId: '8b',
-        attributes: { color: 'Black', size: 'Medium' },
-        price: 2000,
-        stock: 10,
-        images: [
-          'https://adminapi.applegadgetsbd.com/storage/media/large/iPhone-15-Plus-(2)-7161.jpg',
-          'https://adminapi.applegadgetsbd.com/storage/media/large/iPhone-15-Plus-(2)-7161.jpg'
-        ]
-      }
-    ]
-  },
-  {
-    id: '9',
-    name: 'Bluetooth Headphones',
-    description: 'Wireless headphones with high sound quality.',
-    price: 3000,
-    images: [
-      'https://adminapi.applegadgetsbd.com/storage/media/large/iPhone-15-Plus-(2)-7161.jpg',
-      'https://adminapi.applegadgetsbd.com/storage/media/large/iPhone-15-Plus-(2)-7161.jpg'
-    ],
-    variants: [
-      {
-        variantId: '9a',
-        attributes: { color: 'Black', type: 'Over-ear' },
-        price: 3000,
-        stock: 40,
-        images: [
-          'https://adminapi.applegadgetsbd.com/storage/media/large/iPhone-15-Plus-(2)-7161.jpg',
-          'https://adminapi.applegadgetsbd.com/storage/media/large/iPhone-15-Plus-(2)-7161.jpg'
-        ]
-      },
-      {
-        variantId: '9b',
-        attributes: { color: 'White', type: 'On-ear' },
-        price: 3000,
-        stock: 30,
-        images: [
-          'https://adminapi.applegadgetsbd.com/storage/media/large/iPhone-15-Plus-(2)-7161.jpg',
-          'https://adminapi.applegadgetsbd.com/storage/media/large/iPhone-15-Plus-(2)-7161.jpg'
-        ]
-      }
-    ]
-  },
-  {
-    id: '10',
-    name: 'Smartphone Stand',
-    description: 'Adjustable stand for smartphones and tablets.',
-    price: 500,
-    images: [
-      'https://adminapi.applegadgetsbd.com/storage/media/large/iPhone-15-Plus-(2)-7161.jpg',
-      'https://adminapi.applegadgetsbd.com/storage/media/large/iPhone-15-Plus-(2)-7161.jpg'
-    ],
-    variants: [
-      {
-        variantId: '10a',
-        attributes: { color: 'White', material: 'Plastic' },
-        price: 500,
-        stock: 200,
-        images: [
-          'https://adminapi.applegadgetsbd.com/storage/media/large/iPhone-15-Plus-(2)-7161.jpg',
-          'https://adminapi.applegadgetsbd.com/storage/media/large/iPhone-15-Plus-(2)-7161.jpg'
-        ]
-      },
-      {
-        variantId: '10b',
-        attributes: { color: 'Black', material: 'Metal' },
-        price: 500,
-        stock: 150,
-        images: [
-          'https://adminapi.applegadgetsbd.com/storage/media/large/iPhone-15-Plus-(2)-7161.jpg',
-          'https://adminapi.applegadgetsbd.com/storage/media/large/iPhone-15-Plus-(2)-7161.jpg'
-        ]
-      }
-    ]
-  }
-];
