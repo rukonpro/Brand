@@ -5,7 +5,6 @@ import Footer from '../components/Footer/Footer';
 
 
 const MainLayout = ({ children }) => {
-
     return (
         <div>
             <div className="sticky top-0 z-[20]">
