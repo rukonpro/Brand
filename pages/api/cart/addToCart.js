@@ -38,6 +38,12 @@ export default async function handler(req, res) {
             userId,
           },
         });
+
+        // Find the total cart item count for the user
+        const cartItemCount = await prisma.cartItem.count({
+          where: { userId }
+      });
+
         return res.status(201).json({ message: 'Item added to cart successfully', item: newItem });
       }
     } catch (error) {

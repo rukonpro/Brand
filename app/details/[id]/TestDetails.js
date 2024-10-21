@@ -1,9 +1,15 @@
 "use client"
 import { addtoCartApi } from '@/app/utils/cart/fetch_cart_api';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import toast from 'react-hot-toast';
 import { GrAdd, GrFormSubtract } from "react-icons/gr";
 import { useSession } from "next-auth/react";
+import io from 'socket.io-client';
+import baseURL from '@/app/utils/baseURL';
+
+let socket;
+
+
 
 export default function ProductDetails({ product }) {
 
@@ -51,6 +57,40 @@ export default function ProductDetails({ product }) {
   });
 
 
+  //socket io----------------------
+
+
+  useEffect(() => {
+    socketInitializer();
+  }, []);
+
+
+  const socketInitializer = async () => {
+    socket = io(baseURL, { path: '/api/socket' })
+
+    socket.on('connect', () => {
+      console.log('Connected to server');
+    });
+
+    socket.on('cartUpdated', (data) => {
+      toast.success(data.message, {
+        id: "cart",
+        position: "bottom-center"
+      })
+      setLoading(false)
+      // Update cart state if needed
+    });
+
+    socket.on('error', (error) => {
+      toast.success(error.message, {
+        id: "cart",
+        position: "bottom-center"
+      })
+      setLoading(false)
+    });
+  };
+
+
   // Add to Cart Logic
   const addToCart = async () => {
 
@@ -70,7 +110,7 @@ export default function ProductDetails({ product }) {
         return;
       }
 
-      const cartItem = {
+      const data = {
         userId: user?.id,
         productId: product?.id,
         variantId: matchingVariant?.id,
@@ -81,37 +121,41 @@ export default function ProductDetails({ product }) {
       };
       // Add the cart item (store it in context, state, or localStorage)
       setLoading(true);
-      const res = await addtoCartApi(cartItem);
-      setLoading(false);
-      if (res?.status === 200) {
-        toast.success(`${res?.data?.message} ${res?.data?.item?.productName}`, {
-          id: "addToCart",
-          position: "bottom-center"
+      socket?.emit('addToCart', data);
 
-        })
-      }
-      if (res?.status === 201) {
-        toast.success(`${res?.data?.message} ${res?.data?.item?.productName}`, {
-          id: "addToCart",
-          position: "bottom-center"
+      // const res = await addtoCartApi(cartItem);
+      // setLoading(false);
+      // if (res?.status === 200) {
+      //   toast.success(`${res?.data?.message} ${res?.data?.item?.productName}`, {
+      //     id: "addToCart",
+      //     position: "bottom-center"
 
-        })
-      }
+      //   })
+      // }
+      // if (res?.status === 201) {
+      //   toast.success(`${res?.data?.message} ${res?.data?.item?.productName}`, {
+      //     id: "addToCart",
+      //     position: "bottom-center"
 
-      if (res?.status === 405) {
-        toast.success(`${res?.data?.message}`, {
-          id: "addToCart",
-          position: "bottom-center"
+      //   })
+      // }
 
-        })
-      }
+      // if (res?.status === 405) {
+      //   toast.success(`${res?.data?.message}`, {
+      //     id: "addToCart",
+      //     position: "bottom-center"
 
-      else if (res?.status === 500) {
-        toast.error(`${res?.data?.error}`, {
-          id: "addToCart",
-          position: "bottom-center"
-        });
-      }
+      //   })
+      // }
+
+      // else if (res?.status === 500) {
+      //   toast.error(`${res?.data?.error}`, {
+      //     id: "addToCart",
+      //     position: "bottom-center"
+      //   });
+      // }
+
+
     } else {
 
       toast.error('No matching variant found', {

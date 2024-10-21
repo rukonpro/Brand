@@ -1,62 +1,46 @@
 "use client"
-import { deleteSingleCartItemApi } from '@/app/utils/cart/fetch_cart_api';
+
+import baseURL from '@/app/utils/baseURL';
 import { useSession } from 'next-auth/react';
 import React, { useState } from 'react';
 import toast from 'react-hot-toast';
 
 import { AiOutlineClose } from "react-icons/ai";
-const RemoveAddToCartButton = ({ itemId, mutate }) => {
+import io from 'socket.io-client';
+
+const RemoveAddToCartButton = ({ itemId }) => {
     const [loading, setLoading] = useState(false);
     const { data: userData } = useSession();
     const user = userData?.user;
 
+    // sokect io 
+    const socket = io(baseURL, { path: '/api/socket' });
 
-    const params = {
-        userId: user?.id,
-        itemId: itemId
-    }
+    const removeFromCart = (itemId) => {
+        const userId = user?.id;
+        setLoading(true)
+        socket.emit('removeItem', { userId, itemId });
 
-    const handleItemRemoveToCart = async () => {
-        setLoading(true);
-        const res = await deleteSingleCartItemApi(params);
-        if (res?.status === 200) {
-            mutate();
-            toast.success(res?.data?.message, {
+        socket.on('cartUpdated', (data) => {
+            toast.success(data.message, {
                 id: "cart",
                 position: "bottom-center"
-            })
-        } else if (res?.status === 500) {
-            toast.error(res?.data?.message, {
-                id: "cart",
-                position: "bottom-center"
-            })
-        }
+            });
+            setLoading(false)
+        });
 
-        else if (res?.status === 404) {
-            toast.error(res?.data?.message, {
+        socket.on('cartError', (error) => {
+            toast.error(error.message, {
                 id: "cart",
                 position: "bottom-center"
             })
-        }
-
-        else if (res?.status === 405) {
-            toast.error(res?.data?.message, {
-                id: "cart",
-                position: "bottom-center"
-            })
-        }
-        else if (res?.status === 403) {
-            toast.error(res?.data?.message, {
-                id: "cart",
-                position: "bottom-center"
-            })
-        }
-        setLoading(false);
-    }
+            setLoading(false)
+        });
+    };
 
     return (
         <button
-            onClick={handleItemRemoveToCart}
+            onClick={() => removeFromCart(itemId)}
             type="button"
             disabled={loading}
             className={`rounded text-red-500 font-bold text-sm ${loading ? "opacity-20" : ""}`}

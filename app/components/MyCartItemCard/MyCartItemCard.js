@@ -4,11 +4,11 @@ import Link from "next/link";
 
 import RemoveAddToCartButton from "@/app/components/AddToCartButton/RemoveAddToCartButton";
 import { FaSave } from "react-icons/fa";
-const MyCartItemCard = ({ item, mutate }) => {
+const MyCartItemCard = ({ item }) => {
     return (
         <div className="grid grid-cols-12  md:gap-4 p-3 border-b bg-white dark:bg-slate-700 dark:border-slate-700 relative">
             <div className="absolute top-0 right-0 ">
-                <RemoveAddToCartButton itemId={item?.id} mutate={mutate} />
+                <RemoveAddToCartButton itemId={item?.id} />
             </div>
             <div className="col-span-12 md:col-span-2 flex justify-center">
                 <Image

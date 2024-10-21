@@ -8,7 +8,7 @@ import payCord from "@/public/images/Pay-card.png";
 
 const CheckoutCard = ({ cartSummary, children, loading }) => {
 
-    console.log(cartSummary)
+
     return (
         <div >
             <div className=" bg-white p-3 rounded-lg dark:bg-slate-800">

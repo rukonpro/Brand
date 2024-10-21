@@ -6,7 +6,7 @@ import Loader from "@/app/Loader";
 import RemoveAllAddToCartButton from "@/app/components/AddToCartButton/RemoveAllAddToCartButton";
 
 
-const MyCartItems = ({ loading, cartItems, mutate }) => {
+const MyCartItems = ({ loading, cartItems }) => {
 
     return (
         <div className="col-span-12 md:col-span-12 lg:col-span-8 overflow-hidden sm:rounded-lg md:rounded-r-lg md:bg-white dark:bg-slate-800">
@@ -23,7 +23,7 @@ const MyCartItems = ({ loading, cartItems, mutate }) => {
                             return (
                                 <li key={item?.id}>
                                     {/******************************My Cart Item Card*******************************/}
-                                    <MyCartItemCard item={item} mutate={mutate}/>
+                                    <MyCartItemCard item={item} />
                                 </li>
                             )
                         })
