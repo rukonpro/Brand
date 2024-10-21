@@ -1,20 +1,20 @@
 import axios from "axios";
 import baseURL from "@/app/utils/baseURL";
 
-export const getBanners= async (params)=> {
+export const getBanners = async (params) => {
     try {
-        return await axios.get(`${baseURL}/api/banner/findMany`,{
-            params:params,
+        return await axios.get(`${baseURL}/api/banner/findMany`, {
+            params: params,
         });
     } catch (error) {
-        console.log(error);
+        return error
     }
 }
 
-export const createBanner= async (data)=> {
+export const createBanner = async (data) => {
     try {
-        return await axios.post(`${baseURL}/api/banner/create`,data);
+        return await axios.post(`${baseURL}/api/banner/create`, data);
     } catch (error) {
-        console.log(error);
+        return error
     }
 }

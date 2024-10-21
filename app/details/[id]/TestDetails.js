@@ -1,18 +1,15 @@
 "use client"
-import { addtoCartApi } from '@/app/utils/cart/fetch_cart_api';
-import { useState } from 'react';
-import toast from 'react-hot-toast';
 import { GrAdd, GrFormSubtract } from "react-icons/gr";
-import { useSession } from "next-auth/react";
+import { useCart } from '@/app/context/CartContext';
 
 export default function ProductDetails({ product }) {
 
-  const [selectedAttributes, setSelectedAttributes] = useState({});
-  const [quantity, setQuantity] = useState(1);
-  const [loading, setLoading] = useState(false);
+  // const [selectedAttributes, setSelectedAttributes] = useState({});
+  // const [quantity, setQuantity] = useState(1);
+  // // const [loading, setLoading] = useState(false);
+  const { loading, addToCart, selectedAttributes, setSelectedAttributes, quantity, setQuantity } = useCart();
 
-  const { data: userData } = useSession();
-  const user = userData?.user;
+
 
   // Handle attribute selection
   const handleAttributeChange = (attributeName, value) => {
@@ -52,74 +49,74 @@ export default function ProductDetails({ product }) {
 
 
   // Add to Cart Logic
-  const addToCart = async () => {
+  // const addToCart = async () => {
 
-    if (matchingVariant) {
-      // Check for unselected attributes specific to the selected variant
-      const unselectedAttributes = Object.keys(matchingVariant.attributes).filter(attr => !selectedAttributes[attr]);
+  //   if (matchingVariant) {
+  //     // Check for unselected attributes specific to the selected variant
+  //     const unselectedAttributes = Object.keys(matchingVariant.attributes).filter(attr => !selectedAttributes[attr]);
 
-      if (unselectedAttributes.length > 0) {
-        toast.error(`Please select the following attributes for the selected variant: ${unselectedAttributes.join(', ')}`, {
-          id: "addToCart",
-          position: "bottom-center"
-        });
-        toast.error(`Missing attributes for variant ${matchingVariant.variantId}: ${unselectedAttributes.join(', ')}`, {
-          id: "addToCart",
-          position: "bottom-center"
-        });
-        return;
-      }
+  //     if (unselectedAttributes.length > 0) {
+  //       toast.error(`Please select the following attributes for the selected variant: ${unselectedAttributes.join(', ')}`, {
+  //         id: "addToCart",
+  //         position: "bottom-center"
+  //       });
+  //       toast.error(`Missing attributes for variant ${matchingVariant.variantId}: ${unselectedAttributes.join(', ')}`, {
+  //         id: "addToCart",
+  //         position: "bottom-center"
+  //       });
+  //       return;
+  //     }
 
-      const cartItem = {
-        userId: user?.id,
-        productId: product?.id,
-        variantId: matchingVariant?.id,
-        productName: product?.name,
-        price: matchingVariant?.price,
-        quantity,
-        selectedAttributes,
-      };
-      // Add the cart item (store it in context, state, or localStorage)
-      setLoading(true);
-      const res = await addtoCartApi(cartItem);
-      setLoading(false);
-      if (res?.status === 200) {
-        toast.success(`${res?.data?.message} ${res?.data?.item?.productName}`, {
-          id: "addToCart",
-          position: "bottom-center"
+  //     const cartItem = {
+  //       userId: user?.id,
+  //       productId: product?.id,
+  //       variantId: matchingVariant?.id,
+  //       productName: product?.name,
+  //       price: matchingVariant?.price,
+  //       quantity,
+  //       selectedAttributes,
+  //     };
+  //     // Add the cart item (store it in context, state, or localStorage)
+  //     setLoading(true);
+  //     const res = await addtoCartApi(cartItem);
+  //     setLoading(false);
+  //     if (res?.status === 200) {
+  //       toast.success(`${res?.data?.message} ${res?.data?.item?.productName}`, {
+  //         id: "addToCart",
+  //         position: "bottom-center"
 
-        })
-      }
-      if (res?.status === 201) {
-        toast.success(`${res?.data?.message} ${res?.data?.item?.productName}`, {
-          id: "addToCart",
-          position: "bottom-center"
+  //       })
+  //     }
+  //     if (res?.status === 201) {
+  //       toast.success(`${res?.data?.message} ${res?.data?.item?.productName}`, {
+  //         id: "addToCart",
+  //         position: "bottom-center"
 
-        })
-      }
+  //       })
+  //     }
 
-      if (res?.status === 405) {
-        toast.success(`${res?.data?.message}`, {
-          id: "addToCart",
-          position: "bottom-center"
+  //     if (res?.status === 405) {
+  //       toast.success(`${res?.data?.message}`, {
+  //         id: "addToCart",
+  //         position: "bottom-center"
 
-        })
-      }
+  //       })
+  //     }
 
-      else if (res?.status === 500) {
-        toast.error(`${res?.data?.error}`, {
-          id: "addToCart",
-          position: "bottom-center"
-        });
-      }
-    } else {
+  //     else if (res?.status === 500) {
+  //       toast.error(`${res?.data?.error}`, {
+  //         id: "addToCart",
+  //         position: "bottom-center"
+  //       });
+  //     }
+  //   } else {
 
-      toast.error('No matching variant found', {
-        id: "addToCart",
-        position: "bottom-center"
-      });
-    }
-  };
+  //     toast.error('No matching variant found', {
+  //       id: "addToCart",
+  //       position: "bottom-center"
+  //     });
+  //   }
+  // };
 
   const handleChange = (e) => {
     const value = Number(e.target.value);
@@ -206,7 +203,7 @@ export default function ProductDetails({ product }) {
           {/* Add to Cart Button */}
           <div className="mt-8">
             <button
-              onClick={addToCart}
+              onClick={() => addToCart({ matchingVariant, product })}
               disabled={loading}
               className={`px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 font-bold ${loading ? "opacity-20" : ""}`}
             >

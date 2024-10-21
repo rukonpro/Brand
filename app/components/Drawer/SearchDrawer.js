@@ -94,17 +94,17 @@ const SearchDrawer = ({isOpen,toggleDrawer,handleSearchChange,search}) => {
                                                 className="flex items-center gap-3"
                                             >
                                                 <Image
-                                                    src={product?.photos?.[0]}
+                                                    src={product?.images?.[0]}
                                                     height={100}
                                                     width={100}
                                                     placeholder="blur"
-                                                    blurDataURL={product?.photos?.[0]}
+                                                    blurDataURL={product?.images?.[0]}
                                                     alt={product?.name}
                                                 className="h-36 w-36"
                                                 />
                                                 <div>
                                                     <h1>{product?.name}</h1>
-                                                    <p>Price ${product?.price}</p>
+                                                    <p>Price ${product?.basePrice}</p>
                                                 </div>
 
                                             </Link>

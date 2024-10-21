@@ -14,7 +14,7 @@ const RemoveAllAddToCartButton = () => {
     };
     return (
         <button onClick={removeAllFromCart} type="button"
-                className="bg-white border-2 text-blue-500 rounded-lg  px-3 py-1 hover:bg-gray-200"
+                className="border-2  rounded-lg  px-3 py-1 border-blue-500 text-blue-500  dark:bg-inherit"
         >Remove all
         </button>
     );

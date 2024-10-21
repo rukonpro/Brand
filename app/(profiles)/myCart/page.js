@@ -14,19 +14,14 @@ const MyCart = () => {
 
     return (
         <div>
-            <div className="flex justify-between items-center pb-5 px-3 md:px-0">
-                <h1 className="text-xl font-bold">My Cart</h1>
-                <BackButton title="Back" />
-            </div>
-
-            <div className="grid grid-cols-12 gap-4">
+            
                 {/******************************My cart items*******************************/}
                <MyCartItemsLayout/>
 
 
                 {/******************************checkout Card*******************************/}
 
-            </div>
+           
 
             {/******************************Saved ForLater Items*******************************/}
             <div >

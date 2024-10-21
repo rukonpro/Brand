@@ -124,13 +124,13 @@ const Details = async ({ params }) => {
                         <div className="col-span-12 md:col-span-8 ">
                             <div className="flex justify-between items-center">
                                 {product?.data?.offers?.[0]?.isActive &&
-                                    <div className="border rounded p-3 dark:border-slate-700">
+                                    <div >
 
-                                        <p className="font-bold text-2xl text-red-500 bg-green-100 px-2 rounded-full dark:bg-slate-700 dark:text-green-500">{product?.data?.offers?.[0]?.discountValue}%
+                                        <p className="font-bold text-2xl text-red-500 ">{product?.data?.offers?.[0]?.discountValue}%
                                             Discount</p>
-                                        <div className="flex justify-center">
+                                        {/* <div className="flex justify-center">
                                             <Countdown endDate={product?.data?.offers?.[0]?.endDate} />
-                                        </div>
+                                        </div> */}
                                     </div>
                                 }
                             </div>

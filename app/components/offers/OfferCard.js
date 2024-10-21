@@ -1,7 +1,8 @@
-import React, { Suspense } from 'react';
+import React from 'react';
 import Image from 'next/image';
 import Countdown from "@/app/components/Countdown/Countdown";
 const OfferCard = ({ offer }) => {
+
     return (
         <div className="w-40 h-[240px] flex flex-col justify-between  p-2 ">
 
@@ -10,7 +11,7 @@ const OfferCard = ({ offer }) => {
             </div>
 
             <div className='flex justify-center '>
-                {offer?.product?.photos?.[0] && <Image src={offer?.product?.photos?.[0]} alt={offer?.product?.name} width={100} height={100} className="h-36 w-full object-fill" />}
+                {offer?.product?.images?.[0] && <Image src={offer?.product?.images?.[0]} alt={offer?.product?.name} width={100} height={100} className="h-36 w-full object-fill" />}
             </div>
 
             <div className='flex justify-center'>
