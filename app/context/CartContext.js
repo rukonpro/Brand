@@ -14,7 +14,7 @@ export const CartProvider = ({ children }) => {
     const [loadingRemoveToCartItem, setLoadingRemoveToCartItem] = useState(false);
     const [selectedAttributes, setSelectedAttributes] = useState({});
     const [quantity, setQuantity] = useState(1);
-    const { data: userData } = useSession();
+    const { data: userData, status: userStatus } = useSession();
     const user = userData?.user;
 
 
@@ -161,7 +161,8 @@ export const CartProvider = ({ children }) => {
             isLoadingCart,
             handleItemRemoveToCart,
             loadingRemoveToCartItem,
-            user
+            user,
+            userStatus
         }}>
             {children}
         </CartContext.Provider>
