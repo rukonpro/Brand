@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:news="http://www.google.com/schemas/sitemap-news/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:mobile="http://www.google.com/schemas/sitemap-mobile/1.0" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1" xmlns:video="http://www.google.com/schemas/sitemap-video/1.1">
-<url><loc>https://brand-rukon.vercel.app/login</loc><lastmod>2024-10-21T21:44:29.265Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
-<url><loc>https://brand-rukon.vercel.app/messenger</loc><lastmod>2024-10-21T21:44:29.265Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
-<url><loc>https://brand-rukon.vercel.app</loc><lastmod>2024-10-21T21:44:29.265Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
-<url><loc>https://brand-rukon.vercel.app/register</loc><lastmod>2024-10-21T21:44:29.265Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
-<url><loc>https://brand-rukon.vercel.app/admin/dashboard/creator</loc><lastmod>2024-10-21T21:44:29.265Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
-<url><loc>https://brand-rukon.vercel.app/admin/dashboard/products</loc><lastmod>2024-10-21T21:44:29.265Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
-<url><loc>https://brand-rukon.vercel.app/settings</loc><lastmod>2024-10-21T21:44:29.265Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
-<url><loc>https://brand-rukon.vercel.app/products</loc><lastmod>2024-10-21T21:44:29.265Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
-<url><loc>https://brand-rukon.vercel.app/admin/dashboard</loc><lastmod>2024-10-21T21:44:29.265Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
-<url><loc>https://brand-rukon.vercel.app/checkout</loc><lastmod>2024-10-21T21:44:29.265Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
-<url><loc>https://brand-rukon.vercel.app/myAccount</loc><lastmod>2024-10-21T21:44:29.265Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
-<url><loc>https://brand-rukon.vercel.app/myCart</loc><lastmod>2024-10-21T21:44:29.265Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
-<url><loc>https://brand-rukon.vercel.app/saveForLater</loc><lastmod>2024-10-21T21:44:29.265Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
-<url><loc>https://brand-rukon.vercel.app/details/6714d9ef6a1800376deea5e0</loc><lastmod>2024-10-21T21:44:29.265Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
-<url><loc>https://brand-rukon.vercel.app/details/6714dde401b64d1a0942394c</loc><lastmod>2024-10-21T21:44:29.265Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
-<url><loc>https://brand-rukon.vercel.app/details/6715095c7f3a549e43b14d13</loc><lastmod>2024-10-21T21:44:29.265Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://brand-rukon.vercel.app/login</loc><lastmod>2024-10-21T21:52:48.606Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://brand-rukon.vercel.app/messenger</loc><lastmod>2024-10-21T21:52:48.606Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://brand-rukon.vercel.app/products</loc><lastmod>2024-10-21T21:52:48.606Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://brand-rukon.vercel.app/admin/dashboard/products</loc><lastmod>2024-10-21T21:52:48.606Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://brand-rukon.vercel.app/admin/dashboard/creator</loc><lastmod>2024-10-21T21:52:48.606Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://brand-rukon.vercel.app/settings</loc><lastmod>2024-10-21T21:52:48.606Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://brand-rukon.vercel.app</loc><lastmod>2024-10-21T21:52:48.606Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://brand-rukon.vercel.app/register</loc><lastmod>2024-10-21T21:52:48.606Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://brand-rukon.vercel.app/admin/dashboard</loc><lastmod>2024-10-21T21:52:48.606Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://brand-rukon.vercel.app/checkout</loc><lastmod>2024-10-21T21:52:48.606Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://brand-rukon.vercel.app/myAccount</loc><lastmod>2024-10-21T21:52:48.606Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://brand-rukon.vercel.app/myCart</loc><lastmod>2024-10-21T21:52:48.606Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://brand-rukon.vercel.app/saveForLater</loc><lastmod>2024-10-21T21:52:48.606Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://brand-rukon.vercel.app/details/6714d9ef6a1800376deea5e0</loc><lastmod>2024-10-21T21:52:48.606Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://brand-rukon.vercel.app/details/6714dde401b64d1a0942394c</loc><lastmod>2024-10-21T21:52:48.606Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
+<url><loc>https://brand-rukon.vercel.app/details/6715095c7f3a549e43b14d13</loc><lastmod>2024-10-21T21:52:48.606Z</lastmod><changefreq>daily</changefreq><priority>0.7</priority></url>
 </urlset>
