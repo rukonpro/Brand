@@ -19,6 +19,7 @@ const MyCartItemCard = ({ item, mutate }) => {
         const res = await updateSingleCartItemApi(data);
 
         if (res?.status === 200) {
+            mutate();
             toast.success(res?.data?.message, {
                 id: "addToCart",
                 position: "bottom-center"
