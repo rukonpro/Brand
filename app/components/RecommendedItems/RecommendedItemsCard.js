@@ -12,7 +12,7 @@ const RecommendedItemsCard = ({ product }) => {
                     blurDataURL={product?.images?.[0]}
                     loading='lazy'
                     placeholder='blur'
-                    className=" w-auto h-28 object-fill"
+                    className=" w-auto h-28 object-contain"
                     alt={product?.name} />}
             </div>
             <h1 className='text-lg pt-3 font-bold'>${product?.basePrice}</h1>
