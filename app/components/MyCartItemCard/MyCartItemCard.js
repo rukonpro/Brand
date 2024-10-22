@@ -71,7 +71,7 @@ const MyCartItemCard = ({ item, mutate }) => {
 
 
     return (
-        <div className="grid grid-cols-12  gap-4 border-b bg-white dark:bg-slate-700 dark:border-slate-700 relative p-2">
+        <div className="grid grid-cols-12  gap-4 border-b bg-white dark:bg-slate-800 dark:border-slate-700 relative p-2">
             <div className="absolute top-0 right-0 ">
                 <RemoveAddToCartButton itemId={item?.id} mutate={mutate} />
             </div>

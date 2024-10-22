@@ -1,8 +1,6 @@
 "use client"
 import React, {useState} from 'react';
 import Drawer from "@/app/components/Drawer/Drawer";
-import Image from "next/image";
-import MenuIcon from "@/public/images/menu.png";
 import CategoryManu from "@/app/components/navbar/CategoryManu";
 import { FiAlignCenter } from 'react-icons/fi';
 import { FaXmark } from 'react-icons/fa6';

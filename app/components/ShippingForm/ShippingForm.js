@@ -30,8 +30,8 @@ const validationSchema = Yup.object({
 });
 
 
-const ShippingForm = ({setNewAddress,getShippingAddresses,user}) => {
-const [loading, setLoading] = React.useState(false);
+const ShippingForm = ({ user,onClose }) => {
+    const [loading, setLoading] = React.useState(false);
 
     const formik = useFormik({
         initialValues: {
@@ -47,23 +47,23 @@ const [loading, setLoading] = React.useState(false);
         },
         validationSchema,
         onSubmit: async (values) => {
-           values.userId=user?.id
+            values.userId = user?.id
             setLoading(true);
 
-          const res= await create_sipping_address(values);
-           if (res?.data?.error){
-               toast.error(res.data.error,{
-                   id:"shipping"
-               });
-
-           }
-            if (res?.status===201){
-                toast.success("Sipping address add is successfully",{
-                    id:"shipping"
+            const res = await create_sipping_address(values);
+            if (res?.data?.error) {
+                toast.error(res.data.error, {
+                    id: "shipping"
                 });
-                getShippingAddresses()
-                setNewAddress(false);
                 setLoading(false)
+
+            }
+            if (res?.status === 201) {
+                toast.success("Sipping address add is successfully", {
+                    id: "shipping"
+                });
+                onClose();
+                setLoading(false);
             }
 
         },
@@ -74,9 +74,6 @@ const [loading, setLoading] = React.useState(false);
         <form onSubmit={formik.handleSubmit} className=" p-3 rounded-lg">
             <div className="flex justify-between items-center">
                 <h1 className="text-md font-bold pb-2 text-slate-700 dark:text-slate-400">Shipping address:</h1>
-                {setNewAddress&&<button type="button"
-                         onClick={() => setNewAddress(false)}
-                         className="text-sm px-2 py-1 rounded-md  border-1 border-blue-500 bg-white hover:bg-slate-300 shadow  text-slate-700 dark:bg-slate-800 dark:text-slate-300 hover:dark:bg-slate-700">Cancel</button>}
             </div>
             <div className="grid sm:grid-cols-4 md:grid-cols-4 gap-4  md:px-0">
                 <div className="sm:col-span-2 col-span-4">
@@ -225,9 +222,9 @@ const [loading, setLoading] = React.useState(false);
 
                 <div className="col-span-4">
                     <button type="submit"
-                            disabled={loading}
-                            className="mt-4 px-6 py-2 bg-blue-500 text-white rounded-lg">
-                        {loading?"Submitting...":"Submit"}
+                        disabled={loading}
+                        className="mt-4 px-6 py-2 bg-blue-500 text-white rounded-lg">
+                        {loading ? "Submitting..." : "Submit"}
                     </button>
                 </div>
             </div>

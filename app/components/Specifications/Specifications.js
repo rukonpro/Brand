@@ -3,7 +3,7 @@ import React from 'react';
 const Specifications = ({ data }) => {
     return (
         <div className="w-full  my-10">
-            <h3 className="text-2xl font-bold  border-b-1 mb-4 pb-2">
+            <h3 className="text-lg font-bold  border-b-1 mb-4 pb-2">
                 <span className="border-b-4 border-blue-500 pb-2">Specifications</span>
             </h3>
             <table className="w-full text-left border-collapse">

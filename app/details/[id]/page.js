@@ -12,6 +12,8 @@ import Navbar from "@/app/components/navbar/navbar";
 import Specifications from '@/app/components/Specifications/Specifications';
 import Footer from '@/app/components/Footer/Footer';
 import ProductDetails from './TestDetails';
+import RelatedProductsSkeleton from '@/app/components/Skeletons/RelatedProductsSkeleton';
+import SpecificationsSkeleton from '@/app/components/Skeletons/SpecificationsSkeleton';
 
 
 
@@ -144,6 +146,13 @@ const Details = async ({ params }) => {
                                         <p className="col-span-8">{product?.data?.brand?.name}</p>
                                     </div>}
 
+                                {product?.data?.description &&
+                                    <div className='mt-10'>
+                                        <h3 className="text-lg  pb-2">Description:</h3>
+                                        <p className=" text-justify">{product?.data?.description}</p>
+                                    </div>
+                                }
+
                                 <div className='border-t border-slate-50 dark:border-slate-700 mt-6' />
 
                                 <div className="pt-5 ">
@@ -161,12 +170,12 @@ const Details = async ({ params }) => {
                                     </div>
 
 
-                                  
-                                        <div className="grid grid-cols-12  pb-1">
-                                            <p className="col-span-4">Delivery fee:</p>
-                                            <p className="col-span-8">{product?.data?.deliveryFee > 0 ? "$" + product?.data?.deliveryFee : "Free"}</p>
-                                        </div>
-                                  
+
+                                    <div className="grid grid-cols-12  pb-1">
+                                        <p className="col-span-4">Delivery fee:</p>
+                                        <p className="col-span-8">{product?.data?.deliveryFee > 0 ? "$" + product?.data?.deliveryFee : "Free"}</p>
+                                    </div>
+
 
 
                                     {product?.data?.design && <div className="grid grid-cols-12 pt-1">
@@ -192,8 +201,6 @@ const Details = async ({ params }) => {
                                 </div>
                                 <div className='border-t border-slate-50 dark:border-slate-700 mt-6' />
 
-
-
                                 <ProductDetails product={product?.data} />
 
 
@@ -207,27 +214,25 @@ const Details = async ({ params }) => {
 
                 </Suspense>
 
-                {/************************Related products ***********************/}
 
-                {
-                    product?.data?.categoryId &&
-                    <Suspense fallback={<Loader />}>
-                        <RelatedProducts categoryId={product?.data?.categoryId} />
-                    </Suspense>
-                }
+
 
 
 
                 {product?.data?.specifications &&
-                    <Suspense fallback={<Loader />}>
+                    <Suspense fallback={<SpecificationsSkeleton />}>
                         <Specifications data={product?.data?.specifications} />
                     </Suspense>}
 
-                {product?.data?.description &&
-                    <div>
-                        <h3 className="text-2xl border-b-4 border-blue-500 inline border-b-1 mb-4 pb-2">Description:</h3>
-                        <p className="pt-5 text-justify">{product?.data?.description}</p>
-                    </div>
+
+
+                {/************************Related products ***********************/}
+
+                {
+
+                    <Suspense fallback={<RelatedProductsSkeleton />}>
+                        <RelatedProducts categoryId={product?.data?.categoryId} />
+                    </Suspense>
                 }
             </div>
 
