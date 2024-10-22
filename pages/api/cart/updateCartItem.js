@@ -4,9 +4,9 @@ const prisma = new PrismaClient();
 const cache = new Map(); // ক্যাশ অবজেক্ট
 
 export default async function handler(req, res) {
-  if (req.method === 'PATCH') { // অথবা 'PATCH' ব্যবহার করতে পারেন
+  if (req.method === 'PATCH') {
     try {
-      const { userId, cartItemId, newQuantity } = req.body; // নতুন পরিমাণ নিন
+      const { userId, cartItemId, newQuantity } = req.body;
       const cacheKey = `cart:${userId}`;
 
       // ডেটাবেজে কার্ট আইটেম আপডেট করুন
@@ -20,11 +20,11 @@ export default async function handler(req, res) {
         const cachedData = cache.get(cacheKey);
         const updatedCartItems = cachedData.cartItems.map(item => {
           if (item.id === cartItemId) {
-            return { ...item, quantity: newQuantity }; // নতুন পরিমাণ দিন
+            return { ...item, quantity: newQuantity };
           }
           return item;
         });
-        
+
         // ক্যাশে আপডেট করুন
         cache.set(cacheKey, {
           ...cachedData,
@@ -34,7 +34,6 @@ export default async function handler(req, res) {
 
       return res.status(200).json({ message: 'Cart item updated successfully', item: updatedItem });
     } catch (error) {
-      console.error(error);
       return res.status(500).json({ error: 'Something went wrong while updating the cart' });
     }
   }

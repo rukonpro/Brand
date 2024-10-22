@@ -4,11 +4,11 @@ import visaCard from "@/public/images/visa-card.png";
 import masterCard from "@/public/images/master-card.png";
 import pPCard from "@/public/images/PP-Card.png";
 import payCord from "@/public/images/Pay-card.png";
-import CheckoutSkeleton from '../Skeletons/CheckoutSkeleton';
 
 
-const CheckoutCard = ({ cartSummary, children, loading }) => {
-    return loading ? <CheckoutSkeleton /> : (
+
+const CheckoutCard = ({ cartSummary, children }) => {
+    return  (
         <div >
             <div className=" bg-white p-3 rounded-lg dark:bg-slate-800">
                 <h1 className="font-bold">Have a coupon?</h1>

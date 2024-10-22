@@ -19,11 +19,20 @@ export const getCartApi = async (userId) => {
 };
 
 export const deleteSingleCartItemApi = async (params) => {
-  
+
     try {
         return await axios.delete(`${baseURL}/api/cart/geleteSingleItem`, {
             params: params
         });
+    } catch (error) {
+        return error;
+    }
+};
+
+export const updateSingleCartItemApi = async (data) => {
+
+    try {
+        return await axios.patch(`${baseURL}/api/cart/updateCartItem`, data);
     } catch (error) {
         return error;
     }

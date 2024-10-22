@@ -1,15 +1,16 @@
 "use client"
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { Suspense, useEffect, useState } from 'react';
 import SavedForLaterCard from "@/app/components/SavedForLaterCard/SavedForLaterCard";
-import getSavedProductsFromCookies from "@/app/components/SavedForLaterItems/getSavedProductsFromCookies";
 import { getProducts } from "@/app/utils/product/fetch_products_api";
-import Loader from "@/app/Loader";
 import empty_cart from "@/public/images/undraw_empty_cart_co35.svg"
 import Image from 'next/image';
+import useSWR from 'swr';
+import { fetcher } from '@/app/utils/fetcher/fetcher';
+import SavedForLaterSkeleton from '../Skeletons/SavedForLaterSkeleton';
 
 const SavedForLaterItems = () => {
-    const [products, setProducts] = React.useState([]);
-    const [loading, setLoading] = useState(false);
+    const [products, setProducts] = useState([]);
+
     const productIds = products?.map(item => item.id).join(',');
 
     const params = {
@@ -18,56 +19,45 @@ const SavedForLaterItems = () => {
         productIds: productIds
     }
 
-
-    const getHandler = () => {
-        const savedProducts = getSavedProductsFromCookies();
-        setProducts(savedProducts);
-    }
-    useEffect(() => {
-        getHandler()
-    }, []);
+    const {
+        data: saveProducts,
+        error: errorSaveProduts,
+        isLoading: isLoadingSaveProducts,
+        mutate
+    } = useSWR(`/api/product/findMany`, fetcher);
 
 
 
-    const handleGetProducts = useCallback(async () => {
-        setLoading(true)
-        if (productIds) {
-            const products = await getProducts(params);
-            setProducts(products?.data);
-        }
+    return (
+        <div className="mt-10">
+            <Suspense fallback={<SavedForLaterSkeleton />} >
 
-        setLoading(false);
-    }, [productIds, setProducts])
+                {isLoadingSaveProducts ? <SavedForLaterSkeleton /> :
+                    <div className="lg:bg-white md:p-3  md:rounded-r-lg dark:bg-slate-800">
+                        <h1 className="text-xl font-bold text-gray-600 pb-5 px-3 md:px-0 dark:text-slate-200">Saved for later</h1>
+                        <div>
+                            {!isLoadingSaveProducts && saveProducts?.length > 0 ? <ol
+                                className="grid grid-cols-2  sm:grid-cols-3  md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 gap-0.5 md:gap-1 lg:gap-2">
+                                {
+                                    saveProducts?.map((product) => {
+                                        return (
+                                            <li key={product?.id}>
 
+                                                <SavedForLaterCard product={product} />
 
-    useEffect(() => {
-        handleGetProducts()
-    }, [handleGetProducts]);
+                                            </li>
+                                        )
+                                    })
+                                }
+                            </ol> :
+                                <div className="h-56 flex justify-center items-center">
+                                    <Image src={empty_cart} alt='empty_cart' height={300} width={300} />
 
-    return loading ? <Loader /> : (
-        <div className="lg:bg-white md:p-3 mt-10 md:rounded-r-lg dark:bg-slate-800">
-            <h1 className="text-xl font-bold text-gray-600 pb-5 px-3 md:px-0 dark:text-slate-200">Saved for later</h1>
-            <div>
-                {products.length > 0 ? <ol
-                    className="grid grid-cols-2  sm:grid-cols-3  md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4 gap-0.5 md:gap-1 lg:gap-2">
-                    {
-                        products?.map((product) => {
-                            return (
-                                <li key={product?.id}>
-
-                                    <SavedForLaterCard product={product} getHandler={getHandler} />
-
-                                </li>
-                            )
-                        })
-                    }
-                </ol> :
-                    <div className="h-56 flex justify-center items-center">
-                        <Image src={empty_cart} alt='empty_cart' height={300} width={300} />
-                      
-                    </div>
-                }
-            </div>
+                                </div>
+                            }
+                        </div>
+                    </div>}
+            </Suspense>
         </div>
     );
 };

@@ -4,9 +4,6 @@ import { useCart } from '@/app/context/CartContext';
 
 export default function ProductDetails({ product }) {
 
-  // const [selectedAttributes, setSelectedAttributes] = useState({});
-  // const [quantity, setQuantity] = useState(1);
-  // // const [loading, setLoading] = useState(false);
   const { loading, addToCart, selectedAttributes, setSelectedAttributes, quantity, setQuantity } = useCart();
 
 
@@ -48,75 +45,6 @@ export default function ProductDetails({ product }) {
   });
 
 
-  // Add to Cart Logic
-  // const addToCart = async () => {
-
-  //   if (matchingVariant) {
-  //     // Check for unselected attributes specific to the selected variant
-  //     const unselectedAttributes = Object.keys(matchingVariant.attributes).filter(attr => !selectedAttributes[attr]);
-
-  //     if (unselectedAttributes.length > 0) {
-  //       toast.error(`Please select the following attributes for the selected variant: ${unselectedAttributes.join(', ')}`, {
-  //         id: "addToCart",
-  //         position: "bottom-center"
-  //       });
-  //       toast.error(`Missing attributes for variant ${matchingVariant.variantId}: ${unselectedAttributes.join(', ')}`, {
-  //         id: "addToCart",
-  //         position: "bottom-center"
-  //       });
-  //       return;
-  //     }
-
-  //     const cartItem = {
-  //       userId: user?.id,
-  //       productId: product?.id,
-  //       variantId: matchingVariant?.id,
-  //       productName: product?.name,
-  //       price: matchingVariant?.price,
-  //       quantity,
-  //       selectedAttributes,
-  //     };
-  //     // Add the cart item (store it in context, state, or localStorage)
-  //     setLoading(true);
-  //     const res = await addtoCartApi(cartItem);
-  //     setLoading(false);
-  //     if (res?.status === 200) {
-  //       toast.success(`${res?.data?.message} ${res?.data?.item?.productName}`, {
-  //         id: "addToCart",
-  //         position: "bottom-center"
-
-  //       })
-  //     }
-  //     if (res?.status === 201) {
-  //       toast.success(`${res?.data?.message} ${res?.data?.item?.productName}`, {
-  //         id: "addToCart",
-  //         position: "bottom-center"
-
-  //       })
-  //     }
-
-  //     if (res?.status === 405) {
-  //       toast.success(`${res?.data?.message}`, {
-  //         id: "addToCart",
-  //         position: "bottom-center"
-
-  //       })
-  //     }
-
-  //     else if (res?.status === 500) {
-  //       toast.error(`${res?.data?.error}`, {
-  //         id: "addToCart",
-  //         position: "bottom-center"
-  //       });
-  //     }
-  //   } else {
-
-  //     toast.error('No matching variant found', {
-  //       id: "addToCart",
-  //       position: "bottom-center"
-  //     });
-  //   }
-  // };
 
   const handleChange = (e) => {
     const value = Number(e.target.value);
@@ -132,7 +60,7 @@ export default function ProductDetails({ product }) {
   };
 
   const decrement = () => {
-    setQuantity((prev) => (prev > 1 ? prev - 1 : 1)); // Ensure it doesn't go below 1
+    setQuantity((prev) => (prev > 1 ? prev - 1 : 1)); 
   };
   return (
     <div>

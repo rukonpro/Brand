@@ -11,7 +11,6 @@ const CheckoutLayout = () => {
     const { cart, mutate, isLoadingCart, user, userStatus } = useCart()
 
 
-
     const handleOrder = async () => {
 
 
@@ -19,7 +18,7 @@ const CheckoutLayout = () => {
     }
 
 
-    return userStatus === "authenticated" && (
+    return userStatus === "authenticated" && user?.email && (
         <div>
 
             <ShippingForm user={user} />

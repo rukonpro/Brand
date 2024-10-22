@@ -5,10 +5,70 @@ import Link from "next/link";
 import RemoveAddToCartButton from "@/app/components/AddToCartButton/RemoveAddToCartButton";
 import { FaSave } from "react-icons/fa";
 import { GrAdd, GrFormSubtract } from 'react-icons/gr';
+import { updateSingleCartItemApi } from '@/app/utils/cart/fetch_cart_api';
+import { useCart } from '@/app/context/CartContext';
+import toast from 'react-hot-toast';
 const MyCartItemCard = ({ item, mutate }) => {
     const [quantity, setQuantity] = useState(item?.quantity);
+    const { user } = useCart();
 
-    
+
+    const handleUpdateQuantity = async ({ newQuantity }) => {
+
+        const data = { userId: user?.id, cartItemId: item?.id, newQuantity };
+        const res = await updateSingleCartItemApi(data);
+
+        if (res?.status === 200) {
+            toast.success(res?.data?.message, {
+                id: "addToCart",
+                position: "bottom-center"
+            })
+        }
+        else if (res.status === 500) {
+            toast.error(res?.data?.error, {
+                id: "addToCart",
+                position: "bottom-center"
+            })
+        } else {
+            toast.error("Internal error, plases try again!", {
+                id: "addToCart",
+                position: "bottom-center"
+            })
+        }
+
+    }
+
+
+    const handleChange = (e) => {
+        const value = Number(e.target.value);
+        if (value >= 1 || e.target.value === '') {
+            setQuantity(value);
+
+            const newQuantity = value;
+            handleUpdateQuantity({ newQuantity })
+        }
+    };
+
+    const increment = () => {
+        if (item?.variant?.stock > quantity) {
+            setQuantity((prev) => prev + 1);
+
+            const newQuantity = quantity + 1;
+            handleUpdateQuantity({ newQuantity })
+        }
+
+    };
+
+    const decrement = () => {
+
+        setQuantity((prev) => (prev > 1 ? prev - 1 : 1));
+        const newQuantity = quantity > 1 ? quantity - 1 : 1
+        handleUpdateQuantity({ newQuantity })
+
+    }
+
+
+
     return (
         <div className="grid grid-cols-12  gap-4 border-b bg-white dark:bg-slate-700 dark:border-slate-700 relative p-2">
             <div className="absolute top-0 right-0 ">
@@ -69,7 +129,7 @@ const MyCartItemCard = ({ item, mutate }) => {
 
                 <div className=" flex flex-col gap-1 "> {/* Flex container for alignment */}
                     <button
-                        // onClick={decrement}
+                        onClick={decrement}
                         disabled={quantity <= 1}
                         className={`p-0.5 w-10 flex justify-center items-center border-2 border-blue-200  rounded-md bg-transparent hover:border-blue-500 text-blue-500 font-bold ${quantity <= 1 ? "opacity-20" : ""}`}
                     >
@@ -79,14 +139,14 @@ const MyCartItemCard = ({ item, mutate }) => {
                         type="number"
                         min={1}
                         value={quantity}
-                        // onChange={handleChange}
+                        onChange={handleChange}
                         className="p-0.5 w-10 border-2 text-center text-blue-500 font-bold bg-inherit appearance-none border-blue-200 rounded-md  hover:border-blue-500"
                         style={{ appearance: 'none', MozAppearance: 'textfield' }}
                     />
                     <button
-                        // onClick={increment}
-                        // disabled={matchingVariant?.stock <= quantity}
-                        className={`p-0.5 w-10 flex justify-center items-center border-2 border-blue-200 rounded-md bg-transparent hover:border-blue-500 text-blue-500 font-bold `}
+                        onClick={increment}
+                        disabled={item?.variant?.stock <= quantity}
+                        className={`p-0.5 w-10 flex justify-center items-center border-2 border-blue-200 rounded-md bg-transparent hover:border-blue-500 text-blue-500 font-bold ${item?.variant?.stock <= quantity ? "opacity-20" : ""}`}
                     >
                         <GrAdd size={20} />
                     </button>
