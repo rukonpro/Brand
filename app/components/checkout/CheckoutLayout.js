@@ -17,10 +17,10 @@ import { fetcher } from '@/app/utils/fetcher/fetcher';
 import useSWR from 'swr';
 import Drawer2 from '../Drawer/Drawer2';
 import ShippingAddress from '../ShippingAddress/ShippingAddress';
+import AddressTabs from '../AddressTabs/AddressTabs';
+
 const CheckoutLayout = () => {
-
     const { cart, mutate, isLoadingCart, user, userStatus } = useCart();
-
     const [isModalOpen, setModalOpen] = useState(false);
     const openModal = () => setModalOpen(true);
     const closeModal = () => setModalOpen(false);
@@ -50,24 +50,38 @@ const CheckoutLayout = () => {
 
     return userStatus === "authenticated" && user?.email && (
         <div>
-
-
-
             <Modal isOpen={isModalOpen}
                 onClose={closeModal}
                 title="Shipping Address">
-                <ShippingForm user={user} onClose={closeModal} />
+                 <AddressTabs
+                 shippingComponent={
+                    <ShippingForm user={user} onClose={closeModal} />
+                 }
+                 />
+               
             </Modal>
 
 
             <Drawer2 isOpen={isOpenDrawer2}
                 setIsOpen={setIsOpenDrawer2}
-                title="Shipping Address">
-                <ShippingAddress
-                    toggleDrawer2={toggleDrawer2}
-                    mutateDefualtShippingAdresss={mutateDefualtShippingAdresss}
-                    openModal={openModal}
+                title="Shipping & Address">
+
+                <AddressTabs
+                    shippingComponent={
+                        <ShippingAddress
+                            toggleDrawer2={toggleDrawer2}
+                            mutateDefualtShippingAdresss={mutateDefualtShippingAdresss}
+                            openModal={openModal}
+                        />}
+                    billingComponent={
+                        <ShippingAddress
+                            toggleDrawer2={toggleDrawer2}
+                            mutateDefualtShippingAdresss={mutateDefualtShippingAdresss}
+                            openModal={openModal}
+                        />}
                 />
+
+
             </Drawer2>
 
 
@@ -82,15 +96,30 @@ const CheckoutLayout = () => {
 
 
 
-            <div className='pt-5 px-1 md:px-0'>
-                <Suspense fallback={<ShippingBillingSkeleton />}>
+            <AddressTabs
+                shippingComponent={
+                    <Suspense fallback={<ShippingBillingSkeleton />}>
+                        {isLoadingDefualtShippingAdress ?
+                            <ShippingBillingSkeleton /> :
+                            <ShippingBillingCard
+                                title="Shipping address"
+                                toggleDrawer2={toggleDrawer2}
+                                address={defualtShippingAdress} />}
+                    </Suspense>
+                }
+
+                billingComponent={<Suspense fallback={<ShippingBillingSkeleton />}>
                     {isLoadingDefualtShippingAdress ?
                         <ShippingBillingSkeleton /> :
                         <ShippingBillingCard
+                            title="Billing address"
                             toggleDrawer2={toggleDrawer2}
                             address={defualtShippingAdress} />}
-                </Suspense>
-            </div>
+                </Suspense>}
+
+            />
+
+
 
             <div className="grid grid-cols-12 gap-4 mt-5">
 

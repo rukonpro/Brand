@@ -1,5 +1,5 @@
 "use client"
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import Image from "next/image";
 import avatar from "@/public/images/avatar.png";
 import CoverPhoto from "@/public/images/BannerEcommerce-Nordics.png";
@@ -8,11 +8,12 @@ import EditIcon from "@/public/images/edit-2-svgrepo-com.svg";
 import SaveIcon from "@/public/images/save-floppy-svgrepo-com.svg";
 import LoadingIcon from "@/public/images/loading-gray-color-svgrepo-com.svg";
 import ProfileForm from "@/app/components/ProfileForm/ProfileForm";
-import {useSession} from "next-auth/react";
+import { useSession } from "next-auth/react";
+import AddressTabs from '../AddressTabs/AddressTabs';
 
 const MyAccount = () => {
-    const {data:userData}=useSession();
-    const user=userData?.user;
+    const { data: userData } = useSession();
+    const user = userData?.user;
     const [selectedProfilePicture, setSelectedProfilePicture] = useState(null);
     const [selectedCoverPhoto, setSelectedCoverPhoto] = useState(null);
     const [profileImageBB, setProfileImageBB] = useState(null);
@@ -53,7 +54,7 @@ const MyAccount = () => {
                             >
                                 {
                                     <label htmlFor="profile-picture-input"
-                                           className="text-xl absolute text-white top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 hover:cursor-pointer "
+                                        className="text-xl absolute text-white top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 hover:cursor-pointer "
                                     >
                                         {hovered &&
                                             <div
@@ -122,8 +123,8 @@ const MyAccount = () => {
                 <div className="flex justify-between items-center px-3 py-5 md:px-0">
                     <h1 className="text-xl font-bold text-gray-600 dark:text-slate-50">Personal details</h1>
                     <button type="button"
-                            onClick={handleSave}
-                            className="border-2 border-[#3e8cfe] hover:bg-blue-300 hover:text-white text-gray-500 font-bold  px-3 py-1 rounded-lg flex items-center gap-2 dark:bg-slate-800 dark:hover:bg-slate-600 dark:text-slate-50">
+                        onClick={handleSave}
+                        className="border-2 border-[#3e8cfe] hover:bg-blue-300 hover:text-white text-gray-500 font-bold  px-3 py-1 rounded-lg flex items-center gap-2 dark:bg-slate-800 dark:hover:bg-slate-600 dark:text-slate-50">
 
                         {
                             loading ? <Image src={LoadingIcon} height={24} alt="eidt icon" className="animate-spin" /> :
@@ -137,9 +138,12 @@ const MyAccount = () => {
                     </button>
                 </div>
 
-                <ProfileForm user={user}/>
+                <ProfileForm user={user} />
 
             </div>
+
+
+            <AddressTabs />
         </div>
     );
 };

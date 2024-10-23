@@ -1,11 +1,11 @@
-export default function ShippingBillingCard({ toggleDrawer2, address }) {
+export default function ShippingBillingCard({ toggleDrawer2, address, title }) {
 
 
   return (
     <div className="p-4 bg-white dark:bg-slate-800 border border-slate-300 dark:border-slate-600 rounded-md">
       <div className="flex justify-between items-center mb-4">
         <h2 className="text-lg font-semibold text-slate-800 dark:text-slate-100">
-          Shipping & Billing
+          {title}
         </h2>
         <button
           onClick={toggleDrawer2}

@@ -1,5 +1,6 @@
 import { PrismaClient } from '@prisma/client';
-import { getSession } from "next-auth/react";
+import { getSession } from 'next-auth/react';
+
 
 const prisma = new PrismaClient();
 
@@ -8,23 +9,21 @@ export default async function handler(req, res) {
 
     if (method === 'PATCH') {
         try {
-            // const session = await getSession({ req });
+            const session = await getSession({ req });
 
-        
-            // console.log(session)
+            if (!session) {
+                return res.status(401).json({ message: 'Unauthorized' });
+            }
 
-            // if (!session) {
-            //     return res.status(401).json({ message: 'Unauthorized' });
-            // }
 
-            // const userId = session.user.id;
-            const { addressId,userId } = req.body;
+            const userId = session?.user?.id;
+            const { addressId } = req.body;
 
             // Validate that addressId is provided
             if (!addressId) {
                 return res.status(400).json({ message: 'Missing addressId' });
             }
-          
+
 
             // Check if the address belongs to the current user
             const address = await prisma.shippingAddress.findUnique({

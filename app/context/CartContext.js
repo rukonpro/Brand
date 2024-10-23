@@ -17,11 +17,12 @@ export const CartProvider = ({ children }) => {
     const { data: userData, status: userStatus } = useSession();
     const user = userData?.user;
 
+   
+
 
 
     const {
         data: cart,
-        error: errorCart,
         isLoading: isLoadingCart,
         mutate
     } = useSWR(`/api/cart/${user?.id}/getCart`, fetcher);
