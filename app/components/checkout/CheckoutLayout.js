@@ -18,6 +18,11 @@ import useSWR from 'swr';
 import Drawer2 from '../Drawer/Drawer2';
 import ShippingAddress from '../ShippingAddress/ShippingAddress';
 import AddressTabs from '../AddressTabs/AddressTabs';
+import { postOrder } from '@/app/utils/order/fetch_order_api';
+import toast from 'react-hot-toast';
+import { useRouter } from 'next/navigation';
+import { deleteManyCartItemApi } from '@/app/utils/cart/fetch_cart_api';
+
 
 const CheckoutLayout = () => {
     const { cart, mutate, isLoadingCart, user, userStatus } = useCart();
@@ -25,12 +30,17 @@ const CheckoutLayout = () => {
     const openModal = () => setModalOpen(true);
     const closeModal = () => setModalOpen(false);
     const [isOpenDrawer2, setIsOpenDrawer2] = useState(false);
-
+    const [isOrderLoading, setIsOrderLoading] = useState(false);
+    const router = useRouter()
     const toggleDrawer2 = () => {
         setIsOpenDrawer2(!isOpenDrawer2);
     };
 
-
+    const {
+        data: shippingAddress,
+        isLoading: isLoadingShippingAddress,
+        mutate: mutateShippingAddress
+    } = useSWR(`/api/shippingAddress/findMany`, fetcher);
 
     const {
         data: defualtShippingAdress,
@@ -40,25 +50,52 @@ const CheckoutLayout = () => {
 
 
 
-
     const handleOrder = async () => {
+        const data = {
+            orderItems: cart?.cartItems,
+            orderSummery: cart?.cartSummary,
+            userId: user?.id,
+            shippingAddressId: defualtShippingAdress?.id,
+            billingAddressId: defualtShippingAdress?.id
+        }
 
-
-
+        setIsOrderLoading(true);
+        const res = await postOrder(data);
+        setIsOrderLoading(false)
+        if (res?.status === 201) {
+            toast.success(res?.data?.message, {
+                id: "order",
+                position: "bottom-center"
+            });
+            await deleteManyCartItemApi({ userId: user?.id });
+            mutate();
+            router.push(`/orderSuccess?orderId=${res?.data?.order?.id}&userId=${user?.id}`)
+        }
+        else if (res?.status === 400 || res?.status === 500 || res?.status === 405) {
+            toast.error(res?.message, {
+                id: "order",
+                position: "bottom-center"
+            })
+        }
+        else {
+            toast.error("Internal error,please try again!", {
+                id: "order",
+                position: "bottom-center"
+            })
+        }
     }
-
 
     return userStatus === "authenticated" && user?.email && (
         <div>
             <Modal isOpen={isModalOpen}
                 onClose={closeModal}
                 title="Shipping Address">
-                 <AddressTabs
-                 shippingComponent={
-                    <ShippingForm user={user} onClose={closeModal} />
-                 }
-                 />
-               
+                <AddressTabs
+                    shippingComponent={
+                        <ShippingForm user={user} onClose={closeModal} />
+                    }
+                />
+
             </Modal>
 
 
@@ -70,12 +107,18 @@ const CheckoutLayout = () => {
                     shippingComponent={
                         <ShippingAddress
                             toggleDrawer2={toggleDrawer2}
+                            shippingAddress={shippingAddress}
+                            isLoadingShippingAddress={isLoadingShippingAddress}
+                            mutateShippingAddress={mutateShippingAddress}
                             mutateDefualtShippingAdresss={mutateDefualtShippingAdresss}
                             openModal={openModal}
                         />}
                     billingComponent={
                         <ShippingAddress
                             toggleDrawer2={toggleDrawer2}
+                            shippingAddress={shippingAddress}
+                            isLoadingShippingAddress={isLoadingShippingAddress}
+                            mutateShippingAddress={mutateShippingAddress}
                             mutateDefualtShippingAdresss={mutateDefualtShippingAdresss}
                             openModal={openModal}
                         />}
@@ -148,9 +191,9 @@ const CheckoutLayout = () => {
                                     <button
                                         onClick={handleOrder}
                                         type="button"
-                                        disabled={cart?.cartItems?.length < 1}
-                                        className={`text-xl  ${cart?.cartItems?.length < 1 ? "opacity-20" : "bg-green-500 text-white"}  px-5 py-2 rounded-lg w-full inline-block text-center items-center`}
-                                    >Order
+                                        disabled={isOrderLoading || cart?.message === "Cart is empty"}
+                                        className={` ${isOrderLoading || cart?.message === "Cart is empty" ? "opacity-20" : "opacity-100"} bg-green-500 text-white  text-xl  px-5 py-2 rounded-lg w-full inline-block text-center items-center`}
+                                    >{isOrderLoading ? "Processing..." : "Order"}
                                     </button>
                                 </div>
                             </CheckoutCard>}

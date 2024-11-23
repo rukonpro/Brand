@@ -29,6 +29,18 @@ export const deleteSingleCartItemApi = async (params) => {
     }
 };
 
+export const deleteManyCartItemApi = async (params) => {
+
+    try {
+        return await axios.delete(`${baseURL}/api/cart/deleteMany`, {
+            params: params
+        });
+    } catch (error) {
+        return error;
+    }
+};
+
+
 export const updateSingleCartItemApi = async (data) => {
 
     try {

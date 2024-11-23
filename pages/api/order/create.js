@@ -1,172 +1,79 @@
-// import { PrismaClient } from '@prisma/client';
-//
-// const prisma = new PrismaClient();
-//
-// export default async function handler(req, res) {
-//     if (req.method === 'POST') {
-//         const { userId, items } = req.body;
-//
-//         if (!userId || !items || !Array.isArray(items) || items.length === 0) {
-//             return res.status(400).json({ error: 'User ID and items are required' });
-//         }
-//
-//         try {
-//             let totalOrderPrice = 0;
-//             let totalOrderPriceWithDiscount = 0;
-//             let totalOrderTax = 0;
-//             let totalDeliveryFee = 0;
-//
-//             const orderItems = await Promise.all(
-//                 items.map(async (item) => {
-//                     const product = await prisma.product.findUnique({
-//                         where: { id: item.productId },
-//                     });
-//
-//                     if (!product) {
-//                         throw new Error(`Product with ID ${item.productId} not found`);
-//                     }
-//
-//                     // Fetch delivery fee, default to 0 if not available
-//                     const deliveryFee = product.deliveryFee || 0;
-//
-//                     // Calculate individual item pricing
-//                     const totalPrice = product.price * item.quantity;
-//                     const discountAmount = (totalPrice * (product.discountPercentage || 0)) / 100;
-//                     const totalPriceWithDiscount = totalPrice - discountAmount;
-//                     const totalTax = (totalPriceWithDiscount * (product.taxPercentage || 0)) / 100;
-//
-//                     // Update the totals for the order
-//                     totalOrderPrice += totalPrice;
-//                     totalOrderPriceWithDiscount += totalPriceWithDiscount;
-//                     totalOrderTax += totalTax;
-//                     totalDeliveryFee += deliveryFee;
-//
-//                     return {
-//                         productId: product.id,
-//                         quantity: item.quantity,
-//                         price: product.price,
-//                         totalPrice: totalPrice,
-//                         discountPercentage: product.discountPercentage || 0,
-//                         totalPriceWithDiscount: totalPriceWithDiscount,
-//                         taxPercentage: product.taxPercentage || 0,
-//                         totalTax: totalTax,
-//                         deliveryFee: deliveryFee,
-//                     };
-//                 })
-//             );
-//
-//             // Create the order with calculated totals
-//             const order = await prisma.order.create({
-//                 data: {
-//                     userId: userId,
-//                     status: 'PENDING',
-//                     paymentStatus: 'PENDING',
-//                     totalTax: totalOrderTax,
-//                     totalPriceWithDiscount: totalOrderPriceWithDiscount + totalDeliveryFee,
-//                     totalPrice: totalOrderPrice + totalDeliveryFee,
-//                     totalDeliveryFee: totalDeliveryFee,
-//                     items: {
-//                         create: orderItems,
-//                     },
-//                 },
-//                 include: {
-//                     items: true,
-//                 },
-//             });
-//
-//             return res.status(201).json(order);
-//         } catch (error) {
-//             console.error(error);
-//             return res.status(500).json({ error: 'Failed to create order' });
-//         }
-//     } else {
-//         return res.status(405).json({ error: 'Method not allowed' });
-//     }
-// }
-
-
-
 import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
 
 export default async function handler(req, res) {
-    if (req.method === 'POST') {
-        const { userId, items, shippingAddressId } = req.body;
+  if (req.method === 'POST') {
+    try {
 
-        if (!userId || !items || !shippingAddressId) {
-            return res.status(400).json({ error: 'User ID, items, and shipping address are required' });
-        }
+      const {
+        userId,
+        shippingAddressId,
+        billingAddressId,
+        orderItems,
+        orderSummery,
+        paymentMethod,
+        orderNotes,
+        estimatedDeliveryDate,
+        deliveryMethod,
+      } = req.body;
+     
+      // Validate the request body
+      if (!userId || !shippingAddressId || !billingAddressId || !orderItems || !orderSummery) {
+        return res.status(400).json({ message: 'Missing required fields.' });
+      }
 
-        try {
-            let totalOrderPrice = 0;
-            let totalOrderPriceWithDiscount = 0;
-            let totalOrderTax = 0;
-            let totalDeliveryFee = 0;
+      // Create the order
+      const order = await prisma.order.create({
+        data: {
+          userId,
+          shippingAddressId,
+          billingAddressId,
+          paymentMethod,
+          paymentStatus: 'PENDING', // Default payment status
+          orderStatus: 'PENDING', // Default order status
+          deliveryMethod,
+          orderNotes,
+          estimatedDeliveryDate: estimatedDeliveryDate ? new Date(estimatedDeliveryDate) : null,
+          orderItems: {
+            create: orderItems.map((item) => ({
+              productId: item.productId,
+              variantId: item.variantId,
+              productName: item.productName,
+              price: item.price,
+              quantity: item.quantity,
+              discountPercent:item.discountPercent,
+              discountAmount: item.discountAmount,
+              discountedPrice: item.discountedPrice,
+              taxAmount: item.taxAmount,
+            })),
+          },
+          orderSummery: {
+            create: {
+              totalItems: orderSummery.totalItems,
+              originalPrice: orderSummery.originalPrice,
+              totalDiscount: orderSummery.totalDiscount,
+              subTotalPrice: orderSummery.subTotalPrice,
+              taxPercent: orderSummery.taxPercent,
+              totalTax:orderSummery.totalTax,
+              totalPrice: orderSummery.totalPrice,
+            },
+          },
+        },
+        include: {
+          orderItems: true,
+          orderSummery: true,
+        },
+      });
 
-            const orderItems = await Promise.all(
-                items.map(async (item) => {
-                    const product = await prisma.product.findUnique({
-                        where: { id: item.productId },
-                    });
-
-                    if (!product) {
-                        throw new Error(`Product with ID ${item.productId} not found`);
-                    }
-
-                    // Calculate item totals
-                    const totalPrice = product.price * item.quantity;
-                    const discountAmount = (totalPrice * (product.discountPercentage || 0)) / 100;
-                    const totalPriceWithDiscount = totalPrice - discountAmount;
-                    const totalTax = (totalPriceWithDiscount * (product.taxPercentage || 0)) / 100;
-
-                    totalOrderPrice += totalPrice;
-                    totalOrderPriceWithDiscount += totalPriceWithDiscount;
-                    totalOrderTax += totalTax;
-                    totalDeliveryFee += product.deliveryFee || 0;
-
-                    return {
-                        productId: product.id,
-                        quantity: item.quantity,
-                        price: product.price,
-                        totalPrice: totalPrice,
-                        discountPercentage: product.discountPercentage || 0,
-                        totalPriceWithDiscount: totalPriceWithDiscount,
-                        taxPercentage: product.taxPercentage || 0,
-                        totalTax: totalTax,
-                        deliveryFee: product.deliveryFee || 0,
-                    };
-                })
-            );
-
-            // Create order with shipping address
-            const order = await prisma.order.create({
-                data: {
-                    userId: userId,
-                    status: 'PENDING',
-                    paymentStatus: 'PENDING',
-                    totalTax: totalOrderTax,
-                    totalPriceWithDiscount: totalOrderPriceWithDiscount + totalDeliveryFee,
-                    totalPrice: totalOrderPrice + totalDeliveryFee,
-                    totalDeliveryFee: totalDeliveryFee,
-                    items: {
-                        create: orderItems,
-                    },
-                    shippingAddressId: shippingAddressId, // Add shipping address to order
-                },
-                include: {
-                    items: true,
-                    shippingAddress: true,
-                    user:true
-                },
-            });
-
-            return res.status(201).json(order);
-        } catch (error) {
-            console.error(error);
-            return res.status(500).json({ error: 'Failed to create order' });
-        }
-    } else {
-        return res.status(405).json({ error: 'Method not allowed' });
+      return res.status(201).json({
+        message: "Order Successfully",
+        order
+      });
+    } catch (error) {
+      return res.status(500).json({ message: 'Server error', error: error.message });
     }
+  } else {
+    return res.status(405).json({ message: 'Method Not Allowed' });
+  }
 }

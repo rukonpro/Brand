@@ -1,22 +1,13 @@
-import { useCart } from "@/app/context/CartContext";
-import { fetcher } from "@/app/utils/fetcher/fetcher";
+
 import updateDefaultShppingAddress_Api from "@/app/utils/shippingAdress/updateDefaultShppingAddress_Api";
 import React, { useState, useEffect, Suspense } from "react";
-import toast, { ToastBar, ToastIcon } from "react-hot-toast";
+import toast from "react-hot-toast";
 import { GiCheckMark } from "react-icons/gi";
-import useSWR from "swr";
 import AddressSkeleton from "../Skeletons/AddressSkeleton";
 
-export default function ShippingAddress({ toggleDrawer2, mutateDefualtShippingAdresss, openModal }) {
+export default function ShippingAddress({ toggleDrawer2, mutateDefualtShippingAdresss, openModal, shippingAddress, mutateShippingAddress, isLoadingShippingAddress }) {
     const [selectAddress, setSelectAddress] = useState("");
     const [loading, setLoading] = useState(false);
-
-    const {
-        data: shippingAddress,
-        isLoading: isLoadingShippingAddress,
-        mutate: mutateShippingAddress
-    } = useSWR(`/api/shippingAddress/findMany`, fetcher);
-
 
 
     // ডিফল্ট ঠিকানা সিলেক্ট করা
@@ -89,10 +80,10 @@ export default function ShippingAddress({ toggleDrawer2, mutateDefualtShippingAd
                                             <span className="inline-block px-2 py-1 bg-red-500 text-white text-xs rounded-full mr-2">
                                                 HOME
                                             </span>
-                                            <span className="text-gray-800 dark:text-gray-100 text-md">{address?.state}</span>
+                                            <span className="text-gray-800 dark:text-gray-100 text-md">{address?.address}</span>
                                         </div>
                                         <p className="text-gray-600 dark:text-gray-300 text-sm mb-3">
-                                            Region: {address?.state} - {address?.houseNumber}  - {address?.city} -{address?.postalCode} - {address?.country}
+                                       {address?.streetAddress}-{address?.landmarkArea}({address?.postalCode})-{address?.city}-{address?.region}-{address?.country}
                                         </p>
                                         <div className="flex space-x-2">
                                             <button

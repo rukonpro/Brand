@@ -11,7 +11,7 @@ import toast from 'react-hot-toast';
 const MyCartItemCard = ({ item, mutate }) => {
     const [quantity, setQuantity] = useState(item?.quantity);
     const { user } = useCart();
-
+   
 
     const handleUpdateQuantity = async ({ newQuantity }) => {
 
@@ -98,6 +98,7 @@ const MyCartItemCard = ({ item, mutate }) => {
                         ))}
 
                     <li>Quantity: {item?.quantity}</li>
+                    {item?.discountPercent>0 && <li className=' text-red-500 font-bold '>{item?.discountPercent} Discount</li>}
                 </ul>
 
                 <div >

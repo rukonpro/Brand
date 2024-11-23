@@ -3,73 +3,52 @@ import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
 
 export default async function handler(req, res) {
-    if (req.method === 'GET') {
-        const { page = 1, pageSize = 10, status, userId, startDate, endDate, paymentStatus, shippingAddressId,orderId } = req.query;
-
-        try {
-            const skip = (page - 1) * pageSize;
-            const take = parseInt(pageSize);
-
-            const filters = {};
-            if (status) {
-                filters.status = status;
-            }
-            if (paymentStatus) {
-                filters.paymentStatus = paymentStatus;
-            }
-            if (userId) {
-                filters.userId = userId;
-            }
-            if (orderId) {
-                filters.id = orderId;
-            }
-            if (shippingAddressId !== undefined) {
-                filters.shippingAddressId = shippingAddressId;
-            }
-
-            if (startDate && endDate) {
-                filters.createdAt = {
-                    gte: new Date(startDate),
-                    lte: new Date(endDate),
-                };
-            } else if (startDate) {
-                filters.createdAt = {
-                    gte: new Date(startDate),
-                };
-            } else if (endDate) {
-                filters.createdAt = {
-                    lte: new Date(endDate),
-                };
-            }
-
-
-            const orders = await prisma.order.findMany({
-                where: filters,
-                skip: skip,
-                take: take,
-                include: {
-                    items: true,
-                    shippingAddress: true,
-                    user: true,
-                },
-                orderBy: {
-                    createdAt: 'desc',
-                },
-            });
-
-            const totalOrders = await prisma.order.count({
-                where: filters,
-            });
-
-            return res.status(200).json({
-                orders,
-                totalPages: Math.ceil(totalOrders / pageSize),
-                currentPage: page,
-            });
-        } catch (error) {
-            return res.status(500).json({ error: 'Failed to fetch orders' });
-        }
-    } else {
-        return res.status(405).json({ error: 'Method not allowed' });
+    try {
+      const { orderStatus, paymentStatus, page = 1, limit = 10, orderBy = "orderDate", sortDirection = "desc" } = req.query;
+  
+      // Build the `where` clause dynamically based on query parameters
+      const where = {
+        ...(orderStatus && { orderStatus: { equals: orderStatus } }),
+        ...(paymentStatus && { paymentStatus: { equals: paymentStatus } }),
+        // Add other filters as needed
+      };
+  
+      // Pagination parameters
+      const skip = (page - 1) * limit;
+      const take = parseInt(limit);
+  
+      // Sorting parameters (orderDate by default)
+      const orderByClause = {
+        [orderBy]: sortDirection === "desc" ? "desc" : "asc",
+      };
+  
+      // Perform the query
+      const orders = await prisma.order.findMany({
+        where,
+        skip,
+        take,
+        orderBy: orderByClause,
+        include: {
+          orderItems: true,
+          orderSummary: true,
+        },
+      });
+  
+      // Get the total count of matching orders for pagination
+      const totalCount = await prisma.order.count({
+        where,
+      });
+  
+      // Return the result with pagination info
+      res.status(200).json({
+        data: orders,
+        pagination: {
+          currentPage: parseInt(page),
+          totalPages: Math.ceil(totalCount / limit),
+          totalCount,
+        },
+      });
+    } catch (error) {
+      res.status(500).json({ error: "Internal Server Error" });
     }
-}
+  }

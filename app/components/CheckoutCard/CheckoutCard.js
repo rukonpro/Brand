@@ -33,12 +33,12 @@ const CheckoutCard = ({ cartSummary, children }) => {
                     <p>${cartSummary?.originalPrice?.toFixed(2)}</p>
                 </div>
                 <div className="flex justify-between  text-gray-600 dark:text-slate-200">
-                    <p> Discount({cartSummary?.discountPercent}%):</p>
+                    <p> Total discount:</p>
                     <p className="text-red-500">- ${cartSummary?.totalDiscount?.toFixed(2)}</p>
                 </div>
                 <div className="flex justify-between border-b-2 py-2 text-gray-600 dark:text-slate-200 dark:border-slate-700">
                     <p>Tax({cartSummary?.taxPercent}%):</p>
-                    <p className="text-green-500">+ ${cartSummary?.taxWithPrice?.toFixed(2)}</p>
+                    <p className="text-green-500">+ ${cartSummary?.totalTax?.toFixed(2)}</p>
                 </div>
 
                 <div className="flex justify-between text-xl font-bold  py-3">

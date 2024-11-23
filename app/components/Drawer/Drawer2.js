@@ -16,7 +16,7 @@ export default function Drawer2({ isOpen, setIsOpen, children, title }) {
             {/* Drawer Panel */}
             <div
                 className={`fixed top-0 right-0 h-full w-full sm:w-96 bg-white dark:bg-slate-800 z-50 transform ${isOpen ? 'translate-x-0' : 'translate-x-full'
-                    } transition-transform duration-300 ease-in-out shadow-lg`}
+                    } transition-transform duration-300 ease-in-out shadow-lg overflow-y-auto`}
             >
                 {/* Drawer Content */}
                 <div className="p-6">

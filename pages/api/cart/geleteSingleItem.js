@@ -7,7 +7,7 @@ export default async function handler(req, res) {
         try {
             const { userId, itemId } = req.query; // Expecting userId and itemId in the request body
 
-            console.log(userId, itemId)
+          
             // Delete the specific cart item for the user
             const deletedItem = await prisma.cartItem.delete({
                 where: {

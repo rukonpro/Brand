@@ -2,8 +2,11 @@ import React from 'react';
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { parsePhoneNumberFromString } from "libphonenumber-js";
+import { IoHomeOutline, IoHomeSharp } from "react-icons/io5";
+
 import create_sipping_address from "@/app/utils/shippingAdress/create_sipping_address_api";
 import toast from "react-hot-toast";
+import { PiHandbagFill, PiHandbagLight } from 'react-icons/pi';
 const validatePhoneNumber = (value) => {
     const phoneNumber = parsePhoneNumberFromString(value, "BD"); // Default to Bangladesh or change to your preference
     if (!phoneNumber || !phoneNumber.isValid()) {
@@ -22,28 +25,32 @@ const validationSchema = Yup.object({
         })
     ,
     country: Yup.string().required("Country is required"),
-    houseNumber: Yup.string().required("House/Office number is required"),
-    street: Yup.string().required("Street name is required"),
+    region: Yup.string().required("Region is required"),
     city: Yup.string().required("City is required"),
+    streetAddress: Yup.string().required("Building / House No / Floor / Street is required"),
+    landmarkArea: Yup.string().required("Colony / Suburb / Locality / Landmark is required"),
     postalCode: Yup.number().required("Postal code is required"),
-    state: Yup.string().required("State/Province is required"),
+    address: Yup.string().required("Address is required"),
+    deliveryLabel: Yup.string().required("delivery label is required"),
 });
 
 
-const ShippingForm = ({ user,onClose }) => {
+const ShippingForm = ({ user, onClose }) => {
     const [loading, setLoading] = React.useState(false);
 
     const formik = useFormik({
         initialValues: {
-            firstName: user?.firstName || "",
-            lastName: user?.lastName || "",
-            phoneNumber: user?.phoneNumber || "",
-            country: user?.country || "",
-            houseNumber: user?.houseNumber || "",
-            street: user?.street || "",
-            city: user?.city || "",
-            postalCode: user?.postalCode || "",
-            state: user?.state || "",
+            firstName: "",
+            lastName: "",
+            phoneNumber: "",
+            country: "",
+            region: "",
+            city: "",
+            streetAddress: "",
+            postalCode: "",
+            landmarkArea: "",
+            address: "",
+            deliveryLabel: ""
         },
         validationSchema,
         onSubmit: async (values) => {
@@ -69,6 +76,7 @@ const ShippingForm = ({ user,onClose }) => {
         },
     });
 
+   
 
     return (
         <form onSubmit={formik.handleSubmit} className=" p-3 rounded-lg">
@@ -130,7 +138,7 @@ const ShippingForm = ({ user,onClose }) => {
                         type="text"
                         id="country"
                         name="country"
-                        placeholder="Country"
+                        placeholder="Please Enter"
                         value={formik.values.country}
                         onChange={formik.handleChange}
                         onBlur={formik.handleBlur}
@@ -141,35 +149,19 @@ const ShippingForm = ({ user,onClose }) => {
                 </div>
 
                 <div className="sm:col-span-2 col-span-4">
-                    <label htmlFor="houseNumber" className="text-lg">House/Office number:</label>
+                    <label htmlFor="region" className="text-lg">Region:</label>
                     <input
                         type="text"
-                        id="houseNumber"
-                        name="houseNumber"
-                        placeholder="House/Office number"
-                        value={formik.values.houseNumber}
+                        id="region"
+                        name="region"
+                        placeholder="Please Enter"
+                        value={formik.values.region}
                         onChange={formik.handleChange}
                         onBlur={formik.handleBlur}
-                        className={`px-3 py-2 rounded-lg mt-1 w-full dark:bg-slate-800 ${formik.touched.houseNumber && formik.errors.houseNumber ? 'border-red-500' : ''}`}
+                        className={`px-3 py-2 rounded-lg mt-1 w-full dark:bg-slate-800 ${formik.touched.region && formik.errors.region ? 'border-red-500' : ''}`}
                     />
-                    {formik.touched.houseNumber && formik.errors.houseNumber ?
-                        <div className="text-red-500">{formik.errors.houseNumber}</div> : null}
-                </div>
-
-                <div className="sm:col-span-2 col-span-4">
-                    <label htmlFor="street" className="text-lg">Street name:</label>
-                    <input
-                        type="text"
-                        id="street"
-                        name="street"
-                        placeholder="Street name"
-                        value={formik.values.street}
-                        onChange={formik.handleChange}
-                        onBlur={formik.handleBlur}
-                        className={`px-3 py-2 rounded-lg mt-1 w-full dark:bg-slate-800 ${formik.touched.street && formik.errors.street ? 'border-red-500' : ''}`}
-                    />
-                    {formik.touched.street && formik.errors.street ?
-                        <div className="text-red-500">{formik.errors.street}</div> : null}
+                    {formik.touched.region && formik.errors.region ?
+                        <div className="text-red-500">{formik.errors.region}</div> : null}
                 </div>
 
                 <div className="sm:col-span-2 col-span-4">
@@ -178,7 +170,7 @@ const ShippingForm = ({ user,onClose }) => {
                         type="text"
                         id="city"
                         name="city"
-                        placeholder="City"
+                        placeholder="Plases Enter"
                         value={formik.values.city}
                         onChange={formik.handleChange}
                         onBlur={formik.handleBlur}
@@ -188,13 +180,46 @@ const ShippingForm = ({ user,onClose }) => {
                         <div className="text-red-500">{formik.errors.city}</div> : null}
                 </div>
 
-                <div>
+                <div className="sm:col-span-2 col-span-4">
+                    <label htmlFor="streetAddress" className="text-lg">Building / House No / Floor / Street:</label>
+                    <input
+                        type="text"
+                        id="streetAddress"
+                        name="streetAddress"
+                        placeholder="Plases Enter"
+                        value={formik.values.streetAddress}
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                        className={`px-3 py-2 rounded-lg mt-1 w-full dark:bg-slate-800 ${formik.touched.streetAddress && formik.errors.streetAddress ? 'border-red-500' : ''}`}
+                    />
+                    {formik.touched.streetAddress && formik.errors.streetAddress ?
+                        <div className="text-red-500">{formik.errors.streetAddress}</div> : null}
+                </div>
+
+                <div className="sm:col-span-2 col-span-4">
+                    <label htmlFor="landmarkArea" className="text-lg">Colony / Suburb / Locality / Landmark:</label>
+                    <input
+                        type="text"
+                        id="landmarkArea"
+                        name="landmarkArea"
+                        placeholder="Please Enter"
+                        value={formik.values.landmarkArea}
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                        className={`px-3 py-2 rounded-lg mt-1 w-full dark:bg-slate-800 ${formik.touched.landmarkArea && formik.errors.landmarkArea ? 'border-red-500' : ''}`}
+                    />
+                    {formik.touched.landmarkArea && formik.errors.landmarkArea ?
+                        <div className="text-red-500">{formik.errors.landmarkArea}</div> : null}
+                </div>
+
+
+                <div className="sm:col-span-2 col-span-4">
                     <label htmlFor="postalCode" className="text-lg">Postal code:</label>
                     <input
                         type="number"
                         id="postalCode"
                         name="postalCode"
-                        placeholder="Postal code"
+                        placeholder="Plases Enter"
                         value={formik.values.postalCode}
                         onChange={formik.handleChange}
                         onBlur={formik.handleBlur}
@@ -204,20 +229,41 @@ const ShippingForm = ({ user,onClose }) => {
                         <div className="text-red-500">{formik.errors.postalCode}</div> : null}
                 </div>
 
-                <div>
-                    <label htmlFor="state" className="text-lg">State/Province:</label>
+                <div className="sm:col-span-2 col-span-4">
+                    <label htmlFor="address" className="text-lg">Address:</label>
                     <input
                         type="text"
-                        id="state"
-                        name="state"
-                        placeholder="State/Province"
-                        value={formik.values.state}
+                        id="address"
+                        name="address"
+                        placeholder="For Example: House# 123, Street# 123, ABC Road"
+                        value={formik.values.address}
                         onChange={formik.handleChange}
                         onBlur={formik.handleBlur}
-                        className={`px-3 py-2 rounded-lg mt-1 w-full dark:bg-slate-800 ${formik.touched.state && formik.errors.state ? 'border-red-500' : ''}`}
+                        className={`px-3 py-2 rounded-lg mt-1 w-full dark:bg-slate-800 ${formik.touched.address && formik.errors.address ? 'border-red-500' : ''}`}
                     />
-                    {formik.touched.state && formik.errors.state ?
-                        <div className="text-red-500">{formik.errors.state}</div> : null}
+                    {formik.touched.address && formik.errors.address ?
+                        <div className="text-red-500">{formik.errors.address}</div> : null}
+                </div>
+
+                <div className="sm:col-span-2 col-span-4">
+                    <p>Select a label for effective delivery:</p>
+                    <div className='flex gap-5 pt-2'>
+                        <button
+                            type='button'
+                            onClick={() => formik.setFieldValue('deliveryLabel', "home")}
+                            className='border-2 border-blue-500 py-3 px-5 rounded-lg flex items-center gap-2 text-blue-500'>
+                            {formik.values?.deliveryLabel === "home" ? <IoHomeSharp /> : < IoHomeOutline />} Home
+                        </button>
+                        <button
+                            type='button'
+                            onClick={() => formik.setFieldValue('deliveryLabel', "office")}
+                            className='border-2 border-blue-500 py-3 px-5 rounded-lg flex items-center gap-2 text-blue-500'
+                        >
+                            {formik.values?.deliveryLabel === "office" ? <PiHandbagFill /> : <PiHandbagLight />}  Office
+                        </button>
+                    </div>
+                    {formik.errors.address ?
+                        <div className="text-red-500">{formik.errors.deliveryLabel}</div> : null}
                 </div>
 
                 <div className="col-span-4">

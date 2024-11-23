@@ -12,30 +12,54 @@ export default async function handler(req, res) {
                 firstName,
                 lastName,
                 phoneNumber,
-                houseNumber,
-                street,
+                landmarkArea,
+                region,
                 city,
                 postalCode,
-                state,
+                streetAddress,
+                deliveryLabel,
                 country,
+                address,
                 userId
             } = req.body;
 
-           const postalCodeString=postalCode.toString()
+            const postalCodeString = postalCode.toString();
+            if (!userId) {
+                return res.status(401).json({ message: 'Unauthorized' });
+            }
+
+
+            // Check if the address belongs to the current user
+            const addressDB = await prisma.shippingAddress.findMany({
+                where: { userId: userId },
+            });
+
+            if (addressDB.length) {
+                // Update all other addresses for this user to isDefault = false
+                await prisma.shippingAddress.updateMany({
+                    where: {
+                        userId
+                    },
+                    data: { isDefault: false },
+                });
+            }
+
 
             // Create a new ShippingAddress
             const newAddress = await prisma.shippingAddress.create({
-                data:{
+                data: {
                     firstName,
                     lastName,
                     phoneNumber,
-                    houseNumber,
-                    street,
+                    landmarkArea,
+                    region,
                     city,
-                    postalCode:postalCodeString,
-                    state,
+                    address,
+                    postalCode: postalCodeString,
+                    streetAddress,
                     country,
-                    isDefault:false,
+                    deliveryLabel,
+                    isDefault: true,
                     userId
 
                 }
@@ -44,6 +68,7 @@ export default async function handler(req, res) {
             // Respond with the newly created address
             res.status(201).json(newAddress);
         } catch (error) {
+            console.log(error)
             res.status(500).json({ error: "Failed to create shipping address" });
         }
     } else {
