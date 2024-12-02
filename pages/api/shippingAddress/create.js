@@ -68,7 +68,6 @@ export default async function handler(req, res) {
             // Respond with the newly created address
             res.status(201).json(newAddress);
         } catch (error) {
-            console.log(error)
             res.status(500).json({ error: "Failed to create shipping address" });
         }
     } else {

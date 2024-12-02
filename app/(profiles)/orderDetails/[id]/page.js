@@ -23,6 +23,7 @@ const OrderDetails =async ({params:orderIdParams}) => {
         userId:user?.id
     }
     const getOrder =await getSingleOrder(params);
+   
 
     return (
         <Invoice  order={getOrder?.data}/>

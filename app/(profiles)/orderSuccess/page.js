@@ -15,7 +15,7 @@ export default async function OrderSuccess({ searchParams }) {
     const getOrder = await getSingleOrder(params);
 
     const order = getOrder?.data;
-    console.log(order)
+ 
 
     return (
         <div className=" ">

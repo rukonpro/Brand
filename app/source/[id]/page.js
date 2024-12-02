@@ -39,12 +39,12 @@ const Source = async ({params}) => {
 
 
     const { id } = params;
-    console.log(id)
+ 
   
 
     const [ category,products]=await Promise.all([getCategoryById(id),getProducts({ categoryId: id, limit: 10, page: 1 })]);
 
-    // console.log(products)
+
     return (
         <>
             <div className="sticky top-0 z-[20]">

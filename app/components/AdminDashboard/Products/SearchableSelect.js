@@ -12,7 +12,7 @@ const SearchableSelect = ({ options, label, name, formik, defaultName }) => {
     );
 
     const handleOptionSelect = ({ brandId, brandName }) => {
-        console.log(name)
+    
         setSearchTerm(name);
         formik.setFieldValue(name, brandId);
         setIsOpen(false);
