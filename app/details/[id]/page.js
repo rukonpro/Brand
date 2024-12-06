@@ -201,7 +201,7 @@ const Details = async ({ params }) => {
                                 </div>
                                 <div className='border-t border-slate-50 dark:border-slate-700 mt-6' />
 
-                                <ProductDetails product={product?.data} />
+                                <ProductDetails product={product?.data} id={id}/>
 
 
                             </div>

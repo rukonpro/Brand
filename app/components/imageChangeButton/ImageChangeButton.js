@@ -1,19 +1,23 @@
 "use client"
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
+import { useCart } from '@/app/context/CartContext';
 const ImageChangeButton = ({ product }) => {
+    const { imageChange, setImageChange } = useCart()
 
-    const [changeImage, setChnageImage] = useState(product?.images?.[0])
+
+
+
 
     return (
         <div>
             <div className="p-3 bg-white border-2 rounded flex justify-center dark:bg-slate-700 dark:border-slate-700">
 
-                {changeImage && <Image
-                    src={changeImage}
+                {imageChange && <Image
+                    src={imageChange}
                     width={400}
                     height={400}
-                    blurDataURL={changeImage}
+                    blurDataURL={imageChange}
                     placeholder="blur"
                     loading='lazy'
                     alt={product?.name}
@@ -27,8 +31,8 @@ const ImageChangeButton = ({ product }) => {
                 {product?.images?.length > 0 && product?.images?.map((image, index) => {
                     return (
                         <li key={index}>
-                            <button onMouseOver={() => setChnageImage(image)}
-                                onClick={() => setChnageImage(image)}
+                            <button onMouseOver={() => setImageChange(image)}
+                                onClick={() => setImageChange(image)}
 
                                 className="w-[56px] h-[56px] border-2 rounded p-1 dark:border-slate-700">
                                 <Image
@@ -37,7 +41,7 @@ const ImageChangeButton = ({ product }) => {
                                     width={50}
                                     loading="lazy"
                                     alt={product?.name}
-                                    blurDataURL={changeImage}
+                                    blurDataURL={image}
                                     placeholder={"blur"}
                                     className='h-full w-full object-contain' />
                             </button>

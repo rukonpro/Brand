@@ -1,10 +1,11 @@
 "use client"
 import { GrAdd, GrFormSubtract } from "react-icons/gr";
 import { useCart } from '@/app/context/CartContext';
+import { useEffect } from "react";
 
-export default function ProductDetails({ product }) {
+export default function ProductDetails({ product, id }) {
 
-  const { loading, addToCart, selectedAttributes, setSelectedAttributes, quantity, setQuantity } = useCart();
+  const { loading, addToCart, selectedAttributes, setSelectedAttributes, quantity, setQuantity, setImageChange, } = useCart();
 
 
 
@@ -60,8 +61,19 @@ export default function ProductDetails({ product }) {
   };
 
   const decrement = () => {
-    setQuantity((prev) => (prev > 1 ? prev - 1 : 1)); 
+    setQuantity((prev) => (prev > 1 ? prev - 1 : 1));
   };
+
+
+  useEffect(() => {
+    setSelectedAttributes({})
+    setQuantity(1)
+  }, [setSelectedAttributes, id])
+
+  useEffect(() => {
+    setImageChange(matchingVariant?.images?.[0] || product?.images?.[0])
+  }, [matchingVariant?.images, setImageChange, product?.images])
+
   return (
     <div>
       <div>

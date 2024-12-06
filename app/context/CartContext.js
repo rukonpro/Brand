@@ -13,11 +13,12 @@ export const CartProvider = ({ children }) => {
     const [loading, setLoading] = useState(false);
     const [loadingRemoveToCartItem, setLoadingRemoveToCartItem] = useState(false);
     const [selectedAttributes, setSelectedAttributes] = useState({});
+    const [imageChange, setImageChange] = useState("");
     const [quantity, setQuantity] = useState(1);
     const { data: userData, status: userStatus } = useSession();
     const user = userData?.user;
 
-   
+
 
 
 
@@ -155,6 +156,8 @@ export const CartProvider = ({ children }) => {
             addToCart,
             selectedAttributes,
             setSelectedAttributes,
+            imageChange,
+            setImageChange,
             quantity,
             setQuantity,
             cart,
