@@ -68,7 +68,7 @@ export default function ProductDetails({ product, id }) {
   useEffect(() => {
     setSelectedAttributes({})
     setQuantity(1)
-  }, [setSelectedAttributes, id])
+  }, [setSelectedAttributes, setQuantity, id])
 
   useEffect(() => {
     setImageChange(matchingVariant?.images?.[0] || product?.images?.[0])

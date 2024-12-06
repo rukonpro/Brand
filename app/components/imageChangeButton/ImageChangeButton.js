@@ -2,6 +2,13 @@
 import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { useCart } from '@/app/context/CartContext';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import 'swiper/css'; // Swiper CSS ফাইল ইম্পোর্ট করুন
+import 'swiper/css/navigation'; // Navigation বাটন স্টাইল
+import 'swiper/css/pagination';
+import { Navigation, Pagination, EffectCoverflow } from 'swiper/modules';
+
+
 const ImageChangeButton = ({ product }) => {
     const { imageChange, setImageChange } = useCart()
 
@@ -25,31 +32,54 @@ const ImageChangeButton = ({ product }) => {
                 />}
 
             </div>
-            <ol className="pt-3 flex gap-2 justify-center max-w-[600px] overflow-x-auto overflow-hidden ">
 
+            <div className='pt-5'>
+                <Swiper
+                   
+                    spaceBetween={20} // স্লাইডের মধ্যে ফাঁকা জায়গা (পিক্সেলে)
+                    slidesPerView={3} // একসাথে কতটি স্লাইড দেখানো হবে
+                 
+                   
+                    breakpoints={{
+                        640: {
+                            slidesPerView: 1, // মোবাইলে ১টি স্লাইড দেখাবে
+                            spaceBetween: 10,
+                        },
+                        768: {
+                            slidesPerView: 2, // ট্যাবলেটে ২টি স্লাইড দেখাবে
+                            spaceBetween: 15,
+                        },
+                        1024: {
+                            slidesPerView: 5, // ডেস্কটপে ৩টি স্লাইড দেখাবে
+                            spaceBetween: 20,
+                        },
+                    }}
+                >
+                    {product?.images?.length > 0 && product?.images?.map((image, index) => {
+                        return (
+                            <SwiperSlide key={index}>
+                                <button onMouseOver={() => setImageChange(image)}
+                                    onClick={() => setImageChange(image)}
 
-                {product?.images?.length > 0 && product?.images?.map((image, index) => {
-                    return (
-                        <li key={index}>
-                            <button onMouseOver={() => setImageChange(image)}
-                                onClick={() => setImageChange(image)}
+                                    className="w-[56px] h-[56px] border-2 rounded p-1 dark:border-slate-700">
+                                    <Image
+                                        src={image}
+                                        height={50}
+                                        width={50}
+                                        loading="lazy"
+                                        alt={product?.name}
+                                        blurDataURL={image}
+                                        placeholder={"blur"}
+                                        className='h-full w-full object-contain' />
+                                </button>
+                            </SwiperSlide>
+                        )
+                    })
+                    }
 
-                                className="w-[56px] h-[56px] border-2 rounded p-1 dark:border-slate-700">
-                                <Image
-                                    src={image}
-                                    height={50}
-                                    width={50}
-                                    loading="lazy"
-                                    alt={product?.name}
-                                    blurDataURL={image}
-                                    placeholder={"blur"}
-                                    className='h-full w-full object-contain' />
-                            </button>
-                        </li>
-                    )
-                })
-                }
-            </ol>
+                </Swiper>
+            </div>
+
         </div>
     );
 };

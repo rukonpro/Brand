@@ -6,7 +6,6 @@ import RelatedProducts from "@/app/components/RelatedProducts/RelatedProducts";
 import Loader from "@/app/Loader";
 import { getDetailsProduct, getProducts } from "@/app/utils/product/fetch_products_api";
 import SaveForLaterButton from "@/app/components/SavedForLaterItems/SaveForLaterButton";
-import Countdown from "@/app/components/Countdown/Countdown";
 import { PiImageBrokenLight } from "react-icons/pi";
 import Navbar from "@/app/components/navbar/navbar";
 import Specifications from '@/app/components/Specifications/Specifications';
