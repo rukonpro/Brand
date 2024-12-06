@@ -88,7 +88,7 @@ export default function ProductDetails({ product, id }) {
           {product?.variants?.length > 0 && Object.keys(product?.variants[0]?.attributes)?.map((attribute, index) => (
             <div className="mt-6 grid grid-cols-12" key={index}>
               <h2 className=" col-span-4">Select {attribute}:</h2>
-              <div className="flex space-2  col-span-8 flex-wrap">
+              <div className="flex gap-2  col-span-8 flex-wrap">
                 {[...new Set(product?.variants?.map(variant => variant?.attributes[attribute]))]?.map((option, idx) => {
                   const isSelected = selectedAttributes[attribute] === option;
                   const matchingVariants = getMatchingVariants(attribute, option);
