@@ -42,7 +42,7 @@ const ImageChangeButton = ({ product }) => {
                    
                     breakpoints={{
                         640: {
-                            slidesPerView: 3, // মোবাইলে ১টি স্লাইড দেখাবে
+                            slidesPerView: 4, // মোবাইলে ১টি স্লাইড দেখাবে
                             spaceBetween: 10,
                         },
                         768: {
