@@ -26,7 +26,6 @@ export default function ProductDetails({ product, id }) {
   };
 
 
-
   // Function to get matching variants based on selected attributes
   const getMatchingVariants = (attributeName, selectedValue) => {
     const currentSelectedAttributes = { ...selectedAttributes, [attributeName]: selectedValue };
