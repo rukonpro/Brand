@@ -8,7 +8,6 @@ import {SkeletonCategories, SkeletonNotifications, SkeletonSlider} from "@/app/c
 import Link from "next/link";
 
 
-
 const Banner =async () => {
     const [category, banners] = await Promise.all([
         getAllCategory(),
