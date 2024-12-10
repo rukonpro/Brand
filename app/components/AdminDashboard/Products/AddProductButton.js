@@ -1,6 +1,7 @@
 import React from 'react'
 import AdminDashboardModal from '../../Drawer/AdminDashboardModal';
-import CreateProductForm from '../creatore/CreateProductForm';
+import NewProductForm from '../creatore/NewProductForm';
+// import CreateProductForm from '../creatore/CreateProductForm';
 
 export default function AddProductButton({ mutate, categories, brands }) {
     const [isOpen, setOpen] = React.useState(false);
@@ -13,11 +14,12 @@ export default function AddProductButton({ mutate, categories, brands }) {
                 isOpen={isOpen}
                 handleCloseModal={handleCloseModal}
                 title="Create Product">
-                <CreateProductForm
+                <NewProductForm />
+                {/* <CreateProductForm
                     mutate={mutate}
                     categories={categories}
                     brands={brands}
-                />
+                /> */}
             </AdminDashboardModal>
         </>
     )
