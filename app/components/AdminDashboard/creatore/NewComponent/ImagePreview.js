@@ -2,7 +2,6 @@ import Image from 'next/image';
 import React from 'react';
 
 const ImagePreview = ({ images }) => {
-    
   return (
     <div className="grid grid-cols-3 gap-4">
       {images.map((image, index) => (
