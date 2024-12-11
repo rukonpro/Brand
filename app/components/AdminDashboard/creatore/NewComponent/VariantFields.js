@@ -1,11 +1,14 @@
-import React, { useState } from 'react';
+import React from 'react';
 import DynamicFields from './DynamicFields';
-import ImageUploadWidget from './ImageUploadWidget';
+import { CldUploadWidget } from 'next-cloudinary';
+import { RiImageAddFill } from 'react-icons/ri';
+import Image from 'next/image';
+import baseURL from '@/app/utils/baseURL';
 
 const VariantFields = ({ variants, setVariants }) => {
-    const [images, setImages] = useState([]);
+
   const addVariant = () => {
-    setVariants([...variants, { attributes: [], price: '', stock: '', availability: 'IN_STOCK', images: images }]);
+    setVariants([...variants, { attributes: [], price: '', stock: '', availability: 'IN_STOCK', images: [] }]);
   };
 
   const updateVariant = (index, key, value) => {
@@ -18,6 +21,15 @@ const VariantFields = ({ variants, setVariants }) => {
     setVariants(variants.filter((_, i) => i !== index));
   };
 
+
+
+  const handleImageUpload = (index, url) => {
+    const updatedVariants = [...variants];
+    updatedVariants[index].images = [...updatedVariants[index].images, url];
+    setVariants(updatedVariants);
+  };
+
+  // signatureEndpoint={`${baseURL}/api/signature/signature`}
   return (
     <div>
       <h3 className="text-lg font-medium mb-2">Variants</h3>
@@ -51,7 +63,50 @@ const VariantFields = ({ variants, setVariants }) => {
             <option value="IN_STOCK">In Stock</option>
             <option value="OUT_OF_STOCK">Out of Stock</option>
           </select>
-          <ImageUploadWidget images={images} setImages={setImages} />
+
+          <div className="mb-2">
+            <h5 className="font-medium">Images</h5>
+            <CldUploadWidget
+              signatureEndpoint={`${baseURL}/api/signature/signature`}
+              onUpload={(result) => handleImageUpload(index, result?.info?.secure_url)}
+            >
+              {({ open }) => (
+                <button
+                  type="button"
+                  onClick={open}
+                  className="px-4 py-2 flex items-center gap-2 rounded-full border bg-gray-100 hover:bg-gray-200"
+                >
+                  <RiImageAddFill />
+                  Upload Image
+                </button>
+              )}
+            </CldUploadWidget>
+          </div>
+
+          <div className="flex flex-wrap gap-2 mt-2">
+            {variant.images.map((image, imgIndex) => (
+              <div key={imgIndex} className="relative">
+                <Image
+                  src={image}
+                  height={200}
+                  width={200}
+                  alt={`Variant ${index + 1} Image ${imgIndex + 1}`}
+                  className="w-20 h-20 object-cover rounded"
+                />
+                <button
+                  type="button"
+                  onClick={() => {
+                    const updatedImages = variant.images.filter((_, i) => i !== imgIndex);
+                    updateVariant(index, 'images', updatedImages);
+                  }}
+                  className="absolute top-0 right-0 bg-red-500 text-white rounded-full px-2 py-1 text-xs"
+                >
+                  ×
+                </button>
+              </div>
+            ))}
+          </div>
+
           <button
             type="button"
             onClick={() => removeVariant(index)}
