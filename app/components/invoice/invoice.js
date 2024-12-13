@@ -73,7 +73,6 @@ export default function Invoice({ order }) {
                                         <th className="px-3 py-3 text-left text-sm font-medium">Product Code</th>
                                         <th className="px-3 py-3 text-left text-sm font-medium">Quantity</th>
                                         <th className="px-3 py-3 text-left text-sm font-medium">Price</th>
-
                                         <th className="px-3 py-3 text-left text-sm font-medium">Action</th>
                                     </tr>
                                 </thead>
@@ -92,11 +91,13 @@ export default function Invoice({ order }) {
                                                         <ul>
 
                                                             {
-                                                                Object.entries(product?.variant?.attributes)?.map(([key, value], index) => (
-                                                                    <li key={index} className="text-xs text-gray-500 dark:text-slate-200">
-                                                                        {key}: {value}
-                                                                    </li>
-                                                                ))
+                                                                product?.variant?.attributes?.map((attribute, index) => {
+                                                                    return (
+                                                                        <li key={index} className="text-xs text-gray-500 dark:text-slate-200">
+                                                                            {attribute?.name}: {attribute?.value}
+                                                                        </li>
+                                                                    )
+                                                                })
                                                             }
                                                         </ul>
                                                     </div>
@@ -124,7 +125,7 @@ export default function Invoice({ order }) {
                     <section className="mb-8 mt-10">
                         <div className="grid grid-cols-2 gap-4">
                             <div>
-                        <h2 className="text-lg font-semibold text-gray-800 mb-4">Payment Information</h2>
+                                <h2 className="text-lg font-semibold text-gray-800 mb-4">Payment Information</h2>
                                 <p className="text-sm text-gray-600">
                                     <strong>Payment Method:</strong> {order?.paymentMethod}
                                 </p>

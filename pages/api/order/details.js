@@ -22,7 +22,11 @@ export default async function handler(req, res) {
                 include: {
                     orderItems: {
                         include:{
-                            variant:true
+                            variant:{
+                                include:{
+                                    attributes:true
+                                }
+                            }
                         }
                     },
                     orderSummery: true,

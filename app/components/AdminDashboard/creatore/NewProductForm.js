@@ -1,13 +1,18 @@
 import React, { useState } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import DynamicFields from './NewComponent/DynamicFields';
 import Image from 'next/image';
 import { RiImageAddFill } from 'react-icons/ri';
 import { CldUploadWidget } from 'next-cloudinary';
 import baseURL from '@/app/utils/baseURL';
+import { createProduct } from '@/app/utils/product/fetch_products_api';
+import toast from 'react-hot-toast';
 
 const ProductForm = () => {
+  const [isLoading, setIsLoading] = useState(false);
+
+
+
   const validationSchema = Yup.object({
     name: Yup.string().required('Name is required'),
     description: Yup.string().required('Description is required'),
@@ -49,12 +54,12 @@ const ProductForm = () => {
             .of(
               Yup.object().shape({
                 name: Yup.string()
-                // .required('Attribute name is required')
-                // .min(1, 'Attribute name cannot be empty')
+                  .required('Attribute name is required')
+                  .min(1, 'Attribute name cannot be empty')
                 ,
                 value: Yup.string()
-                // .required('Attribute value is required')
-                // .min(1, 'Attribute value cannot be empty')
+                  .required('Attribute value is required')
+                  .min(1, 'Attribute value cannot be empty')
                 ,
               })
             )
@@ -99,8 +104,28 @@ const ProductForm = () => {
 
     },
     validationSchema,
-    onSubmit: (values) => {
+    onSubmit: async (values) => {
       console.log("submmit", values);
+      setIsLoading(true)
+
+      try {
+
+        const res = await createProduct(values);
+
+        if (res?.status === 201) {
+  
+          toast.success("A product post is successfully!", {
+            id: "addProduct"
+          });
+        }
+      } catch (error) {
+        setIsLoading(false);
+        toast.error("Server error ,Please try again later", {
+          id: "addProduct"
+        });
+      } finally {
+        setIsLoading(false);
+      }
     },
   });
 
@@ -149,6 +174,20 @@ const ProductForm = () => {
     updatedVariants[index].images = [...updatedVariants[index].images, url];
     formik.setFieldValue("variants", updatedVariants);
   };
+
+  const addAttribute = (variantIndex) => {
+    const updatedVariants = [...formik.values.variants];
+    updatedVariants[variantIndex].attributes.push({ name: "", value: "" });
+    formik.setFieldValue("variants", updatedVariants);
+  };
+  const removeAttribute = (variantIndex, attrIndex) => {
+    const updatedVariants = [...formik.values.variants];
+    updatedVariants[variantIndex].attributes = updatedVariants[variantIndex].attributes.filter(
+      (_, index) => index !== attrIndex
+    );
+    formik.setFieldValue("variants", updatedVariants);
+  };
+
 
 
   return (
@@ -369,7 +408,7 @@ const ProductForm = () => {
               onClick={() => removeImage(index)}
               className="absolute top-0 right-0 bg-red-500 text-white rounded-full px-2 py-1 text-xs"
             >
-               ×
+              ×
             </button>
           </div>
         ))}
@@ -381,6 +420,7 @@ const ProductForm = () => {
 
       {/************************* variants  *************************/}
 
+
       <div>
         <h3 className="text-lg font-medium mb-2">Variants</h3>
         {formik.values.variants.map((variant, index) => (
@@ -388,11 +428,77 @@ const ProductForm = () => {
             <h4 className="font-medium mb-2">Variant {index + 1}</h4>
 
             {/* Attributes Section */}
-            <DynamicFields
+            {/* <DynamicFields
               fields={variant.attributes}
               setFields={(fields) => updateVariant(index, 'attributes', fields)}
               title="Attributes"
-            />
+            /> */}
+            <h4 className="font-medium mb-2">Attributes</h4>
+            {/* Attributes Section for Each Variant */}
+            {formik.values.variants[index].attributes.map((attribute, attrIndex) => (
+              <div
+                key={attrIndex}
+                className="grid grid-cols-12 gap-4 items-center mb-3 py-2 bg-slate-200 rounded"
+              >
+                <div className="col-span-5">
+                  {/* Field for Attribute Name */}
+                  <input
+                    type="text"
+                    placeholder="Attribute Name"
+                    {...formik.getFieldProps(
+                      `variants[${index}].attributes[${attrIndex}].name`
+                    )}
+                    className="border p-2 rounded w-full"
+                  />
+                  {/* Error message for Attribute Name */}
+                  {formik.touched.variants?.[index]?.attributes?.[attrIndex]?.name &&
+                    formik.errors.variants?.[index]?.attributes?.[attrIndex]?.name && (
+                      <div className="text-red-500 text-sm">
+                        {formik.errors.variants[index].attributes[attrIndex].name}
+                      </div>
+                    )}
+                </div>
+
+                <div className="col-span-5">
+                  {/* Field for Attribute Value */}
+                  <input
+                    type="text"
+                    placeholder="Attribute Value"
+                    {...formik.getFieldProps(
+                      `variants[${index}].attributes[${attrIndex}].value`
+                    )}
+                    className="border p-2 rounded w-full"
+                  />
+                  {/* Error message for Attribute Value */}
+                  {formik.touched.variants?.[index]?.attributes?.[attrIndex]?.value &&
+                    formik.errors.variants?.[index]?.attributes?.[attrIndex]?.value && (
+                      <div className="text-red-500 text-sm">
+                        {formik.errors.variants[index].attributes[attrIndex].value}
+                      </div>
+                    )}
+                </div>
+
+                <div className="col-span-2">
+                  {/* Remove Attribute Button */}
+                  <button
+                    type="button"
+                    onClick={() => removeAttribute(index, attrIndex)}
+                    className="bg-red-500 text-white px-3 rounded"
+                  >
+                    Remove
+                  </button>
+                </div>
+              </div>
+            ))}
+
+            {/* Add Attribute Button for Each Variant */}
+            <button
+              type="button"
+              onClick={() => addAttribute(index)}
+              className="bg-blue-500 text-white px-4 py-2 rounded"
+            >
+              Add Attribute
+            </button>
 
             {/* Price Input */}
             <input

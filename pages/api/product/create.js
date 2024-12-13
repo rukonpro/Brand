@@ -39,27 +39,35 @@ export default async function handler(req, res) {
                     },
                     variants: {
                         create: variants.map((variant) => ({
-                            attributes: variant.attributes,
                             price: variant.price,
                             stock: variant.stock,
                             sku: generateSKUAndVarcode(name, variant?.attributes).sku,
                             varcode: generateSKUAndVarcode(name, variant?.attributes).varcode,
                             availability: variant.availability,
                             images: variant.images,
-
+                            attributes: {
+                                create: variant.attributes.map((attribute) => ({
+                                    name: attribute.name,
+                                    value: attribute.value,
+                                })),
+                            },
                         })),
                     },
-
                 },
                 include: {
-                    variants: true,
+                    variants: {
+                        include: {
+                            attributes: true, // Include attributes in response
+                        },
+                    },
                     brand: true,
-                    category: true
-                }
+                    category: true,
+                },
             });
 
             res.status(201).json({ message: 'Product created successfully', product: newProduct });
         } catch (error) {
+            console.log(error);
             res.status(500).json({ message: 'Error creating product', error: error.message });
         }
     } else {
@@ -67,23 +75,17 @@ export default async function handler(req, res) {
     }
 }
 
-
 function generateSKUAndVarcode(productName, attributes) {
     // Get the first three letters of the product name
     const namePart = productName.substring(0, 3).toUpperCase(); // Convert to uppercase
 
-    // Create a string from attributes' keys and values
-    const attributesPart = Object.entries(attributes)
-        .map(([key, value]) => `${value}`)
-        .join("_")
-        .toUpperCase(); // Example: { color: 'red', size: 'large' } -> 'COLOR_RED_SIZE_LARGE'
-
     // Generate unique suffix using timestamp and random number
-    const uniqueSuffix = Date.now().toString().slice(-5) + Math.floor(Math.random() * 100).toString(); // Last 5 digits of timestamp + random number
+    const uniqueSuffix =
+        Date.now().toString().slice(-5) + Math.floor(Math.random() * 100).toString(); // Last 5 digits of timestamp + random number
 
     // Construct SKU and Varcode
-    const sku = `${namePart}_${attributesPart}_${uniqueSuffix}`;
-    const varcode = `${namePart}VAR_${uniqueSuffix}`;
+    const sku = `SKU_${namePart}_${uniqueSuffix}`;
+    const varcode = `VAR_${namePart}_${uniqueSuffix}`;
 
     return { sku, varcode };
 }

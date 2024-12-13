@@ -50,7 +50,11 @@ export default async function handler(req, res) {
                     brand: true,   // Include brand details
                     category: true, // Include category details
                     offers: true,    // Include offers if needed
-                    variants: true
+                    variants: {
+                        include: {
+                            attributes: true
+                        }
+                    }
                 },
             });
 

@@ -62,7 +62,6 @@ model Product {
 model Variant {
   id           String       @id @default(auto()) @map("_id") @db.ObjectId
   productId    String       @db.ObjectId // Reference to the Product
-  attributes   Json // JSON object for attributes (color, size, etc.)
   price        Float
   stock        Int
   sku          String       @unique
@@ -74,6 +73,16 @@ model Variant {
   offerId      String?      @db.ObjectId
   CartItem     CartItem[]
   OrderItem    OrderItem[]
+  attributes  Attribute[] @relation("VariantToAttributes")
+  
+}
+
+model Attribute {
+  id        String  @id @default(auto()) @map("_id") @db.ObjectId
+  name      String // Attribute name, e.g., "size", "material"
+  value     String // Attribute value, e.g., "M", "cotton"
+  variant   Variant @relation("VariantToAttributes", fields: [variantId], references: [id])
+  variantId String  @db.ObjectId
 }
 
 enum Availability {

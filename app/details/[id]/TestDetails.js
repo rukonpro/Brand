@@ -1,13 +1,20 @@
-"use client"
+"use client";
 import { GrAdd, GrFormSubtract } from "react-icons/gr";
-import { useCart } from '@/app/context/CartContext';
+import { useCart } from "@/app/context/CartContext";
 import { useEffect } from "react";
 
-export default function ProductDetails({ product, id }) {
-
-  const { loading, addToCart, selectedAttributes, setSelectedAttributes, quantity, setQuantity, setImageChange, } = useCart();
+export default function ProductDetails({ product,id }) {
 
 
+  const {
+    loading,
+    addToCart,
+    selectedAttributes,
+    setSelectedAttributes,
+    quantity,
+    setQuantity,
+    setImageChange,
+  } = useCart();
 
   // Handle attribute selection
   const handleAttributeChange = (attributeName, value) => {
@@ -25,30 +32,34 @@ export default function ProductDetails({ product, id }) {
     }
   };
 
-
   // Function to get matching variants based on selected attributes
   const getMatchingVariants = (attributeName, selectedValue) => {
     const currentSelectedAttributes = { ...selectedAttributes, [attributeName]: selectedValue };
 
-    return product?.variants?.filter(variant =>
-      Object.keys(currentSelectedAttributes).every(attr =>
-        variant?.attributes[attr] === currentSelectedAttributes[attr]
+    return product?.variants?.filter((variant) =>
+      Object.keys(currentSelectedAttributes).every((attr) =>
+        variant.attributes.some(
+          (attribute) =>
+            attribute.name === attr &&
+            attribute.value === currentSelectedAttributes[attr]
+        )
       )
     );
   };
 
   // Find the currently selected variant based on selected attributes
-  const matchingVariant = product?.variants?.find(variant => {
-    return Object.keys(selectedAttributes).every(attr => {
-      return variant.attributes[attr] === selectedAttributes[attr];
-    });
+  const matchingVariant = product?.variants?.find((variant) => {
+    return Object.keys(selectedAttributes).every((attr) =>
+      variant.attributes.some(
+        (attribute) =>
+          attribute?.name === attr && attribute?.value === selectedAttributes[attr]
+      )
+    );
   });
-
-
 
   const handleChange = (e) => {
     const value = Number(e.target.value);
-    if (value >= 1 || e.target.value === '') {
+    if (value >= 1 || e.target.value === "") {
       setQuantity(value);
     }
   };
@@ -63,56 +74,57 @@ export default function ProductDetails({ product, id }) {
     setQuantity((prev) => (prev > 1 ? prev - 1 : 1));
   };
 
+  useEffect(() => {
+    setSelectedAttributes({});
+    setQuantity(1);
+  }, [setSelectedAttributes, setQuantity, id]);
 
   useEffect(() => {
-    setSelectedAttributes({})
-    setQuantity(1)
-  }, [setSelectedAttributes, setQuantity, id])
-
-  useEffect(() => {
-    setImageChange(matchingVariant?.images?.[0] || product?.images?.[0])
-  }, [matchingVariant?.images, setImageChange, product?.images])
+    setImageChange(matchingVariant?.images?.[0] || product?.images?.[0]);
+  }, [matchingVariant?.images, setImageChange,product?.images]);
 
   return (
     <div>
       <div>
-
         {/* Product Info */}
         <div>
-          {/* <h1 className="text-2xl font-bold">{product.name}</h1>
-          <p className="text-gray-600 mt-4">{product.description}</p>
-          <p className="text-xl font-semibold mt-4">BDT {product.price}</p> */}
-
           {/* Dynamic Attribute Selection */}
-          {product?.variants?.length > 0 && Object.keys(product?.variants[0]?.attributes)?.map((attribute, index) => (
-            <div className="mt-6 grid grid-cols-12" key={index}>
-              <h2 className=" col-span-4">Select {attribute}:</h2>
-              <div className="flex gap-2  col-span-8 flex-wrap">
-                {[...new Set(product?.variants?.map(variant => variant?.attributes[attribute]))]?.map((option, idx) => {
-                  const isSelected = selectedAttributes[attribute] === option;
-                  const matchingVariants = getMatchingVariants(attribute, option);
+          {product?.variants?.length > 0 &&
+            [...new Set(product?.variants?.flatMap((variant) => variant?.attributes?.map((attr) => attr.name)))].map((attribute, index) => (
+              <div className="mt-6 grid grid-cols-12" key={index}>
+                <h2 className=" col-span-4">Select {attribute}:</h2>
+                <div className="flex gap-2  col-span-8 flex-wrap">
+                  {[...new Set(
+                    product?.variants
+                      ?.map((variant) =>
+                        variant?.attributes?.find((attr) => attr?.name === attribute)?.value
+                      )
+                      .filter(Boolean)
+                  )].map((option, idx) => {
+                    const isSelected = selectedAttributes[attribute] === option;
+                    const matchingVariants = getMatchingVariants(attribute, option);
 
-                  return option && (
-                    <button
-                      key={idx}
-                      onClick={() => handleAttributeChange(attribute, option)}
-                      className={`px-4 py-2 border-2 rounded-md ${isSelected ? 'border-blue-500' : 'border-blue-200'
-                        } 
+                    return option && (
+                      <button
+                        key={idx}
+                        onClick={() => handleAttributeChange(attribute, option)}
+                        className={`px-4 py-2 border-2 rounded-md ${isSelected ? 'border-blue-500' : 'border-blue-200'
+                          } 
                         ${matchingVariants?.length === 0 ? 'opacity-20 cursor-not-allowed' : ''}
                         `}
-                      disabled={matchingVariants?.length === 0}
-                    >
-                      {option}
-                    </button>
-                  );
-                })}
+                        disabled={matchingVariants?.length === 0}
+                      >
+                        {option}
+                      </button>
+                    );
+                  })}
+                </div>
               </div>
-            </div>
-          ))}
+            ))}
 
           {/* Quantity Selection */}
           <div className="mt-6 grid grid-cols-12">
-            <h2 className='col-span-4'>Quantity:</h2>
+            <h2 className="col-span-4">Quantity:</h2>
             <div className="flex items-center space-x-2"> {/* Flex container for alignment */}
               <button
                 onClick={decrement}
@@ -155,3 +167,46 @@ export default function ProductDetails({ product, id }) {
   );
 }
 
+
+// const product = {
+//   "id":"1",
+//   "name": "I-phone",
+//   "description": "ddss",
+//   "basePrice": 500,
+//   "brandId": "sdfsdf",
+//   "categoryId": "dsfdsf",
+//   "warranty": "sdfsd",
+//   "protection": "dsfdsf",
+//   "images": [
+//     "https://res.cloudinary.com/dtncxgdrh/image/upload/v1733326769/brand/po4saaooaflpjpfqgqtl.webp"
+//   ],
+//   "variants": [
+//     {
+//       "attributes": [
+//         {
+//           "name": "size",
+//           "value": "M"
+//         },
+//         {
+//           "name": "material",
+//           "value": "cotton"
+//         }
+//       ],
+//       "price": 500,
+//       "stock": 100,
+//       "availability": "IN_STOCK",
+//       "images": [
+//         "https://res.cloudinary.com/dtncxgdrh/image/upload/v1733326769/brand/po4saaooaflpjpfqgqtl.webp"
+//       ]
+//     }
+//   ],
+//   "specifications": [
+//     {
+//       "name": "sdfds",
+//       "value": "dsfd"
+//     }
+//   ],
+//   "tags": [
+//     "sdfds"
+//   ]
+// }
