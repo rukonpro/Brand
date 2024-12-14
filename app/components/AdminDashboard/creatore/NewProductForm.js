@@ -7,8 +7,10 @@ import { CldUploadWidget } from 'next-cloudinary';
 import baseURL from '@/app/utils/baseURL';
 import { createProduct } from '@/app/utils/product/fetch_products_api';
 import toast from 'react-hot-toast';
+import SearchableSelectField from '../Products/SearchableSelectField';
 
-const ProductForm = () => {
+
+const ProductForm = ({ mutate, categories, brands }) => {
   const [isLoading, setIsLoading] = useState(false);
 
 
@@ -113,7 +115,7 @@ const ProductForm = () => {
         const res = await createProduct(values);
 
         if (res?.status === 201) {
-  
+
           toast.success("A product post is successfully!", {
             id: "addProduct"
           });
@@ -188,7 +190,7 @@ const ProductForm = () => {
     formik.setFieldValue("variants", updatedVariants);
   };
 
-
+  console.log(formik.values)
 
   return (
     <form onSubmit={formik.handleSubmit} className="p-8 max-w-4xl mx-auto">
@@ -355,23 +357,19 @@ const ProductForm = () => {
         </button>
       </div>
 
-
-
-      <input
-        type="text"
-        placeholder="Brand ID"
-        {...formik.getFieldProps('brandId')}
-        className="border p-2 rounded w-full mb-2"
-      />
-      {formik.touched.brandId && formik.errors.brandId && (
-        <div className="text-red-500">{formik.errors.brandId}</div>
-      )}
-
-      <input
-        type="text"
-        placeholder="Category ID"
-        {...formik.getFieldProps('categoryId')}
-        className="border p-2 rounded w-full mb-2"
+      <div>
+        <SearchableSelectField
+          label="Category"
+          name="categoryId"
+          options={categories}
+          formik={formik}
+        />
+      </div>
+      <SearchableSelectField
+        label="Brand"
+        name="brandId"
+        options={brands}
+        formik={formik}
       />
       {formik.touched.categoryId && formik.errors.categoryId && (
         <div className="text-red-500">{formik.errors.categoryId}</div>

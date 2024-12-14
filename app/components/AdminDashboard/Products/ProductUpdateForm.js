@@ -5,7 +5,7 @@ import Image from 'next/image';
 import React, { useState } from "react";
 import { IoCloseSharp } from "react-icons/io5";
 import SearchableSelect from "@/app/components/AdminDashboard/Products/SearchableSelect";
-import SearchableSelectCategory from "@/app/components/AdminDashboard/Products/SearchableSelectCategory";
+import SearchableSelectField from "@/app/components/AdminDashboard/Products/SearchableSelectField";
 import { updateProduct } from "@/app/utils/product/fetch_products_api";
 import toast from "react-hot-toast";
 const ProductUpdateForm = ({ initialData, categories, brands, mutate }) => {
@@ -571,7 +571,7 @@ const ProductUpdateForm = ({ initialData, categories, brands, mutate }) => {
 
                     <div>
 
-                        <SearchableSelectCategory
+                        <SearchableSelectField
                             label="Category"
                             name="categoryId"
                             defaultName={initialData?.category?.name}

@@ -14,7 +14,10 @@ export default function AddProductButton({ mutate, categories, brands }) {
                 isOpen={isOpen}
                 handleCloseModal={handleCloseModal}
                 title="Create Product">
-                <NewProductForm />
+                <NewProductForm
+                    mutate={mutate}
+                    categories={categories}
+                    brands={brands} />
                 {/* <CreateProductForm
                     mutate={mutate}
                     categories={categories}

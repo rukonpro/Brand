@@ -9,7 +9,7 @@ import { RiImageAddFill } from "react-icons/ri";
 
 import Image from "next/image";
 import toast from "react-hot-toast";
-import SearchableSelectCategory from '../Products/SearchableSelectCategory';
+import SearchableSelectField from '../Products/SearchableSelectField';
 import SearchableSelect from '../Products/SearchableSelect';
 
 const CreateProductForm = ({ categories, brands, mutate }) => {
@@ -38,7 +38,7 @@ const CreateProductForm = ({ categories, brands, mutate }) => {
             tags: [], // Dynamic tags array
             colors: [],
             sizes: [],
-            photos:[]
+            photos: []
 
         },
         validationSchema: Yup.object({
@@ -192,7 +192,7 @@ const CreateProductForm = ({ categories, brands, mutate }) => {
                         {/* Category */}
                         <div className="mb-4 md:col-span-1 col-span-2">
                             <div className="relative">
-                                <SearchableSelectCategory
+                                <SearchableSelectField
                                     label="Category"
                                     name="categoryId"
                                     options={categories}

@@ -4,9 +4,9 @@ const prisma = new PrismaClient();
 
 export default async function handler(req, res) {
     if (req.method === 'DELETE') {
-        const { orderId } = req.query;
+        const { id } = req.query;
 
-        if (!orderId) {
+        if (!id) {
             return res.status(400).json({ error: 'Order ID is required' });
         }
 
@@ -14,8 +14,12 @@ export default async function handler(req, res) {
             // Delete the order
             const deletedOrder = await prisma.order.delete({
                 where: {
-                    id: orderId,
+                    id: id,
                 },
+                include: {
+                    orderSummery: true,
+                    orderItems: true
+                }
             });
 
             return res.status(200).json({
