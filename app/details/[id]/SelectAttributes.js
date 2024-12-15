@@ -3,7 +3,8 @@ import { GrAdd, GrFormSubtract } from "react-icons/gr";
 import { useCart } from "@/app/context/CartContext";
 import { useEffect } from "react";
 
-export default function ProductDetails({ product,id }) {
+
+export default function SelectAttributes({ product, id }) {
 
 
   const {
@@ -14,6 +15,7 @@ export default function ProductDetails({ product,id }) {
     quantity,
     setQuantity,
     setImageChange,
+    setSelectVariant,
   } = useCart();
 
   // Handle attribute selection
@@ -76,17 +78,17 @@ export default function ProductDetails({ product,id }) {
 
   useEffect(() => {
     setSelectedAttributes({});
+    setSelectVariant({});
     setQuantity(1);
-  }, [setSelectedAttributes, setQuantity, id]);
+  }, [setSelectedAttributes, setSelectVariant, setQuantity, id]);
 
   useEffect(() => {
     setImageChange(matchingVariant?.images?.[0] || product?.images?.[0]);
-  }, [matchingVariant?.images, setImageChange,product?.images]);
+    setSelectVariant(matchingVariant)
+  }, [matchingVariant?.images, setImageChange, product?.images, matchingVariant, setSelectVariant]);
+
 
   return (
-    <div>
-      <div>
-        {/* Product Info */}
         <div>
           {/* Dynamic Attribute Selection */}
           {product?.variants?.length > 0 &&
@@ -161,9 +163,7 @@ export default function ProductDetails({ product,id }) {
               Add to Cart
             </button>
           </div>
-        </div>
-      </div>
-    </div>
+        </div> 
   );
 }
 

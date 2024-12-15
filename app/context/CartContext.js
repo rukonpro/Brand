@@ -14,6 +14,7 @@ export const CartProvider = ({ children }) => {
     const [loadingRemoveToCartItem, setLoadingRemoveToCartItem] = useState(false);
     const [selectedAttributes, setSelectedAttributes] = useState({});
     const [imageChange, setImageChange] = useState("");
+    const [selectVariant, setSelectVariant] = useState({});
     const [quantity, setQuantity] = useState(1);
     const { data: userData, status: userStatus } = useSession();
     const user = userData?.user;
@@ -38,19 +39,19 @@ export const CartProvider = ({ children }) => {
             const unselectedAttributes = matchingVariant.attributes
                 .filter(attr => !selectedAttributes[attr.name]) // Compare `name` in attributes
                 .map(attr => attr.name); // Extract the names of unselected attributes
-    
+
             if (unselectedAttributes.length > 0) {
                 toast.error(`Please select the following attributes for the selected variant: ${unselectedAttributes.join(', ')}`, {
                     id: "addToCart",
                     position: "bottom-center"
                 });
-                toast.error(`Missing attributes for variant ${matchingVariant.id}: ${unselectedAttributes.join(', ')}`, {
+                toast.error(`Missing attributes for variant: ${unselectedAttributes.join(', ')}`, {
                     id: "addToCart",
                     position: "bottom-center"
                 });
                 return;
             }
-    
+
             const cartItem = {
                 userId: user?.id,
                 productId: product?.id,
@@ -60,12 +61,12 @@ export const CartProvider = ({ children }) => {
                 quantity,
                 selectedAttributes, // Ensure this is in the updated { name, value } format
             };
-    
+
             // Add the cart item (store it in context, state, or localStorage)
             setLoading(true);
             const res = await addtoCartApi(cartItem);
             setLoading(false);
-    
+
             if (res?.status === 200 || res?.status === 201) {
                 toast.success(`${res?.data?.message} ${res?.data?.item?.productName}`, {
                     id: "addToCart",
@@ -90,17 +91,17 @@ export const CartProvider = ({ children }) => {
             });
         }
     };
-    
+
     const handleItemRemoveToCart = async ({ itemId }) => {
         const params = {
             userId: user?.id,
             itemId: itemId
         };
-    
+
         setLoadingRemoveToCartItem(true);
         const res = await deleteSingleCartItemApi(params);
         setLoadingRemoveToCartItem(false);
-    
+
         if (res?.status === 200) {
             mutate();
             toast.success(res?.data?.message, {
@@ -114,7 +115,7 @@ export const CartProvider = ({ children }) => {
             });
         }
     };
-    
+
 
 
     return (
@@ -126,6 +127,8 @@ export const CartProvider = ({ children }) => {
             setSelectedAttributes,
             imageChange,
             setImageChange,
+            setSelectVariant,
+            selectVariant,
             quantity,
             setQuantity,
             cart,
