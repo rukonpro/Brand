@@ -8,7 +8,6 @@ import Topbar from '@/app/components/AdminDashboard/Topbar/Topbar';
 const products =async () => {
     const [products,brands,categories]= await Promise.all([getProducts(),getBrands(),getAllCategory()]);
 
-
     return (
         <div >
              <Topbar />

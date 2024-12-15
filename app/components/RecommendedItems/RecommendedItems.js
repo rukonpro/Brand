@@ -1,8 +1,8 @@
-import React, {Suspense} from 'react';
+import React, { Suspense } from 'react';
 import RecommendedItemsCard from './RecommendedItemsCard';
 import Link from "next/link";
-import {getProducts} from "@/app/utils/product/fetch_products_api";
-import {SkeletonRecommendedItemCard} from "@/app/components/Skeletons/SkeletonRecommendedItemCard";
+import { getProducts } from "@/app/utils/product/fetch_products_api";
+import { SkeletonRecommendedItemCard } from "@/app/components/Skeletons/SkeletonRecommendedItemCard";
 
 
 
@@ -25,7 +25,7 @@ const RecommendedItems = async () => {
                             return (
                                 <li key={index} >
                                     <Link href={`/details/${product?.id}`}>
-                                        <Suspense fallback={<SkeletonRecommendedItemCard/>}>
+                                        <Suspense fallback={<SkeletonRecommendedItemCard />}>
                                             <RecommendedItemsCard product={product} />
                                         </Suspense>
                                     </Link>

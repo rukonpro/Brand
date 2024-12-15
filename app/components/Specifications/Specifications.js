@@ -1,8 +1,6 @@
 import React from 'react';
 
 const Specifications = ({ data }) => {
-
-    console.log(data)
     return (
         <div className="w-full  my-10">
             <h3 className="text-lg font-bold  border-b-1 mb-4 pb-2">

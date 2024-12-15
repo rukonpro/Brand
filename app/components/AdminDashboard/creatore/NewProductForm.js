@@ -119,6 +119,7 @@ const ProductForm = ({ mutate, categories, brands }) => {
           toast.success("A product post is successfully!", {
             id: "addProduct"
           });
+          mutate()
         }
       } catch (error) {
         setIsLoading(false);
@@ -190,7 +191,7 @@ const ProductForm = ({ mutate, categories, brands }) => {
     formik.setFieldValue("variants", updatedVariants);
   };
 
-  console.log(formik.values)
+ 
 
   return (
     <form onSubmit={formik.handleSubmit} className="p-8 max-w-4xl mx-auto">
@@ -545,6 +546,7 @@ const ProductForm = ({ mutate, categories, brands }) => {
               <CldUploadWidget
                 signatureEndpoint={`${baseURL}/api/signature/signature`}
                 onUpload={(result) => {
+                  console.log(result.info.secure_url)
                   handleVariantImageUpload(index, result.info.secure_url)
                 }}
               >
@@ -620,7 +622,8 @@ const ProductForm = ({ mutate, categories, brands }) => {
 
       <button
         type="submit"
-        className="bg-green-500 text-white px-4 py-2 rounded mt-5"
+        disabled={isLoading}
+        className={`bg-green-500 text-white px-4 py-2 rounded mt-5 ${isLoading && "opacity-50"}`}
       >
         Submit
       </button>
