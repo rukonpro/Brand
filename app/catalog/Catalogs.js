@@ -22,7 +22,7 @@ const Catalogs = ({ products, brands, categories }) => {
     return (
         <>
             <Drawer handleClose={handleClose} handleToggleDrawer={handleToggleDrawer} isDrawerOpen={isDrawerOpen}>
-               
+
                 <CatalogAsideManu categories={categories} brands={brands} />
             </Drawer>
             <div className="grid grid-cols-12 gap-4">
@@ -42,32 +42,35 @@ const Catalogs = ({ products, brands, categories }) => {
                             " lg:grid-cols-4" : "grid-cols-1"} gap-0.5 lg:gap-4`}>
                             {
                                 products?.map((product) => {
-
+                                    console.log(product)
                                     return (
                                         <li key={product?.id}>
-                                            <div className=" grid grid-cols-12 gap-4 bg-white p-3 lg:rounded-lg">
+                                            <div className=" grid grid-cols-12 gap-4 bg-white  lg:rounded-lg">
                                                 <div
-                                                    className={`${gitView ? "col-span-12" : 'col-span-4'} flex justify-center items-center  `}>
+                                                    className={`${gitView ? "col-span-12" : 'col-span-4'} flex justify-center items-center  p-2`}>
                                                     <Image
-                                                        src={product?.photos?.[0]}
-                                                        width={112}
-                                                        height={112}
+                                                        src={product?.images?.[0]}
+                                                        width={200}
+                                                        height={200}
                                                         loading='lazy'
-                                                        placeholder="blur"
-                                                        blurDataURL={product?.photos?.[0]}
+                                                        placeholder='blur'
+                                                        blurDataURL={product?.images?.[0]}
                                                         alt={product?.name}
-                                                        className='w-28 h-28 object-contain'
+                                                        className=' object-contain'
                                                     />
                                                 </div>
-                                                <div className={`${gitView ? "col-span-12" : "col-span-8"}`}>
-                                                    <h1 className="md:text-xl font-bold text-gray-500 truncate">{product?.name}</h1>
-                                                    <p className="md:text-2xl font-bold text-gray-600 pt-2">${product?.price}</p>
+                                                <div className={`${gitView ? "col-span-12" : "col-span-8"} p-2 
+                                                 flex items-center`}>
+                                                    <div>
+                                                        <h1 className="md:text-xl font-bold text-gray-500 truncate">{product?.name}</h1>
+                                                        <p className="md:text-2xl font-bold text-gray-600 pt-2">${product?.basePrice}</p>
 
-                                                    <Link href={`/details/${product?.id}`}>
-                                                        <button type="button" className="text-blue-500 mt-2">
-                                                            View details
-                                                        </button>
-                                                    </Link>
+                                                        <Link href={`/details/${product?.id}`}>
+                                                            <button type="button" className="text-blue-500 mt-2">
+                                                                View details
+                                                            </button>
+                                                        </Link>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </li>
