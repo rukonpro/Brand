@@ -58,7 +58,6 @@ const Catalogs = ({ products, brands, categories }) => {
                                                             blurDataURL={product?.images?.[0]}
                                                             alt={product?.name}
                                                             className='w-full h-full object-contain'
-
                                                         />
                                                     </div>
                                                 </div>
