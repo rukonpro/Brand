@@ -2,29 +2,14 @@
 
 import { useState } from "react";
 
-export default function BrandFilter() {
-    const [showAll, setShowAll] = useState(false);
+export default function BrandFilter({ brands }) {
+    const [limitBrand, setLimitBrand] = useState(10);
     const [isOpenBrand, setIsOpenBrand] = useState(false);
 
     const toggleOpenBrand = () => {
         setIsOpenBrand(!isOpenBrand);
     };
 
-    const brands = [
-        "UGREEN",
-        "HXSJ",
-        "SamiaCrafts",
-        "ASUS",
-        "Orico",
-        "WIWU",
-        "Logitech",
-        "LouisWill",
-        "BOYA",
-        "Teton",
-    ];
-
-    // Controls how many items to display initially
-    const visibleBrands = showAll ? brands : brands.slice(0, 5);
 
     return (
         <div className=" p-4 border-b">
@@ -56,7 +41,7 @@ export default function BrandFilter() {
                 {isOpenBrand && (
                     <div>
                         <ul className="space-y-2 text-sm text-gray-600">
-                            {visibleBrands.map((brand, index) => (
+                            {brands.map((brand, index) => (
                                 <li key={index} className="flex items-center">
                                     <input
                                         type="checkbox"
@@ -70,10 +55,10 @@ export default function BrandFilter() {
                             ))}
                         </ul>
                         <button
-                            onClick={() => setShowAll(!showAll)}
+                            onClick={() => setLimitBrand((prev) => prev + 10)}
                             className="text-blue-500 mt-4 font-medium hover:underline"
                         >
-                            {showAll ? "VIEW LESS" : "VIEW MORE"}
+                            {"VIEW MORE"}
                         </button>
                     </div>
 

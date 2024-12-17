@@ -42,27 +42,29 @@ const Catalogs = ({ products, brands, categories }) => {
                             " lg:grid-cols-4" : "grid-cols-1"} gap-0.5 lg:gap-4`}>
                             {
                                 products?.map((product) => {
-                                    console.log(product)
+
                                     return (
                                         <li key={product?.id}>
-                                            <div className=" grid grid-cols-12 gap-4 bg-white  lg:rounded-lg">
+                                            <div className=" grid grid-cols-12 bg-white  lg:rounded-lg">
                                                 <div
                                                     className={`${gitView ? "col-span-12" : 'col-span-4'} flex justify-center items-center  p-2`}>
-                                                    <Image
-                                                        src={product?.images?.[0]}
-                                                        width={200}
-                                                        height={200}
-                                                        loading='lazy'
-                                                        placeholder='blur'
-                                                        blurDataURL={product?.images?.[0]}
-                                                        alt={product?.name}
-                                                        className=' object-contain'
-                                                    />
+                                                    <div className='w-full h-full flex items-center justify-center'>
+                                                        <Image
+                                                            src={product?.images?.[0]}
+                                                            width={290}
+                                                            height={300}
+                                                            loading='lazy'
+                                                            placeholder='blur'
+                                                            blurDataURL={product?.images?.[0]}
+                                                            alt={product?.name}
+                                                            className='w-full h-full object-contain'
+
+                                                        />
+                                                    </div>
                                                 </div>
-                                                <div className={`${gitView ? "col-span-12" : "col-span-8"} p-2 
-                                                 flex items-center`}>
+                                                <div className={`${gitView ? "col-span-12" : "col-span-8"} p-2`}>
                                                     <div>
-                                                        <h1 className="md:text-xl font-bold text-gray-500 truncate">{product?.name}</h1>
+                                                        <h1 className="md:text-sm font-bold text-gray-500 truncate ">{product?.name}</h1>
                                                         <p className="md:text-2xl font-bold text-gray-600 pt-2">${product?.basePrice}</p>
 
                                                         <Link href={`/details/${product?.id}`}>
