@@ -22,11 +22,11 @@ const JoinNowCard = () => {
 
                         <div className='grid grid-cols-3 gap-2 items-center justify-center'>
                         <div className="col-span-1 flex justify-end items-center">
-                            <Image className="rounded-full h-[44px] w-[44px] object-contain bg-white dark:bg-slate-400 p-1"
+                            <Image className="rounded-full h-[40px] w-[40px] object-contain bg-white dark:bg-slate-400 p-1"
                                    src={Avater} alt='Avater' />
                         </div>
                         <div className="col-span-2">
-                    <span>{
+                    <span className="text-sm">{
                         "Hi, user let’s get stated"
                     }</span>
                         </div>
@@ -48,12 +48,12 @@ const JoinNowCard = () => {
                     {!user?.email &&
                         <div><Link href="/register">
                             <button
-                                className="rounded-lg bg-blue-500 text-white py-1 px-2 mt-2 inline-block w-full">
+                                className="rounded-lg bg-blue-500 text-white text-sm py-1 px-2 mt-2 inline-block w-full">
                                 Join now
                             </button>
                         </Link>
                             <Link href="/login">
-                                <button className="rounded-lg bg-white py-1 px-2 mt-2 inline-block w-full dark:bg-slate-800">
+                                <button className="rounded-lg bg-white text-sm py-1 px-2 mt-2 inline-block w-full dark:bg-slate-800">
                                     Login
                                 </button>
                             </Link>

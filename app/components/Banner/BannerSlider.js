@@ -1,126 +1,134 @@
-"use client"
-import { useState, useEffect } from 'react';
-import Image from 'next/image';
+"use client";
+import { useState, useEffect, useRef } from "react";
+import { gsap } from "gsap";
+import Image from "next/image";
 import Link from "next/link";
 
 const BannerSlider = ({ banners }) => {
     const [currentSlide, setCurrentSlide] = useState(0);
-    const [link, setLink] = useState(banners?.[0]?.link);
-    const [isDragging, setIsDragging] = useState(false);
-    const [startX, setStartX] = useState(0);
-    const [moveX, setMoveX] = useState(0);
+    const sliderRef = useRef(null);
+    const autoSlideRef = useRef(null);
 
-    const slideCount = banners?.length;
 
-    useEffect(() => {
-        setLink(banners?.[currentSlide]?.link); // Set the current banner's link
-    }, [currentSlide,banners]);
+    // GSAP Animation for fade transition
+    const fadeAnimation = (direction) => {
+        const slides = sliderRef.current.children;
+        const current = slides[currentSlide];
+        const nextIndex =
+            direction === "next"
+                ? (currentSlide + 1) % banners?.length
+                : (currentSlide - 1 + banners?.length) % banners?.length;
+        const next = slides[nextIndex];
 
-    // Auto-slide after every 3 seconds
-    useEffect(() => {
-        const slideInterval = setInterval(() => {
-            nextSlide();
-        }, 3000);
+        gsap.timeline()
+            .to(current, { opacity: 0, duration: 0.5 })
+            .fromTo(next, { opacity: 0 }, { opacity: 1, duration: 0.5 }, "-=0.5")
+            .call(() => setCurrentSlide(nextIndex));
+    };
 
-        return () => clearInterval(slideInterval);
-    }, []);
-
+    // Handle Next Slide
     const nextSlide = () => {
-        setCurrentSlide((prev) => (prev === slideCount - 1 ? 0 : prev + 1));
+        fadeAnimation("next");
+        resetAutoSlide();
     };
 
+    // Handle Previous Slide
     const prevSlide = () => {
-        setCurrentSlide((prev) => (prev === 0 ? slideCount - 1 : prev - 1));
+        fadeAnimation("prev");
+        resetAutoSlide();
     };
 
-    const handleMouseDown = (e) => {
-        e.preventDefault(); // Prevent default behavior like selecting text or image
-        setIsDragging(true);
-        setStartX(e.clientX);
-    };
-
-    const handleMouseMove = (e) => {
-        if (!isDragging) return;
-        e.preventDefault(); // Prevent default behavior while dragging
-        setMoveX(e.clientX - startX);
-    };
-
-    const handleMouseUp = () => {
-        setIsDragging(false);
-
-        if (moveX > 50) {
-            // Swipe right (previous slide)
-            prevSlide();
-        } else if (moveX < -50) {
-            // Swipe left (next slide)
+    // Auto Slide every 5 seconds
+    let startAutoSlide = () => {
+        autoSlideRef.current = setInterval(() => {
             nextSlide();
-        }
-
-        setMoveX(0); // Reset the movement state after sliding
+        }, 5000);
     };
 
-    const handleMouseLeave = () => {
-        setIsDragging(false); // Stop dragging when the mouse leaves the banner
+    // Reset auto slide timer
+    const resetAutoSlide = () => {
+        clearInterval(autoSlideRef.current);
+        startAutoSlide();
     };
+
+
+
+    // Start auto slide on mount and cleanup on unmount
+    useEffect(() => {
+        startAutoSlide();
+        return () => clearInterval(autoSlideRef.current);
+    }, [startAutoSlide]);
 
     return (
         <div
             className="relative w-full h-60 md:h-96 overflow-hidden"
-            onMouseDown={handleMouseDown}
-            onMouseMove={handleMouseMove}
-            onMouseUp={handleMouseUp}
-            onMouseLeave={handleMouseLeave} // To stop dragging if the mouse leaves the slider
-            style={{ userSelect: "none",  }} // Prevent text selection and change cursor
         >
-            {banners?.map((banner, index) => (
-                <div
-                    key={index}
-                    className={`absolute top-0 left-0 w-full h-full transition-opacity duration-700 ${currentSlide === index ? 'opacity-100' : 'opacity-0'}`}
-                >
-                    {/* Next.js Image for optimization */}
-                    <Image
-                        src={banner?.image}
-                        alt={banner?.title}
-                        fill
-                        sizes='100%'
-                        priority={index === currentSlide} // Give priority to current image
-                    />
-                    <div className="absolute top-10 left-5 text-slate-700 font-bold w-60">
-                        <h1 className="text-xl p-0 backdrop-blur text-stone-100 inline px-2 rounded-full">
-                           {banner?.title}
-                        </h1>
-                        <br/>
-
-                            <Link href={link} aria-label={banner?.title} className="bg-white rounded-xl px-3 py-2 mt-5">
-                                
-                                    Learn more
+            {/* Slider Container */}
+            <div ref={sliderRef}>
+                {banners?.map((banner, index) => (
+                    <div
+                        key={index}
+                        className={`absolute top-0 left-0 w-full h-full transition-opacity duration-700 ${
+                            currentSlide === index ? "opacity-100" : "opacity-0"
+                        }`}
+                    >
+                        <Image
+                            src={banner?.image}
+                            alt={banner?.title}
+                            fill
+                            sizes="100%"
+                            priority={index === currentSlide}
+                            className="object-cover"
+                        />
+                        <div className="absolute top-2 left-5 text-slate-700 font-bold ">
+                           <div className=" backdrop-blur">
+                               <h1 className="text-xl py-0 text-stone-100  rounded-2xl">
+                                   {banner?.title}
+                               </h1>
+                           </div>
+                            <br />
+                            <Link
+                                href={banner?.link}
+                                aria-label={banner?.title}
+                                className="bg-white rounded-xl px-2 py-1  inline-block text-sm"
+                            >
+                                Learn More
                             </Link>
-
+                        </div>
                     </div>
-                </div>
-            ))}
+                ))}
+            </div>
 
+            {/* Navigation Buttons */}
             <button
                 className="absolute top-1/2 left-4 w-10 transform -translate-y-1/2 bg-blue-500 bg-opacity-50 text-white p-2 rounded-full focus:outline-none"
                 onClick={prevSlide}
             >
-                &#10094;
+                ❮
             </button>
             <button
                 className="absolute top-1/2 right-4 w-10 transform -translate-y-1/2 bg-blue-500 bg-opacity-50 text-white p-2 rounded-full focus:outline-none"
                 onClick={nextSlide}
             >
-                &#10095;
+                ❯
             </button>
 
+            {/* Navigation Dots */}
             <div className="absolute bottom-5 left-1/2 transform -translate-x-1/2 flex space-x-2">
-                {banners?.map((_, index) => (
-                    <span
-                        key={index}
-                        className={`h-4 w-4 rounded-full cursor-pointer transition-colors duration-300 ${currentSlide === index ? 'bg-blue-500' : 'bg-blue-200'}`}
-                        onClick={() => setCurrentSlide(index)}
-                    ></span>
-                ))}
+                {banners?.map((_, index) => {
+                    return(
+                        <span
+                            key={index}
+                            className={`h-4 w-4 rounded-full cursor-pointer transition-colors duration-300 ${
+                                currentSlide === index ? "bg-blue-500" : "bg-blue-200"
+                            }`}
+                            onClick={() => {
+                                setCurrentSlide(index);
+                                resetAutoSlide();
+                            }}
+                        ></span>
+                    )
+                })}
             </div>
         </div>
     );

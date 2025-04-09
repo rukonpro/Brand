@@ -9,9 +9,13 @@ import Link from "next/link";
 
 
 const Banner =async () => {
+
+    const params = {
+        status:"ACTIVE",
+    }
     const [category, banners] = await Promise.all([
         getAllCategory(),
-        getBanners()
+        getBanners(params)
     ]);
 
     return (
@@ -38,11 +42,11 @@ const Banner =async () => {
                         <Suspense fallback={<SkeletonNotifications/>}>
                                <JoinNowCard/>
                             <div className=" p-3 rounded-lg bg-[#360a65f8] text-white w-full h-full">
-                                <h1 className="text-lg">Get US $10 off with a new supplier</h1>
+                                <h1 className="text-base">Get US $10 off with a new supplier</h1>
                             </div>
 
                             <div className="p-3 rounded-lg bg-[#92504d] text-white w-full h-full">
-                                <h1 className="text-lg">Send quotes with supplier preferences</h1>
+                                <h1 className="text-base">Send quotes with supplier preferences</h1>
                             </div>
                         </Suspense>
                     </div>

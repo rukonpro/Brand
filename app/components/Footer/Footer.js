@@ -204,10 +204,10 @@ const Footer = () => {
                                                         <li key={index} className='mt-2 text-gray-500 dark:text-slate-300'>
                                                             {
                                                                 link?.path ?
-                                                                    <Link href={link?.path}>{link?.title+index}</Link> :
+                                                                    <Link href={link?.path}>{link?.title}</Link> :
 
                                                                     <a href={link?.link} >
-                                                                        <Image src={link.icon} alt={link?.title+index}/>
+                                                                        <Image src={link.icon} alt={link?.title}/>
                                                                     </a>
                                                             }
                                                         </li>

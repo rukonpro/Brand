@@ -23,6 +23,7 @@
     "cloudinary": "^2.5.0",
     "formidable": "^3.5.1",
     "formik": "^2.4.6",
+    "gsap": "^3.12.7",
     "jose": "^5.2.4",
     "js-cookie": "^3.0.5",
     "jsonwebtoken": "^9.0.2",
