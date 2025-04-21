@@ -1,595 +1,577 @@
+import React, { useState, useEffect } from 'react';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import { CldUploadWidget } from 'next-cloudinary';
 import Image from 'next/image';
-import React, { useState } from "react";
-import { IoCloseSharp } from "react-icons/io5";
-import SearchableSelect from "@/app/components/AdminDashboard/Products/SearchableSelect";
-import SearchableSelectField from "@/app/components/AdminDashboard/Products/SearchableSelectField";
-import { updateProduct } from "@/app/utils/product/fetch_products_api";
-import toast from "react-hot-toast";
-const ProductUpdateForm = ({ initialData, categories, brands, mutate }) => {
-    const [imageUrls, setImageUrls] = useState(initialData.photos || []);
+import { RiImageAddFill } from 'react-icons/ri';
+import { CldUploadWidget } from 'next-cloudinary';
+import baseURL from '@/app/utils/baseURL';
+import { updateProduct } from '@/app/utils/product/fetch_products_api';
+import toast from 'react-hot-toast';
+import SearchableSelectField from '../Products/SearchableSelectField';
 
+const ProductUpdateForm = ({ mutate, categories, brands, product }) => {
 
+    const [isLoading, setIsLoading] = useState(false);
 
+    const validationSchema = Yup.object({
+        name: Yup.string().required('Name is required'),
+        description: Yup.string().required('Description is required'),
+        basePrice: Yup.number()
+            .required('Base Price is required')
+            .positive('Base Price must be positive'),
+        brandId: Yup.string().required('Brand ID is required'),
+        categoryId: Yup.string().required('Category ID is required'),
+        warranty: Yup.string().required('Warranty is required'),
+        protection: Yup.string().required('Protection is required'),
+        images: Yup.array().min(1, 'At least one image is required'),
+        specifications: Yup.array()
+            .of(
+                Yup.object().shape({
+                    name: Yup.string().required('Specification name is required'),
+                    value: Yup.string().required('Specification value is required'),
+                })
+            )
+            .test(
+                'unique-names',
+                'Specification names must be unique',
+                (specs) => {
+                    const names = specs.map((spec) => spec.name);
+                    return new Set(names).size === names.length;
+                }
+            ),
+        tags: Yup.array()
+            .of(
+                Yup.string()
+                    .required('Tag is required')
+                    .min(1, 'Tag cannot be empty')
+                    .trim('Tag cannot contain only spaces')
+            )
+            .min(1, 'At least one tag is required'),
+        variants: Yup.array()
+            .of(
+                Yup.object().shape({
+                    attributes: Yup.array()
+                        .of(
+                            Yup.object().shape({
+                                name: Yup.string()
+                                    .required('Attribute name is required')
+                                    .min(1, 'Attribute name cannot be empty'),
+                                value: Yup.string()
+                                    .required('Attribute value is required')
+                                    .min(1, 'Attribute value cannot be empty'),
+                            })
+                        )
+                        .min(1, 'At least one attribute is required'),
+                    price: Yup.number()
+                        .required('Price is required')
+                        .positive('Price must be positive'),
+                    stock: Yup.number()
+                        .required('Stock is required')
+                        .min(1, 'Stock must be at least 1'),
+                    availability: Yup.string().required('Availability is required'),
+                    images: Yup.array()
+                        .of(Yup.string().url('Invalid image URL'))
+                        .min(1, 'At least one image is required'),
+                })
+            )
+            .min(1, 'At least one variant is required'),
+    });
 
     const formik = useFormik({
         initialValues: {
-            name: initialData.name || "",
-            description: initialData.description || "",
-            price: initialData.price || null,
-            material: initialData.material || "",
-            quantity: initialData.quantity || null,
-            warranty: initialData.warranty || "",
-            protection: initialData.protection || "",
-            colors: initialData.colors || [],
-            sizes: initialData.sizes || [],
-            tags: initialData?.tags || [],
-            dimension: initialData?.dimension || null,
-            discountPercentage: initialData.discountPercentage || null,
-            taxPercentage: initialData?.taxPercentage || null,
-            deliveryFee: initialData?.deliveryFee || null,
-            brandId: initialData?.brandId || "",
-            categoryId: initialData?.categoryId || "",
-            photos: imageUrls,
+            name: product?.name || '',
+            description: product?.description || '',
+            basePrice: product?.basePrice || '',
+            brandId: product?.brandId || '',
+            categoryId: product?.categoryId || '',
+            warranty: product?.warranty || '',
+            protection: product?.protection || '',
+            images: product?.images || [],
+            variants: product?.variants || [],
+            specifications: product?.specifications || [],
+            tags: product?.tags || [],
         },
-        validationSchema: Yup.object({
-            name: Yup.string()
-                .required('Name is required')
-                .min(2, 'Name must be at least 2 characters')
-                .max(200, 'Name cannot exceed 100 characters'),
-
-            description: Yup.string()
-                .required('Description is required')
-                .min(10, 'Description must be at least 10 characters')
-                .max(5000, 'Description cannot exceed 500 characters'),
-
-            price: Yup.number()
-                .required('Price is required')
-                .min(0, 'Price cannot be negative')
-                .typeError('Price must be a valid number'),
-
-            material: Yup.string()
-                .max(50, 'Material cannot exceed 50 characters')
-                .nullable(),
-
-            quantity: Yup.number()
-                .required('Quantity is required')
-                .min(0, 'Quantity cannot be negative')
-                .integer('Quantity must be an integer')
-                .typeError('Quantity must be a valid number'),
-
-            warranty: Yup.string()
-                .max(100, 'Warranty cannot exceed 100 characters')
-                .optional()
-                .nullable(),
-
-            protection: Yup.string()
-                .max(100, 'Protection cannot exceed 100 characters')
-                .optional()
-                .nullable(),
-
-            colors: Yup.array()
-                .of(Yup.string().max(30, 'Color name too long'))
-                .optional()
-                .nullable(),
-
-            sizes: Yup.array()
-                .of(Yup.string().max(10, 'Size name too long'))
-                .optional()
-                .nullable(),
-
-            tags: Yup.array()
-                .of(Yup.string().max(20, 'Tag too long'))
-                .optional()
-                .nullable(),
-
-            discountPercentage: Yup.number()
-                .nullable() // This allows `null` as a valid value
-                .transform((value, originalValue) => {
-                    // This ensures empty strings are treated as `null`
-                    return originalValue === "" ? null : value;
-                })
-                .min(0, 'Discount percentage cannot be negative')
-                .max(100, 'Discount percentage cannot exceed 100')
-                .typeError('Discount percentage must be a valid number')
-                .optional()
-                .nullable(),
-
-            taxPercentage: Yup.number()
-                .nullable() // This allows `null` as a valid value
-                .transform((value, originalValue) => {
-                    // This ensures empty strings are treated as `null`
-                    return originalValue === "" ? null : value;
-                })
-                .min(0, 'Tax percentage cannot be negative')
-                .max(100, 'Tax percentage cannot exceed 100')
-                .typeError('Tax percentage must be a valid number')
-                .optional()
-                .nullable(),
-            deliveryFee: Yup.number()
-                .nullable() // This allows `null` as a valid value
-                .transform((value, originalValue) => {
-                    // This ensures empty strings are treated as `null`
-                    return originalValue === null ? null : value;
-                })
-                .min(0, 'Tax delivery fee cannot be negative')
-                .typeError('Delivery fee must be a valid number')
-                .optional()
-                .nullable(),
-
-
-            dimension: Yup.object({
-                length: Yup.number()
-                    .nullable()
-                    .transform((value, originalValue) => (originalValue === '' ? null : value))
-                    .typeError('Length must be a valid number')
-                    .min(0, 'Length must be greater than or equal to 0')
-                    .notRequired()
-                    .nullable(),
-
-                width: Yup.number()
-                    .nullable()
-                    .transform((value, originalValue) => (originalValue === '' ? null : value))
-                    .typeError('Width must be a valid number')
-                    .min(0, 'Width must be greater than or equal to 0')
-                    .notRequired()
-                    .nullable(),
-
-                height: Yup.number()
-                    .nullable()
-                    .transform((value, originalValue) => (originalValue === '' ? null : value))
-                    .typeError('Height must be a valid number')
-                    .min(0, 'Height must be greater than or equal to 0')
-                    .notRequired()
-                    .nullable(),
-            })
-                .test('all-or-none', 'All dimensions must be provided if one is specified', (value) => {
-                    const { length, width, height } = value || undefined;
-                    const isAnyFieldFilled = length !== null || width !== null || height !== null;
-
-                    // যদি কোন একটি ফিল্ড পূর্ণ থাকে তাহলে সব ফিল্ড পূরণ হতে হবে
-                    return !isAnyFieldFilled || (length !== null && width !== null && height !== null);
-                })
-                .nullable()
-            ,
-
-            brandId: Yup.string()
-                .optional()
-                .nullable(),
-
-            categoryId: Yup.string()
-                .optional()
-                .nullable(),
-
-            photos: Yup.array()
-                .of(Yup.string().url('Each photo must be a valid URL'))
-                .min(1, 'At least one photo is required')
-
-        }),
-        onSubmit: async (values, { setSubmitting }) => {
-
-            const res = await updateProduct({ productId: initialData?.id, updateData: values });
-
-            if (res?.status === 200) {
-                mutate();
-                toast.success("Product update is successfully", {
-                    id: "product"
-                })
-            } else {
-                toast.error("Internal error , please try again", {
-                    id: "product"
-                })
+        validationSchema,
+        enableReinitialize: true, // Allows form to reinitialize when product prop changes
+        onSubmit: async (values) => {
+            setIsLoading(true);
+            try {
+                const res = await updateProduct({productId:product.id, updateData:values});
+                if (res?.status === 200) {
+                    toast.success('Product updated successfully!', { id: 'updateProduct' });
+                    mutate();
+                }
+            } catch (error) {
+                toast.error('Server error, please try again later', { id: 'updateProduct' });
+            } finally {
+                setIsLoading(false);
             }
-
-            setSubmitting(false);
         },
     });
 
-
-
-    const handleUploadSuccess = (result) => {
-        const newImageUrl = result.info.secure_url;
-        setImageUrls((prev) => [...prev, newImageUrl]);
-        formik.setFieldValue('photos', [...imageUrls, newImageUrl]);
+    // ********** Specifications ********** //
+    const addSpecification = () => {
+        formik.setFieldValue('specifications', [
+            ...formik.values.specifications,
+            { name: '', value: '' },
+        ]);
     };
 
-    const handleUpload = (open) => {
-        open();
+    const removeSpecification = (index) => {
+        formik.setFieldValue(
+            'specifications',
+            formik.values.specifications.filter((_, i) => i !== index)
+        );
     };
 
-
-    const handleRemoveImage = (index) => {
-        // Create a new array by filtering out the image at the specified index
-        const newImageUrls = imageUrls.filter((_, i) => i !== index);
-        setImageUrls(newImageUrls);
-        formik.setFieldValue('photos', newImageUrls);
+    // ********** Images ********** //
+    const handleImageUpload = (result) => {
+        const url = result.info.secure_url;
+        formik.setFieldValue('images', [...formik.values.images, url]);
     };
 
+    const removeImage = (index) => {
+        const updatedImages = formik.values.images.filter((_, i) => i !== index);
+        formik.setFieldValue('images', updatedImages);
+    };
 
+    // ********** Variants ********** //
+    const addVariant = () => {
+        formik.setFieldValue('variants', [
+            ...formik.values.variants,
+            { attributes: [], price: '', stock: '', availability: 'IN_STOCK', images: [] },
+        ]);
+    };
+
+    const updateVariant = (index, key, value) => {
+        const updatedVariants = [...formik.values.variants];
+        updatedVariants[index][key] = value;
+        formik.setFieldValue('variants', updatedVariants);
+    };
+
+    const removeVariant = (index) => {
+        formik.setFieldValue(
+            'variants',
+            formik.values.variants.filter((_, i) => i !== index)
+        );
+    };
+
+    const handleVariantImageUpload = (index, result) => {
+        const url = result.info.secure_url;
+        const updatedVariants = [...formik.values.variants];
+        updatedVariants[index] = {
+            ...updatedVariants[index],
+            images: [...updatedVariants[index].images, url],
+        };
+        formik.setFieldValue('variants', updatedVariants);
+    };
+
+    const addAttribute = (variantIndex) => {
+        const updatedVariants = [...formik.values.variants];
+        updatedVariants[variantIndex].attributes.push({ name: '', value: '' });
+        formik.setFieldValue('variants', updatedVariants);
+    };
+
+    const removeAttribute = (variantIndex, attrIndex) => {
+        const updatedVariants = [...formik.values.variants];
+        updatedVariants[variantIndex].attributes = updatedVariants[
+            variantIndex
+            ].attributes.filter((_, index) => index !== attrIndex);
+        formik.setFieldValue('variants', updatedVariants);
+    };
 
     return (
-        <div className="p-3">
-            <form onSubmit={formik.handleSubmit}>
-                {/* Name Field */}
-                <div className="mb-4">
-                    <label htmlFor="name" className="block text-sm font-medium text-slate-700 dark:text-slate-300 text-left">Product Name</label>
-                    <input
-                        type="text"
-                        id="name"
-                        name="name"
-                        placeholder="Enter product name"
-                        className={`mt-1 block w-full px-3 py-2 border dark:bg-slate-700 dark:text-slate-200 ${formik.touched.name && formik.errors.name ? 'border-red-500' : 'border-gray-300'} rounded-md shadow-sm`}
-                        onChange={formik.handleChange}
-                        onBlur={formik.handleBlur}
-                        value={formik.values.name}
-                    />
-                    {formik.touched.name && formik.errors.name && (
-                        <p className="text-red-500 text-sm">{formik.errors.name}</p>
-                    )}
-                </div>
+        <div className="p-8 max-w-4xl mx-auto">
+            <h1 className="text-2xl font-bold mb-6">Update Product</h1>
 
-                {/* Description Field */}
-                <div className="mb-4">
-                    <label htmlFor="description" className="block text-sm font-medium text-slate-700 dark:text-slate-300 text-left">Description</label>
-                    <textarea
-                        id="description"
-                        name="description"
-                        placeholder="Enter description"
-                        className={`mt-1 block w-full px-3 py-2 border dark:bg-slate-700 dark:text-slate-200 ${formik.touched.description && formik.errors.description ? 'border-red-500' : 'border-gray-300'} rounded-md shadow-sm`}
-                        onChange={formik.handleChange}
-                        value={formik.values.description}
-                        onBlur={formik.handleBlur}
-                    />
-                    {formik.touched.description && formik.errors.description && (
-                        <p className="text-red-500 text-sm">{formik.errors.description}</p>
-                    )}
-                </div>
+            <input
+                type="text"
+                placeholder="Name"
+                {...formik.getFieldProps('name')}
+                className="border p-2 rounded w-full mb-2"
+            />
+            {formik.touched.name && formik.errors.name && (
+                <div className="text-red-500">{formik.errors.name}</div>
+            )}
 
-                {/* Price Field */}
-                <div className="mb-4">
-                    <label htmlFor="price" className="block text-sm font-medium text-slate-700 dark:text-slate-300 text-left">Price</label>
-                    <input
-                        type="number"
-                        id="price"
-                        name="price"
-                        placeholder="Enter price"
-                        className={`mt-1 block w-full px-3 py-2 border dark:bg-slate-700 dark:text-slate-200 ${formik.touched.price && formik.errors.price ? 'border-red-500' : 'border-gray-300'} rounded-md shadow-sm`}
-                        onChange={formik.handleChange}
-                        onBlur={formik.handleBlur}
-                        value={formik.values.price}
-                    />
-                    {formik.touched.price && formik.errors.price && (
-                        <p className="text-red-500 text-sm">{formik.errors.price}</p>
-                    )}
-                </div>
+            <textarea
+                placeholder="Description"
+                {...formik.getFieldProps('description')}
+                className="border p-2 rounded w-full mb-2"
+            />
+            {formik.touched.description && formik.errors.description && (
+                <div className="text-red-500">{formik.errors.description}</div>
+            )}
 
-                {/* Additional Fields */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
-                    <div>
-                        <label htmlFor="material" className="block text-sm font-medium text-slate-700 dark:text-slate-300 text-left">Material</label>
-                        <input
-                            type="text"
-                            id="material"
-                            name="material"
-                            placeholder="Enter material"
-                            className={`mt-1 block w-full px-3 py-2 border dark:bg-slate-700 dark:text-slate-200 ${formik.touched.material && formik.errors.material ? 'border-red-500' : 'border-gray-300'} rounded-md shadow-sm`}
-                            onChange={formik.handleChange}
-                            onBlur={formik.handleBlur}
-                            value={formik.values.material}
-                        />
-                        {formik.touched.material && formik.errors.material && (
-                            <p className="text-red-500 text-sm">{formik.errors.material}</p>
-                        )}
+            <input
+                type="number"
+                placeholder="Base Price"
+                {...formik.getFieldProps('basePrice')}
+                className="border p-2 rounded w-full mb-2"
+            />
+            {formik.touched.basePrice && formik.errors.basePrice && (
+                <div className="text-red-500">{formik.errors.basePrice}</div>
+            )}
+
+            <input
+                type="text"
+                placeholder="Warranty"
+                {...formik.getFieldProps('warranty')}
+                className="border p-2 rounded w-full mb-2"
+            />
+            {formik.touched.warranty && formik.errors.warranty && (
+                <div className="text-red-500">{formik.errors.warranty}</div>
+            )}
+
+            <input
+                type="text"
+                placeholder="Protection"
+                {...formik.getFieldProps('protection')}
+                className="border p-2 rounded w-full mb-2"
+            />
+            {formik.touched.protection && formik.errors.protection && (
+                <div className="text-red-500">{formik.errors.protection}</div>
+            )}
+
+            <div>
+                <h3 className="text-lg font-medium mb-2">Specifications</h3>
+                {formik.values.specifications.map((field, index) => (
+                    <div
+                        key={index}
+                        className="grid grid-cols-12 gap-4 items-center mb-3 py-3 bg-slate-100"
+                    >
+                        <div className="col-span-5">
+                            <input
+                                type="text"
+                                placeholder="Name"
+                                {...formik.getFieldProps(`specifications[${index}].name`)}
+                                className="border p-2 rounded w-full"
+                            />
+                            {formik.touched.specifications?.[index]?.name &&
+                                formik.errors.specifications?.[index]?.name && (
+                                    <div className="text-red-500">
+                                        {formik.errors.specifications[index].name}
+                                    </div>
+                                )}
+                        </div>
+                        <div className="col-span-5">
+                            <input
+                                type="text"
+                                placeholder="Value"
+                                {...formik.getFieldProps(`specifications[${index}].value`)}
+                                className="border p-2 rounded w-full"
+                            />
+                            {formik.touched.specifications?.[index]?.value &&
+                                formik.errors.specifications?.[index]?.value && (
+                                    <div className="text-red-500">
+                                        {formik.errors.specifications[index].value}
+                                    </div>
+                                )}
+                        </div>
+                        <div className="col-span-2">
+                            <button
+                                type="button"
+                                onClick={() => removeSpecification(index)}
+                                className="bg-red-500 text-white px-3 rounded"
+                            >
+                                Remove
+                            </button>
+                        </div>
                     </div>
+                ))}
+                <button
+                    type="button"
+                    onClick={addSpecification}
+                    className="bg-blue-500 text-white px-4 py-2 rounded"
+                >
+                    Add Specification
+                </button>
+            </div>
 
-                    <div>
-                        <label htmlFor="quantity" className="block text-sm font-medium text-slate-700 dark:text-slate-300 text-left">Quantity</label>
-                        <input
-                            type="number"
-                            id="quantity"
-                            name="quantity"
-                            placeholder="Enter quantity"
-                            className={`mt-1 block w-full px-3 py-2 border dark:bg-slate-700 dark:text-slate-200 ${formik.touched.quantity && formik.errors.quantity ? 'border-red-500' : 'border-gray-300'} rounded-md shadow-sm`}
-                            onChange={formik.handleChange}
-                            onBlur={formik.handleBlur}
-                            value={formik.values.quantity}
-                        />
-                        {formik.touched.quantity && formik.errors.quantity && (
-                            <p className="text-red-500 text-sm">{formik.errors.quantity}</p>
-                        )}
-                    </div>
-                </div>
-
-                {/* Warranty and Protection Fields */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
-                    <div>
-                        <label htmlFor="warranty" className="block text-sm font-medium text-slate-700 dark:text-slate-300 text-left">Warranty</label>
-                        <input
-                            type="text"
-                            id="warranty"
-                            name="warranty"
-                            placeholder="Enter Warranty"
-                            className="mt-1 block w-full px-3 py-2 border dark:bg-slate-700 dark:text-slate-200 rounded-md shadow-sm"
-                            onChange={formik.handleChange}
-                            onBlur={formik.handleBlur}
-                            value={formik.values.warranty}
-                        />
-                        {formik.touched.warranty && formik.errors.warranty && (
-                            <p className="text-red-500 text-sm">{formik.errors.warranty}</p>
-                        )}
-                    </div>
-                    <div>
-                        <label htmlFor="protection" className="block text-sm font-medium text-slate-700 dark:text-slate-300 text-left">Protection</label>
-                        <input
-                            type="text"
-                            id="protection"
-                            name="protection"
-                            placeholder="Enter Protection"
-                            className="mt-1 block w-full px-3 py-2 border dark:bg-slate-700 dark:text-slate-200 rounded-md shadow-sm"
-                            onChange={formik.handleChange}
-                            onBlur={formik.handleBlur}
-                            value={formik.values.protection}
-                        />
-                        {formik.touched.protection && formik.errors.protection && (
-                            <p className="text-red-500 text-sm">{formik.errors.protection}</p>
-                        )}
-                    </div>
-                </div>
-
-                {/* Colors Field */}
-                <div className="mb-4">
-                    <label htmlFor="colors" className="block text-sm font-medium text-slate-700 dark:text-slate-300 text-left">Colors (comma-separated)</label>
-                    <input
-                        type="text"
-                        id="colors"
-                        name="colors"
-                        placeholder="Enter colors"
-                        className="mt-1 block w-full px-3 py-2 border dark:bg-slate-700 dark:text-slate-200 rounded-md shadow-sm"
-                        onChange={(e) => formik.setFieldValue('colors', e.target.value.split(','))}
-                        onBlur={formik.handleBlur}
-                        value={formik.values.colors.join(',')}
-                    />
-                    {formik.touched.colors && formik.errors.colors && (
-                        <p className="text-red-500 text-sm">{formik.errors.colors}</p>
-                    )}
-                </div>
-
-                {/* Sizes Field */}
-                <div className="mb-4">
-                    <label htmlFor="sizes" className="block text-sm font-medium text-slate-700 dark:text-slate-300 text-left">Sizes (comma-separated)</label>
-                    <input
-                        type="text"
-                        id="sizes"
-                        name="sizes"
-                        placeholder="Enter sizes"
-                        className="mt-1 block w-full px-3 py-2 border dark:bg-slate-700 dark:text-slate-200 rounded-md shadow-sm"
-                        onChange={(e) => formik.setFieldValue('sizes', e.target.value.split(','))}
-                        onBlur={formik.handleBlur}
-                        value={formik.values.sizes.join(',')}
-                    />
-                    {formik.touched.sizes && formik.errors.sizes && (
-                        <p className="text-red-500 text-sm">{formik.errors.sizes}</p>
-                    )}
-                </div>
-
-                {/* Tags Field */}
-                <div className="mb-4">
-                    <label htmlFor="tags" className="block text-sm font-medium text-slate-700 dark:text-slate-300 text-left">Tags (comma-separated)</label>
-                    <input
-                        type="text"
-                        id="tags"
-                        name="tags"
-                        placeholder="Enter tags"
-                        className="mt-1 block w-full px-3 py-2 border dark:bg-slate-700 dark:text-slate-200 rounded-md shadow-sm"
-                        onChange={(e) => formik.setFieldValue('tags', e.target.value.split(','))}
-                        onBlur={formik.handleBlur}
-                        value={formik.values.tags.join(',')}
-                    />
-                    {formik.touched.tags && formik.errors.tags && (
-                        <p className="text-red-500 text-sm">{formik.errors.tags}</p>
-                    )}
-                </div>
-
-                {/* Photos Upload Section */}
-                <div className="mb-4">
-                    <div className="flex justify-start">
-                        <CldUploadWidget
-                            uploadPreset={process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET}
-                            signatureEndpoint="/api/signature/signature"
-                            onUpload={(result, widget) => {
-                                if (result && result.event === 'success') {
-                                    handleUploadSuccess(result);
+            <div>
+                <h3 className="text-lg font-medium mb-2">Tags</h3>
+                <div className="flex flex-col gap-2">
+                    {formik.values.tags.map((tag, index) => (
+                        <div key={index} className="grid grid-cols-6 gap-4 items-center">
+                            <div className="col-span-5">
+                                <input
+                                    type="text"
+                                    placeholder={`Tag ${index + 1}`}
+                                    {...formik.getFieldProps(`tags[${index}]`)}
+                                    className="border p-2 rounded w-full"
+                                />
+                                {formik.touched.tags?.[index] && formik.errors.tags?.[index] && (
+                                    <div className="text-red-500">{formik.errors.tags[index]}</div>
+                                )}
+                            </div>
+                            <button
+                                type="button"
+                                onClick={() =>
+                                    formik.setFieldValue(
+                                        'tags',
+                                        formik.values.tags.filter((_, i) => i !== index)
+                                    )
                                 }
-                            }}
+                                className="bg-red-500 text-white px-3 rounded"
+                            >
+                                Remove
+                            </button>
+                        </div>
+                    ))}
+                </div>
+                <button
+                    type="button"
+                    onClick={() => {
+                        const updatedTags = [...formik.values.tags, ''];
+                        formik.setFieldValue('tags', updatedTags);
+                    }}
+                    className="bg-blue-500 text-white px-4 py-2 rounded mt-3"
+                >
+                    Add Tag
+                </button>
+            </div>
+
+            <div>
+                <SearchableSelectField
+                    defaultName={product?.category?.name}
+                    label="Category"
+                    name="categoryId"
+                    options={categories}
+                    formik={formik}
+                />
+            </div>
+            <SearchableSelectField
+                defaultName={product?.brand?.name}
+                label="Brand"
+                name="brandId"
+                options={brands}
+                formik={formik}
+            />
+            {formik.touched.categoryId && formik.errors.categoryId && (
+                <div className="text-red-500">{formik.errors.categoryId}</div>
+            )}
+
+            <CldUploadWidget
+                signatureEndpoint={`${baseURL}/api/signature/signature`}
+                options={{ multiple: true }}
+                onUpload={handleImageUpload}
+            >
+                {({ open }) => (
+                    <button
+                        type="button"
+                        onClick={() => open()}
+                        className="px-4 py-2 flex items-center gap-2 rounded-full border bg-gray-100 hover:bg-gray-200"
+                    >
+                        <RiImageAddFill />
+                        Upload Images
+                    </button>
+                )}
+            </CldUploadWidget>
+
+            <div className="flex flex-wrap gap-2 mt-2">
+                {formik.values.images.map((image, index) => (
+                    <div key={index} className="relative border rounded">
+                        <Image
+                            src={image}
+                            width={200}
+                            height={200}
+                            alt={`Preview ${index}`}
+                            className="w-20 h-20 object-cover rounded"
+                        />
+                        <button
+                            type="button"
+                            onClick={() => removeImage(index)}
+                            className="absolute top-0 right-0 bg-red-500 text-white rounded-full px-2 py-1 text-xs"
                         >
-                            {({ open }) => (
-                                <button
-                                    type="button"
-                                    onClick={() => handleUpload(open)}
-                                    className="text-white bg-blue-500 hover:bg-blue-700 rounded px-4 py-2 "
-                                >
-                                    Upload Image
-                                </button>
-                            )}
-                        </CldUploadWidget>
+                            ×
+                        </button>
                     </div>
-                    {formik.touched.photos && formik.errors.photos && (
-                        <p className="text-red-500 text-sm text-left">{formik.errors.photos}</p>
-                    )}
-                    {imageUrls.length > 0 && (
-                        <ul className="mt-4 grid grid-cols-5 gap-3">
-                            {imageUrls.map((url, index) => (
-                                <li key={index} className="relative bg-white flex justify-center items-center">
-                                    <Image src={url} alt={`Product Image ${index + 1}`} width={100} height={100} />
+                ))}
+            </div>
+            {formik.touched.images && formik.errors.images && (
+                <div className="text-red-500">{formik.errors.images}</div>
+            )}
+
+            {/* ********** Variants ********** */}
+            <div>
+                <h3 className="text-lg font-medium mb-2">Variants</h3>
+                {formik.values.variants.map((variant, index) => (
+                    <div key={index} className="mb-4 border p-4 rounded">
+                        <h4 className="font-medium mb-2">Variant {index + 1}</h4>
+
+                        {/* Attributes Section */}
+                        <h4 className="font-medium)’mb-2">Attributes</h4>
+                        {formik.values.variants[index].attributes.map((attribute, attrIndex) => (
+                            <div
+                                key={attrIndex}
+                                className="grid grid-cols-12 gap-4 items-center mb-3 py-2 bg-slate-200 rounded"
+                            >
+                                <div className="col-span-5">
+                                    <input
+                                        type="text"
+                                        placeholder="Attribute Name"
+                                        {...formik.getFieldProps(
+                                            `variants[${index}].attributes[${attrIndex}].name`
+                                        )}
+                                        className="border p-2 rounded w-full"
+                                    />
+                                    {formik.touched.variants?.[index]?.attributes?.[attrIndex]?.name &&
+                                        formik.errors.variants?.[index]?.attributes?.[attrIndex]?.name && (
+                                            <div className="text-red-500 text-sm">
+                                                {formik.errors.variants[index].attributes[attrIndex].name}
+                                            </div>
+                                        )}
+                                </div>
+                                <div className="col-span-5">
+                                    <input
+                                        type="text"
+                                        placeholder="Attribute Value"
+                                        {...formik.getFieldProps(
+                                            `variants[${index}].attributes[${attrIndex}].value`
+                                        )}
+                                        className="border p-2 rounded w-full"
+                                    />
+                                    {formik.touched.variants?.[index]?.attributes?.[attrIndex]?.value &&
+                                        formik.errors.variants?.[index]?.attributes?.[attrIndex]?.value && (
+                                            <div className="text-red-500 text-sm">
+                                                {formik.errors.variants[index].attributes[attrIndex].value}
+                                            </div>
+                                        )}
+                                </div>
+                                <div className="col-span-2">
                                     <button
                                         type="button"
-                                        className="absolute top-0 right-0 w-5 h-5 rounded-full p-1"
-                                        onClick={() => handleRemoveImage(index)}
+                                        onClick={() => removeAttribute(index, attrIndex)}
+                                        className="bg-red-500 text-white px-3 rounded"
                                     >
-                                        <IoCloseSharp />
+                                        Remove
                                     </button>
-                                </li>
+                                </div>
+                            </div>
+                        ))}
+                        <button
+                            type="button"
+                            onClick={() => addAttribute(index)}
+                            className="bg-blue-500 text-white px-4 py-2 rounded"
+                        >
+                            Add Attribute
+                        </button>
+
+                        {/* Price Input */}
+                        <input
+                            type="number"
+                            placeholder="Price"
+                            {...formik.getFieldProps(`variants[${index}].price`)}
+                            className="border p-2 rounded w-full my-2"
+                        />
+                        {formik.touched.variants?.[index]?.price &&
+                            formik.errors.variants?.[index]?.price && (
+                                <div className="text-red-500">{formik.errors.variants[index].price}</div>
+                            )}
+
+                        {/* Stock Input */}
+                        <input
+                            type="number"
+                            placeholder="Stock"
+                            {...formik.getFieldProps(`variants[${index}].stock`)}
+                            className="border p-2 rounded w-full my-2"
+                        />
+                        {formik.touched.variants?.[index]?.stock &&
+                            formik.errors.variants?.[index]?.stock && (
+                                <div className="text-red-500">{formik.errors.variants[index].stock}</div>
+                            )}
+
+                        {/* Availability Dropdown */}
+                        <select
+                            {...formik.getFieldProps(`variants[${index}].availability`)}
+                            className="border p-2 rounded w-full my-2"
+                        >
+                            <option value="IN_STOCK">In Stock</option>
+                            <option value="OUT_OF_STOCK">Out of Stock</option>
+                        </select>
+                        {formik.touched.variants?.[index]?.availability &&
+                            formik.errors.variants?.[index]?.availability && (
+                                <div className="text-red-500">
+                                    {formik.errors.variants[index].availability}
+                                </div>
+                            )}
+
+                        {/* Variant Images */}
+                        <div className="mb-2">
+                            <h5 className="font-medium">Images</h5>
+                            <CldUploadWidget
+                                signatureEndpoint={`${baseURL}/api/signature/signature`}
+                                options={{ multiple: true }}
+                                onUpload={(result) => handleVariantImageUpload(index, result)}
+                            >
+                                {({ open }) => (
+                                    <button
+                                        type="button"
+                                        onClick={() => open()}
+                                        className="px-4 py-2 flex items-center gap-2 rounded-full border bg-gray-100 hover:bg-gray-200"
+                                    >
+                                        <RiImageAddFill />
+                                        Upload Images
+                                    </button>
+                                )}
+                            </CldUploadWidget>
+                        </div>
+
+                        <div className="flex flex-wrap gap-2 mt-2">
+                            {variant.images.map((image, imgIndex) => (
+                                <div key={imgIndex} className="relative">
+                                    <Image
+                                        src={image}
+                                        height={200}
+                                        width={200}
+                                        alt={`Variant ${index + 1} Image ${imgIndex + 1}`}
+                                        className="w-20 h-20 object-cover rounded"
+                                    />
+                                    <button
+                                        type="button"
+                                        onClick={() => {
+                                            const updatedImages = variant.images.filter((_, i) => i !== imgIndex);
+                                            updateVariant(index, 'images', updatedImages);
+                                        }}
+                                        className="absolute top-0 right-0 bg-red-500 text-white rounded-full px-2 py-1 text-xs"
+                                    >
+                                        ×
+                                    </button>
+                                </div>
                             ))}
-                        </ul>
-                    )}
-                </div>
-
-                {/* Dimensions */}
-                <div className="mb-4 col-span-2">
-                    <label className="block text-gray-700 dark:text-slate-300 text-left">Dimension</label>
-                    <div className="grid grid-cols-6 gap-5 border-2 p-1 rounded-xl">
-                        <div className="mb-4 md:col-span-2 col-span-6">
-                            <label className="block text-gray-700 dark:text-slate-300 text-left">Height</label>
-                            <input
-                                type="number"
-                                name="dimension.height"
-                                value={formik.values.dimension?.height || ""} // Handle undefined or empty values
-                                onChange={formik.handleChange}
-                                onBlur={formik.handleBlur}
-                                placeholder="Height"
-                                className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-slate-700 dark:border-slate-600 dark:text-slate-300"
-                            />
-                            {formik.errors.dimension?.height && (
-                                <div className="text-red-600">{formik.errors.dimension?.height}</div>
-                            )}
                         </div>
-
-
-                        <div className="mb-4 md:col-span-2 col-span-6">
-                            <label className="block text-gray-700 dark:text-slate-300 text-left">Width</label>
-                            <input
-                                type="number"
-                                name="dimension.width"
-                                value={formik.values.dimension?.width || ''} // Handle undefined or empty values
-                                onChange={formik.handleChange}
-                                onBlur={formik.handleBlur}
-                                placeholder="Width"
-                                className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-slate-700 dark:border-slate-600 dark:text-slate-300"
-                            />
-                            {formik.errors.dimension?.width && (
-                                <div className="text-red-600">{formik.errors.dimension?.width}</div>
+                        {formik.touched.variants?.[index]?.images &&
+                            formik.errors.variants?.[index]?.images && (
+                                <div className="text-red-500">{formik.errors.variants[index].images}</div>
                             )}
-                        </div>
-                        <div className="mb-4 md:col-span-2 col-span-6">
-                            <label className="block text-gray-700 dark:text-slate-300 text-left">Length</label>
-                            <input
-                                type="number"
-                                name="dimension.length"
-                                value={formik.values.dimension?.length || ''} // Handle undefined or empty values
-                                onChange={formik.handleChange}
-                                onBlur={formik.handleBlur}
-                                placeholder="Length"
-                                className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 dark:bg-slate-700 dark:border-slate-600 dark:text-slate-300"
-                            />
-                            {formik.errors.dimension?.length && (
-                                <div className="text-red-600">{formik.errors.dimension?.length}</div>
-                            )}
-                        </div>
 
-
+                        <button
+                            type="button"
+                            onClick={() => removeVariant(index)}
+                            className="bg-red-500 text-white px-3 rounded mt-2"
+                        >
+                            Remove Variant
+                        </button>
                     </div>
-                </div>
+                ))}
 
-
-                {/* Discount Percentage Field */}
-                <div className="mb-4">
-                    <label htmlFor="discountPercentage"
-                        className="block text-sm font-medium text-slate-700 dark:text-slate-300 text-left">Discount
-                        Percentage</label>
-                    <input
-                        type="number"
-                        id="discountPercentage"
-                        name="discountPercentage"
-                        placeholder="Enter discount percentage"
-                        className={`mt-1 block w-full px-3 py-2 border dark:bg-slate-700 dark:text-slate-200 ${formik.touched.discountPercentage && formik.errors.discountPercentage ? 'border-red-500' : 'border-gray-300'} rounded-md shadow-sm`}
-                        onChange={formik.handleChange}
-                        onBlur={formik.handleBlur}
-                        value={formik.values.discountPercentage}
-                    />
-                    {formik.touched.discountPercentage && formik.errors.discountPercentage && (
-                        <p className="text-red-500 text-sm">{formik.errors.discountPercentage}</p>
-                    )}
-                </div>
-
-                {/* Tax Percentage Field */}
-                <div className="mb-4">
-                    <label htmlFor="taxPercentage"
-                        className="block text-sm font-medium text-slate-700 dark:text-slate-300 text-left">Tax
-                        Percentage</label>
-                    <input
-                        type="number"
-                        id="taxPercentage"
-                        name="taxPercentage"
-                        placeholder="Enter Tax Percentage"
-                        className={`mt-1 block w-full px-3 py-2 border dark:bg-slate-700 dark:text-slate-200 ${formik.touched.taxPercentage && formik.errors.taxPercentage ? 'border-red-500' : 'border-gray-300'} rounded-md shadow-sm`}
-                        onChange={formik.handleChange}
-                        onBlur={formik.handleBlur}
-                        value={formik.values.taxPercentage}
-                    />
-                    {formik.touched.taxPercentage && formik.errors.taxPercentage && (
-                        <p className="text-red-500 text-sm">{formik.errors.taxPercentage}</p>
-                    )}
-                </div>
-
-                {/* Delivery Fee Field */}
-                <div className="mb-4">
-                    <label htmlFor="deliveryFee"
-                        className="block text-sm font-medium text-slate-700 dark:text-slate-300 text-left">Delivery
-                        Fee</label>
-                    <input
-                        type="number"
-                        id="deliveryFee"
-                        name="deliveryFee"
-                        placeholder="Enter Delivery Fee"
-                        className={`mt-1 block w-full px-3 py-2 border dark:bg-slate-700 dark:text-slate-200 ${formik.touched.deliveryFee && formik.errors.deliveryFee ? 'border-red-500' : 'border-gray-300'} rounded-md shadow-sm`}
-                        onChange={formik.handleChange}
-                        onBlur={formik.handleBlur}
-                        value={formik.values.deliveryFee}
-                    />
-                    {formik.touched.deliveryFee && formik.errors.deliveryFee && (
-                        <p className="text-red-500 text-sm">{formik.errors.deliveryFee}</p>
-                    )}
-                </div>
-
-                {/* Brand and Category Selection */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
-                    <div>
-
-                        <SearchableSelect
-                            label="Brand"
-                            name="brandId"
-                            defaultName={initialData?.brand?.name}
-                            options={brands}
-                            formik={formik}
-                        />
-                        {formik.touched.brandId && formik.errors.brandId && (
-                            <p className="text-red-500 text-sm">{formik.errors.brandId}</p>
-                        )}
-                    </div>
-
-                    <div>
-
-                        <SearchableSelectField
-                            label="Category"
-                            name="categoryId"
-                            defaultName={initialData?.category?.name}
-                            options={categories}
-                            formik={formik}
-                        />
-                    </div>
-                    {formik.touched.categoryId && formik.errors.categoryId && (
-                        <p className="text-red-500 text-sm">{formik.errors.categoryId}</p>
-                    )}
-                </div>
-
-                {/* Submit Button */}
-                <button type="submit"
-                    className="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                    {formik.isSubmitting ? "Updating..." : " Update Product"}
+                <button
+                    type="button"
+                    onClick={addVariant}
+                    className="bg-blue-500 text-white px-4 py-2 rounded"
+                >
+                    Add Variant
                 </button>
-            </form>
+            </div>
+
+            <button
+                type="submit"
+                disabled={isLoading}
+                className={`bg-green-500 text-white px-4 py-2 rounded mt-5 ${isLoading && 'opacity-50'}`}
+                onClick={formik.handleSubmit}
+            >
+                Update Product
+            </button>
         </div>
     );
 };

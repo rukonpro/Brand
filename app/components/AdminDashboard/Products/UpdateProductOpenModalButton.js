@@ -20,7 +20,7 @@ const UpdateProductOpenModalButton = ({mutate,product,categories,brands}) => {
                 handleCloseModal={handleCloseModal}
                 title="Update Product">
                <ProductUpdateForm
-                   initialData={product}
+                   product={product}
                    categories={categories}
                    brands={brands}
                    mutate={mutate}
