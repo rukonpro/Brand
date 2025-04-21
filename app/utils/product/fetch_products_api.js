@@ -6,7 +6,12 @@ import baseURL from "@/app/utils/baseURL";
 export const getProducts = async (params)=>{
     try {
         return await axios.get(`${baseURL}/api/product/findMany`,{
-            params:params
+            params:params,
+            headers:{
+                'Cache-Control': 'no-cache',
+                Pragma: 'no-cache',
+                Expires: '0',
+            }
         });
     }catch(error){
        return {error}
@@ -17,7 +22,14 @@ export const getProducts = async (params)=>{
 
 export const getDetailsProduct= async ({id})=>{
     try {
-        return await axios.get(`${baseURL}/api/product/${id}/details`)
+        const response = await axios.get(`${baseURL}/api/product/${id}/details`, {
+            headers: {
+                'Cache-Control': 'no-cache',
+                Pragma: 'no-cache',
+                Expires: '0',
+            },
+        });
+        return { data: response.data };
     }catch (error) {
        return {error}
     }
