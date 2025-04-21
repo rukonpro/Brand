@@ -57,7 +57,7 @@ export default async function handler(req, res) {
                     }
                 },
             });
-
+            res.setHeader('Cache-Control', 's-maxage=60, stale-while-revalidate');
             res.status(200).json(products);
         } catch (error) {
             console.error(error); // Log error for debugging
