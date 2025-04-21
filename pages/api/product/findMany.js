@@ -6,7 +6,7 @@ export default async function handler(req, res) {
     if (req.method === 'GET') {
         try {
             // Optionally handle query parameters for filtering, sorting, or pagination
-            const { name, categoryId, categoryName, brandId, brandName, availability, status, productIds, page = 1, pageSize = 10 } = req.query;
+            const { name, categoryId, categoryName, brandId, brandName, availability, status, productIds, page = 1, limit = 10 } = req.query;
 
             // Initialize the whereCondition
             let whereCondition = {
@@ -44,8 +44,8 @@ export default async function handler(req, res) {
                         }
                     })
                 },
-                skip: (page - 1) * pageSize,  // Pagination: skip records
-                take: parseInt(pageSize),     // Pagination: limit records
+                skip: (page - 1) * limit,  // Pagination: skip records
+                take: parseInt(limit),     // Pagination: limit records
                 include: {
                     brand: true,   // Include brand details
                     category: true, // Include category details
@@ -57,7 +57,6 @@ export default async function handler(req, res) {
                     }
                 },
             });
-            res.setHeader('Cache-Control', 's-maxage=60, stale-while-revalidate');
             res.status(200).json(products);
         } catch (error) {
             console.error(error); // Log error for debugging

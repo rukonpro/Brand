@@ -2,10 +2,24 @@ import axios from "axios";
 import baseURL from "@/app/utils/baseURL";
 
 export const getAllCategory= async (params)=> {
+
     try {
-        return await axios.get(`${baseURL}/api/category/findMany`,{
-            params:params,
+
+        const url =await new URL(`${baseURL}/api/category/findMany`);
+        if (params) {
+            Object.entries(params).forEach(([key, value]) =>
+                url.searchParams.append(key, value.toString())
+            );
+        }
+
+        const res = await fetch(url.toString(), {
+            cache: 'no-store', // ensures SSR (no caching)
         });
+
+        return {
+            data: await res.json()
+        };
+
     } catch (error) {
         return {
             error
@@ -15,7 +29,13 @@ export const getAllCategory= async (params)=> {
 
 export const getCategoryById= async (id)=> {
     try {
-        return await axios.get(`${baseURL}/api/category/${id}/details`);
+        const res = await fetch(`${baseURL}/api/category/${id}/details`,{
+            cache: 'no-store',
+        });
+        return {
+            data: await res.json()
+        }
+
     } catch (error) {
         return {
             error

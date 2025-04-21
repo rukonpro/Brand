@@ -5,16 +5,22 @@ import baseURL from "@/app/utils/baseURL";
 
 export const getProducts = async (params)=>{
     try {
-        return await axios.get(`${baseURL}/api/product/findMany`,{
-            params:params,
-            headers:{
-                'Cache-Control': 'no-cache',
-                Pragma: 'no-cache',
-                Expires: '0',
-            }
+        const url =await new URL(`${baseURL}/api/product/findMany`);
+        if (params) {
+            Object.entries(params).forEach(([key, value]) =>
+                url.searchParams.append(key, value.toString())
+            );
+        }
+
+        const res = await fetch(url.toString(), {
+            cache: 'no-store', // ensures SSR (no caching)
         });
-    }catch(error){
-       return {error}
+
+        return {
+            data: await res.json()
+        };
+    } catch (error) {
+        return { error };
     }
 };
 
@@ -22,14 +28,12 @@ export const getProducts = async (params)=>{
 
 export const getDetailsProduct= async ({id})=>{
     try {
-        const response = await axios.get(`${baseURL}/api/product/${id}/details`, {
-            headers: {
-                'Cache-Control': 'no-cache',
-                Pragma: 'no-cache',
-                Expires: '0',
-            },
+        const res = await fetch(`${baseURL}/api/product/${id}/details`,{
+            cache: 'no-store',
         });
-        return { data: response.data };
+        return {
+            data: await res.json()
+        }
     }catch (error) {
        return {error}
     }
