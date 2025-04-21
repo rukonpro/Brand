@@ -14,7 +14,7 @@ const RecommendedItems = async () => {
     }
     const products = await getProducts(params);
 
-console.log(products);
+
     return (
         <div className='pt-5 sm:px-3  '>
             <div className='max-w-[1200px] mx-auto md:border-2 pb-10 md:px-5 rounded-lg dark:border-slate-700 backdrop-blur-3xl'>
