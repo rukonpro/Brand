@@ -2,7 +2,7 @@ import React from 'react';
 import Image from 'next/image';
 import Countdown from "@/app/components/Countdown/Countdown";
 const OfferCard = ({ offer }) => {
-
+console.log(offer);
     return (
         <div className="w-40 h-[240px] flex flex-col justify-between  p-2 ">
 

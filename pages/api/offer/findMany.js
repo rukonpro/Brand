@@ -1,84 +1,103 @@
-import { PrismaClient } from '@prisma/client';
+import {PrismaClient} from '@prisma/client';
 
 const prisma = new PrismaClient();
 
 
 export default async function handler(req, res) {
-    if (req.method === 'GET') {
-        try {
-            const {
-                discountType,
-                isActive,
-                startDate,
-                endDate,
-                productId,
-                page = 1,
-                limit = 10
-            } = req.query;
+    const { method } = req;
+    const { discountType, isActive, productId, startDate, endDate, page, pageSize } = req.query;
 
-            // Build the query object based on the provided filters
-            const filters = {};
+    if (method === 'GET') {
+        try {
+            // Build filter conditions
+            const where = {};
 
             if (discountType) {
-                filters.discountType = discountType; // PERCENTAGE or FLAT
+                if (discountType !== 'PERCENTAGE' && discountType !== 'FLAT') {
+                    return res.status(400).json({ success: false, error: 'Invalid discountType. Must be PERCENTAGE or FLAT.' });
+                }
+                where.discountType = discountType;
             }
 
             if (isActive !== undefined) {
-                filters.isActive = isActive === 'true'; // Convert string to boolean
-            }
-
-            if (startDate) {
-                filters.startDate = {
-                    gte: new Date(startDate), // gte = greater than or equal
-                };
-            }
-
-            if (endDate) {
-                filters.endDate = {
-                    lte: new Date(endDate), // lte = less than or equal
-                };
+                where.isActive = isActive === 'true' || isActive === '1';
             }
 
             if (productId) {
-                filters.productId = productId;
+                const product = await prisma.product.findUnique({
+                    where: { id: productId },
+                });
+                if (!product) {
+                    return res.status(404).json({ success: false, error: 'Product not found.' });
+                }
+                where.productId = productId;
             }
 
-            // Calculate pagination variables
-            const skip = (parseInt(page) - 1) * parseInt(limit);
-            const take = parseInt(limit);
+            if (startDate || endDate) {
+                where.startDate = {};
+                where.endDate = {};
+                if (startDate) {
+                    if (isNaN(new Date(startDate).getTime())) {
+                        return res.status(400).json({ success: false, error: 'Invalid startDate format.' });
+                    }
+                    where.startDate.gte = new Date(startDate);
+                }
+                if (endDate) {
+                    if (isNaN(new Date(endDate).getTime())) {
+                        return res.status(400).json({ success: false, error: 'Invalid endDate format.' });
+                    }
+                    where.endDate.lte = new Date(endDate);
+                }
+            }
 
-            // Fetch offers based on filters and pagination
-            const offers = await prisma.offer.findMany({
-                where: filters,
-                include: {
-                    product: true, // Include related product data if needed
-                },
-                skip,
-                take,
-            });
+            // Pagination parameters
+            const pageNum = Number(page) || 1;
+            const pageSizeNum = Number(pageSize) || 10;
+            if (pageNum < 1 || pageSizeNum < 1) {
+                return res.status(400).json({ success: false, error: 'Invalid page or pageSize. Must be positive numbers.' });
+            }
+            const skip = (pageNum - 1) * pageSizeNum;
+            const take = pageSizeNum;
 
-            // Count the total number of offers
-            const totalOffers = await prisma.offer.count({ where: filters });
+            // Fetch valid product IDs to filter out orphaned offers
+            const validProductIds = (await prisma.product.findMany({ select: { id: true } })).map(p => p.id);
+            where.productId = { in: validProductIds };
 
-            res.status(200).json({
-                success: true,
-                data: offers,
-                meta: {
-                    currentPage: parseInt(page),
-                    totalPages: Math.ceil(totalOffers / limit),
-                    totalOffers,
-                    limit: parseInt(limit),
-                },
-            });
+            // Fetch offers with pagination
+            const [offers, totalCount] = await Promise.all([
+                prisma.offer.findMany({
+                    where,
+                    include: {
+                        Variant: true, // Include Variant relation
+                    },
+                    orderBy: { startDate: 'desc' },
+                    skip,
+                    take,
+                }),
+                prisma.offer.count({ where }),
+            ]);
+
+            // Calculate pagination metadata
+            const totalPages = Math.ceil(totalCount / pageSizeNum);
+            const pagination = {
+                page: pageNum,
+                pageSize: pageSizeNum,
+                totalCount,
+                totalPages,
+            };
+
+            // Prevent caching to ensure fresh data
+            res.setHeader('Cache-Control', 'no-store');
+
+            res.status(200).json({ success: true, offers, pagination });
         } catch (error) {
-            res.status(500).json({
-                success: false,
-                message: 'Failed to fetch offers',
-            });
+            console.error(error);
+            res.status(500).json({ success: false, error: 'Failed to fetch offers.' });
+        } finally {
+            await prisma.$disconnect();
         }
     } else {
         res.setHeader('Allow', ['GET']);
-        res.status(405).end(`Method ${req.method} Not Allowed`);
+        res.status(405).end(`Method ${method} Not Allowed`);
     }
 }
-
