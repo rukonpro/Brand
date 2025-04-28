@@ -20,7 +20,7 @@ const RecommendedItems = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [hasMore, setHasMore] = useState(productCache.hasMore);
 
-    const limit = 2;
+    const limit = 12;
 
     // Fetch products based on page number
     const fetchProducts = async (pageNum) => {
