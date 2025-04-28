@@ -134,7 +134,7 @@ export async function getStaticPaths() {
     const res = await getProducts({
         limit: 1000,
     });
-    const products = res?.data || []
+    const products = res?.data?.data || []
 
     // Get the paths we want to pre-render based on posts
     const paths = products?.map((product) => ({

@@ -5,19 +5,18 @@ export const SkeletonRecommendedItemCard = () => {
         <div className='p-5 sm:border-2 sm:rounded-lg bg-white dark:bg-slate-800 dark:border-slate-700 animate-pulse'>
             <div className='flex justify-center'>
                 {/* Placeholder for the image */}
-                <div className="w-28 h-28 bg-slate-300 dark:bg-slate-600 rounded-lg"></div>
+                <div
+                    className="  h-28 w-full bg-slate-300 dark:bg-slate-600 rounded-lg"></div>
             </div>
-            <div className="pt-5">
+            <div className="pt-3">
                 {/* Placeholder for the price */}
-                <div className="h-6 bg-slate-300 dark:bg-slate-600 rounded w-24"></div>
+                <div className="h-7 bg-slate-300 dark:bg-slate-600 rounded w-24"></div>
             </div>
             {/* Placeholder for the product name */}
-            <div className="pt-1">
-                <div className="h-4 bg-slate-300 dark:bg-slate-600 rounded w-full"></div>
+            <div className="pt-2">
+                <div className="h-5 bg-slate-300 dark:bg-slate-600 rounded w-full"></div>
             </div>
-            <div className="pt-1">
-                <div className="h-4 bg-slate-300 dark:bg-slate-600 rounded w-3/4"></div>
-            </div>
+
         </div>
     );
 };

@@ -12,6 +12,7 @@ import Footer from "@/app/components/Footer/Footer";
 import CategoriesHome from "./components/CategoriesHome/CategoriesHome";
 import Loader from "./Loader";
 import Offers from "./components/offers/Offers";
+import Brands from "@/app/components/Brands/Brands";
 
 
 
@@ -44,23 +45,15 @@ export default function Home() {
                 <Banner />
             </Suspense>
 
-            {/*<Suspense fallback={<Loader/>}>*/}
-
             <Offers />
 
-            <Suspense fallback={<Loader />}>
-                <CategoriesHome />
-            </Suspense >
-            {/* <Suspense fallback={<Loader />}>
-                <Brands />
-            </Suspense> */}
-            {/*</Suspense>*/}
+            <CategoriesHome />
+
             <Suspense fallback={<SkeletonRecommendedItemsSection />}>
                 <RecommendedItems />
             </Suspense>
-            {/*<Suspense fallback={<Loader/>}>*/}
-            {/*    <SourcesProductsLayout />*/}
-            {/*</Suspense>*/}
+            <Brands />
+
             <Requests />
 
             <OurExtraServices />

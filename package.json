@@ -15,6 +15,10 @@
     "postbuild": "next-sitemap"
   },
   "dependencies": {
+    "@glidejs/glide": "^3.7.1",
+    "@splidejs/react-splide": "^0.7.12",
+    "@splidejs/splide": "^4.1.4",
+    "@splidejs/splide-extension-auto-scroll": "^0.5.3",
     "@vercel/analytics": "^1.2.2",
     "ai": "^3.3.37",
     "axios": "^1.6.8",
