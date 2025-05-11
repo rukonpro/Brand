@@ -4,14 +4,14 @@ import Link from "next/link";
 import undraw_posting_photo_re_plk8 from "@/public/images/undraw_posting_photo_re_plk8.svg"
 import removeFormLaterItemHandler from "@/app/components/SavedForLaterItems/removeFormLaterItemHandler";
 import { IoCloseSharp } from "react-icons/io5";
-const SavedForLaterCard = ({ product }) => {
+const SavedForLaterCard = ({ product,handleDeleteForLater,id }) => {
     return (
         <div className="lg:border-2 border-blue-200 md:rounded-lg p-3 bg-white dark:bg-slate-700 dark:border-slate-700 relative">
             <button
                 type="button"
                 className="text-red-500  absolute right-0 top-0 z-10"
                 onClick={() => {
-                    removeFormLaterItemHandler(product?.id);
+                    handleDeleteForLater(id);
                 }}
             >
                 <IoCloseSharp size={25} />

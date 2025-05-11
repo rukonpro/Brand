@@ -4,7 +4,7 @@ import {getProducts} from "@/app/utils/product/fetch_products_api";
 
 const Page =async () => {
     const products= await getProducts();
-    console.log(products);
+
     return (
         <div >
             <ProductsTable  products={products?.data}/>

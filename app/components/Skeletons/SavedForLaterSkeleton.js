@@ -7,7 +7,7 @@ const SavedForLaterSkeleton = () => {
             <h2 className="text-lg font-bold text-gray-700 dark:text-slate-400 mb-4">Saved for later</h2>
 
             {/* Saved Items Grid */}
-            <div className="grid grid-cols-3 gap-4">
+            <div className="grid grid-cols-4 gap-4">
                 {/* Skeleton for each saved item */}
                 {[1, 2, 3].map((item) => (
                     <div key={item} className="relative border border-gray-200 p-4 rounded-md dark:border-slate-600">

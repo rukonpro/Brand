@@ -5,7 +5,7 @@ import RecommendedItemsCard from './RecommendedItemsCard';
 import Link from 'next/link';
 import { getProducts } from '@/app/utils/product/fetch_products_api';
 import { SkeletonRecommendedItemCard } from '@/app/components/Skeletons/SkeletonRecommendedItemCard';
-import Loader from '@/app/Loader';
+
 
 // In-memory cache to persist products across page navigations
 const productCache = {
@@ -121,11 +121,7 @@ const RecommendedItems = () => {
                         </button>
                     </div>
                 )}
-                {isLoading && (
-                    <ul className="grid lg:grid-cols-6 md:grid-cols-5 sm:grid-cols-4 grid-cols-3 gap-0.5">
 
-                    </ul>
-                )}
             </div>
         </div>
     );
