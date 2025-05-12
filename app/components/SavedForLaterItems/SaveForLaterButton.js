@@ -91,6 +91,7 @@ const SaveForLaterButton = ({product}) => {
 // Find SaveForLater ID for deletion
     // eslint-disable-next-line react-hooks/exhaustive-deps
     const getSaveId = async () => {
+        if (status !== "authenticated") return;
         try {
             const response = await fetch('/api/saveForLater/save-for-later',{
                 method: 'GET',
