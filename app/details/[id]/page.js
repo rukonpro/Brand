@@ -127,20 +127,5 @@ const Details = async ({ params }) => {
 };
 
 
+
 export default Details;
-
-
-export async function getStaticPaths() {
-    const res = await getProducts({
-        limit: 1000,
-    });
-    const products = res?.data?.data || []
-
-    // Get the paths we want to pre-render based on posts
-    const paths = products?.map((product) => ({
-        params: { id: product?.id }, // must be string type for dynamic routes
-    }));
-
-    // Fallback enables dynamic rendering for paths not generated during build
-    return { paths, fallback: false };
-}
