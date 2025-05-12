@@ -11,6 +11,7 @@ import Loader from '@/app/Loader';
 import Navbar from '@/app/components/navbar/navbar';
 import Image from 'next/image';
 import NotFoundImage from '@/public/images/not-found.png';
+import RecommendedItemsCard from "@/app/components/RecommendedItems/RecommendedItemsCard";
 
 // In-memory cache to persist products across page navigations
 const productCache = new Map(); // Map to handle different categoryId keys
@@ -136,16 +137,16 @@ const Source = ({ initialProducts, pagination, category, categoryId }) => {
                                 </div>
                             </div>
                         ) : (
-                            <ul className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 gap-0.5 md:gap-4 pt-10">
+                            <ul className="grid lg:grid-cols-6 md:grid-cols-5 sm:grid-cols-4 grid-cols-3 gap-0.5 pt-10">
                                 {products?.map((product) => (
                                     <li
                                         key={product.id}
-                                        className="bg-white dark:bg-slate-800 dark:border-slate-700 md:border-2 border-blue-200 md:rounded-lg p-3 flex-1 flex flex-col justify-between"
+
                                     >
                                         <Link href={`/details/${product?.id}`}>
-                                            <RelatedProductCard product={product} />
+                                            <RecommendedItemsCard product={product} />
                                         </Link>
-                                        <AddToCartButton product={product} />
+
                                     </li>
                                 ))}
                             </ul>
