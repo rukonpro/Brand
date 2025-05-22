@@ -55,7 +55,7 @@ const Banner =async () => {
             </div>
 
             <div className="max-w-[1200px] mx-auto pt-4 md:hidden block px-3">
-                <Link href="/allCategory">All Categories</Link> |  <Link href="/">Hot offers</Link> |  <Link href="/">Gift Boxes</Link>
+                <Link href="/allCategory">All Categories</Link> |  <Link href="/hotOffer">Hot offers</Link> |  <Link href="/">Gift Boxes</Link>
             </div>
 
         </div>
