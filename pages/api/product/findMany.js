@@ -95,7 +95,6 @@ export default async function handler(req, res) {
                 }
             });
         } catch (error) {
-            console.error(error); // Log error for debugging
             res.status(500).json({ error: 'An error occurred while fetching the products.' });
         } finally {
             await prisma.$disconnect(); // Ensure Prisma client disconnects

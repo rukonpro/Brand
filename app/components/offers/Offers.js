@@ -4,7 +4,6 @@ import Image from 'next/image';
 import { Splide, SplideSlide } from '@splidejs/react-splide';
 import '@splidejs/react-splide/css';
 import { getOffers } from '@/app/utils/offer/fetch_offer_api';
-import {DealsSkeleton} from "@/app/components/Skeletons/OfferSkeletons";
 import Link from "next/link";
 
 
@@ -12,15 +11,15 @@ const OfferSlider = () => {
     const [offers, setOffers] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-
+    const pageSize=10;
     useEffect(() => {
         const fetchOffers = async () => {
             try {
-                const data = await getOffers({ page: 1, pageSize: 10, isActive: true });
+                const data = await getOffers({ currentPage: 1, pageSize: pageSize, isActive: true });
                 if (data.success) {
-                    setOffers(data.offers);
+                    setOffers(data?.offers);
                 } else {
-                    setError(data.error);
+                    setError(data?.error);
                 }
             } catch (err) {
                 setError('Failed to load offers');
@@ -35,26 +34,13 @@ const OfferSlider = () => {
         return price - (price * discountValue) / 100;
     };
 
-    if (loading) {
-        return (
-            <div className="sm:px-3">
-                <div className="max-w-[1200px] mx-auto mt-5">
-                    <h1 className="text-2xl py-5 sm:px-0 px-4">Deals and offers</h1>
-                    <div className="sm:rounded-lg bg-gray-200 dark:bg-slate-700 border-2 border-gray-200 dark:border-slate-700 overflow-hidden">
-                        <Suspense fallback={<div>Loading skeleton...</div>}>
-                            <DealsSkeleton />
-                        </Suspense>
-                    </div>
-                </div>
-            </div>
-        );
-    }
 
-    if (error) {
+
+    if (!loading && error) {
         return <div className="py-8 text-red-500 text-center">Error: {error}</div>;
     }
 
-    if (!offers.length) {
+    if (!loading && !offers.length) {
         return <div className="py-8 text-center">No active offers available</div>;
     }
 
@@ -81,7 +67,25 @@ const OfferSlider = () => {
                         }}
                         aria-label="Offer Slider"
                     >
-                        {offers.map((offer) =>
+
+                        {
+                            loading? Array.from({ length: 6 }).map((_, i) => (
+                                        <SplideSlide key={i}>
+                                            <div
+                                                className="md:p-5 p-2 h-full  bg-white dark:bg-slate-800 dark:border-slate-700 relative"
+                                            >
+                                                <div className="absolute z-10 top-2 left-2 bg-gray-200 dark:bg-slate-600 h-6 w-16 rounded animate-pulse"></div>
+                                                <div className="relative">
+                                                    <div className="w-auto h-40 bg-gray-200 dark:bg-slate-600 rounded animate-pulse"></div>
+                                                </div>
+                                                <div className="mt-2 flex items-center space-x-2">
+                                                    <div className="h-6 w-20 bg-gray-200 dark:bg-slate-600 rounded animate-pulse"></div>
+                                                    <div className="h-4 w-16 bg-gray-200 dark:bg-slate-600 rounded animate-pulse"></div>
+                                                </div>
+                                            </div>
+                                        </SplideSlide>
+                                    )):
+                            offers.map((offer) =>
                             offer.Variant.map((variant) => (
 
                                   <SplideSlide
@@ -89,7 +93,6 @@ const OfferSlider = () => {
                                       className="w-[calc(50%-4px)] sm:w-[calc(33.33%-5.33px)] md:w-[calc(25%-6px)] lg:w-[calc(20%-6.4px)] bg-white dark:bg-slate-900 overflow-hidden"
                                   >
                                       <Link
-
                                           href={`/details/${variant.productId}`}>
                                       <div className="relative h-48 w-72">
                                           <Image
@@ -119,7 +122,10 @@ const OfferSlider = () => {
 
                             ))
                         )}
+
+
                     </Splide>
+
                 </div>
             </div>
             <style jsx>{`

@@ -33,8 +33,7 @@ const AllCategory = async ({ searchParams }) => {
 
     const { parentId, name } = searchParams;
 
-    const [categories, products] = await Promise.all([getAllCategory({ parentId }), parentId && getProducts({ categoryId: parentId })]);
-
+    const [categories, products] = await Promise.all([getAllCategory(parentId?{parentId:parentId}:{}), parentId && getProducts({ categoryId: parentId })]);
 
     return (
         <>

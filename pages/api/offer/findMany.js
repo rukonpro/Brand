@@ -1,7 +1,6 @@
-import {PrismaClient} from '@prisma/client';
+import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
-
 
 export default async function handler(req, res) {
     const { method } = req;
@@ -80,18 +79,24 @@ export default async function handler(req, res) {
             // Calculate pagination metadata
             const totalPages = Math.ceil(totalCount / pageSizeNum);
             const pagination = {
-                page: pageNum,
-                pageSize: pageSizeNum,
-                totalCount,
+                totalProducts: totalCount,
                 totalPages,
+                currentPage: pageNum,
+                pageSize: pageSizeNum,
+                hasNextPage: pageNum < totalPages,
+                hasPrevPage: pageNum > 1,
             };
 
             // Prevent caching to ensure fresh data
             res.setHeader('Cache-Control', 'no-store');
 
-            res.status(200).json({ success: true, offers, pagination });
+            // Return paginated response with metadata
+            res.status(200).json({
+                success: true,
+                offers,
+                pagination,
+            });
         } catch (error) {
-            console.error(error);
             res.status(500).json({ success: false, error: 'Failed to fetch offers.' });
         } finally {
             await prisma.$disconnect();

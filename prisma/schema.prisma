@@ -9,10 +9,15 @@ datasource db {
 
 model Review {
   id        String   @id @default(auto()) @map("_id") @db.ObjectId
-  user      String
-  body      String
-  rating    Int      @default(0)
+  productId String   @db.ObjectId
+  userId    String   @db.ObjectId
+  rating    Int      @default(0) // Rating from 1 to 5
+  comment   String?
+  images    String[] @default([]) // Optional review images
   createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  product   Product  @relation(fields: [productId], references: [id])
+  user      User     @relation(fields: [userId], references: [id])
 }
 
 model Category {
@@ -59,6 +64,7 @@ model Product {
   OrderItem    OrderItem[]
   saveForLater SaveForLater[] @relation("ProductSaveForLater")
   SaveForLater SaveForLater[]
+  reviews      Review[]       @relation
 }
 
 model Variant {
@@ -141,6 +147,7 @@ model User {
   orders            Order[]
   CartItem          CartItem[]
   saveForLater      SaveForLater[]    @relation("UserSaveForLater")
+  reviews           Review[]          @relation
 }
 
 enum Gender {

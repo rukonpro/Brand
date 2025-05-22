@@ -14,10 +14,8 @@ const Nav = () => {
                             {/*    <Image src={MenuIcon} alt='MenuIcon'/>*/}
                             {/*</button>*/}
                             <Link href="/allCategory">All category</Link>
-                            <Link href="/">Hot offers</Link>
+                            <Link href="/hotOffer">Hot offers</Link>
                             <Link href="/">Gift boxes</Link>
-                            <Link href="/">Projects</Link>
-                            <Link href="/">Menu item</Link>
                             <Link href="/">Help</Link>
 
                         </div>
