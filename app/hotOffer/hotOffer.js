@@ -12,7 +12,7 @@ const HotOffer = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(1);
     const [hasNextPage, setHasNextPage] = useState(false);
-    const pageSize = 1;
+    const pageSize = 12;
 
     // Debounced fetchOffers to prevent rapid API calls
     // eslint-disable-next-line react-hooks/exhaustive-deps
