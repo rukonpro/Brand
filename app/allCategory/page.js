@@ -34,7 +34,6 @@ const AllCategory = async ({ searchParams }) => {
     const { parentId, name } = searchParams;
 
     const [categories, products] = await Promise.all([getAllCategory(parentId?{parentId:parentId}:{}), parentId && getProducts({ categoryId: parentId })]);
-
     return (
         <>
             <div className="sticky top-0 z-[20]">
@@ -93,10 +92,10 @@ const AllCategory = async ({ searchParams }) => {
                     }
                 </ul>
 
-                {parentId && products?.data?.length > 0 ? <ol
+                {parentId && products?.data?.data?.length > 0 ? <ol
                     className='grid xl:grid-cols-5 lg:grid-cols-5 md:grid-cols-4 sm:grid-cols-3 grid-cols-2 sm:gap-2 gap-1 pt-6 '>
                     {
-                        products?.data?.map((product) => (
+                        products?.data?.data?.map((product) => (
                             <li key={product?.id}>
                                 <Link href={`/details/${product?.id}`}>
                                     <RecommendedItemsCard product={product} />
@@ -107,7 +106,7 @@ const AllCategory = async ({ searchParams }) => {
 
                 </ol> :
 
-                    (products?.data?.length === 0 && categories?.data?.length === 0 &&
+                    (products?.data?.data?.length === 0 && categories?.data?.length === 0 &&
                         <div className="flex justify-center items-center">
                             <Image src={notfoundImage} width={300} height={300} alt="Seatch image" />
                         </div>)
